@@ -1,7 +1,7 @@
 {
     "configs" : {
         "base" : {
-            "location" : "/home/aaron/projects/peerreview/",
+            "location" : "/home/aaron/projects/peerreviewed/",
             "script" : "./update-and-restart.sh",
             "branch" : "master",
             "remote" : "origin"
