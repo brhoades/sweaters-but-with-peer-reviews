@@ -1,0 +1,10 @@
+{
+    "configs" : {
+        "base" : {
+            "location" : "/home/aaron/projects/peerreview/",
+            "script" : "./update-and-restart.sh",
+            "branch" : "master",
+            "remote" : "origin"
+        }
+    }
+}
