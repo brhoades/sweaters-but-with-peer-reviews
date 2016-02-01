@@ -17,7 +17,7 @@ class Professor(models.Model):
 
 
 class Review(models.Model):
-    # source = models.ForeignKey(Users)
+    source = models.ForeignKey(User)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     course = models.CharField(max_length=100)
     created_ts = models.DateTimeField(auto_now_add=True)
