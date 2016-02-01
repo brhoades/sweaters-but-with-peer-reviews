@@ -1,3 +1,6 @@
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
 # SECURITY WARNING: keep the secret key used in production secret!
 # Turn this into a string.
 SECRET_KEY = None
