@@ -1,0 +1,17 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <br />
+  {{ message }}<br />
+  <br />
+
+  {% for var in numbers %}
+    {{ var }}<br />
+  {% endfor %}
+
+  <br /><br />
+  <h2>This is a PandaZu</h2><br />
+  <img href="{% static "browse/img/PandaZu.jpg" %}" />
+{% endblock %}

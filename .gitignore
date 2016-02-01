@@ -1,1 +1,6 @@
-peerreviwed/settings.py
+peerreviewed/sensitive.py
+*__pycache__*
+*.pyc
+
+staticfiles/*
+*.sqlite3
