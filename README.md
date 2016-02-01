@@ -9,7 +9,7 @@ Here's what you have to do to get this running:
 Install Django 1.7.9:
 
 ```
-pip3 install django==1.7.9
+pip3 install -r requirements.txt
 ```
 
 Copy example secrets file over.
