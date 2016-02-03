@@ -54,7 +54,7 @@ def school(request, id=None, page=0):
 
     If a page is provided, it skips forward that page * items per page.
     """
-    template = loader.get_template("browse/index.html")
+    template = loader.get_template("browse/school.html")
 
     if id is None:
         context = {"message":
@@ -74,7 +74,7 @@ def professor(request, id=None, page=0):
 
     If a page is provided, it skips forward that page * items per page.
     """
-    template = loader.get_template("browse/index.html")
+    template = loader.get_template("browse/professor.html")
 
     if id is None:
         context = {"message":
