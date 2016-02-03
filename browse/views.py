@@ -35,7 +35,7 @@ def profile(request, id=None, page=0):
 
     If a page is provided, it skips forward that page * items per page.
     """
-    template = loader.get_template("browse/index.html")
+    template = loader.get_template("browse/profile.html")
 
     if id is None:
         context = {"message": "This is a user listing as there's no id"
