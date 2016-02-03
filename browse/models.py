@@ -9,8 +9,8 @@ class School(models.Model):
     name = models.CharField(max_length=100)
     email_pattern = models.CharField(max_length=50,
                                      validators=[RegexValidator])
-    email_pattern = models.CharField(max_length=100,
-                                     validators=[URLValidator])
+    url = models.CharField(max_length=100,
+                           validators=[URLValidator], blank=True, null=True)
     location = GeopositionField()
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
@@ -33,6 +33,8 @@ class Department(models.Model):
     name = models.CharField(max_length=100)
     school = models.ForeignKey(School)
     fields = models.ManyToManyField(Field)
+    url = models.CharField(max_length=100,
+                           validators=[URLValidator], blank=True, null=True)
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
