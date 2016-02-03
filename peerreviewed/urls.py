@@ -1,12 +1,14 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from browse.views import index
+import browse.views as bviews
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'peerreviewed.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', index, name="index"),
+
+    # Prolly should move, but it's more of a browse thing
+    url(r'^$', bviews.index, name="index"),
+
+    # Other modules
+    url(r'^browse/', include('browse.urls')),
+    url(r'^new/', include('new.urls')),
 )

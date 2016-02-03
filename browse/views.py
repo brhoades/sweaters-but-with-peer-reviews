@@ -18,3 +18,24 @@ def index(request):
             context["numbers"].append("{0} fizz".format(x))
 
     return HttpResponse(template.render(context))
+
+
+def profile(request, id):
+    pass
+
+
+def school(request, id):
+    pass
+
+
+def professor(request, id):
+    pass
+
+
+def review_overview(request):
+    pass
+
+
+def review(request, id):
+    pass
+
