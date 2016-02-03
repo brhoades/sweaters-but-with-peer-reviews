@@ -112,9 +112,9 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
                    "(pg {0}).".format(page, first_id)
                    .format(page, first_id)}
 
-    elif type == "by_first_professor":
+    elif type == "by_school_professor":
         context = {"message":
-                   "This is the page for reviews of professor {1} from first "
+                   "This is the page for reviews of professor {1} from school "
                    "{0} (pg {2})."
                    .format(first_id, second_id, page)}
     else:

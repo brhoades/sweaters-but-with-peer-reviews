@@ -6,6 +6,14 @@
   <br />
   {{ message }}<br />
   <br />
+  <br />
+  <ul>
+    <li><a href="{% url 'reviews_overview' %}">Reviews Overview</a></li>
+    <li><a href="{% url 'reviews' 2 %}">Reviews Pg 2</a></li>
+    <li><a href="{% url 'reviews_by_type_one' page=0 type='by_school' first_id=0 %}">All Review at School #0</a></li>
+    <li><a href="{% url 'reviews_by_type_one' page=0 type='by_professor' first_id=0 %}">All Reviews for  Professor #0</a></li>
+    <li><a href="{% url 'reviews_by_type_two' page=0 type='by_school_professor' first_id=0 second_id=0 %}">All Review Professor #0 at School #0</a></li>
+  </ul>
 
   {% for var in numbers %}
     {{ var }}<br />
