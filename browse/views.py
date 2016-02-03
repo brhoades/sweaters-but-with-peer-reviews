@@ -21,21 +21,55 @@ def index(request):
 
 
 def profile(request, id):
-    pass
+    template = loader.get_template("browse/index.html")
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context = {"message": "<h3>This is a profile page</h3>"}
+    return HttpResponse(template.render(context))
 
 
 def school(request, id):
-    pass
+    template = loader.get_template("browse/index.html")
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    if id is None:
+        context = {"message":
+                   "This is a school listing, since there's no id"}
+    else:
+        context = {"message":
+                   "This is a school overview for school {0}"
+                   .format(id)}
+    return HttpResponse(template.render(context))
 
 
 def professor(request, id):
-    pass
+    template = loader.get_template("browse/index.html")
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    if id is None:
+        context = {"message":
+                   "This is a professor listing, since there's no id"}
+    else:
+        context = {"message":
+                   "This is a professor overview for prof #{0}"
+                   .format(id)}
+    return HttpResponse(template.render(context))
 
 
 def review_overview(request):
-    pass
+    template = loader.get_template("browse/index.html")
+
+    context = {"message":
+               "This is a recent reviews list, since there's no id"}
+
+    return HttpResponse(template.render(context))
 
 
-def review(request, id):
-    pass
+def review(request, school_id, professor_id):
+    template = loader.get_template("browse/index.html")
 
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context = {"message":
+               "This is the page for reviews of professor {1} from school {0}"
+               .format(school_id, professor_id)}
+    return HttpResponse(template.render(context))

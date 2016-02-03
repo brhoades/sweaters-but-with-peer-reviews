@@ -15,7 +15,13 @@
   </head>
 
   <body>
-    <a href="{% url 'index' %}">Index</a></li>
+    <ul>
+      <li><a href="{% url 'index' %}">Index</a></li>
+      <li><a href="{% url 'reviews' %}">Reviews</a></li>
+      <li><a href="{% url 'school' %}">Schools</a></li>
+      <li><a href="{% url 'professor' %}">Professors</a></li>
+      <li><a href="{% url 'profile' %}">Profile</a></li>
+    </ul>
 
     <div id="content">
       {% block content %}{% endblock %}
