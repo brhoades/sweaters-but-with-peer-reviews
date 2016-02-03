@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, \
-    RegexValidator
+    RegexValidator, URLValidator
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 
@@ -9,7 +9,34 @@ class School(models.Model):
     name = models.CharField(max_length=100)
     email_pattern = models.CharField(max_length=50,
                                      validators=[RegexValidator])
+    email_pattern = models.CharField(max_length=100,
+                                     validators=[URLValidator])
     location = GeopositionField()
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+
+
+class FieldCategories(models.Model):
+    name = models.CharField(max_length=30)
+
+    created_by = models.ForeignKey(User)
+
+
+class Field(models.Model):
+    name = models.CharField(max_length=100)
+    categories = models.ManyToManyField(FieldCategories)
+
+    created_by = models.ForeignKey(User)
+
+
+class Department(models.Model):
+    name = models.CharField(max_length=100)
+    school = models.ForeignKey(School)
+    fields = models.ManyToManyField(Field)
+
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User)
 
 
 class Professor(models.Model):
@@ -18,16 +45,30 @@ class Professor(models.Model):
     last_name = models.CharField(max_length=50)
     school = models.ForeignKey(School)
 
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, related_name='created_by')
+
+
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    department = models.ForeignKey(Department)
+
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User)
+
 
 class Review(models.Model):
     source = models.ForeignKey(User)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     course = models.CharField(max_length=100)
+
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
 
 
-class Review_Votes(models.Model):
+class ReviewVotes(models.Model):
     quality = models.IntegerField(validators=[MaxValueValidator(100),
                                   MinValueValidator(0)])
     review = models.ForeignKey(Review)
