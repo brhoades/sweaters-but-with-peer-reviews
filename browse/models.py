@@ -54,6 +54,7 @@ class Professor(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=100)
+    number = models.IntegerField()
     department = models.ForeignKey(Department)
 
     created_ts = models.DateTimeField(auto_now_add=True)
@@ -63,8 +64,8 @@ class Course(models.Model):
 
 class Review(models.Model):
     source = models.ForeignKey(User)
+    course = models.ForeignKey(Course)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
-    course = models.CharField(max_length=100)
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
