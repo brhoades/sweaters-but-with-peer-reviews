@@ -92,8 +92,8 @@ def review(request, review_id=0):
     """
     template = loader.get_template("browse/review.html")
     # should massage more than this
-    context = {'review': Review.objects.filter(id=review_id)}
-    print(context['review'])
+    context = {"review": Review.objects.get(id=review_id)}
+    print(context["review"].__dict__)
 
     return HttpResponse(template.render(context))
 

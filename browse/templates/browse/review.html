@@ -4,9 +4,23 @@
 
 {% block content %}
   <br />
-  {{ review.user.username }}<br />
-  {{ review.course.name }} <br />
+  <strong>School</strong>: {{ review.course.department.school.name }}<br ?>
+  <strong>Department</strong>: {{ review.course.department.name }}<br >
+  <strong>Course</strong>: {{ review.course.name }} ({{ review.course.number }})<br />
+  <strong>Reviewer</strong>:
+  {% if review.source.first_name or review.source.last_name %}
+    {{ review.source.first_name }} {{review.source.lsat_name }} ({{ review.source.username }})<br />
+  {% else %}
+    {{ review.source.username }}<br />
+  {% endif %}
+  <br />
+  <br />
+  <strong>Review</strong>:
   <br />
   {{ review.text }}<br />
-  Hello World
+  <br />
+  Created: {{ review.created_ts|date:"DATETIME_FORMAT" }}<br />
+  {% if review.update_ts %}
+    Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}<br />
+  {% endif %}
 {% endblock %}
