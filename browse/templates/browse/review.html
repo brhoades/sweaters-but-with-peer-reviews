@@ -9,7 +9,7 @@
   <strong>Course</strong>: {{ review.course.name }} ({{ review.course.number }})<br />
   <strong>Reviewer</strong>:
   {% if review.source.first_name or review.source.last_name %}
-    {{ review.source.first_name }} {{review.source.lsat_name }} ({{ review.source.username }})<br />
+    {{ review.source.first_name }} {{review.source.last_name }} ({{ review.source.username }})<br />
   {% else %}
     {{ review.source.username }}<br />
   {% endif %}

@@ -6,7 +6,7 @@
   {% if reviews|length > 0 %}
     <h2>Latest Reviews</h2>
     {% for review in reviews %}
-    {{ review.source.username }}&nbsp; -- &nbsp;{{ review.course.name }}&nbsp; -- &nbsp;<a href="{{ review.id }}">FIXME</a><br />
+    {{ review.source.username }}&nbsp; -- &nbsp;{{ review.course.name }}&nbsp; -- &nbsp;<a href="{% url 'review' review_id=review.id %}">View</a><br />
     {% endfor %}
   {% else %}
     <h2>There are no reviews</h2>
