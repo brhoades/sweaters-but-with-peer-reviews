@@ -13,7 +13,7 @@ class School(models.Model):
 
 
 class Professor(models.Model):
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     school = models.ForeignKey(School)
