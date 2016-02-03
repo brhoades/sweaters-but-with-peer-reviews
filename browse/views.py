@@ -20,18 +20,35 @@ def index(request):
     return HttpResponse(template.render(context))
 
 
-def profile(request, id):
+def profile(request, id=None, page=0):
+    """
+    This is our profile page. It's passed, optionally, a user id as "id" in
+    kwargs. If it gets an id, it spits out a profile. If it doesn't, it spits
+    out a listing of all users with links to profiles.
+
+    If a page is provided, it skips forward that page * items per page.
+    """
     template = loader.get_template("browse/index.html")
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
-    context = {"message": "<h3>This is a profile page</h3>"}
+    if id is None:
+        context = {"message": "This is a user listing as there's no id"
+                   .format(id)}
+    else:
+        context = {"message": "This is a profile page for user {0}".format(id)}
+
     return HttpResponse(template.render(context))
 
 
-def school(request, id):
+def school(request, id=None, page=0):
+    """
+    This is a school page. If no id is provided, it displays a listing of
+    all schoosl with information about each. If one is provided, it provides
+    an overview about that school.
+
+    If a page is provided, it skips forward that page * items per page.
+    """
     template = loader.get_template("browse/index.html")
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
     if id is None:
         context = {"message":
                    "This is a school listing, since there's no id"}
@@ -42,10 +59,16 @@ def school(request, id):
     return HttpResponse(template.render(context))
 
 
-def professor(request, id):
+def professor(request, id=None, page=0):
+    """
+    This is a professor profile page (not a user). It provides information
+    about courses taught, latest reviews, and aggregate ratings. If an id is
+    not specified, it provides a listing of all professors (paginated).
+
+    If a page is provided, it skips forward that page * items per page.
+    """
     template = loader.get_template("browse/index.html")
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
     if id is None:
         context = {"message":
                    "This is a professor listing, since there's no id"}
@@ -56,20 +79,46 @@ def professor(request, id):
     return HttpResponse(template.render(context))
 
 
-def review_overview(request):
-    template = loader.get_template("browse/index.html")
+def reviews(request, type="all", first_id=None, second_id=None, page=0):
+    """
+    This is the general-purpose review-viewing page. It allows for returning
+    views of specific requests from the user.
 
-    context = {"message":
-               "This is a recent reviews list, since there's no id"}
+    :Parameters:
+        * *page*: (``int``) --
+            The page to start listing from.
+        * *type*: (``str``) --
+            The type of review view page to get. Valid types are:
+                * all (default)
+                * by_school
+                * by_professor
+                * by_school_professor
+        * *first_id*: (``int``) --
+            The first id of the requested view type (ie professor).
+        * *second_id*: (``int``) --
+            The second id of the requested view type (ie school).
+    """
+    template = loader.get_template("browse/reviews.html")
+    context = {}
 
-    return HttpResponse(template.render(context))
+    if type == "by_school":
+        context = {"message":
+                   "This is the page that lists all reviews for school {1}"
+                   "(pg {0}).".format(page, first_id)
+                   .format(page)}
+    elif type == "by_professor":
+        context = {"message":
+                   "This is the page that lists all reviews for professor {1} "
+                   "(pg {0}).".format(page, first_id)
+                   .format(page, first_id)}
 
-
-def review(request, school_id, professor_id):
-    template = loader.get_template("browse/index.html")
-
-    # HTML passthrough has to be enabled in the template... this is serialized.
-    context = {"message":
-               "This is the page for reviews of professor {1} from school {0}"
-               .format(school_id, professor_id)}
+    elif type == "by_first_professor":
+        context = {"message":
+                   "This is the page for reviews of professor {1} from first "
+                   "{0} (pg {2})."
+                   .format(first_id, second_id, page)}
+    else:
+        context = {"message":
+                   "This is the page that lists all reviews (pg {0})."
+                   .format(page)}
     return HttpResponse(template.render(context))
