@@ -1,12 +1,15 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, \
+    RegexValidator
 from django.contrib.auth.models import User
+from geoposition.fields import GeopositionField
 
 
 class School(models.Model):
     name = models.CharField(max_length=100)
-    email_pattern = models.CharField(max_length=50)
-    location = models.CharField(max_length=100)
+    email_pattern = models.CharField(max_length=50,
+                                     validators=[RegexValidator])
+    location = GeopositionField()
 
 
 class Professor(models.Model):
