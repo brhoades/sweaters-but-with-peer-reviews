@@ -1,0 +1,12 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}View Review{% endblock %}
+
+{% block content %}
+  <br />
+  {{ review.user.username }}<br />
+  {{ review.course.name }} <br />
+  <br />
+  {{ review.text }}<br />
+  Hello World
+{% endblock %}

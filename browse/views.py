@@ -1,6 +1,8 @@
 from django.template import RequestContext, loader
 from django.http import HttpResponse
 
+from browse.models import Review
+
 
 def index(request):
     template = loader.get_template("browse/index.html")
@@ -8,6 +10,8 @@ def index(request):
     # HTML passthrough has to be enabled in the template... this is serialized.
     context = {"message": "<h3>Sam Sucks and Dzu Rocks</h3>"}
     context["numbers"] = []
+
+    context["reviews"] = Review.objects.order_by('-created_ts')
 
     for x in range(1, 101):
         if x % 15 == 0:
@@ -76,6 +80,18 @@ def professor(request, id=None, page=0):
         context = {"message":
                    "This is a professor overview for prof #{0}"
                    .format(id)}
+    return HttpResponse(template.render(context))
+
+
+def review(request, review_id=0):
+    """
+    View a single review given an ID.
+    """
+    template = loader.get_template("browse/review.html")
+    # should massage more than this
+    context = {'review': Review.objects.filter(id=review_id)}
+    print(context['review'])
+
     return HttpResponse(template.render(context))
 
 

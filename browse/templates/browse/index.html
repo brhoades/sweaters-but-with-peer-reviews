@@ -3,9 +3,16 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <br />
-  {{ message }}<br />
-  <br />
+  {% if reviews|length > 0 %}
+    <h2>Latest Reviews</h2>
+    {% for review in reviews %}
+    {{ review.source.username }}&nbsp; -- &nbsp;{{ review.course.name }}&nbsp; -- &nbsp;<a href="{{ review.id }}">FIXME</a><br />
+    {% endfor %}
+  {% else %}
+    <h2>There are no reviews</h2>
+  {% endif %}
+
+  <br /> <br />
 
   {% for var in numbers %}
     {{ var }}<br />

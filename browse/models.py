@@ -67,6 +67,9 @@ class Review(models.Model):
     course = models.ForeignKey(Course)
     professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
+    # 100k otta be enough for nebody.
+    text = models.TextField(max_length=100000)
+
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
 
