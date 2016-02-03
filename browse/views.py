@@ -1,5 +1,8 @@
 from django.template import RequestContext, loader
 from django.http import HttpResponse
+from django.shortcuts import render
+
+from .forms import ReviewForm
 
 from browse.models import Review
 
@@ -114,27 +117,37 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
         * *second_id*: (``int``) --
             The second id of the requested view type (ie school).
     """
-    template = loader.get_template("browse/reviews.html")
+    template = "browse/reviews.html"
     context = {}
 
-    if type == "by_school":
-        context = {"message":
-                   "This is the page that lists all reviews for school {1}"
-                   "(pg {0}).".format(page, first_id)
-                   .format(page)}
-    elif type == "by_professor":
-        context = {"message":
-                   "This is the page that lists all reviews for professor {1} "
-                   "(pg {0}).".format(page, first_id)
-                   .format(page, first_id)}
-
-    elif type == "by_school_professor":
-        context = {"message":
-                   "This is the page for reviews of professor {1} from school "
-                   "{0} (pg {2})."
-                   .format(first_id, second_id, page)}
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            model_instance = form.save(commit=False)
+            #Here we can change things in the model.
+            #IE user who posted, time posted, etc..
+            model_instance.save()
     else:
-        context = {"message":
-                   "This is the page that lists all reviews (pg {0})."
-                   .format(page)}
-    return HttpResponse(template.render(context))
+        form = ReviewForm()
+        if type == "by_school":
+            context = {"message":
+                       "This is the page that lists all reviews for school {1}"
+                       "(pg {0}).".format(page, first_id)
+                       .format(page)}
+        elif type == "by_professor":
+            context = {"message":
+                       "This is the page that lists all reviews for professor {1} "
+                       "(pg {0}).".format(page, first_id)
+                       .format(page, first_id)}
+    
+        elif type == "by_school_professor":
+            context = {"message":
+                       "This is the page for reviews of professor {1} from school "
+                       "{0} (pg {2})."
+                       .format(first_id, second_id, page)}
+        else:
+            context = {"message":
+                       "This is the page that lists all reviews (pg {0})."
+                       .format(page)}
+    context["form"] = form
+    return render(request, template, context)
