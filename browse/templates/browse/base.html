@@ -7,23 +7,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
-    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="{% static 'browse/js/main.js' %}"></script>
     <script src="{% static 'lib/angular/angular.min.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/styles.css' %}"> 
 
     {% block header %}{% endblock %}
   </head>
-
   <body>
+    
+    <div id='cssmenu'>
     <ul>
-      <li><a href="{% url 'index' %}">Index</a></li>
+      <li class='active'><a href="{% url 'index' %}">Index</a></li>
       <li><a href="{% url 'reviews_overview' %}">Reviews</a></li>
       <li><a href="{% url 'school' %}">Schools</a></li>
       <li><a href="{% url 'professor' %}">Professors</a></li>
       <li><a href="{% url 'profile' %}">Profile</a></li>
     </ul>
-
+  </div>
     <div id="content">
       {% block content %}{% endblock %}
     </div>
