@@ -1,4 +1,4 @@
-from django.template import RequestContext, loader
+from django.template import loader
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -124,8 +124,8 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
         form = ReviewForm(request.POST)
         if form.is_valid():
             model_instance = form.save(commit=False)
-            #Here we can change things in the model.
-            #IE user who posted, time posted, etc..
+            # Here we can change things in the model.
+            # IE user who posted, time posted, etc..
             model_instance.save()
     else:
         form = ReviewForm()
@@ -136,14 +136,14 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
                        .format(page)}
         elif type == "by_professor":
             context = {"message":
-                       "This is the page that lists all reviews for professor {1} "
-                       "(pg {0}).".format(page, first_id)
+                       "This is the page that lists all reviews for professor"
+                       " {1} (pg {0}).".format(page, first_id)
                        .format(page, first_id)}
-    
+
         elif type == "by_school_professor":
             context = {"message":
-                       "This is the page for reviews of professor {1} from school "
-                       "{0} (pg {2})."
+                       "This is the page for reviews of professor {1} from "
+                       "school {0} (pg {2})."
                        .format(first_id, second_id, page)}
         else:
             context = {"message":

@@ -20,3 +20,7 @@ cp peerreviewed/sensitive.example.py peerreviewed/sensitive.py
 
 Then edit SECRET_KEY in sensitive.py to be a random string.
 
+Contributing
+------------
+
+Make your changes, run flake8, fix your code, test it, fix it again, and commit.

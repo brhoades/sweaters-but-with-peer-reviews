@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from new.forms import ReviewForm, CourseForm, ProfessorForm
 
-# Create your views here.
 
 def new(request, page=None):
     template = "new/index.html"

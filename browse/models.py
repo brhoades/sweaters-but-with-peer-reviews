@@ -15,18 +15,29 @@ class School(models.Model):
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "%s" % (self.name)
 
-class FieldCategories(models.Model):
+
+class FieldCategory(models.Model):
+    class Meta:
+        verbose_name_plural = "Field Categories"
+
     name = models.CharField(max_length=30)
 
     created_by = models.ForeignKey(User)
 
+    def __str__(self):
+        return "%s" % (self.name)
 
 class Field(models.Model):
     name = models.CharField(max_length=100)
-    categories = models.ManyToManyField(FieldCategories)
+    categories = models.ManyToManyField(FieldCategory)
 
     created_by = models.ForeignKey(User)
+
+    def __str__(self):
+        return "%s" % (self.name)
 
 
 class Department(models.Model):
@@ -40,6 +51,9 @@ class Department(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User)
 
+    def __str__(self):
+        return "%s" % (self.name)
+
 
 class Professor(models.Model):
     owner = models.ForeignKey(User, blank=True, null=True)
@@ -51,6 +65,9 @@ class Professor(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, related_name='created_by')
 
+    def __str__(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
 
 class Course(models.Model):
     name = models.CharField(max_length=100)
@@ -61,6 +78,8 @@ class Course(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User)
 
+    def __str__(self):
+        return "%s (%i)" % (self.name, self.number)
 
 class Review(models.Model):
     source = models.ForeignKey(User)
@@ -73,9 +92,17 @@ class Review(models.Model):
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "%s %s for %s %s" % (self.source.first_name, self.source.last_name, self.professor.first_name, self.professor.last_name)
 
-class ReviewVotes(models.Model):
+class ReviewVote(models.Model):
+    class Meta:
+        verbose_name_plural = "Review Votes"
+
     quality = models.IntegerField(validators=[MaxValueValidator(100),
                                   MinValueValidator(0)])
     review = models.ForeignKey(Review)
     reviewer = models.ForeignKey(User)
+
+    def __str__(self):
+        return "%s %s" % (self.reviewer.first_name, self.reviewer.last_name)
