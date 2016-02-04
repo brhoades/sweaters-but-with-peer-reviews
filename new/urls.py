@@ -4,5 +4,5 @@ import new.views as nviews
 
 
 urlpatterns = patterns('',
-    url(r'^new/(professor|school|courne)$', nviews.new, name="new"),
+    url(r'^(?P<page>(professor|review|course))$', nviews.new, name="new"),
 )
