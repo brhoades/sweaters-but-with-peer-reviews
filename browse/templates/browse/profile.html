@@ -8,8 +8,9 @@
     {% for user in users %}
       {{ user.username }}<br />
     {% endfor %}
+  {% else %}
+    {{ user.username }}<br />
   {% endif %}
-  {{ message }}<br />
   <br />
 
   {% for var in numbers %}

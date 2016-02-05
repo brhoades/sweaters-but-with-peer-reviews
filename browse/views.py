@@ -40,7 +40,7 @@ def profile(request, id=None, page=0):
     if id is None:
         context = {"users": User.objects.all()}
     else:
-        context = {"message": "This is a profile page for user {0}".format(id)}
+        context = {"user": User.object.get(id=id)}
 
     return HttpResponse(template.render(context))
 
