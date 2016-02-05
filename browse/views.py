@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from .forms import ReviewForm
 
-from browse.models import Review
+from browse.models import Review, User
 
 
 def index(request):
@@ -38,10 +38,9 @@ def profile(request, id=None, page=0):
     template = loader.get_template("browse/profile.html")
 
     if id is None:
-        context = {"message": "This is a user listing as there's no id"
-                   .format(id)}
+        context = {"users": User.objects.all()}
     else:
-        context = {"message": "This is a profile page for user {0}".format(id)}
+        context = {"user": User.object.get(id=id)}
 
     return HttpResponse(template.render(context))
 

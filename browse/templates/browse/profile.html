@@ -4,7 +4,13 @@
 
 {% block content %}
   <br />
-  {{ message }}<br />
+  {% if users %}
+    {% for user in users %}
+      {{ user.username }}<br />
+    {% endfor %}
+  {% else %}
+    {{ user.username }}<br />
+  {% endif %}
   <br />
 
   {% for var in numbers %}
