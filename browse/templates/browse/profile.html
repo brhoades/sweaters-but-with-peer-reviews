@@ -23,42 +23,41 @@
 
   <div>
 	<!-- Section #1 / Intro -->
-	<section id="first" class="story" data-speed="8" data-type="background">    
-		<article>
-      {% if profile %}
-			<figure class="profile-picture"
-			        style="background-image: url('{% gravatar_url profile.email %}')">
-      </figure>
-      {% else %}
-			<figure class="profile-picture"
-			        style="background-image: url('{% gravatar_url user.email %}')">
-			</figure>
-      {% endif %}
+	<section id="profile_header" class="story" data-speed="8" data-type="background">    
 
+		<article>
+
+		    {% if profile %}
+				<figure class="profile-picture"
+				        style="background-image: url('{% gravatar_url profile.email %}')">
+		    </figure>
+		    {% else %}
+				<figure class="profile-picture"
+			        style="background-image: url('{% gravatar_url user.email %}')">
+				</figure>
+		    {% endif %}
+
+		    <!-- This is where profile data gets called and displayed -->
 			<div class="profile-stats">
-			  <ul>
-				  <li>13    <span>Projects</span></li>
-				  <li>1,354 <span>Commits</span></li>
-				  <li>32    <span>Following</span></li>
-				  <li>324   <span>Followers</span></li>
-			  </ul>
-			  <a href="javascript:void(0);" class="follow">
-			      Buttons!
-			  </a>
+				<ul>
+					{% if profile %}
+						<li><span class="fs-display-1 display-block">{{ profile.first_name }} {{ profile.last_name }}</span></li>
+						<li><span class="fs-headline display-block">dtptw6</span><small>{{ profile.username }}</small></li>
+					{% else %}
+						<li><span class="fs-display-1 display-block">{{ user.first_name }} {{ user.last_name }}</span></li>
+						<li><span class="fs-headline display-block">{{ user.username }}</span><small>username</small></li>
+					{% endif %}
+					<li><span class="fs-headline display-block">15</span><small>rated</small></li>
+					<li><span class="fs-headline display-block">120</span><small>post</small></li>
+				</ul>
 
 			</div>
-			<article>
-			{% if profile %}
-				<h2>{{ profile.first_name }} {{ profile.last_name }}<small>{{ profile.username }}</small></h2>
-			{% else %}
-				<h2>{{ user.first_name }} {{ user.last_name }}<small>{{ user.username }}</small></h2>
-			{% endif %}
-			</article>
+
 		</article>
 	</section>
 
 	<!-- Section #2 / Background Only -->
-	<section id="second" class="story" data-speed="4" data-type="background">
+	<section id="profile_body" class="story" data-speed="4" data-type="background">
 		<article>
 			<h2>Background Only</h2>
 		    	<p>In this section we are sliding the background at a different speed to the rest of the page.</p>
@@ -68,19 +67,6 @@
 		    		
 		</article>
 	</section>
-	
-	<!-- Section #3 / Photos -->
-	<section id="third" class="story" data-speed="6" data-type="background" data-offsetY="250">    	
-		<div class="photograph" data-type="sprite" data-offsetY="1250" data-Xposition="25%" data-speed="2"></div>
-    	<article>
-    		<h2>Scrolling Sprites</h2>
-	    	<div class="textbox">    	
-		    	<p>The next step in your parallax scrolling adventure is to create some sprites!</p>
-		    	<p>I have cut out one of the photos in this background and use it as a sprite. It scrolls at a different speed to the background <i>and</i> the window, and it's this effect that's used so well on Nike Better World and other parallax sites..</p>
-		    	<p>Using too many sprites can slow down older computers, and you need to use some clever maths (and trial & error!) to work out their placement on the page.</p>
-		    </div>
-    	</article>
-	</section>	
 	
 
   </div> <!-- // End of #main -->
