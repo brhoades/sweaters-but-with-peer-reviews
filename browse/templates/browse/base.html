@@ -36,12 +36,7 @@
       <li><a href="{% url 'reviews_overview' %}">Reviews</a></li>
       <li><a href="{% url 'school' %}">Schools</a></li>
       <li><a href="{% url 'professor' %}">Professors</a></li>
-        <li><a href="{% url 'profile' %}">Profile</a></li>
-      {% if user.is_authenticated %}
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-      {% else %}
-        <li><a href="{% url 'login' %}">Login</a></li>
-      {% endif %}
+      <li><a href="{% url 'profile' %}">Profile</a></li>
     </ul>
   </div>
     <div id="content">

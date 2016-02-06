@@ -3,14 +3,14 @@ body {
   margin-bottom: 100px;
 }
 
-h1 {
+h2 {
   display: block;
   font-size: 50px;
   margin: 25px auto 0;
   width: 975px;
 }
 
-h1>small {
+h2>small {
   color: #FFFFFF;
   font-size: .5em;
 }
@@ -136,7 +136,7 @@ div.profile-stats a.follow.followed {
 
 header>h1 {
   bottom: -50px;
-  color: #354B63;
+  color: #ffffff;
   font-size: 40px;
   left: 350px;
   position: absolute;

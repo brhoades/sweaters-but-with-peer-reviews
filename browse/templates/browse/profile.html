@@ -24,33 +24,19 @@
   <div>
 	<!-- Section #1 / Intro -->
 	<section id="first" class="story" data-speed="8" data-type="background">    
-		  	
-
-		<!-- Up direction -->
-    <div class="fab">
-        <button class="fab__primary btn btn--xl btn--blue btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left">
-            <i class="mdi mdi-android"></i>
-            <i class="mdi mdi-plus"></i>
-        </button>
-
-        <div class="fab__actions fab__actions--up">
-            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left"><i class="mdi mdi-delete"></i></button>
-            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left"><i class="mdi mdi-package"></i></button>
-            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left"><i class="mdi mdi-pencil"></i></button>
-        </div>
-    </div>
-		  	
+		
 		<article>
-              {% if user %}
-			    <figure class="profile-picture"
+            {% if user %}
+				<figure class="profile-picture"
 			    style="background-image: url('{% gravatar_url user.email %}')">
                 </figure>
-              {% else %}
+            {% else %}
 			    <figure class="profile-picture"
 			    style="background-image: url('{% static 'browse/img/PandaZu.jpg' %}')">
 			    </figure>
-              {% endif %}
-			  <div class="profile-stats">
+            {% endif %}
+
+			<div class="profile-stats">
 			    <ul>
 				    <li>13    <span>Projects</span></li>
 				    <li>1,354 <span>Commits</span></li>
@@ -60,13 +46,17 @@
 				<a href="javascript:void(0);" class="follow">
 			      Buttons!
 			    </a>
-			  </div>
-    </article>
-    {% if user %}
-    <h1>{{ user.first_name }} {{ user.last_name }}<small>{{ user.username }}</small></h1>
-    {% else %}
-    <h1>No User<small>NoneAtAll</small></h1>
-    {% endif %}
+
+			</div>
+			<article>
+			{% if user %}
+				<h2>{{ user.first_name }} {{ user.last_name }}<small>{{ user.username }}</small></h2>
+			{% else %}
+				<h2>No User<small>NoneAtAll</small></h2>
+			{% endif %}
+			</article>
+
+		</article>
 
 	</section>
 
