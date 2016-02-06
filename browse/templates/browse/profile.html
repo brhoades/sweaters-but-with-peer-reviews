@@ -10,7 +10,7 @@
       {{ user.username }}<br />
     {% endfor %}
   {% else %}
-    {{ user.username }}<br />
+    {{ profile.username }}<br />
   {% endif %}
   <br />
 
@@ -24,40 +24,37 @@
   <div>
 	<!-- Section #1 / Intro -->
 	<section id="first" class="story" data-speed="8" data-type="background">    
-		
 		<article>
-            {% if user %}
-				<figure class="profile-picture"
-			    style="background-image: url('{% gravatar_url user.email %}')">
-                </figure>
-            {% else %}
-			    <figure class="profile-picture"
-			    style="background-image: url('{% static 'browse/img/PandaZu.jpg' %}')">
-			    </figure>
-            {% endif %}
+      {% if profile %}
+			<figure class="profile-picture"
+			        style="background-image: url('{% gravatar_url profile.email %}')">
+      </figure>
+      {% else %}
+			<figure class="profile-picture"
+			        style="background-image: url('{% gravatar_url user.email %}')">
+			</figure>
+      {% endif %}
 
 			<div class="profile-stats">
-			    <ul>
-				    <li>13    <span>Projects</span></li>
-				    <li>1,354 <span>Commits</span></li>
-				    <li>32    <span>Following</span></li>
-				    <li>324   <span>Followers</span></li>
-			    </ul>
-				<a href="javascript:void(0);" class="follow">
+			  <ul>
+				  <li>13    <span>Projects</span></li>
+				  <li>1,354 <span>Commits</span></li>
+				  <li>32    <span>Following</span></li>
+				  <li>324   <span>Followers</span></li>
+			  </ul>
+			  <a href="javascript:void(0);" class="follow">
 			      Buttons!
-			    </a>
+			  </a>
 
 			</div>
 			<article>
-			{% if user %}
-				<h2>{{ user.first_name }} {{ user.last_name }}<small>{{ user.username }}</small></h2>
+			{% if profile %}
+				<h2>{{ profile.first_name }} {{ profile.last_name }}<small>{{ profile.username }}</small></h2>
 			{% else %}
-				<h2>No User<small>NoneAtAll</small></h2>
+				<h2>{{ user.first_name }} {{ user.last_name }}<small>{{ user.username }}</small></h2>
 			{% endif %}
 			</article>
-
 		</article>
-
 	</section>
 
 	<!-- Section #2 / Background Only -->
