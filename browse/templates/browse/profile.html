@@ -60,10 +60,14 @@
 				<a href="javascript:void(0);" class="follow">
 			      Buttons!
 			    </a>
-			</div>
-			
-		</article>
-		<h1>Dzu Pham<small>PandaZu</small></h1>
+			  </div>
+    </article>
+    {% if user %}
+    <h1>{{ user.first_name }} {{ user.last_name }}<small>{{ user.username }}</small></h1>
+    {% else %}
+    <h1>No User<small>NoneAtAll</small></h1>
+    {% endif %}
+
 	</section>
 
 	<!-- Section #2 / Background Only -->
