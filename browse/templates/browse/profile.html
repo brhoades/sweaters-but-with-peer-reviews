@@ -1,5 +1,6 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load gravatar %}
 {% block title %}Profile{% endblock %}
 
 {% block content %}
@@ -10,6 +11,7 @@
     {% endfor %}
   {% else %}
     {{ user.username }}<br />
+    {% gravatar user.email 150 %}
   {% endif %}
   <br />
 
