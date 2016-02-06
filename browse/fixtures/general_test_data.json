@@ -1,0 +1,429 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$uAlk5mM1SI15$A6Ubt14DwhKBmTvXJakmBnhElRC9o/JwD8X8qZttl/k=",
+        "last_login": "2016-02-01T22:06:17.137Z",
+        "is_superuser": true,
+        "username": "RSCK",
+        "first_name": "",
+        "last_name": "",
+        "email": "django-chained@googlegroups.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-02-01T21:59:58.343Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$9fK9XabMgzq4$efMGWurhz3FoOjUHE41zevE4teB68FjhES02tITLStE=",
+        "last_login": "2016-02-06T01:21:30.116Z",
+        "is_superuser": true,
+        "username": "JDrilling",
+        "first_name": "Jacob",
+        "last_name": "Drilling",
+        "email": "jcd3kf@mst.edu",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-02-01T22:05:06Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$ASKoqbbUACX5$MQZ5B6OEtAP7/1arV8Mnls4W2Y1y3E1M2fiwmjKhQno=",
+        "last_login": "2016-02-03T22:22:06.522Z",
+        "is_superuser": true,
+        "username": "aaron",
+        "first_name": "Billy",
+        "last_name": "Rhoades",
+        "email": "bjrq48@mst.edu",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-02-01T22:05:28Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$r9voju6a5qB2$GlWB4APgZiAuivxylz/MTkBokQnCAVYihNuz0WFJS08=",
+        "last_login": "2016-02-06T01:22:17.710Z",
+        "is_superuser": true,
+        "username": "sjpn96",
+        "first_name": "Sam",
+        "last_name": "Pilla",
+        "email": "sjpn96@mst.edu",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-02-01T22:05:42Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$Z3IUICjKVFLk$sfBp9FQWxLhxzQ2t+vHJ0Zwka5b5ecOawDXspW3jDv4=",
+        "last_login": "2016-02-06T01:23:25.162Z",
+        "is_superuser": true,
+        "username": "jbrown400",
+        "first_name": "Justin",
+        "last_name": "Brown",
+        "email": "justin.brown400@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-02-01T22:06:00Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$NqDLJvEG6cV0$8KJguqAScdXsd2WEozRWUVONSYUYUZ9BPu1qFe8gfrY=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "DPham",
+        "first_name": "Dzu",
+        "last_name": "Pham",
+        "email": "dtptw6@mst.edu",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-02-01T22:06:21Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$GSXC5oXUrgzD$JKtHI/Po44gsu2uSLWmDqVRp0ExSMZYjeFc6WwiF2N8=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "test_user",
+        "first_name": "Test",
+        "last_name": "User",
+        "email": "test@mst.edu",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-02-06T03:17:58Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "6krvasabf0eo123jr18refon5wm8kjs4",
+    "fields": {
+        "session_data": "ZmI5NDNlMTgzZTI0YzlhNzJiMTY2ZDBlNTJhM2Q2YTQ1ODFkZmM1MDp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9oYXNoIjoiM2NkYjNhMjVkMzI3M2JiMTQ3NjYyYWY0MWJiZTYxM2U0NTAzNTUyNyIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
+        "expire_date": "2016-02-17T22:22:06.524Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "nxzviavo6twtohmn3oue0fgensl1aikz",
+    "fields": {
+        "session_data": "MmI2MjkzMzdiODRlY2U3OTk2MDUyYTZjZjg5OTJlYTc5OGIxMmJjZTp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzY2RiM2EyNWQzMjczYmIxNDc2NjJhZjQxYmJlNjEzZTQ1MDM1NTI3In0=",
+        "expire_date": "2016-02-17T19:17:36.339Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "u4e35e5ojkvoz3sbbawd5v61cy9kjxp9",
+    "fields": {
+        "session_data": "MTNhZWRmMWI4NGE0Y2NmZDAxOGVjOTlkZTRkMmNhNWY2MjRkN2RmZjp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9oYXNoIjoiOTMwNTM5ZTk2MTBkN2NlY2U2NzQzOWEwNzljYzcwNmM2ZjEwOWYxNiIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
+        "expire_date": "2016-02-20T01:22:17.712Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ugom7excqjhcqobycncm9c3xj4upzyma",
+    "fields": {
+        "session_data": "YmEwYmQ5NjRhOWM1OWM4OTJjYWE3YjdmZmVmOGFjMmE4NGRkOWI5NDp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9oYXNoIjoiMGU3YjBlMWNlZDc0MTNhYmQwYjMxNmEyMTQxZjAxN2Y4NTFjZThkMCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
+        "expire_date": "2016-02-20T01:21:30.118Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "xybe264noxjdmbk3zw28ml6kfk00tssc",
+    "fields": {
+        "session_data": "MzI3NWU1NzE3MTI4M2E0MjgxNTI3MzFjM2JjMDc3YTFhNGMzNjE4ODp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiNDhiYmI3OWQ4ZWMzOTlkYjhiYjgzMWEzMWQxNWE3MjFlYWRhZThmOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
+        "expire_date": "2016-02-15T22:05:14.555Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "z3lms719m9d0evotdnwwehw7vfyzswmj",
+    "fields": {
+        "session_data": "MzI3NWU1NzE3MTI4M2E0MjgxNTI3MzFjM2JjMDc3YTFhNGMzNjE4ODp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiNDhiYmI3OWQ4ZWMzOTlkYjhiYjgzMWEzMWQxNWE3MjFlYWRhZThmOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
+        "expire_date": "2016-02-15T22:05:06.110Z"
+    }
+},
+{
+    "model": "browse.school",
+    "pk": 1,
+    "fields": {
+        "name": "Missouri University of Science and Technology",
+        "email_pattern": "/@mst.edu$/",
+        "url": "https://mst.edu/",
+        "location": "37.9535811,-91.77611150000001",
+        "created_ts": "2016-02-03T20:43:30.592Z",
+        "updated_ts": "2016-02-03T20:43:30.592Z"
+    }
+},
+{
+    "model": "browse.fieldcategory",
+    "pk": 1,
+    "fields": {
+        "name": "STEM",
+        "created_by": [
+            "aaron"
+        ]
+    }
+},
+{
+    "model": "browse.field",
+    "pk": 1,
+    "fields": {
+        "name": "Computer Science",
+        "created_by": [
+            "aaron"
+        ],
+        "categories": [
+            1
+        ]
+    }
+},
+{
+    "model": "browse.field",
+    "pk": 2,
+    "fields": {
+        "name": "Mathematics",
+        "created_by": [
+            "jbrown400"
+        ],
+        "categories": [
+            1
+        ]
+    }
+},
+{
+    "model": "browse.field",
+    "pk": 3,
+    "fields": {
+        "name": "Statistics",
+        "created_by": [
+            "sjpn96"
+        ],
+        "categories": [
+            1
+        ]
+    }
+},
+{
+    "model": "browse.department",
+    "pk": 1,
+    "fields": {
+        "name": "Computer Science",
+        "school": 1,
+        "url": "https://cs.mst.edu/",
+        "created_ts": "2016-02-03T20:44:08.251Z",
+        "updated_ts": "2016-02-03T20:44:08.251Z",
+        "created_by": [
+            "aaron"
+        ],
+        "fields": [
+            1
+        ]
+    }
+},
+{
+    "model": "browse.department",
+    "pk": 2,
+    "fields": {
+        "name": "Mathematics and Statistics",
+        "school": 1,
+        "url": "math.mst.edu",
+        "created_ts": "2016-02-06T03:09:17.499Z",
+        "updated_ts": "2016-02-06T03:09:17.499Z",
+        "created_by": [
+            "RSCK"
+        ],
+        "fields": [
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "browse.professor",
+    "pk": 1,
+    "fields": {
+        "owner": null,
+        "first_name": "Clayton",
+        "last_name": "Price",
+        "school": 1,
+        "created_ts": "2016-02-03T20:44:35.452Z",
+        "updated_ts": "2016-02-03T20:44:35.452Z",
+        "created_by": [
+            "aaron"
+        ]
+    }
+},
+{
+    "model": "browse.professor",
+    "pk": 2,
+    "fields": {
+        "owner": null,
+        "first_name": "Thomas",
+        "last_name": "Cutcha",
+        "school": 1,
+        "created_ts": "2016-02-06T03:10:02.827Z",
+        "updated_ts": "2016-02-06T03:10:02.827Z",
+        "created_by": [
+            "aaron"
+        ]
+    }
+},
+{
+    "model": "browse.professor",
+    "pk": 3,
+    "fields": {
+        "owner": null,
+        "first_name": "Fikret",
+        "last_name": "Ercal",
+        "school": 1,
+        "created_ts": "2016-02-06T03:10:12.172Z",
+        "updated_ts": "2016-02-06T03:10:12.172Z",
+        "created_by": [
+            "jbrown400"
+        ]
+    }
+},
+{
+    "model": "browse.course",
+    "pk": 2,
+    "fields": {
+        "name": "Object Oriented Numerical Modeling",
+        "number": 5201,
+        "department": 1,
+        "created_ts": "2016-02-03T20:53:50.883Z",
+        "updated_ts": "2016-02-03T20:53:50.883Z",
+        "created_by": [
+            "aaron"
+        ]
+    }
+},
+{
+    "model": "browse.course",
+    "pk": 3,
+    "fields": {
+        "name": "File Structures and Intro to Databases",
+        "number": 2300,
+        "department": 1,
+        "created_ts": "2016-02-06T03:03:19.364Z",
+        "updated_ts": "2016-02-06T03:03:19.364Z",
+        "created_by": [
+            "DPham"
+        ]
+    }
+},
+{
+    "model": "browse.course",
+    "pk": 4,
+    "fields": {
+        "name": "Linear Algebra",
+        "number": 3108,
+        "department": 1,
+        "created_ts": "2016-02-06T03:03:41.180Z",
+        "updated_ts": "2016-02-06T03:03:41.180Z",
+        "created_by": [
+            "JDrilling"
+        ]
+    }
+},
+{
+    "model": "browse.course",
+    "pk": 5,
+    "fields": {
+        "name": "Introduction to Numerical Methods",
+        "number": 3200,
+        "department": 1,
+        "created_ts": "2016-02-06T03:04:24.335Z",
+        "updated_ts": "2016-02-06T03:04:24.335Z",
+        "created_by": [
+            "RSCK"
+        ]
+    }
+},
+{
+    "model": "browse.review",
+    "pk": 2,
+    "fields": {
+        "source": [
+            "aaron"
+        ],
+        "course": 2,
+        "professor": 1,
+        "text": "This is a good review because I'm good.",
+        "created_ts": "2016-02-03T20:54:03.725Z",
+        "updated_ts": "2016-02-03T22:22:27.494Z"
+    }
+},
+{
+    "model": "browse.review",
+    "pk": 3,
+    "fields": {
+        "source": [
+            "JDrilling"
+        ],
+        "course": 2,
+        "professor": 1,
+        "text": "This is a bad review because I did poorly.",
+        "created_ts": "2016-02-03T20:54:13.808Z",
+        "updated_ts": "2016-02-03T22:22:19.962Z"
+    }
+},
+{
+    "model": "browse.review",
+    "pk": 4,
+    "fields": {
+        "source": [
+            "JDrilling"
+        ],
+        "course": 5,
+        "professor": 3,
+        "text": "This was a bad course. Don't do it.",
+        "created_ts": "2016-02-06T03:10:37.799Z",
+        "updated_ts": "2016-02-06T03:10:37.799Z"
+    }
+},
+{
+    "model": "browse.review",
+    "pk": 5,
+    "fields": {
+        "source": [
+            "jbrown400"
+        ],
+        "course": 4,
+        "professor": 2,
+        "text": "Please, no, no more.",
+        "created_ts": "2016-02-06T03:10:54.584Z",
+        "updated_ts": "2016-02-06T03:10:54.584Z"
+    }
+}
+]
