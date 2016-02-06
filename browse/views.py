@@ -44,7 +44,7 @@ def profile(request, id=None, page=0):
     if id is None:
         context["users"] = User.objects.all()
     else:
-        context["user"] = User.object.get(id=id)
+        context["profile"] = User.objects.get(id=id)
 
     return HttpResponse(template.render(context))
 
