@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djangular',
     'geoposition',
+    'django_gravatar',
 
     # Local
     'browse',
