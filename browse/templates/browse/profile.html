@@ -24,26 +24,38 @@
 	<!-- Section #1 / Intro -->
 	<section id="first" class="story" data-speed="8" data-type="background">    
 		  	
-		  <header>
+		<!-- Up direction -->
+    <div class="fab">
+        <button class="fab__primary btn btn--xl btn--blue btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left">
+            <i class="mdi mdi-android"></i>
+            <i class="mdi mdi-plus"></i>
+        </button>
 
-			  <figure class="profile-picture"
-			  style="background-image: url('{% static 'browse/img/PandaZu.jpg' %}')">
-			  </figure>
-			  <div class="profile-stats">
+        <div class="fab__actions fab__actions--up">
+            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left"><i class="mdi mdi-delete"></i></button>
+            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left"><i class="mdi mdi-package"></i></button>
+            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="left"><i class="mdi mdi-pencil"></i></button>
+        </div>
+    </div>
+		  	
+		<article>
+			<figure class="profile-picture"
+			style="background-image: url('{% static 'browse/img/PandaZu.jpg' %}')">
+			</figure>
+			<div class="profile-stats">
 			    <ul>
-			      <li>13    <span>Projects</span></li>
-			      <li>1,354 <span>Commits</span></li>
-			      <li>32    <span>Following</span></li>
-			      <li>324   <span>Followers</span></li>
+				    <li>13    <span>Projects</span></li>
+				    <li>1,354 <span>Commits</span></li>
+				    <li>32    <span>Following</span></li>
+				    <li>324   <span>Followers</span></li>
 			    </ul>
-			    <a href="javascript:void(0);" class="follow">
+				<a href="javascript:void(0);" class="follow">
 			      Buttons!
 			    </a>
-			  </div>
-			  <h1>Dzu Pham<small>PandaZu</small></h1>
-			</header>
-
-
+			</div>
+			
+		</article>
+		<h1>Dzu Pham<small>PandaZu</small></h1>
 	</section>
 
 	<!-- Section #2 / Background Only -->
