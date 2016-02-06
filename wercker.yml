@@ -42,7 +42,9 @@ build:
 
     - script:
         name: check style
-        code: flake8 browse/*.py new/*.py peerreviewed/*.py
+        code: |
+           pip install flake8
+           flake8 browse/*.py new/*.py peerreviewed/*.py
 
     - script:
         name: built-in unit tests
