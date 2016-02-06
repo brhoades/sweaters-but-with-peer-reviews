@@ -658,6 +658,24 @@
     }
 },
 {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$GSXC5oXUrgzD$JKtHI/Po44gsu2uSLWmDqVRp0ExSMZYjeFc6WwiF2N8=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "test_user",
+        "first_name": "Test",
+        "last_name": "User",
+        "email": "test@mst.edu",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-02-06T03:17:58Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
     "model": "browse.fieldcategory",
     "pk": 1,
     "fields": {
@@ -1408,6 +1426,32 @@
         "object_repr": "Justin Brown for Thomas Cutcha",
         "action_flag": 1,
         "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 43,
+    "fields": {
+        "action_time": "2016-02-06T03:17:58.655Z",
+        "user": 3,
+        "content_type": 4,
+        "object_id": "7",
+        "object_repr": "test_user",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 44,
+    "fields": {
+        "action_time": "2016-02-06T03:18:05.638Z",
+        "user": 3,
+        "content_type": 4,
+        "object_id": "7",
+        "object_repr": "test_user",
+        "action_flag": 2,
+        "change_message": "Changed first_name, last_name and email."
     }
 }
 ]
