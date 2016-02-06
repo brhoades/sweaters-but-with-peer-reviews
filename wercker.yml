@@ -1,0 +1,16 @@
+box: python
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    - pip install -r requirements.txt
+
+    - script:
+        name: flake8
+        code: |
+          echo "./flake8"
+
+    - script:
+        name: run
+        code: |
+          echo "./manage.py runserver"
