@@ -3,7 +3,7 @@
 {% load gravatar %}
 {% block title %}Profile{% endblock %}
 
-{% block content %}
+<!--{% block content %}
   <br />
   {% if users %}
     {% for user in users %}
@@ -16,7 +16,7 @@
 
   {% for var in numbers %}
     {{ var }}<br />
-  {% endfor %}
+  {% endfor %}-->
 
 
 <body>
@@ -24,16 +24,15 @@
   <div>
 	<!-- Section #1 / Intro -->
 	<section id="profile_header" class="story" data-speed="8" data-type="background">    
-
 		<article>
 
 		    {% if profile %}
 				<figure class="profile-picture"
-				        style="background-image: url('{% gravatar_url profile.email %}')">
+				        style="background-image: url('{% gravatar_url profile.email 200 %}')">
 		    </figure>
 		    {% else %}
 				<figure class="profile-picture"
-			        style="background-image: url('{% gravatar_url user.email %}')">
+			        style="background-image: url('{% gravatar_url user.email 200 %}')">
 				</figure>
 		    {% endif %}
 
@@ -44,8 +43,8 @@
 						<li><span class="fs-display-1 display-block">{{ profile.first_name }} {{ profile.last_name }}</span></li>
 						<li><span class="fs-headline display-block">{{ profile.username }}</span><small>username</small></li>
 					{% else %}
-						<li><span class="fs-display-1 display-block">{{ user.first_name }} {{ user.last_name }}</span></li>
-						<li><span class="fs-headline display-block">{{ user.username }}</span><small>username</small></li>
+						<li><span class="fs-display-1 display-block">BillBot</span></li>
+						<li><span class="fs-headline display-block">SirBot</span><small>username</small></li>
 					{% endif %}
 					<li><span class="fs-headline display-block">15</span><small>rated</small></li>
 					<li><span class="fs-headline display-block">120</span><small>post</small></li>
@@ -60,10 +59,10 @@
 	<section id="profile_body" class="story" data-speed="4" data-type="background">
 		<article>
 			<h2>Background Only</h2>
-		    	<p>In this section we are sliding the background at a different speed to the rest of the page.</p>
-		    	<p>As this text box is scrolling at the same speed as the page, and faster than the background, it creates this lovely parallax effect.</p>
-		    	<p>You can find all the HTML, CSS and the all important JavaScript files over at GitHub - so why don't you drop by for some hardcore forking action?</p>
-		    	<p>Backgrounds for this article were taken from the May/June 2011 Smashing Magazine Desktop backgrounds.</p>	
+	    	<p>In this section we are sliding the background at a different speed to the rest of the page.</p>
+	    	<p>As this text box is scrolling at the same speed as the page, and faster than the background, it creates this lovely parallax effect.</p>
+	    	<p>You can find all the HTML, CSS and the all important JavaScript files over at GitHub - so why don't you drop by for some hardcore forking action?</p>
+	    	<p>Backgrounds for this article were taken from the May/June 2011 Smashing Magazine Desktop backgrounds.</p>	
 		    		
 		</article>
 	</section>
