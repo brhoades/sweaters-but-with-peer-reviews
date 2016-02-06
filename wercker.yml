@@ -43,5 +43,15 @@ build:
     - script:
         name: flake8
         code: |
-          echo "flake8"
+          echo "pip install flake8"
+          echo "./flake8"
 
+    - script:
+        name: built-in unit tests
+        code: |
+          echo "./manage.py test browse"
+
+    - script:
+        name: built-in unit tests
+        code: |
+          echo "./manage.py test new"
