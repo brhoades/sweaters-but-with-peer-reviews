@@ -1,0 +1,28 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <form method="post" action="{% url 'login' %}">{% csrf_token %}
+    {% if message %}
+      {{ message }}
+    {% endif %}
+
+    <br />
+    Username: <input type="text" name="username" value="{{ form.username }}" /><br />
+    Password: <input type="password" name="password" value="{{ form.password }}" /><br />
+    <br />
+
+    <input type="submit" value="Login" />
+    <input type="hidden" name="next" value="/home" />
+  </form>
+  <br />
+
+  {% for var in numbers %}
+    {{ var }}<br />
+  {% endfor %}
+
+  <br /><br />
+  <h2>This is a PandaZu</h2><br />
+  <img width="900" height="600" src="{% static "browse/img/PandaZu.jpg" %}" />
+{% endblock %}

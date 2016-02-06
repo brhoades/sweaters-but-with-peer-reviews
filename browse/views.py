@@ -1,17 +1,20 @@
-from django.template import loader
+from django.template import loader, RequestContext
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import ReviewForm
 
 from browse.models import Review, User
+from django.contrib.auth import authenticate, login as auth_login, \
+        logout as auth_logout
 
 
 def index(request):
     template = loader.get_template("browse/index.html")
+    context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context = {"message": "<h3>Sam Sucks and Dzu Rocks</h3>"}
+    context["message"] = "<h3>Sam Sucks and Dzu Rocks</h3>"
     context["numbers"] = []
 
     context["reviews"] = Review.objects.order_by('-created_ts')
@@ -36,11 +39,12 @@ def profile(request, id=None, page=0):
     If a page is provided, it skips forward that page * items per page.
     """
     template = loader.get_template("browse/profile.html")
+    context = RequestContext(request)
 
     if id is None:
-        context = {"users": User.objects.all()}
+        context["users"] = User.objects.all()
     else:
-        context = {"user": User.objects.get(id=id)}
+        context["user"] = User.object.get(id=id)
 
     return HttpResponse(template.render(context))
 
@@ -54,14 +58,13 @@ def school(request, id=None, page=0):
     If a page is provided, it skips forward that page * items per page.
     """
     template = loader.get_template("browse/school.html")
+    context = RequestContext(request)
 
     if id is None:
-        context = {"message":
-                   "This is a school listing, since there's no id"}
+        context["message"] = "This is a school listing, since there's no id"
     else:
-        context = {"message":
-                   "This is a school overview for school {0}"
-                   .format(id)}
+        context["message"] = "This is a school overview for school {0}"\
+                             .format(id)
     return HttpResponse(template.render(context))
 
 
@@ -74,14 +77,14 @@ def professor(request, id=None, page=0):
     If a page is provided, it skips forward that page * items per page.
     """
     template = loader.get_template("browse/professor.html")
+    context = RequestContext(request)
 
     if id is None:
-        context = {"message":
-                   "This is a professor listing, since there's no id"}
+        context["message"] =\
+                   "This is a professor listing, since there's no id"
     else:
-        context = {"message":
-                   "This is a professor overview for prof #{0}"
-                   .format(id)}
+        context["message"] = "This is a professor overview for prof #{0}"\
+                             .format(id)
     return HttpResponse(template.render(context))
 
 
@@ -117,7 +120,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
             The second id of the requested view type (ie school).
     """
     template = "browse/reviews.html"
-    context = {}
+    context = RequestContext(request)
 
     if request.method == "POST":
         form = ReviewForm(request.POST)
@@ -129,24 +132,56 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     else:
         form = ReviewForm()
         if type == "by_school":
-            context = {"message":
-                       "This is the page that lists all reviews for school {1}"
+            context["message"] =\
+                       "This is the page that lists all reviews for school {1}"\
                        "(pg {0}).".format(page, first_id)
-                       .format(page)}
         elif type == "by_professor":
-            context = {"message":
-                       "This is the page that lists all reviews for professor"
+            context["message"] =\
+                       "This is the page that lists all reviews for professor"\
                        " {1} (pg {0}).".format(page, first_id)
-                       .format(page, first_id)}
 
         elif type == "by_school_professor":
-            context = {"message":
-                       "This is the page for reviews of professor {1} from "
-                       "school {0} (pg {2})."
-                       .format(first_id, second_id, page)}
+            context["message"] =\
+                       "This is the page for reviews of professor {1} from "\
+                       "school {0} (pg {2})."\
+                       .format(first_id, second_id, page)
         else:
-            context = {"message":
-                       "This is the page that lists all reviews (pg {0})."
-                       .format(page)}
+            context["message"] =\
+                       "This is the page that lists all reviews (pg {0})."\
+                       .format(page)
     context["form"] = form
     return render(request, template, context)
+
+
+def login(request, user=None):
+    """
+    Our view for logging in.
+    """
+    template = "browse/login.html"
+    context = {}
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                auth_login(request, user)
+                return redirect("index")
+            else:
+                context["message"] = "Your account is disabled."
+                return render(request, template, context)
+        else:
+            context["message"] = "Invalid login details supplied."
+            return render(request, template, context)
+    else:
+        return render(request, template, context)
+
+
+def logout(request):
+    """
+    Our view for logging out.
+    """
+    auth_logout(request)
+    return redirect("index")
