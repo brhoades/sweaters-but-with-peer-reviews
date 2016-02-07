@@ -3,7 +3,8 @@
 {% load gravatar %}
 {% block title %}Profile{% endblock %}
 
-<!--{% block content %}
+{% block content %}
+{% comment %}
   <br />
   {% if users %}
     {% for user in users %}
@@ -16,7 +17,8 @@
  
   {% for var in numbers %}
     {{ var }}<br />
-  {% endfor %}-->
+  {% endfor %}
+{% endcomment %}
 
 <body>
 
@@ -24,29 +26,20 @@
 	<!-- Section #1 / Intro -->
 	<section id="profile_header" class="story" data-speed="8" data-type="background">    
 		<article>
+			<figure class="profile-picture"
+				      style="background-image: url('{% gravatar_url profile.email 200 %}')">
+		  </figure>
 
-		    {% if profile %}
-				<figure class="profile-picture"
-				        style="background-image: url('{% gravatar_url profile.email 200 %}')">
-		    </figure>
-		    {% else %}
-				<figure class="profile-picture"
-			        style="background-image: url('{% gravatar_url user.email 200 %}')">
-				</figure>
-		    {% endif %}
-
-		    <!-- This is where profile data gets called and displayed -->
+		  <!-- This is where profile data gets called and displayed -->
 			<div class="profile-stats">
 				<ul>
-					{% if profile %}
-						<li><span class="fs-display-1 display-block">{{ profile.first_name }} {{ profile.last_name }}</span></li>
-						<li><span class="fs-headline display-block">{{ profile.username }}</span><small>username</small></li>
-					{% else %}
-						<li><span class="fs-display-1 display-block">BillBot</span></li>
-						<li><span class="fs-headline display-block">SirBot</span><small>username</small></li>
-					{% endif %}
+					<li><span class="fs-display-1 display-block">{{ profile.first_name }} {{ profile.last_name }}</span></li>
+					<li><span class="fs-headline display-block">{{ profile.username }}</span><small>username</small></li>
 					<li><span class="fs-headline display-block">15</span><small>rated</small></li>
-					<li><span class="fs-headline display-block">120</span><small>post</small></li>
+          <li>
+            <span class="fs-headline display-block">{{ profile.review_set.count }}</span>
+            <small>Review{{ profile.review_set.count|pluralize }}</small>
+          </li>
 				</ul>
 
 			</div>
@@ -65,11 +58,7 @@
 		    		
 		</article>
 	</section>
-	
 
   </div> <!-- // End of #main -->
-
-
-
 
 {% endblock %}
