@@ -1,6 +1,7 @@
 from django.template import loader, RequestContext
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 
 from .forms import ReviewForm
 
@@ -38,15 +39,25 @@ def profile(request, id=None, page=0):
 
     If a page is provided, it skips forward that page * items per page.
     """
-    template = loader.get_template("browse/profile.html")
+    template = "browse/profile.html"
     context = RequestContext(request)
 
-    if id is None:
-        context["users"] = User.objects.all()
-    else:
-        context["profile"] = User.objects.get(id=id)
 
-    return HttpResponse(template.render(context))
+    # Specific profile was requested
+    if id is not None:
+        # Could use 404 shortcut, or a simple redirect for invalid user id's
+        context["profile"] = get_object_or_404(User, id=id)
+        # context["profile"] = User.objects.get(id=id)
+    # User logged in and should see own profile
+    elif request.user.is_authenticated():
+        context["profile"] = request.user
+    # No Profile specified and user is not logged in
+    else:
+        # One option is redirect as such.
+        messages.info(request, "Please Login to view your profile.")
+        return redirect("login")
+
+    return render(request, template, context)
 
 
 def school(request, id=None, page=0):
