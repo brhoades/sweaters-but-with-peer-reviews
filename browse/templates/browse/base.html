@@ -35,36 +35,68 @@
 
     {% block header %}{% endblock %}
   </head>
-  <body class="bgc-blue-grey-100 p+">
+  <body class="bgc-deep-purple-A700 p+">
     <div id="o-wrapper" class="o-wrapper">
-
       
-        <button id="c-button--push-left" class="btn btn--l btn--black btn--icon">
+      <div class="o-header">
+      <!--<div class="card bgc-blue-grey-400 tc-white-1 p+" >-->
+        <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon">
           <i class="mdi mdi-menu"></i>
         </button>
-          
-          <div class="c-buttons">
-
-            <div id="content">
-              {% block content %}{% endblock %}
-            </div>
-          </div>
+      <!--</div>-->
+      </div>
+      <div class="c-buttons">
+        <div id="content">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
 
     </div>
 
     <nav id="c-menu--push-left" class="c-menu c-menu--push-left">
-      <button class="c-menu__close">&larr; Close Menu</button>
+      <button class="c-menu__close"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
       <ul class="c-menu__items">
-        <li class="c-menu__item"><a href="{% url 'index' %}" class="c-menu__link">Index</a></li>
-        <li class="c-menu__item"><a href="{% url 'reviews_overview' %}" class="c-menu__link">Reviews</a></li>
-        <li class="c-menu__item"><a href="{% url 'school' %}" class="c-menu__link">School</a></li>
-        <li class="c-menu__item"><a href="{% url 'professor' %}" class="c-menu__link">Professor</a></li>
-        <li class="c-menu__item"><a href="{% url 'profile' %}" class="c-menu__link">Profile</a></li>
-        {% if user.is_authenticated %}
-          <li class="c-menu__item"><a href="{% url 'logout' %}" class="c-menu__link">Logout</a></li>
-        {% else %}
-          <li class="c-menu__item"><a href="{% url 'login' %}" class="c-menu__link">Login</a></li>
-        {% endif %}
+        <ul class="list mt++">
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'index' %}" class="c-menu__link">Index</a>
+            </li>
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'reviews_overview' %}" class="c-menu__link">Reviews</a>
+                </div>
+            </li>
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'school' %}" class="c-menu__link">School</a>
+                </div>
+            </li>
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'professor' %}" class="c-menu__link">Professor</a>
+                </div>
+            </li>
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'profile' %}" class="c-menu__link">Profile</a>
+                </div>
+            </li>
+            {% if user.is_authenticated %}
+              <li class="list-row list-row--has-separator">
+                  <div class="list-row__content" align="right">
+                      <a href="{% url 'logout' %}" class="c-menu__link">Logout</a>
+                  </div>
+              </li>
+            {% else %}
+              <li class="list-row list-row--has-separator">
+                  <div class="list-row__content" align="right">
+                      <a href="{% url 'login' %}" class="c-menu__link">Login</a>
+                  </div>
+              </li>
+            {% endif %}
+            
+        </ul>
+        
       </ul>
     </nav>
     <div id="c-mask" class="c-mask"></div>
