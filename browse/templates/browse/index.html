@@ -4,45 +4,55 @@
 {% load gravatar %}
 
 {% block content %}
+  <!--
+  <div class="card bgc-indigo-900 tc-grey-50 p+">
+  Sweaters But With Peer Reviews
+  </div>
+  -->
   {% if reviews|length > 0 %}
     <h2>Latest {{reviews|length}} Review(s)</h2>
     {% for review in reviews %}
       <div class="divider divider--dark"></div>
-      <a href="{% url 'profile' review.source.id %}">
-      <li class="list-row">
-        <div class="list-row__primary" >
-            <img src="{% gravatar_url review.source.email %}" width="40" height="40" class="img-round">
-        </div>
-        
-        
-        {% if review.source.first_name or review.source.last_name %}
-        <div class="list-row__content">
-            <span class="display-block">{{ review.source.first_name }} {{ review.source.last_name }}</a></span>
-            <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }} -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
-        </div>
+      
+      
+      <div class="card bgc-pink-200 tc-white-1 p+">
+        <li class="list-row">
           
-        {% else %}
-        <div class="list-row__content">
-            <span class="display-block">{{ review.source.username }}</a></span>
-            <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}</span>
-        </div>
-
-        <div class="list-row__secondary">
-            <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
-        </div>
+            <div class="list-row__primary" >
+                <a href="{% url 'profile' review.source.id %}"><img src="{% gravatar_url review.source.email 200 %}" width="40" height="40" class="img-round"></a>
+            </div>
           
-        {% endif %}
-      </li>
+          
+          {% if review.source.first_name or review.source.last_name %}
+            <div flex-item>
+              
+                <div class="list-row__content">
+                    <span class="display-block">{{ review.source.first_name }} {{ review.source.last_name }}</a></span>
+                    <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}
+                      -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
+                </div>
+              
+            </div>
+          {% else %}
+          <div class="list-row__content">
+              <span class="display-block">{{ review.source.username }}</a></span>
+              <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}</span>
+          </div>
 
+          <div class="list-row__secondary">
+              <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
+          </div>
+            
+          {% endif %}
+        </li>
+      </div>
+      
     {% endfor %}
   {% else %}
     <h2>There are no reviews</h2>
   {% endif %}
 
   <br /> <br />
-  
 
-  <br /><br />
-  <h2>This is PandaZu</h2><br />
-  <img width="900" height="600" src="{% static "browse/img/PandaZu.jpg" %}" />
+
 {% endblock %}
