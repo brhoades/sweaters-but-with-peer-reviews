@@ -29,11 +29,6 @@
     <script src="{% static 'browse/bower_components/moment/min/moment-with-locales.js' %}"></script>
     <script src="{% static 'browse/bower_components/angular/angular.js' %}"></script>
     <script src="{% static 'browse/bower_components/lumx/dist/lumx.js' %}"></script>
-
-    <!--
-    <script src="{% static 'browse/Slide-Push-Menus/js/dist/githubIcons.js' %}"></script>
-    <script src="{% static 'browse/Slide-Push-Menus/js/dist/carbonAd.js' %}"></script>
-    -->
     
     <script src="{% static 'browse/Slide-Push-Menus/js/src/menu.js' %}"></script>
     <script src="{% static 'browse/Slide-Push-Menus/gulpfile.js' %}"></script> 
@@ -47,10 +42,6 @@
         <button id="c-button--push-left" class="btn btn--l btn--black btn--icon">
           <i class="mdi mdi-menu"></i>
         </button>
-      
-
-      <!--<main class="o-content">-->
-        <!--<div class="o-container"> -->
           
           <div class="c-buttons">
 
@@ -58,8 +49,6 @@
               {% block content %}{% endblock %}
             </div>
           </div>
-        <!--</div> /o-container -->
-      <!--</main><!-- /o-content -->
 
     </div>
 
@@ -96,38 +85,6 @@
         pushLeft.open();
       });
     </script>
-          <!--
-          <div flex-container="row" flex-gutter="24" class="card bgc-blue-grey-700 tc-white-1 p+">
-          
-
-
-            
-            <div flex-item >
-              
-              <a href="{% url 'index' %}"><button class="btn btn--m btn--blue btn--raised" lx-ripple>Index</button></a>
-            </div>
-            <div flex-item>
-                <a href="{% url 'reviews_overview' %}"><button class="btn btn--m btn--blue btn--raised" lx-ripple>Reviews</button></a>
-            </div>
-            <div flex-item>
-                <a href="{% url 'school' %}"><button class="btn btn--m btn--blue btn--raised" lx-ripple>Schools</button></a>
-            </div>
-            <div flex-item>
-                <a href="{% url 'professor' %}"><button class="btn btn--m btn--blue btn--raised" lx-ripple>Professors</button></a>
-            </div>
-            <div flex-item>
-                <a href="{% url 'profile' %}"><button class="btn btn--m btn--blue btn--raised" lx-ripple>Profile</button></a>
-            </div>
-            <div flex-item="6" align="right">
-              {% if user.is_authenticated %}
-              
-                <a href="{% url 'logout' %}"><button class="btn btn--xl btn--blue btn--raised" lx-ripple>Logout</button></a>
-              {% else %}
-                <a href="{% url 'login' %}"><button class="btn btn--xl btn--blue btn--raised" lx-ripple>Login</button></a></li>
-              {% endif %}
-            </div> 
-          </div>
-      -->
     
 
     {% block js %}{% endblock %}
