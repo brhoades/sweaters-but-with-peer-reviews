@@ -2,8 +2,6 @@ from django.test import TestCase, RequestFactory
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
-from browse.models import Review
-
 
 class BrowseViewsTestCase(TestCase):
     fixtures = ["general_test_data.json"]
@@ -12,8 +10,10 @@ class BrowseViewsTestCase(TestCase):
         # Every test needs access to the request factory.
         self.factory = RequestFactory()
         self.creds = {"username": "jason", "password": "top_secret"}
-        self.user = User.objects.create_user(**self.creds,
-                email="jsholm@mst.edu", first_name="Jason", last_name="Holm")
+        self.user = User.objects.\
+            create_user(**self.creds,
+                        email="jsholm@mst.edu", first_name="Jason",
+                        last_name="Holm")
 
     def test_index(self):
         resp = self.client.get(reverse("index"))

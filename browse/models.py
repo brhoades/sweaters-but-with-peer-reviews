@@ -30,6 +30,7 @@ class FieldCategory(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
+
 class Field(models.Model):
     name = models.CharField(max_length=100)
     categories = models.ManyToManyField(FieldCategory)
@@ -81,6 +82,7 @@ class Course(models.Model):
     def __str__(self):
         return "%s (%i)" % (self.name, self.number)
 
+
 class Review(models.Model):
     source = models.ForeignKey(User)
     course = models.ForeignKey(Course)
@@ -93,7 +95,11 @@ class Review(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "%s %s for %s %s" % (self.source.first_name, self.source.last_name, self.professor.first_name, self.professor.last_name)
+        return "{} {} for {} {}".format(self.source.first_name,
+                                        self.source.last_name,
+                                        self.professor.first_name,
+                                        self.professor.last_name)
+
 
 class ReviewVote(models.Model):
     class Meta:

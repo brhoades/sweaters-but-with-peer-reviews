@@ -7,7 +7,7 @@ from .forms import ReviewForm
 
 from browse.models import Review, User
 from django.contrib.auth import authenticate, login as auth_login, \
-        logout as auth_logout
+    logout as auth_logout
 
 
 def index(request):
@@ -41,7 +41,6 @@ def profile(request, id=None, page=0):
     """
     template = "browse/profile.html"
     context = RequestContext(request)
-
 
     # Specific profile was requested
     if id is not None:
@@ -92,7 +91,7 @@ def professor(request, id=None, page=0):
 
     if id is None:
         context["message"] =\
-                   "This is a professor listing, since there's no id"
+            "This is a professor listing, since there's no id"
     else:
         context["message"] = "This is a professor overview for prof #{0}"\
                              .format(id)
@@ -144,22 +143,22 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
         form = ReviewForm()
         if type == "by_school":
             context["message"] =\
-                       "This is the page that lists all reviews for school {1}"\
-                       "(pg {0}).".format(page, first_id)
+                "This is the page that lists all reviews for school {1}"\
+                "(pg {0}).".format(page, first_id)
         elif type == "by_professor":
             context["message"] =\
-                       "This is the page that lists all reviews for professor"\
-                       " {1} (pg {0}).".format(page, first_id)
+                "This is the page that lists all reviews for professor"\
+                " {1} (pg {0}).".format(page, first_id)
 
         elif type == "by_school_professor":
             context["message"] =\
-                       "This is the page for reviews of professor {1} from "\
-                       "school {0} (pg {2})."\
-                       .format(first_id, second_id, page)
+                "This is the page for reviews of professor {1} from "\
+                "school {0} (pg {2})."\
+                .format(first_id, second_id, page)
         else:
             context["message"] =\
-                       "This is the page that lists all reviews (pg {0})."\
-                       .format(page)
+                "This is the page that lists all reviews (pg {0})."\
+                .format(page)
     context["form"] = form
     return render(request, template, context)
 
