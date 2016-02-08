@@ -38,25 +38,25 @@
 
   <body class="bgc-deep-purple-A700 p+">
     <div id="o-wrapper" class="o-wrapper">
-      
-      <div class="o-header">
-      <!--<div class="card bgc-blue-grey-400 tc-white-1 p+" >-->
-        <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon">
-          <i class="mdi mdi-menu"></i>
-        </button>
-      <!--</div>-->
-      </div>
-      <div class="c-buttons">
-        <div id="content">
-          {% block content %}{% endblock %}
+      <div ng-app="lumxWrap">
+        <div class="o-header">
+        <!--<div class="card bgc-blue-grey-400 tc-white-1 p+" >-->
+          <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
+            <i class="mdi mdi-menu"></i>
+          </button>
+        <!--</div>-->
+        </div>
+        <div class="c-buttons">
+          <div id="content">
+            {% block content %}{% endblock %}
+          </div>
         </div>
       </div>
-
     </div>
 
-    <nav id="c-menu--push-left" class="c-menu c-menu--push-left">
-      <button class="c-menu__close"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
-      <ul class="c-menu__items">
+    <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-deep-purple-A700 p+">
+      <button class="c-menu__close bgc-deep-purple-A700 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
+      <ul class="c-menu__items bgc-deep-purple-A700 p+">
         <ul class="list mt++">
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
