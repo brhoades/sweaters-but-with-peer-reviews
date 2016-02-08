@@ -44,7 +44,7 @@ build:
         name: check style
         code: |
            pip install flake8
-           flake8 browse/*.py new/*.py peerreviewed/*.py
+           flake8 --show-pep8 --show-source --exclude=settings.py,wsgi.py browse/*.py peerreviewed/*.py new/*.py
 
     - script:
         name: built-in unit tests
