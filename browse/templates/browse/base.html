@@ -7,34 +7,35 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script src="{% static 'browse/js/main.js' %}"></script>
-    <script src="{% static 'lib/angular/angular.min.js' %}"></script>
-    <script src="script.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/styles.css' %}"> 
 
+    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/styles.css' %}"> 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/reset.css' %}"> 
+    <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/style.min.css' %}">
+    <!-- lumx CSS dependencies -->
+    <link rel="stylesheet" href="{% static 'browse/bower_components/lumx/dist/lumx.css' %}">
+    <!-- CSS pre-built -->
+    <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/scroll_style.css' %}"> 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/profile_style.css' %}"> 
-    <link rel="stylesheet" href="{% static 'browse/bower_components/lumx/dist/lumx.css' %}">
 
-    <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/style.min.css' %}">
-    <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/font-awesome.min.css' %}">
-
+    <!-- Custom js files -->
     <script src="{% static 'browse/js/script.js' %}"></script>
     <script src="{% static 'browse/js/index.js' %}"></script>
-
+    <script src="{% static 'browse/js/main.js' %}"></script>
+    <!-- lumx dependencies -->
     <script src="{% static 'browse/bower_components/jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'browse/bower_components/velocity/velocity.js' %}"></script>
     <script src="{% static 'browse/bower_components/moment/min/moment-with-locales.js' %}"></script>
     <script src="{% static 'browse/bower_components/angular/angular.js' %}"></script>
     <script src="{% static 'browse/bower_components/lumx/dist/lumx.js' %}"></script>
-    
+    <!-- side bar dependencies -->
     <script src="{% static 'browse/Slide-Push-Menus/js/src/menu.js' %}"></script>
     <script src="{% static 'browse/Slide-Push-Menus/gulpfile.js' %}"></script> 
 
+
     {% block header %}{% endblock %}
   </head>
+
   <body class="bgc-deep-purple-A700 p+">
     <div id="o-wrapper" class="o-wrapper">
       
@@ -116,6 +117,10 @@
         e.preventDefault;
         pushLeft.open();
       });
+    </script>
+
+    <script>
+      var app = angular.module('lumxWrap', ['lumx']);
     </script>
     
 
