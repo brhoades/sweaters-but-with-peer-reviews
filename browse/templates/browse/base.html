@@ -37,21 +37,21 @@
   </head>
 
   <body class="bgc-deep-purple-A700 p+">
+    <div ng-app="lumxWrap">
+      <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
+        <i class="mdi mdi-menu"></i>
+      </button>
+    </div>
     <div id="o-wrapper" class="o-wrapper">
-      <div ng-app="lumxWrap">
-        <div class="o-header">
-        <!--<div class="card bgc-blue-grey-400 tc-white-1 p+" >-->
-          <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
-            <i class="mdi mdi-menu"></i>
-          </button>
-        <!--</div>-->
-        </div>
+      
+        
+        
         <div class="c-buttons">
           <div id="content">
             {% block content %}{% endblock %}
           </div>
         </div>
-      </div>
+      
     </div>
 
     <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-deep-purple-A700 p+">
@@ -60,38 +60,39 @@
         <ul class="list mt++">
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                    <a href="{% url 'index' %}" class="c-menu__link">Index</a>
-            </li>
-            <li class="list-row list-row--has-separator">
-                <div class="list-row__content" align="right">
-                    <a href="{% url 'reviews_overview' %}" class="c-menu__link">Reviews</a>
+                    <a href="{% url 'index' %}" class="c-menu__link fs-headline display-block">Index</a>
                 </div>
             </li>
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                    <a href="{% url 'school' %}" class="c-menu__link">School</a>
+                    <a href="{% url 'reviews_overview' %}" class="c-menu__link fs-headline display-block">Reviews</a>
                 </div>
             </li>
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                    <a href="{% url 'professor' %}" class="c-menu__link">Professor</a>
+                    <a href="{% url 'school' %}" class="c-menu__link fs-headline display-block">School</a>
                 </div>
             </li>
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                    <a href="{% url 'profile' %}" class="c-menu__link">Profile</a>
+                    <a href="{% url 'professor' %}" class="c-menu__link fs-headline display-block">Professor</a>
+                </div>
+            </li>
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'profile' %}" class="c-menu__link fs-headline display-block">Profile</a>
                 </div>
             </li>
             {% if user.is_authenticated %}
               <li class="list-row list-row--has-separator">
                   <div class="list-row__content" align="right">
-                      <a href="{% url 'logout' %}" class="c-menu__link">Logout</a>
+                      <a href="{% url 'logout' %}" class="c-menu__link fs-headline display-block">Logout</a>
                   </div>
               </li>
             {% else %}
               <li class="list-row list-row--has-separator">
                   <div class="list-row__content" align="right">
-                      <a href="{% url 'login' %}" class="c-menu__link">Login</a>
+                      <a href="{% url 'login' %}" class="c-menu__link fs-headline display-block">Login</a>
                   </div>
               </li>
             {% endif %}
