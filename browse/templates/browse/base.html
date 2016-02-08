@@ -41,17 +41,19 @@
       <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
         <i class="mdi mdi-menu"></i>
       </button>
-    </div>
+      {% if request.get_full_path %}
+        <h2>Index</h2>
+      {% else %}
+        <h2>Other</h2>
+      {% endif %}
+    
+
     <div id="o-wrapper" class="o-wrapper">
-      
-        
-        
-        <div class="c-buttons">
-          <div id="content">
-            {% block content %}{% endblock %}
-          </div>
+      <div class="c-buttons">
+        <div id="content">
+          {% block content %}{% endblock %}
         </div>
-      
+      </div>
     </div>
 
     <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-deep-purple-A700 p+">
@@ -101,6 +103,7 @@
         
       </ul>
     </nav>
+    </div>
     <div id="c-mask" class="c-mask"></div>
 
     <script src="{% static 'browse/Slide-Push-Menus/js/dist/menu.js' %}"></script>

@@ -15,57 +15,72 @@
   <div class="fs-display-4 display-block tc-white-1">
     Sweaters But With Peer Reviews
   </div>
-
-  <div flex-container="row">
-    <div flex-item="6">
-      {% if reviews|length > 0 %}
-        <h2 class="tc-white-1 p+" align="left">Latest {{reviews|length}} Review(s)</h2>
-        {% for review in reviews %}
-          <div class="divider divider--dark"></div>
-            <div class="card bgc-grey-400 tc-white-1 p+">
-              <li class="list-row">
-                <div flex-container="column">
-                  <div>
-                    <button class="btn btn--s btn--blue btn--flat"><i class="icon icon--xl icon--deep-purple icon--flat mdi mdi-chevron-up"></i></button>
-                  </div>
-                  <div>
-                    <button class="btn btn--s btn--blue btn--flat"><i class="icon icon--xl icon--deep-purple icon--flat mdi mdi-chevron-down"></i></button>
-                  </div>
-                </div>
-                <div class="list-row__primary" >
-                    <a href="{% url 'profile' review.source.id %}"><img src="{% gravatar_url review.source.email 200 %}" width="80" height="80" class="img-round" ></a>
-                </div>
-                {% if review.source.first_name or review.source.last_name %}
-                  <div flex-item>
-                    <div class="list-row__content">
-                        <span class="display-block">{{ review.source.first_name }} {{ review.source.last_name }}</a></span>
-                        <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}
-                          -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
+  
+    <div flex-container="row">
+      <div flex-item="6">
+        {% if reviews|length > 0 %}
+          <h2 class="tc-white-1 p+" align="left">Latest {{reviews|length}} Review(s)</h2>
+          {% for review in reviews %}
+            <div class="divider divider--dark"></div>
+              <div class="card bgc-grey-400 tc-white-1 p+">
+                <li class="list-row">
+                  <div flex-container="row" flex-gutter="24">
+                    <div flex-item="8">
+                      <div flex-container="column" align="left">
+                        <div ng-app="lumxWrap">
+                          <div>
+                            <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i></button>
+                          </div>
+                          <div>
+                            <i class="icon icon--xs icon--white icon--flat mdi mdi-brightness-1 tc-grey-400"></i>
+                          </div>
+                          <div>
+                            <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div flex-item="2">
+                      <div class="list-row__primary" >
+                          <a href="{% url 'profile' review.source.id %}"><img src="{% gravatar_url review.source.email 200 %}" width="100" height="100" class="img-round" ></a>
+                      </div>
                     </div>
                   </div>
-                {% else %}
-                <div class="list-row__content">
-                    <span class="display-block">{{ review.source.username }}</a></span>
-                    <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}</span>
-                </div>
-                <div class="list-row__secondary">
-                    <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
-                </div>
-                  
-                {% endif %}
-              </li>
-            </div>
-        {% endfor %}
-      {% else %}
-        <h2>There are no reviews</h2>
-      {% endif %}
-    </div>
-    <div flex-item="6">
-      <div class="fs-display-1 display-block tc-white-1">
-        Let's Put Some "Eye Candy" Here!
+                    
+                      {% if review.source.first_name or review.source.last_name %}
+                        <div flex-item>
+                          <div class="list-row__content">
+                              <span class="display-block">{{ review.source.first_name }} {{ review.source.last_name }}</a></span>
+                              <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}
+                                -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
+                          </div>
+                        </div>
+                      {% else %}
+                      <div class="list-row__content">
+                          <span class="display-block">{{ review.source.username }}</a></span>
+                          <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}</span>
+                      </div>
+                      <div class="list-row__secondary">
+                          <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
+                      </div>
+                        
+                      {% endif %}
+
+                    
+                </li>
+              </div>
+          {% endfor %}
+        {% else %}
+          <h2>There are no reviews</h2>
+        {% endif %}
+      </div>
+      <div flex-item="6">
+        <div class="fs-display-1 display-block tc-white-1">
+          Let's Put Some "Eye Candy" Here!
+        </div>
       </div>
     </div>
-  </div>
+  
   <br /> <br />
 
 
