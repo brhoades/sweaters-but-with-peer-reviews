@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load gravatar %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,15 +39,67 @@
 
   <body class="bgc-deep-purple-A700 p+">
     <div ng-app="lumxWrap">
-      <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
-        <i class="mdi mdi-menu"></i>
-      </button>
+      <div class="toolbar">
+        <div class="toolbar__left mr+++">
+          <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
+            <i class="mdi mdi-menu"></i>
+          </button>
+        </div>
+        <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
+        <div class="toolbar__right">
+          <lx-dropdown position="right" from-top>
+            {% if user.is_authenticated %}
+            
+              <button class="btn" lx-ripple lx-dropdown-toggle >
+                <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
+              </button>
+              <lx-dropdown-menu>
+                <ul>
+                  <li>
+                    <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'login' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
+                  </li>
+                
+                  <li>
+                    <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
+                  </li>
+          
+                </ul>
+              </lx-dropdown-menu>
+            {% else %}
+              <button class="btn" lx-ripple lx-dropdown-toggle >
+                <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
+              </button>
+              <lx-dropdown-menu>
+                <ul>
+                  <li>
+                    <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Login</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'login' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
+                  </li>
+                
+                  <li>
+                    <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
+                  </li>
+          
+                </ul>
+              </lx-dropdown-menu>
+            {% endif %} 
+              
+                
+                  
+        </div>
+      </div>
+      <!--
       {% if request.get_full_path %}
         <h2>Index</h2>
       {% else %}
         <h2>Other</h2>
       {% endif %}
-    
+      -->
 
     <div id="o-wrapper" class="o-wrapper">
       <div class="c-buttons">
@@ -84,21 +137,7 @@
                 <div class="list-row__content" align="right">
                     <a href="{% url 'profile' %}" class="c-menu__link fs-headline display-block">Profile</a>
                 </div>
-            </li>
-            {% if user.is_authenticated %}
-              <li class="list-row list-row--has-separator">
-                  <div class="list-row__content" align="right">
-                      <a href="{% url 'logout' %}" class="c-menu__link fs-headline display-block">Logout</a>
-                  </div>
-              </li>
-            {% else %}
-              <li class="list-row list-row--has-separator">
-                  <div class="list-row__content" align="right">
-                      <a href="{% url 'login' %}" class="c-menu__link fs-headline display-block">Login</a>
-                  </div>
-              </li>
-            {% endif %}
-            
+            </li>            
         </ul>
         
       </ul>
