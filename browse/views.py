@@ -103,8 +103,10 @@ def review(request, review_id=0):
     View a single review given an ID.
     """
     template = loader.get_template("browse/review.html")
-    # should massage more than this
-    context = {"review": Review.objects.get(id=review_id)}
+    context = RequestContext(request)
+
+    context["review"] = get_object_or_404(Review, id=review_id)
+    # Review id does not exist
     print(context["review"].__dict__)
 
     return HttpResponse(template.render(context))
