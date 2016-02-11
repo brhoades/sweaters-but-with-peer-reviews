@@ -10,6 +10,8 @@ class BrowseViewsTestCase(TestCase):
         # Every test needs access to the request factory.
         self.factory = RequestFactory()
         self.creds = {"username": "jason", "password": "top_secret"}
+        self.two_review_types = ["by_school", "by_professor"]
+        self.three_review_types = ["by_school_professor"]
         self.user = User.objects.\
             create_user(**self.creds,
                         email="jsholm@mst.edu", first_name="Jason",
@@ -64,10 +66,44 @@ class BrowseViewsTestCase(TestCase):
         resp = self.client.get(reverse("review", kwargs={"review_id": 2}))
         self.assertEqual(resp.status_code, 200)
 
-    def test_reviews(self):
+    def test_reviews_overview(self):
         resp = self.client.get(reverse("review", kwargs={"review_id": 2}))
         self.assertEqual(resp.status_code, 200)
 
-    def test_reviews_(self):
+    def test_reviews_page(self):
         resp = self.client.get(reverse("reviews", kwargs={"page": 1}))
         self.assertEqual(resp.status_code, 200)
+
+    def test_reviews_by_type(self):
+        for type in self.two_review_types:
+            resp = self.client.get(reverse("reviews",
+                                   kwargs={"page": 1, "type": type,
+                                           "first_id": 1}))
+            self.assertEqual(resp.status_code, 200)
+
+        for type in self.three_review_types:
+            resp = self.client.get(reverse("reviews",
+                                   kwargs={"page": 1, "type": type,
+                                           "first_id": 1,
+                                           "second_id": 1}))
+            self.assertEqual(resp.status_code, 200)
+
+    def test_school(self):
+        resp = self.client.get(reverse("school"))
+        self.assertEqual(resp.status_code, 200)
+
+    """
+    def test_school_specific(self):
+        resp = self.client.get(reverse("school", kwargs={"id": 1}))
+        self.assertEqual(resp.status_code, 200)
+    """
+
+    def test_professor(self):
+        resp = self.client.get(reverse("professor"))
+        self.assertEqual(resp.status_code, 200)
+
+    """
+    def test_professor_specific(self):
+        resp = self.client.get(reverse("professor", kwargs={"id": 1}))
+        self.assertEqual(resp.status_code, 200)
+    """

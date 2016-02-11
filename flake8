@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Install flake8 (if it's not already there)
 if [ ! -f `which flake8` ]
@@ -7,7 +7,5 @@ then
   sudo pip3 install flake8
 fi
 
-flake8 --help
-python -m flake8 --help
-python -m flake8 --show-pep8 --show-source --exclude=settings.py,wsgi.py \
+flake8 --show-pep8 --show-source --exclude=settings.py,wsgi.py \
   browse/*.py peerreviewed/*.py new/*.py
