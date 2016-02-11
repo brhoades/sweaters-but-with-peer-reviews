@@ -105,8 +105,7 @@ class ReviewVote(models.Model):
     class Meta:
         verbose_name_plural = "Review Votes"
 
-    quality = models.IntegerField(validators=[MaxValueValidator(100),
-                                  MinValueValidator(0)])
+    quality = models.BooleanField()
     review = models.ForeignKey(Review)
     reviewer = models.ForeignKey(User)
 
