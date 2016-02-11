@@ -84,9 +84,9 @@ class Course(models.Model):
 
 
 class Review(models.Model):
-    source = models.ForeignKey(User)
+    owner = models.ForeignKey(User)
     course = models.ForeignKey(Course)
-    professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+    target = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
     # 100k otta be enough for nebody.
     text = models.TextField(max_length=100000)
@@ -106,8 +106,8 @@ class ReviewVote(models.Model):
         verbose_name_plural = "Review Votes"
 
     quality = models.BooleanField()
-    review = models.ForeignKey(Review)
-    reviewer = models.ForeignKey(User)
+    target = models.ForeignKey(Review)
+    owner = models.ForeignKey(User)
 
     def __str__(self):
         return "%s %s" % (self.reviewer.first_name, self.reviewer.last_name)
