@@ -8,10 +8,10 @@
   <strong>Department</strong>: {{ review.course.department.name }}<br >
   <strong>Course</strong>: {{ review.course.name }} ({{ review.course.number }})<br />
   <strong>Reviewer</strong>:
-  {% if review.source.first_name or review.source.last_name %}
-    {{ review.source.first_name }} {{review.source.last_name }} ({{ review.source.username }})<br />
+  {% if review.owner.first_name or review.owner.last_name %}
+    {{ review.owner.first_name }} {{review.owner.last_name }} ({{ review.owner.username }})<br />
   {% else %}
-    {{ review.source.username }}<br />
+    {{ review.owner.username }}<br />
   {% endif %}
   <br />
   <br />

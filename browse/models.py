@@ -95,10 +95,10 @@ class Review(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} {} for {} {}".format(self.source.first_name,
-                                        self.source.last_name,
-                                        self.professor.first_name,
-                                        self.professor.last_name)
+        return "{} {} for {} {}".format(self.owner.first_name,
+                                        self.owner.last_name,
+                                        self.target.first_name,
+                                        self.target.last_name)
 
 
 class ReviewVote(models.Model):
@@ -110,4 +110,4 @@ class ReviewVote(models.Model):
     owner = models.ForeignKey(User)
 
     def __str__(self):
-        return "%s %s" % (self.reviewer.first_name, self.reviewer.last_name)
+        return "%s %s" % (self.owner.first_name, self.owner.last_name)

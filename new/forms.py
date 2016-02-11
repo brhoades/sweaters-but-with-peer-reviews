@@ -6,7 +6,7 @@ from django.forms import ModelForm
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
-        fields = ['professor', 'course', 'text']
+        fields = ['target', 'course', 'text']
 
 
 class CourseForm(ModelForm):
