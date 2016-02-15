@@ -95,3 +95,11 @@
 #cssmenu > ul > li > a:hover:after {
   background: #47c9af;
 }
+
+#loginData{
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #cce6ff;
+  padding: 30px;
+}
