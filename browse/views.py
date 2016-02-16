@@ -15,7 +15,7 @@ def index(request):
     context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam Sucks and Dzu Rocks</h3>"
+    context["message"] = "<h3>Sam does not suck</h3>"
     context["numbers"] = []
 
     context["reviews"] = Review.objects.order_by('-created_ts')
