@@ -14,14 +14,14 @@ def get_courses(request):
 
 def get_courses_matching(request, partial):
     return HttpResponse(serializers.serialize("json",
-                        Course.objects.filter(name__contains=partial)))
+                        Course.objects.filter(name__icontains=partial)))
 
 
 def get_professors_matching(request, partial):
     return HttpResponse(serializers.serialize("json",
                         Professor.objects
-                        .filter(Q(last_name__contains=partial)
-                                | Q(first_name__contains=partial))))
+                        .filter(Q(last_name__icontains=partial)
+                                | Q(first_name__icontains=partial))))
 
 
 def get_course_per_professor(request):
