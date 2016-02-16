@@ -11,4 +11,21 @@ $('a.follow').click(function () {
     $('ul li:last-child').html('324<span>Followers</span>');
   }
 });
-    
+
+
+$(document).ready(function() {
+  $('button').click(function() {
+    var review_id = $(this).closest('.card').attr('review-id');
+    var action = $(this).attr('action');
+
+    $.ajax({
+      url: "new/add_vote",
+      type: "POST",
+      data: {
+        "review-id": review_id,
+        "action": action
+      }
+    });
+  });
+});
+

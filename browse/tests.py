@@ -12,10 +12,10 @@ class BrowseViewsTestCase(TestCase):
         self.creds = {"username": "jason", "password": "top_secret"}
         self.two_review_types = ["by_school", "by_professor"]
         self.three_review_types = ["by_school_professor"]
-        self.user = User.objects.\
-            create_user(**self.creds,
-                        email="jsholm@mst.edu", first_name="Jason",
-                        last_name="Holm")
+        self.user = User.objects.create_user(**self.creds,
+                                             email="jsholm@mst.edu",
+                                             first_name="Jason",
+                                             last_name="Holm")
 
     def test_index(self):
         resp = self.client.get(reverse("index"))
