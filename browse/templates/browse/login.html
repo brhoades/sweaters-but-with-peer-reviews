@@ -16,21 +16,19 @@
       {{ message }}
     {% endif %}
 
-    <br />
-    Username: <input type="text" name="username" value="{{ form.username }}" /><br />
-    Password: <input type="password" name="password" value="{{ form.password }}" /><br />
-    <br />
 
-    <input type="submit" value="Login" />
-    <input type="hidden" name="next" value="/home" />
+    <div id="loginData">
+        <lx-text-field label="Username">
+            <input type="text" ng-model="textField.username" name="username" value="{{ form.username }}">
+        </lx-text-field>
+
+        <lx-text-field label="Password">
+            <input type="password" ng-model="textField.password" name="password" value="{{ form.password }}">
+        </lx-text-field>
+
+         <button class="btn btn--l btn--blue btn--raised" lx-ripple type="submit">Login</button>
+        <input type="hidden" name="next" value="/home" />
+    </div>
+
   </form>
-  <br />
-
-  {% for var in numbers %}
-    {{ var }}<br />
-  {% endfor %}
-
-  <br /><br />
-  <h2>This is a PandaZu</h2><br />
-  <img width="900" height="600" src="{% static "browse/img/PandaZu.jpg" %}" />
 {% endblock %}
