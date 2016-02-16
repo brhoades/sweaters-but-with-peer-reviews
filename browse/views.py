@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from .forms import ReviewForm
+from browse.forms import ReviewForm
 
 from browse.models import Review, User
 from django.contrib.auth import authenticate, login as auth_login, \
@@ -133,6 +133,35 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     template = "browse/reviews.html"
     context = RequestContext(request)
 
+    if type == "by_school":
+        context["message"] =\
+            "This is the page that lists all reviews for school {1}"\
+            "(pg {0}).".format(page, first_id)
+    elif type == "by_professor":
+        context["message"] =\
+            "This is the page that lists all reviews for professor"\
+            " {1} (pg {0}).".format(page, first_id)
+
+    elif type == "by_school_professor":
+        context["message"] =\
+            "This is the page for reviews of professor {1} from "\
+            "school {0} (pg {2})."\
+            .format(first_id, second_id, page)
+    else:
+        context["message"] =\
+            "This is the page that lists all reviews (pg {0})."\
+            .format(page)
+
+    return render(request, template, context)
+
+
+def new_review(request, review_id=0):
+    """
+    View a single review given an ID.
+    """
+    template = loader.get_template("browse/new_review.html")
+    context = RequestContext(request)
+
     if request.method == "POST":
         form = ReviewForm(request.POST)
 
@@ -150,26 +179,15 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
             return redirect("review", review_id=model_instance.id)
     else:
         form = ReviewForm()
-        if type == "by_school":
-            context["message"] =\
-                "This is the page that lists all reviews for school {1}"\
-                "(pg {0}).".format(page, first_id)
-        elif type == "by_professor":
-            context["message"] =\
-                "This is the page that lists all reviews for professor"\
-                " {1} (pg {0}).".format(page, first_id)
+        context["form"] = form
+        print(form["target"])
+        context["targets"] = form["target"]
 
-        elif type == "by_school_professor":
-            context["message"] =\
-                "This is the page for reviews of professor {1} from "\
-                "school {0} (pg {2})."\
-                .format(first_id, second_id, page)
-        else:
-            context["message"] =\
-                "This is the page that lists all reviews (pg {0})."\
-                .format(page)
-    context["form"] = form
-    return render(request, template, context)
+    context["review"] = get_object_or_404(Review, id=review_id)
+    # Review id does not exist
+    print(context["review"].__dict__)
+
+    return HttpResponse(template.render(context))
 
 
 def login(request, user=None):
@@ -204,3 +222,4 @@ def logout(request):
     """
     auth_logout(request)
     return redirect("index")
+

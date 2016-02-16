@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/scroll_style.css' %}"> 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/profile_style.css' %}"> 
 
+    
     <!-- lumx dependencies -->
     <script src="{% static 'browse/bower_components/jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'browse/bower_components/velocity/velocity.js' %}"></script>
@@ -28,7 +29,7 @@
     <script src="{% static 'browse/bower_components/lumx/dist/lumx.js' %}"></script>
     <!-- side bar dependencies -->
     <script src="{% static 'browse/Slide-Push-Menus/js/src/menu.js' %}"></script>
-    <script src="{% static 'browse/Slide-Push-Menus/gulpfile.js' %}"></script> 
+    <script src="{% static 'browse/Slide-Push-Menus/gulpfile.js' %}"></script>
 
     {% block header %}{% endblock %}
   </head>
@@ -90,7 +91,6 @@
                   
         </div>
       </div>
-    </div>
       <!--
       {% if request.get_full_path %}
         <h2>Index</h2>
@@ -138,12 +138,16 @@
     </div>
     <div id="c-mask" class="c-mask"></div>
 
+    <script>
+      var app = angular.module('lumxWrap', ['lumx']);
+    </script>
+
     <!-- Custom js files -->
     <script src="{% static 'browse/js/script.js' %}"></script>
     <script src="{% static 'browse/js/index.js' %}"></script>
-    <script src="{% static 'browse/js/main.js' %}"></script>
     <script src="{% static 'browse/Slide-Push-Menus/js/dist/menu.js' %}"></script>
     <script src="{% static 'browse/bower_components/lumx/modules/dialog/js/dialog_directive.js' %}"></script>
+    <script src="{% static 'browse/js/main.js' %}"></script>
     
     <script>
       var pushLeft = new Menu({
@@ -159,10 +163,6 @@
         e.preventDefault;
         pushLeft.open();
       });
-    </script>
-
-    <script>
-      var app = angular.module('lumxWrap', ['lumx']);
     </script>
     
 

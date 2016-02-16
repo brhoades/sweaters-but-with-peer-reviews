@@ -14,8 +14,7 @@ app.controller('test', function($scope, LxDialogService, LxNotificationService) 
 });*/
 
 
-angular.module('testApp', [])
-.controller('myCount', function($scope) {
+angular.module('lumxWrap').controller('myCount', function($scope) {
   $scope.count = 0;
 });
 
@@ -46,4 +45,89 @@ $.ajaxSetup({
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         }
     }
+  }
+);
+
+angular.module('lumxWrap').controller('getReviewForm', function($scope, $http) {
+  $scope.raw_professors = [];
+  $scope.professors = [];
+  
+  $http.get('/get/professors').then( function(response) {
+    $scope.raw_professors = response.data;
+    $scope.professors = [];
+    $scope.raw_courses = [];
+    $scope.courses = [];
+    response.data.forEach(function(e, i, l) {
+      $scope.professors.push(e["fields"]);
+    });
+  });
+
+  $http.get('/get/courses').then( function(response) {
+    $scope.raw_courses = response.data;
+    response.data.forEach(function(e, i, l) {
+      $scope.courses.push(e["fields"]);
+    });
+  });
+
+  $scope.selects = {
+    selectedPerson: undefined,
+    selectedPersons: [$scope.professors[1], $scope.professors[1]],
+    selectedPersons2: []
+  };
+
+  $scope.ajax = {
+      selected: '',
+      list: [],
+      update: function(newFilter, oldFilter, subtext) {
+          if(newFilter) {
+              $scope.ajax.loading = true;
+              $http.get("/get/" + subtext + "/" + escape(newFilter)).
+                  success(function(data) {
+                    // Always expects, if any elements, a fields item in it
+                    $scope.ajax.list = [];
+                    data.forEach(function(e, i, l) {
+                      $scope.ajax.list.push(e.fields);
+                    });
+                      $scope.ajax.loading = false;
+                  }).
+                  error(function() {
+                      $scope.ajax.loading = false;
+                  });
+          }
+          else {
+              $scope.ajax.list = false;
+          }
+      },
+      toModel: function(data, callback, subtext) {
+          if(data) {
+              callback(data.fields);
+          }
+          else {
+              callback();
+          }
+      },
+      toSelection: function(data, callback, subtext) {
+          if(data) {
+              $http.get("/get/" + subtext + "/" + escape(newFilter)).
+                  success(function(response) {
+                      callback(response.data.fields);
+                  }).
+                  error(function() {
+                      callback();
+                  });
+          }
+          else {
+              callback();
+          }
+      },
+      loading: false
+  };
+
+  $scope.cbSelect = {
+      exec: function(newVal, oldVal) {
+          //LxNotificationService.notify('Change detected!');
+          console.log('oldVal: ', oldVal);
+          console.log('newVal: ', newVal);
+      }
+  };
 });
