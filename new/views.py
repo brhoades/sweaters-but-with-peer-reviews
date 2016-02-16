@@ -1,15 +1,45 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from new.forms import ReviewForm, CourseForm, ProfessorForm
 from browse.models import ReviewVote, Review
+from django.core import serializers
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 import json
 
 
+@login_required
 def new(request, page=None):
-    template = "new/index.html"
-    context = {}
+    # context = RequestContext(request)
+    data = json.loads(request.body.decode())
+    new = None
+    response = {"error":
+                {
+                    "error": "",
+                    "text": "",
+                    "target": "",
+                    "course": ""
+                }
+                }
 
-    return render(request, template, context)
+    if "target" not in data or "id" not in data["target"]:
+        response["error"]["target"] = "No professor specified"
+    if "course" not in data or "id" not in data["course"]:
+        response["error"]["course"] = "No course specified"
+
+    # Look for any errors
+    for k, v in response["error"].items():
+        if len(v) > 0:
+            return HttpResponse(json.dumps(response))
+    try:
+        new = Review(target_id=data["target"]["id"],
+                     course_id=data["course"]["id"],
+                     text=data["text"],
+                     owner=request.user)
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(e)}))
+
+    new.save()
+    return HttpResponse(json.dumps(
+        {"redirect": reverse('review', kwargs={"review_id": new.id})}))
 
 
 def addVote(request):

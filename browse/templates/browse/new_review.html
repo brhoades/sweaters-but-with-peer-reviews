@@ -1,80 +1,31 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
-{% block title %}Home{% endblock %}
+{% block title %}New Review{% endblock %}
+{% block js %}
+  <script src="{% static 'browse/js/new_review.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-  <br />
-  {{ message }}<br />
-  <br />
-  <br />
-    <div ng-app="testApp" >
-      <div ng-controller="myCount">
-            <button ng-click="count = count + 1">Click me!</button>
-                  <p>{{ count }}</p>
-      </div>
-    </div>
+  <div ng-app="">
+    <div ng-controller="getReviewForm">
+      <form method="post" ng-submit="submit()">
+        {% csrf_token %}
 
-<script>
-angular.module('reviewForm', [])
-.controller('getProfessors', function($scope) {
-  //console.log("HELLO!");
-  $scope.count = "HI";
-  /*
-  $http.get('/get/professors').then( function(response) {
-    $scope.raw_professors = response.data;
-    $scope.professors = []
-    response.data.forEach(function(e, i, l) {
-      console.log(profobj["fields"]);
-      $scope.professors.push(profobj["fields"]);
-    });
-  });
-
-  $scope.selects = {
-    selectedPerson: undefined,
-    selectedPersons: [$scope.professors[1], $scope.professors[1]],
-    selectedPersons2: []
-  };
-  */
-});
-
-angular.module('course', [])
-.controller('getCourses', function($scope) {
-  $http.get('/get/courses').then( function(response) {
-    $scope.courses = response.data;
-  });
-});
-</script>
-
-  <form method="post">
-    {% csrf_token %}
-
-    <div ng-app="">
-      <div ng-controller="getReviewForm">
+        {% verbatim %}
+        <div flex-container="row" ng-model="vald" 
+             class="p+ error bgc-red-500 tc-white-1"
+             ng-show="valid.error != ''">
+          <center>
+            {{ valid.error }}
+          </center>
+        </div>
         <div flex-container="row" flex-gutter="24">
           <div flex-item>
-            {% verbatim %}
-              <!--- old selectin box for prof
-              <div flex-container="row" flex-gutter="24">
-                  <div flex-item>
-                      <lx-select ng-model="professor" placeholder="Professor" choices="professors" floating-label>
-                          <lx-select-selected>
-                              {{ $selected.last_name + ', ' + $selected.first_name }}
-                          </lx-select-selected>
-
-                          <lx-select-choices>
-                              {{ $choice.last_name + ', ' + $choice.first_name }}
-                          </lx-select-choices>
-                      </lx-select>
-                  </div>
-              </div>
-            </div>
-            --!>
-            <lx-select ng-model="ajax.selected" change="cbSelect.exec(newValue, oldValue)" placeholder="Professor"
+            <lx-select ng-model="data.target" change="cbSelect.exec('target', newValue)" placeholder="Professor"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'professors_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-                       selection-to-model="ajax.toModel(data, callback, 'professors_matching')"
-                       model-to-selection="ajax.toSelection(data, callback, 'professors_matching')"
-                       id="target" ng-required="true">
+                       error-if="valid.course"
+                       id="target">
               <lx-select-selected>
                 {{ $selected.last_name + ', ' + $selected.first_name }}
               </lx-select-selected>
@@ -83,13 +34,13 @@ angular.module('course', [])
                 {{ $choice.last_name + ', ' + $choice.first_name }}
               </lx-select-choices>
             </lx-select>
+            <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
           </div>
           <div flex-item>
-            <lx-select ng-model="ajax.selected" change="cbSelect.exec(newValue, oldValue)" placeholder="Course"
+            <lx-select ng-model="data.course" change="cbSelect.exec('course', newValue)" placeholder="Course"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'courses_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-                       selection-to-model="ajax.toModel(data, callback, 'courses_matching')"
-                       model-to-selection="ajax.toSelection(data, callback, 'courses_matching')"
+                       error-if="valid.course"
                        id="course">
               <lx-select-selected>
                 {{ $selected.name }} ({{ $selected.number }})
@@ -99,15 +50,15 @@ angular.module('course', [])
                 {{ $choice.name }} ({{ $choice.number }})
               </lx-select-choices>
             </lx-select>
-            <span class="text-field-error" ng-if="anglar.isUndefined(formdata.course)">Required</span>
+            <span class="text-field-error" ng-show="valid.course != ''">{{ valid.course }}</span>
           </div>
         </div>
           {% endverbatim %}
 
       <div flex-container="row">
         <div flex-item>
-          <lx-text-field ng-required="true">
-            <textarea ng-model="description" change="description.update(newValue)"
+          <lx-text-field>
+            <textarea ng-model="data.text" change="description.update(newValue)" ng-required="true"
                       id="text" placeholder="Review text"></textarea>
           </lx-text-field>
         </div>
@@ -116,7 +67,7 @@ angular.module('course', [])
       <input type="submit" ng-submit="submit()" value="Submit Review"
              class="btn btn--l btn--blue btn--raised" lx-ripple />
 
+        </form>
       </div>
     </div>
-  </form>
 {% endblock %}
