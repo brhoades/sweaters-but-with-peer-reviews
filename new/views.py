@@ -1,13 +1,36 @@
 from django.http import HttpResponse
-from browse.models import ReviewVote, Review
+from browse.models import ReviewVote, Review, Professor
 from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.template import loader, RequestContext
 import json
 
 
+def get_template_for_model(request, page):
+    template = None
+    context = RequestContext(request)
+
+    if page == "review":
+        template = loader.get_teamplate("new/review.html")
+    elif page == "professor":
+        template = loader.get_template("new/professor.html").render(context)
+
+    return HttpResponse(template.render(context))
+
 @login_required
 def new(request, page=None):
+    model = None
+    if request.method != "POST":
+        return get_template_for_model(request, page)
+
+    if page == "review":
+        model = Review
+    elif page == "professor":
+        model = Professor
+    else:
+        return HttpResponse(json.dumps({"error": "Unknown page requested"}))
+
     # context = RequestContext(request)
     data = json.loads(request.body.decode())
     new = None
@@ -42,6 +65,11 @@ def new(request, page=None):
     new.save()
     return HttpResponse(json.dumps(
         {"redirect": reverse('review', kwargs={"review_id": new.id})}))
+
+    return HttpResponse(template.render(context))
+
+
+    return HttpResponse(json.dumps({"error": "Unknown query."}))
 
 
 def addVote(request):
