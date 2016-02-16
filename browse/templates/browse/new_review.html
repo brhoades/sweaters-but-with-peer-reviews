@@ -8,6 +8,7 @@
 {% block content %}
   <div ng-app="">
     <div ng-controller="getReviewForm">
+
       <form method="post" ng-submit="submit()">
         {% csrf_token %}
 
@@ -20,7 +21,7 @@
           </center>
         </div>
         <div flex-container="row" flex-gutter="24">
-          <div flex-item>
+          <div flex-item style="margin-left: 5%">
             <lx-select ng-model="data.target" change="cbSelect.exec('target', newValue)" placeholder="Professor"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'professors_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
@@ -36,7 +37,7 @@
             </lx-select>
             <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
           </div>
-          <div flex-item>
+          <div flex-item style="margin-right: 5%">
             <lx-select ng-model="data.course" change="cbSelect.exec('course', newValue)" placeholder="Course"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'courses_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
@@ -65,7 +66,7 @@
         </div>
           {% endverbatim %}
 
-      <input type="submit" ng-submit="submit()" value="Submit Review"
+        <input type="submit" ng-submit="submit()" value="Submit Review"
              class="btn btn--l btn--blue btn--raised" lx-ripple />
 
         </form>
