@@ -1,104 +1,17 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
-{% block title %}Home{% endblock %}
+{% block title %}School{% endblock %}
 
 {% block content %}
   <br />
-  {{ message }}<br />
+  <strong>School</strong>: {{ school.name }}<br />
+  <strong>Location</strong>: {{ school.location }}<br />
+  <strong>Email Pattern</strong>:{{ school.email_patter }}<br />
+  <strong>Website</strong>:{{ school.url }}<br />
   <br />
-
-  {% for var in numbers %}
-    {{ var }}<br />
-  {% endfor %}
-
-  <br /><br />
-  
-  <div class="card">
-    <div class="toolbar">
-      <div class="toolbar__left mr+++">
-        <button class="btn btn--l btn--black btn--icon" lx-ripple>
-          <i class="mdi mdi-menu"></i>
-        </button>
-      </div>
-
-      <span class="toolbar__label fs-title">Lorem Ipsum</span>
-
-      <div class="toolbar__right">
-        <lx-search-filter closed theme="light"></lx-search-filter>
-
-        <lx-dropdown position="right" from-top>
-          <button class="btn btn--l btn--black btn--icon" lx-ripple lx-dropdown-toggle>
-            <i class="mdi mdi-dots-vertical"></i>
-          </button>
-
-          <lx-dropdown-menu>
-            <ul>
-              <li><a class="dropdown-link">Action</a></li>
-              <li><a class="dropdown-link">Another action</a></li>
-              <li><a class="dropdown-link">Something else here</a></li>
-              <li class="dropdown-divider"></li>
-              <li><a class="dropdown-link dropdown-link--is-header">Header</a></li>
-              <li><a class="dropdown-link">Separated link</a></li>
-            </ul>
-          </lx-dropdown-menu>
-        </lx-dropdown>
-      </div>
-    </div>
-
-	<lx-dropdown>
-    <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dropdown-toggle>
-      Dropdown toggle
-    </button>
-
-    <lx-dropdown-menu>
-      <ul>
-        <li><a class="dropdown-link" ng-click="dropdownAlert()">Notification</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Another action</a></li>
-        <li><a class="dropdown-link">Something else here</a></li>
-        <li class="dropdown-divider"></li>
-        <li><span class="dropdown-link dropdown-link--is-header">Header</span></li>
-        <li><a class="dropdown-link">Separated link</a></li>
-      </ul>
-    </lx-dropdown-menu>
-	</lx-dropdown>
-
-	<div>
-    <button class="btn btn--m btn--blue btn--raised" lx-ripple>Button</button>
-    <button class="btn btn--m btn--green btn--raised" lx-ripple>Button</button>
-    <button class="btn btn--m btn--orange btn--raised" lx-ripple>Button</button>
-    <button class="btn btn--m btn--red btn--raised" lx-ripple>Button</button>
-    <button class="btn btn--m btn--black btn--raised" lx-ripple>Button</button>
-    <button class="btn btn--m btn--grey btn--raised" lx-ripple>Button</button>
-    <button class="btn btn--m btn--white btn--raised" lx-ripple>Button</button>
-</div>
-  </div>
-
-
-<!--====================TEST THIS====================
-<script>
-    angular.module('testApp', [])
-        .controller('myCount', ['$scope', function CountController($scope) {
-          $scope.count = 0;
-        }]);
-</script>
--->
-
-{% verbatim %}
-<div>
-      <button ng-click="count = count + 1">Click me!</button>
-      <p>{{ count }}</p>
-</div>
-{% endverbatim %}
-
+  Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
+  {% if professor.update_ts %}
+    Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
+  {% endif %}
 
 {% endblock %}
