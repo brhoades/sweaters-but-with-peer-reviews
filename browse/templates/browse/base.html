@@ -9,6 +9,7 @@
     <meta name="author" content="">
     <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
+    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/styles.css' %}"> 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/reset.css' %}"> 
     <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/style.min.css' %}">
@@ -34,7 +35,8 @@
     {% block header %}{% endblock %}
   </head>
 
-  <body class="bgc-deep-purple-A700 p+">
+  <body class="bgc-light-blue-A400 p+">
+    <div class="top-bar bgc-light-blue-800"></div>
     <div ng-app="lumxWrap">
       <div class="toolbar">
         <div class="toolbar__left mr+++">
@@ -106,9 +108,9 @@
       </div>
     </div>
 
-    <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-deep-purple-A700 p+">
-      <button class="c-menu__close bgc-deep-purple-A700 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
-      <ul class="c-menu__items bgc-deep-purple-A700 p+">
+    <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-yellow-500 p+">
+      <button class="c-menu__close bgc-yellow-500 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
+      <ul class="c-menu__items bgc-yellow-500 p+">
         <ul class="list mt++">
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
