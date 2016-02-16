@@ -155,7 +155,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     return render(request, template, context)
 
 
-def new_review(request, review_id=0):
+def new_review(request):
     """
     View a single review given an ID.
     """
@@ -176,16 +176,12 @@ def new_review(request, review_id=0):
             model_instance.owner = request.user
             # Here we can change things in the model.
             model_instance.save()
-            return redirect("review", review_id=model_instance.id)
+            return redirect("review")
     else:
         form = ReviewForm()
         context["form"] = form
         print(form["target"])
         context["targets"] = form["target"]
-
-    context["review"] = get_object_or_404(Review, id=review_id)
-    # Review id does not exist
-    print(context["review"].__dict__)
 
     return HttpResponse(template.render(context))
 

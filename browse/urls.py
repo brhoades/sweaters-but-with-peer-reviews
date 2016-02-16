@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^professor/(P?<id>[0-9]+)?$', bviews.professor, name="professor"),
 
     url(r'^review/(?P<review_id>[0-9]+)/?$', bviews.review, name="review"),
-    url(r'^new_review/(?P<review_id>[0-9]+)/?$', bviews.new_review,
+    url(r'^new_review/?$', bviews.new_review,
         name="new_review"),
     url(r'^reviews/?$', bviews.reviews, name="reviews_overview"),
     url(r'^reviews/(?P<page>[0-9]+)/?$', bviews.reviews, name="reviews"),
