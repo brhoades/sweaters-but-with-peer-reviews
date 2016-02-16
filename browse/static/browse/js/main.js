@@ -1,20 +1,18 @@
-/*var app = angular.module('myApp', []);
+var app = angular.module('lumxWrap', ['lumx'])
+	
 
-app.controller('test', function($scope, LxDialogService, LxNotificationService) {
-
+app.controller('loginData', function($scope, LxDialogService, LxNotificationService) {
     $scope.opendDialog = function(dialogId)
     {
         LxDialogService.open(dialogId);
     };
-
     $scope.closingDialog = function()
     {
-        LxNotificationService.info('Dialog closed!');
+        LxNotificationService.info('Box Closed!');
     };
-});*/
+});
 
-
-angular.module('lumxWrap').controller('myCount', function($scope) {
+app.controller('myCount', function($scope) {
   $scope.count = 0;
 });
 
@@ -48,7 +46,7 @@ $.ajaxSetup({
   }
 );
 
-angular.module('lumxWrap').controller('getReviewForm', function($scope, $http) {
+app.controller('getReviewForm', function($scope, $http) {
   $scope.formData = {};
   
   $scope.description = {
@@ -116,3 +114,4 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http) {
         console.log("ELLO");
     };
 })
+
