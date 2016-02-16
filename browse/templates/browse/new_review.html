@@ -21,12 +21,14 @@
           </center>
         </div>
         <div flex-container="row" flex-gutter="24">
-          <div flex-item style="margin-left: 5%">
+
+          <div flex-item style="margin-left: 5%; margin-right: 5%" class="bgc-light-blue-800 p+">
             <lx-select ng-model="data.target" change="cbSelect.exec('target', newValue)" placeholder="Professor"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'professors_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                        error="valid.target != ''"
-                       id="target">
+                       id="target"
+                       class="tc-white-1">
               <lx-select-selected>
                 {{ $selected.last_name + ', ' + $selected.first_name }}
               </lx-select-selected>
@@ -37,8 +39,8 @@
             </lx-select>
             <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
           </div>
-          <div flex-item style="margin-right: 5%">
-            <lx-select ng-model="data.course" change="cbSelect.exec('course', newValue)" placeholder="Course"
+          <div flex-item style="margin-right: 5%; margin-left: 5%" class="bgc-light-blue-800 p+">
+            <lx-select ng-model="data.course" change="cbSelect.exec('course', newValue)"  placeholder="Course"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'courses_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                        error="valid.course != ''"
@@ -57,6 +59,7 @@
 
         <div flex-container="row">
           <div flex-item>
+
             <lx-text-field error="valid.text != ''">
               <textarea ng-model="data.text" change="description.update(newValue)"
                         id="text" placeholder="Write your review here"></textarea>
