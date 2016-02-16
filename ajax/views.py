@@ -1,4 +1,4 @@
-from browse.models import Professor, Course
+from browse.models import Professor, Course, School, Department
 from django.http import HttpResponse
 from django.core import serializers
 from django.db.models import Q
@@ -15,6 +15,16 @@ def get_courses(request):
 def get_courses_matching(request, partial):
     return HttpResponse(serializers.serialize("json",
                         Course.objects.filter(name__icontains=partial)))
+
+
+def get_schools_matching(request, partial):
+    return HttpResponse(serializers.serialize("json",
+                        School.objects.filter(name__icontains=partial)))
+
+
+def get_departments_matching(request, partial):
+    return HttpResponse(serializers.serialize("json",
+                        Department.objects.filter(name__icontains=partial)))
 
 
 def get_professors_matching(request, partial):
