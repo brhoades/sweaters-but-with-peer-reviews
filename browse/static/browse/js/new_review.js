@@ -62,8 +62,6 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $
 
   $scope.submit = function() {
     $scope.ajax.loading = true;
-    console.log("ELLO");
-    console.log(JSON.stringify($scope.data));
     $http.post("/new/review", JSON.stringify($scope.data)).
       success(function(data) {
         // Always expects, if any elements, a fields item in it
@@ -75,14 +73,10 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $
           target: "",
           course: ""
         };
-        console.log("RESPNSE");
-        console.log(JSON.stringify(data));
         if(data != undefined && data.error != undefined) {
-          if(data.error != {})
-            $scope.valid = data.error;
+          $scope.valid = data.error;
         }
         if(data.redirect != undefined) {
-          console.log("TIME TO GO");
           $window.location.href = data.redirect;
         }
       }).

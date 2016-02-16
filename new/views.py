@@ -24,6 +24,8 @@ def new(request, page=None):
         response["error"]["target"] = "No professor specified"
     if "course" not in data or "id" not in data["course"]:
         response["error"]["course"] = "No course specified"
+    if "text" not in data or len(data["text"]) < 50:
+        response["error"]["text"] = "Review is not long enough."
 
     # Look for any errors
     for k, v in response["error"].items():
