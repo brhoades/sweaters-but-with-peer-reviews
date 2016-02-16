@@ -57,6 +57,39 @@ def profile(request, id=None, page=0):
 
     return render(request, template, context)
 
+def schools(request, type="all", first_id=None, second_id=None, page=0):
+    """
+    This is the general-purpose review-viewing page. It allows for returning
+    views of specific requests from the user.
+
+    :Parameters:
+        * *page*: (``int``) --
+            The page to start listing from.
+        * *type*: (``str``) --
+            The type of review view page to get. Valid types are:
+                * all (default)
+                * by_school
+                * by_professor
+                * by_school_professor
+        * *first_id*: (``int``) --
+            The first id of the requested view type (ie professor).
+        * *second_id*: (``int``) --
+            The second id of the requested view type (ie school).
+    """
+    template = "browse/schools.html"
+    context = RequestContext(request)
+
+    if type == "by_name":
+        context["message"] =\
+            "This is the page that lists all schools by name {1}"\
+            "(pg {0}).".format(page, first_id)
+    else:
+        context["message"] =\
+            "This is the page that lists all schools (pg {0})."\
+            .format(page)
+
+    return render(request, template, context)
+
 
 def school(request, id=None, page=0):
     """
@@ -74,6 +107,40 @@ def school(request, id=None, page=0):
     print(context["school"].__dict__)
 
     return HttpResponse(template.render(context))
+
+
+def professors(request, type="all", first_id=None, second_id=None, page=0):
+    """
+    This is the general-purpose review-viewing page. It allows for returning
+    views of specific requests from the user.
+
+    :Parameters:
+        * *page*: (``int``) --
+            The page to start listing from.
+        * *type*: (``str``) --
+            The type of review view page to get. Valid types are:
+                * all (default)
+                * by_school
+                * by_professor
+                * by_school_professor
+        * *first_id*: (``int``) --
+            The first id of the requested view type (ie professor).
+        * *second_id*: (``int``) --
+            The second id of the requested view type (ie school).
+    """
+    template = "browse/professors.html"
+    context = RequestContext(request)
+
+    if type == "by_last_name":
+        context["message"] =\
+            "This is the page that lists all professors by last name {1}"\
+            "(pg {0}).".format(page, first_id)
+    else:
+        context["message"] =\
+            "This is the page that lists all professors (pg {0})."\
+            .format(page)
+
+    return render(request, template, context)
 
 
 def professor(request, id=None, page=0):
