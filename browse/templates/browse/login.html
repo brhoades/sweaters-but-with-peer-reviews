@@ -33,7 +33,7 @@
 
 
 
-{% verbatim %}
+
 <div ng-controller="loginData">
 
     <button class="btn btn--m btn--black btn--flat" ng-click="opendDialog('loginCall')" lx-ripple>Open dialog</button>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="dialog__content">
+        <div class="dialog__content" id="loginData">
 
             <lx-text-field label="Username">
                 <input type="text" ng-model="textField.username" name="username" value="{{ form.username }}">
@@ -66,7 +66,6 @@
         </div>
     </lx-dialog>
 </div>
-{% endverbatim %}
 
 
 {% endblock %}

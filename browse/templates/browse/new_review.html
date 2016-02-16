@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-  <div ng-app="">
+  <div>
     <div ng-controller="getReviewForm">
 
       <form method="post" ng-submit="submit()">
@@ -59,18 +59,23 @@
 
         <div flex-container="row">
           <div flex-item>
-
-            <lx-text-field error="valid.text != ''">
-              <textarea ng-model="data.text" change="description.update(newValue)"
-                        id="text" placeholder="Write your review here"></textarea>
+            <lx-text-field label="Write your review here" error="valid.text != ''">
+              <input ng-model="data.text" change="description.update(newValue)" type="text"></input>
             </lx-text-field>
             <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
           </div>
         </div>
           {% endverbatim %}
 
-        <input type="submit" ng-submit="submit()" value="Submit Review"
-             class="btn btn--l btn--blue btn--raised" lx-ripple />
+        <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
+
+
+
+          <div class="toolbar__right">
+              <lx-search-filter model="searchFilter.third" position="right" filter-width="400px" theme="dark" closed></lx-search-filter>
+          </div>
+
+
 
         </form>
       </div>
