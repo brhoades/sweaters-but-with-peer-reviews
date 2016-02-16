@@ -1,6 +1,6 @@
-var myAppModule = angular.module('myApp', []);
+/*var app = angular.module('myApp', []);
 
-myAppModule.controller(function ($scope, LxDialogService, LxNotificationService) {
+app.controller('test', function($scope, LxDialogService, LxNotificationService) {
 
     $scope.opendDialog = function(dialogId)
     {
@@ -11,4 +11,6 @@ myAppModule.controller(function ($scope, LxDialogService, LxNotificationService)
     {
         LxNotificationService.info('Dialog closed!');
     };
-} );
+});*/
+
+

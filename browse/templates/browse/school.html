@@ -87,4 +87,25 @@
   </div>
 
 
+<!--====================TEST THIS====================-->
+
+<div ng-app="testApp" >
+    <div ng-controller="myCount">
+        <button ng-click="count = count + 1">Click me!</button>
+        <p>{{ count }}</p>
+    </div>
+</div>
+
+
+<script>
+    var hiBilly = angular.module('testApp', []);
+   
+
+    hiBilly.controller('myCount', function($scope) {
+        $scope.count = 0;
+    });
+
+</script>
+
+
 {% endblock %}
