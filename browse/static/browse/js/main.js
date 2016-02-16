@@ -14,3 +14,7 @@ app.controller('test', function($scope, LxDialogService, LxNotificationService) 
 });*/
 
 
+angular.module('testApp', [])
+.controller('myCount', function($scope) {
+  $scope.count = 0;
+});
