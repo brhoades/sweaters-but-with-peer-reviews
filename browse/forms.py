@@ -1,9 +1,7 @@
 from browse.models import Review, Course, Professor
 from django.forms import ModelForm
-from djangular.forms import NgModelFormMixin, NgModelForm
 
-
-class ReviewForm(NgModelFormMixin, NgModelForm):
+class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['target', 'course', 'text']
