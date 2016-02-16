@@ -49,30 +49,12 @@ $.ajaxSetup({
 );
 
 angular.module('lumxWrap').controller('getReviewForm', function($scope, $http) {
-  $scope.raw_professors = [];
-  $scope.professors = [];
+  $scope.formData = {};
   
-  $http.get('/get/professors').then( function(response) {
-    $scope.raw_professors = response.data;
-    $scope.professors = [];
-    $scope.raw_courses = [];
-    $scope.courses = [];
-    response.data.forEach(function(e, i, l) {
-      $scope.professors.push(e["fields"]);
-    });
-  });
-
-  $http.get('/get/courses').then( function(response) {
-    $scope.raw_courses = response.data;
-    response.data.forEach(function(e, i, l) {
-      $scope.courses.push(e["fields"]);
-    });
-  });
-
-  $scope.selects = {
-    selectedPerson: undefined,
-    selectedPersons: [$scope.professors[1], $scope.professors[1]],
-    selectedPersons2: []
+  $scope.description = {
+    update: function(newVal) {
+      $scope.formData["text"] = newVal;
+    }
   };
 
   $scope.ajax = {
@@ -124,10 +106,13 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http) {
   };
 
   $scope.cbSelect = {
-      exec: function(newVal, oldVal) {
-          //LxNotificationService.notify('Change detected!');
-          console.log('oldVal: ', oldVal);
-          console.log('newVal: ', newVal);
-      }
+    exec: function(type, newVal, oldVal) {
+      $scope.formData[type] = newVal;
+    }
   };
-});
+
+  $scope.submit = function() {
+        $scope.ajax.loading = true;
+        console.log("ELLO");
+    };
+})

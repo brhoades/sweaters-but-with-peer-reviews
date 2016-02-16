@@ -45,7 +45,7 @@ angular.module('course', [])
 });
 </script>
 
-  <form method="post" action="">
+  <form method="post">
     {% csrf_token %}
 
     <div ng-app="">
@@ -73,7 +73,8 @@ angular.module('course', [])
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'professors_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                        selection-to-model="ajax.toModel(data, callback, 'professors_matching')"
-                       model-to-selection="ajax.toSelection(data, callback, 'professors_matching')">
+                       model-to-selection="ajax.toSelection(data, callback, 'professors_matching')"
+                       id="target" ng-required="true">
               <lx-select-selected>
                 {{ $selected.last_name + ', ' + $selected.first_name }}
               </lx-select-selected>
@@ -88,7 +89,8 @@ angular.module('course', [])
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'courses_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                        selection-to-model="ajax.toModel(data, callback, 'courses_matching')"
-                       model-to-selection="ajax.toSelection(data, callback, 'courses_matching')">
+                       model-to-selection="ajax.toSelection(data, callback, 'courses_matching')"
+                       id="course">
               <lx-select-selected>
                 {{ $selected.name }} ({{ $selected.number }})
               </lx-select-selected>
@@ -97,21 +99,24 @@ angular.module('course', [])
                 {{ $choice.name }} ({{ $choice.number }})
               </lx-select-choices>
             </lx-select>
+            <span class="text-field-error" ng-if="anglar.isUndefined(formdata.course)">Required</span>
           </div>
         </div>
           {% endverbatim %}
-      </div>
 
       <div flex-container="row">
-          <div flex-item>
-              <lx-text-field id="text">
-                  <textarea ng-model="reviews.description" placeholder="Review text."></textarea>
-              </lx-text-field>
-          </div>
+        <div flex-item>
+          <lx-text-field ng-required="true">
+            <textarea ng-model="description" change="description.update(newValue)"
+                      id="text" placeholder="Review text"></textarea>
+          </lx-text-field>
+        </div>
       </div>
 
+      <input type="submit" ng-submit="submit()" value="Submit Review"
+             class="btn btn--l btn--blue btn--raised" lx-ripple />
+
+      </div>
     </div>
-    
-    <input type="submit" value="Submit Review" class="btn btn--l btn--blue btn--raised" lx-ripple />
   </form>
 {% endblock %}
