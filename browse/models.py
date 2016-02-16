@@ -1,6 +1,5 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator, \
-    RegexValidator, URLValidator
+from django.core.validators import RegexValidator, URLValidator
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 

@@ -46,7 +46,6 @@ def profile(request, id=None, page=0):
     if id is not None:
         # Could use 404 shortcut, or a simple redirect for invalid user id's
         context["profile"] = get_object_or_404(User, id=id)
-        # context["profile"] = User.objects.get(id=id)
     # User logged in and should see own profile
     elif request.user.is_authenticated():
         context["profile"] = request.user
@@ -136,11 +135,19 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
 
     if request.method == "POST":
         form = ReviewForm(request.POST)
+
+        # If the form was submitted, but user was not logged in, redirect them.
+        if not request.user.is_authenticated():
+            messages.info(request, "Please Login to post reviews.")
+            return redirect("login")
+
+        # Process form if it is valid
         if form.is_valid():
             model_instance = form.save(commit=False)
+            model_instance.owner = request.user
             # Here we can change things in the model.
-            # IE user who posted, time posted, etc..
             model_instance.save()
+            return redirect("review", review_id=model_instance.id)
     else:
         form = ReviewForm()
         if type == "by_school":
