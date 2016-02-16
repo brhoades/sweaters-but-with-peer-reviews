@@ -1,20 +1,18 @@
-/*var app = angular.module('myApp', []);
+var app = angular.module('lumxWrap', ['lumx'])
+	
 
-app.controller('test', function($scope, LxDialogService, LxNotificationService) {
-
+app.controller('loginData', function($scope, LxDialogService, LxNotificationService) {
     $scope.opendDialog = function(dialogId)
     {
         LxDialogService.open(dialogId);
     };
-
     $scope.closingDialog = function()
     {
-        LxNotificationService.info('Dialog closed!');
+        LxNotificationService.info('Box Closed!');
     };
-});*/
+});
 
-
-angular.module('lumxWrap').controller('myCount', function($scope) {
+app.controller('myCount', function($scope) {
   $scope.count = 0;
 });
 
@@ -38,3 +36,81 @@ function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    }
+  }
+);
+
+app.controller('getReviewForm', function($scope, $http) {
+  $scope.formData = {};
+  
+  $scope.description = {
+    update: function(newVal) {
+      $scope.formData["text"] = newVal;
+    }
+  };
+
+  $scope.ajax = {
+      selected: '',
+      list: [],
+      update: function(newFilter, oldFilter, subtext) {
+          if(newFilter) {
+              $scope.ajax.loading = true;
+              $http.get("/get/" + subtext + "/" + escape(newFilter)).
+                  success(function(data) {
+                    // Always expects, if any elements, a fields item in it
+                    $scope.ajax.list = [];
+                    data.forEach(function(e, i, l) {
+                      $scope.ajax.list.push(e.fields);
+                    });
+                      $scope.ajax.loading = false;
+                  }).
+                  error(function() {
+                      $scope.ajax.loading = false;
+                  });
+          }
+          else {
+              $scope.ajax.list = false;
+          }
+      },
+      toModel: function(data, callback, subtext) {
+          if(data) {
+              callback(data.fields);
+          }
+          else {
+              callback();
+          }
+      },
+      toSelection: function(data, callback, subtext) {
+          if(data) {
+              $http.get("/get/" + subtext + "/" + escape(newFilter)).
+                  success(function(response) {
+                      callback(response.data.fields);
+                  }).
+                  error(function() {
+                      callback();
+                  });
+          }
+          else {
+              callback();
+          }
+      },
+      loading: false
+  };
+
+  $scope.cbSelect = {
+    exec: function(type, newVal, oldVal) {
+      $scope.formData[type] = newVal;
+    }
+  };
+
+  $scope.submit = function() {
+        $scope.ajax.loading = true;
+        console.log("ELLO");
+    };
+})

@@ -84,17 +84,17 @@
   </div>
 
 
-<!--====================TEST THIS====================-->
+<!--====================TEST THIS====================
 <script>
     angular.module('testApp', [])
         .controller('myCount', ['$scope', function CountController($scope) {
           $scope.count = 0;
         }]);
 </script>
-
+-->
 
 {% verbatim %}
-<div ng-app="testApp" >
+<div>
       <button ng-click="count = count + 1">Click me!</button>
       <p>{{ count }}</p>
 </div>
