@@ -78,8 +78,9 @@ def new(request, page=None):
     for key in data.keys():
         # Check that this is a key that exists
         if key not in model._meta.get_all_field_names():
-            return json_error(''.join(["No field for ", str(model), ": \"",
-                                       key, "\""]))
+            return json_error({"error": ''.join(["No field for ",
+                                                 str(model), ": \"",
+                                                 key, "\""])})
         # Check that an id field exists for required foreign key fields
         field = model._meta.get_field(key)
         if field.is_relation and isinstance(data[key], dict):
@@ -114,7 +115,7 @@ def new(request, page=None):
 
     # Save and return all info
     new.save()
-    return HttpResponse(json.dumps({"id": new.id}))
+    return HttpResponse(json.dumps({"id": new.id, "error": {}}))
 
 
 def addVote(request):
