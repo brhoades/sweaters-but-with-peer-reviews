@@ -8,7 +8,7 @@
 {% block content %}
   <!-- Type here passes off to our controller in its scope !-->
   <div ng-app"lumxWrap">
-    <div ng-controller="form-handler" model="professor">
+    <div ng-controller="form-handler" model="professor" id="demo" class="card">
 
       <form method="post" ng-submit="submit()">
         {% csrf_token %}
@@ -22,7 +22,7 @@
           </center>
         </div>
         <div flex-container="row" flex-gutter="24">
-          <div flex-item style="margin-left: 5%; margin-right: 5%" class="bgc-light-blue-800 p+">
+          <div flex-item style="margin-left: 5%; margin-right: 5%">
             <lx-select ng-model="data.school" placeholder="School"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'schools_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
@@ -54,22 +54,14 @@
           </div>
         </div>
 
-        <div flex-container="row">
+        <div flex-container="row" style="padding: 5%;">
           <div flex-item>
-            <button class="btn btn--l btn--blue btn--raised"type="submit"
+            <button class="btn btn--l btn--blue btn--raised" type="submit"
                     ng-submit="submit()" lx-ripple />Add Professor</button>
           </div>
         </div>
 
         {% endverbatim %}
-
-
-          <div class="toolbar__right">
-              <lx-search-filter model="searchFilter.third" position="right" filter-width="400px" theme="dark" closed></lx-search-filter>
-          </div>
-
-
-
         </form>
       </div>
     </div>
