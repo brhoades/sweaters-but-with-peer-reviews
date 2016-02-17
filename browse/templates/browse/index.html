@@ -30,13 +30,17 @@
                   <div flex-container="column" align="left">
                     <div ng-app="lumxWrap">
                       <div>
-                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700 {{ vote|yesno:"active," }}" action="up" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i></button>
+                        <button class="up btn btn--l btn--deep-purple btn--fab {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="up" lx-ripple>
+                          <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i>
+                        </button>
                       </div>
                       <div>
                         <i class="icon icon--xs icon--white icon--flat mdi mdi-brightness-1 tc-grey-400"></i>
                       </div>
                       <div>
-                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700 {{ vote|yesno:",active," }}" action="down" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i></button>
+                        <button class="down btn btn--l btn--deep-purple btn--fab {{ vote|yesno:"bgc-deep-purple-A500,bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="down" lx-ripple>
+                          <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i>
+                        </button>
                       </div>
                     </div>
                   </div>

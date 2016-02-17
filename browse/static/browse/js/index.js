@@ -15,8 +15,39 @@ $('a.follow').click(function () {
 
 $(document).ready(function() {
   $('button').click(function() {
-    var review_id = $(this).closest('.card').attr('review-id');
     var action = $(this).attr('action');
+
+    var review_div = $(this).closest('.card');
+    var review_id = review_div.attr('review-id');
+
+    var up = $(review_div).find("button.up");
+    var down = $(review_div).find("button.down");
+
+
+    if (action == "up") {
+      $(up).toggleClass("active");
+      $(up).toggleClass("bgc-deep-purple-A500");
+      $(up).toggleClass("bgc-deep-purple-900");
+      if ($(down).hasClass("active")) {
+        $(down).removeClass("active");
+        $(down).removeClass("bgc-deep-purple-900");
+        $(down).addClass("bgc-deep-purple-A500");
+      }
+    }
+    else if (action == "down") {
+      $(down).toggleClass("active");
+      $(down).toggleClass("bgc-deep-purple-A500");
+      $(down).toggleClass("bgc-deep-purple-900");
+      if ($(up).hasClass("active")) {
+        $(up).removeClass("active");
+        $(up).removeClass("bgc-deep-purple-900");
+        $(up).addClass("bgc-deep-purple-A500");
+      }
+    }
+    else {
+      return;
+    }
+    
 
     $.ajax({
       url: "new/add_vote",

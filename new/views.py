@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from browse.models import ReviewVote, Review
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -57,23 +57,29 @@ def addVote(request):
         review = Review.objects.get(id=review_id)
 
         try:
-            exists = ReviewVote.objects.filter(target=review,
-                                               owner=user).exists()
+            vote = ReviewVote.objects.filter(target=review,
+                                             owner=user)
 
-            # vote doesn't exist yet, and a vote direction is given
-            if not exists and (action == "up" or action == "down"):
+            # If the vote exists, we need to change it based on input.
+            # Currently votes are changed as such:
+            #     If the user presses the same direction as their current vote
+            #     then the vote is removed
+            #     If the user presses opposite their vote, the vote is changed
+            #     to the new direction
+            if vote.exists():
+                vote = vote[0]
+                if (vote.quality and action == "up") or \
+                   (not vote.quality and action == "down"):
+                    vote.delete()
+                else:
+                    vote.quality = (action == "up")
+                    vote.save()
+            # vote doesn't exist yet, then it needs to be created.
+            elif (action == "up" or action == "down"):
                 vote = ReviewVote(target=review,
                                   owner=user,
                                   quality=(action == "up"))
                 vote.save()
-            # vote does exist and needs to be removed
-            elif exists:
-                vote = ReviewVote.objects.get(target=review, owner=user)
-                # This only deletes the vote if the action is
-                # opposite the current vote
-                if (action != "up" and vote.quality) or \
-                        (action != "down" and not vote.quality):
-                    vote.delete()
 
         except:
             jsonResponse = {"success": False,
@@ -81,5 +87,7 @@ def addVote(request):
             return HttpResponse(json.dumps(jsonResponse),
                                 content_type="application/json")
 
-    return HttpResponse(json.dumps({"success": True}),
-                        content_type="application/json")
+        return HttpResponse(json.dumps({"success": True}),
+                            content_type="application/json")
+    else:
+        return HttpResponseNotAllowed(["POST"])
