@@ -54,6 +54,8 @@
           <span class="display-block">{{ school.name }}</a></span>
           <span class="display-block fs-body-1 tc-black-2">
             <a href="{{ school.url }}">{{ school.url }}</a></span>
+            <br />
+            <a href="{% url 'school' school.id %}">View School Reviews</a></span>
         </div>
         <div class="list-row__secondary">
           <i class="icon icon--xs icon--blue icon--flat mdi mdi-information"></i>
