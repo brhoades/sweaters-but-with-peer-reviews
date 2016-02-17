@@ -63,9 +63,14 @@
             <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
           </div>
         </div>
+
+        <div flex-container="row">
+          <div flex-item>
+            <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
+          </div>
+        </div>
           {% endverbatim %}
 
-        <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
         </form>
       </div>
     </div>
