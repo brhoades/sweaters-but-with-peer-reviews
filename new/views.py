@@ -1,11 +1,11 @@
 from django.http import HttpResponse
-from browse.models import ReviewVote, Review, Professor, School
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
 
 import json
 
-from new.forms import ReviewForm, ProfessorForm, SchoolForm
+from browse.models import ReviewVote, Review, Professor, School, Department
+from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm
 
 
 def get_template_for_model(request, model_form_map, page):
@@ -18,6 +18,8 @@ def get_template_for_model(request, model_form_map, page):
         template = loader.get_template("new/professor.html")
     elif page == "school":
         template = loader.get_template("new/school.html")
+    elif page == "department":
+        template = loader.get_template("new/department.html")
     else:
         return HttpResponse("Put a 404 here or something.")
 
@@ -35,11 +37,13 @@ def new(request, page=None):
     response = {"error": {"error": ""}}
     model_map = {"review": Review,
                  "professor": Professor,
-                 "school": School
+                 "school": School,
+                 "department": Department
                  }
     model_form_map = {"review": ReviewForm,
                       "professor": ProfessorForm,
-                      "school": SchoolForm
+                      "school": SchoolForm,
+                      "department": DepartmentForm
                       }
 
     if request.method != "POST":

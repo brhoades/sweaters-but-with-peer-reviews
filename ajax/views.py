@@ -1,4 +1,5 @@
-from browse.models import Review, Professor, Course, School, Department
+from browse.models import Review, Professor, Course, School, Department,\
+    Field, FieldCategory
 from django.http import HttpResponse
 from django.core import serializers
 from django.db.models import Q
@@ -34,6 +35,16 @@ def get_professors_matching(request, partial):
                         Professor.objects
                         .filter(Q(last_name__icontains=partial)
                                 | Q(first_name__icontains=partial))))
+
+
+def get_fields_matching(request, partial):
+    return HttpResponse(serializers.serialize("json",
+                        Field.objects.filter(name__icontains=partial)))
+
+
+def get_fields_categories_matching(request, partial):
+    return HttpResponse(serializers.serialize("json",
+                        FieldCategory.objects.filter(name__icontains=partial)))
 
 
 def get_fields_for_model(request, model=""):
