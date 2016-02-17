@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^course_per_professor$', aviews.get_course_per_professor),
     url(r'^get_fields_for_model/(?P<model>[A-Za-z_]+)$',
         aviews.get_fields_for_model),
+
+    url(r'^view_for_model_at_id/(?P<model>[^\/]+)/(?P<id>[0-9]+)$',
+        aviews.get_view_for_model),
 ]

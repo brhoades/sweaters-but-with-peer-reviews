@@ -19,11 +19,16 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
     error: "",
   };
 
+  $scope.original = {
+    error: "",
+  };
+
   // Get our field names automatically
   $http.get("/get/get_fields_for_model/" + $scope.type).success(function(data) {
     data.forEach(function(e, i, l) {
       $scope.data[e] = "";
       $scope.valid[e] = "";
+      $scope.original[e] = "";
     });
   });
 
@@ -60,17 +65,21 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
         // Always expects, if any elements, a fields item in it
         $scope.ajax.list = [];
         $scope.ajax.loading = false;
-        $scope.valid = {
-          error: "",
-          text: "",
-          target: "",
-          course: ""
-        };
+        $scope.valid = angular.copy($scope.original);
+
         if(data != undefined && data.error != undefined) {
           $scope.valid = data.error;
         }
-        if(data.redirect != undefined) {
-          $window.location.href = data.redirect;
+        if(data != undefined && data.id != undefined) {
+          $http.get("/get/view_for_model_at_id/" + type + "/" + data.id).
+              $scope.ajax.loading = true;
+              success(function(data) {
+                // Always expects, if any elements, a fields item in it
+                  $window.location.href = data.url;
+              }).
+              error(function() {
+                  $scope.ajax.loading = false;
+              });
         }
       }).
     error(function() {

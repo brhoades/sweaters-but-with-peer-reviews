@@ -62,7 +62,7 @@ def new(request, page=None):
     data = json.loads(request.body.decode())
 
     if page not in model_map.keys():
-        return json_error("Unknown page requested.")
+        return json_error({"error": "Unknown page requested."})
 
     model = model_map[page]
 
@@ -70,10 +70,10 @@ def new(request, page=None):
     del data["error"]
 
     # If model has an owner or created by field, add us
-    if "owner" in model._meta.get_all_field_names():
-        data["owner"] = {"id": request.user.id}
-    elif "created_by" in model._meta.get_all_field_names():
-        data["created_by"] = {"id": request.user.id}
+    if model_form_map[page].needs_owner:
+        data["owner"] = request.user
+    elif model_form_map[page].needs_created_by:
+        data["created_by"] = request.user
 
     for key in data.keys():
         # Check that this is a key that exists
@@ -111,7 +111,7 @@ def new(request, page=None):
         new = model(**data)
     except Exception as e:
         print("ERROR: " + str(e))
-        return HttpResponse(json.dumps({"error": str(e)}))
+        return HttpResponse(json_error({"error": str(e)}))
 
     # Save and return all info
     new.save()
