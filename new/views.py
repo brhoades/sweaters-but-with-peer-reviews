@@ -4,8 +4,10 @@ from django.template import loader, RequestContext
 
 import json
 
-from browse.models import ReviewVote, Review, Professor, School, Department
-from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm
+from browse.models import ReviewVote, Review, Professor, School, Department, \
+    Field, FieldCategory
+from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
+    FieldForm, FieldCategoryForm
 
 
 def get_template_for_model(request, model_form_map, page):
@@ -20,6 +22,10 @@ def get_template_for_model(request, model_form_map, page):
         template = loader.get_template("new/school.html")
     elif page == "department":
         template = loader.get_template("new/department.html")
+    elif page == "field":
+        template = loader.get_template("new/field.html")
+    elif page == "fieldcategory":
+        template = loader.get_template("new/fieldcategory.html")
     else:
         return HttpResponse("Put a 404 here or something.")
 
@@ -38,12 +44,16 @@ def new(request, page=None):
     model_map = {"review": Review,
                  "professor": Professor,
                  "school": School,
-                 "department": Department
+                 "department": Department,
+                 "field": Field,
+                 "fieldcategory": FieldCategory,
                  }
     model_form_map = {"review": ReviewForm,
                       "professor": ProfessorForm,
                       "school": SchoolForm,
-                      "department": DepartmentForm
+                      "department": DepartmentForm,
+                      "field": FieldForm,
+                      "fieldcategory": FieldCategoryForm,
                       }
 
     if request.method != "POST":
