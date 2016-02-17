@@ -10,7 +10,7 @@ def get_template_for_model(request, page):
     context = RequestContext(request)
 
     if page == "review":
-        template = loader.get_template("browse/new_review.html")
+        template = loader.get_template("new/review.html")
     elif page == "professor":
         template = loader.get_template("new/professor.html")
     else:

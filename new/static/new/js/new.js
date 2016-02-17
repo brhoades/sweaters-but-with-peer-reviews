@@ -7,6 +7,7 @@ $.ajaxSetup({
   }
 );
 
+// expects a ng-init to be defined with a internal "type" set (the name of the model)
 angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $window) {
   $scope.data = {
     error: ""
