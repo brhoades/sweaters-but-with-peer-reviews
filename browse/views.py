@@ -77,7 +77,7 @@ def schools(request):
     return HttpResponse(template.render(context))
 
 
-def school(request, id=None, page=0):
+def school(request, school_id=None, page=0):
     """
     This is a school page. If no id is provided, it displays a listing of
     all schoosl with information about each. If one is provided, it provides
@@ -88,7 +88,7 @@ def school(request, id=None, page=0):
     template = loader.get_template("browse/school.html")
     context = RequestContext(request)
 
-    context["school"] = get_object_or_404(School, id=id)
+    context["school"] = get_object_or_404(School, id=school_id)
     # Review id does not exist
     print(context["school"].__dict__)
 
@@ -116,7 +116,7 @@ def professors(request):
     return HttpResponse(template.render(context))
 
 
-def professor(request, id=None, page=0):
+def professor(request, professor_id=None, page=0):
     """
     This is a professor profile page (not a user). It provides information
     about courses taught, latest reviews, and aggregate ratings. If an id is
@@ -127,7 +127,7 @@ def professor(request, id=None, page=0):
     template = loader.get_template("browse/professor.html")
     context = RequestContext(request)
 
-    context["professor"] = get_object_or_404(Professor, id=id)
+    context["professor"] = get_object_or_404(Professor, id=professor_id)
     # Review id does not exist
     print(context["professor"].__dict__)
 

@@ -43,6 +43,7 @@
           <div class="list-row__content">
             <span class="display-block">{{ professor.first_name }} {{ professor.last_name }}</a></span>
             <span class="display-block fs-body-1 tc-black-2">{{ professor.school.name }}</span>
+            <a href="{% url 'professor' professor_id=professor.id %}">View</a><br />
           </div>
           <div class="list-row__secondary">
             <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
