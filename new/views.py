@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.core import serializers
-from browse.models import ReviewVote, Review, Professor
+from browse.models import ReviewVote, Review, Professor, School
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
 import json
@@ -14,6 +14,8 @@ def get_template_for_model(request, page):
         template = loader.get_template("new/review.html")
     elif page == "professor":
         template = loader.get_template("new/professor.html")
+    elif page == "school":
+        template = loader.get_template("new/school.html")
     else:
         return HttpResponse("Put a 404 here or something.")
 
@@ -29,7 +31,8 @@ def new(request, page=None):
     model = None
     response = {"error": {"error": ""}}
     model_map = {"review": Review,
-                 "professor": Professor
+                 "professor": Professor,
+                 "school": School
                  }
 
     if request.method != "POST":
@@ -54,8 +57,8 @@ def new(request, page=None):
     for key in data.keys():
         # Check that this is a key that exists
         if key not in model._meta.get_all_field_names():
-            return json_error(''.join(["No field for ", str(model), ": ",
-                                       key]))
+            return json_error(''.join(["No field for ", str(model), ": \"",
+                                       key, "\""]))
         # Check that an id field exists for required foreign key fields
         field = model._meta.get_field(key)
         if field.is_relation and isinstance(data[key], dict):
@@ -79,11 +82,12 @@ def new(request, page=None):
     try:
         new = model(**data)
     except Exception as e:
+        print("ERROR: " + str(e))
         return HttpResponse(json.dumps({"error": str(e)}))
 
     # Save and return all info
     new.save()
-    return HttpResponse(serializers.serialize("json", new))
+    return HttpResponse(json.dumps({"id": new.id}))
 
 
 def addVote(request):
