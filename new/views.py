@@ -10,7 +10,7 @@ def get_template_for_model(request, page):
     context = RequestContext(request)
 
     if page == "review":
-        template = loader.get_teamplate("new/review.html")
+        template = loader.get_template("browse/new_review.html")
     elif page == "professor":
         template = loader.get_template("new/professor.html")
     else:
@@ -26,7 +26,7 @@ def json_error(data):
 @login_required
 def new(request, page=None):
     model = None
-    response = {"error": {}}
+    response = {"error": {"error": ""}}
     model_map = {"review": Review,
                  "professor": Professor
                  }
@@ -41,6 +41,8 @@ def new(request, page=None):
 
     model = model_map[page]
 
+    del data["error"]
+
     for key in data.keys():
         # Check that this is a key that exists
         if key not in model._meta.get_all_field_names():
@@ -48,7 +50,7 @@ def new(request, page=None):
                                        key]))
         # Check that an id field exists for required foreign key fields
         field = model._meta.get_field(key)
-        if field.get_internal_name() == "ForeignKey":
+        if field.is_relation:
             if "id" not in data[key]:
                 response["error"][key] = "No {} specified".format(
                     field.target_field.model.__name__)

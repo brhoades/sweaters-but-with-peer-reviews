@@ -9,18 +9,21 @@ $.ajaxSetup({
 
 angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $window) {
   $scope.data = {
-      text: '',
-      target: '',
-      course: ''
+    error: ""
   };
 
   $scope.valid = {
     error: "",
-    text: "",
-    target: "",
-    course: ""
   };
-  
+
+  // Get our field names automatically
+  $http.get("/get/get_fields_for_model/review").success(function(data) {
+    data.forEach(function(e, i, l) {
+      $scope.data[e] = "";
+      $scope.valid[e] = "";
+    });
+  });
+
   $scope.description = {
     update: function(newVal) {
       $scope.formData["text"] = newVal;
