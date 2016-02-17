@@ -1,54 +1,67 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load gravatar %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
   <br />
-  {{ message }}<br />
   <br />
-  <br />
-  <!--
-  <ul>
-    <li><a href="{% url 'reviews_overview' %}">Reviews Overview</a></li>
-    <li><a href="{% url 'reviews' 2 %}">Reviews Pg 2</a></li>
-    <li><a href="{% url 'reviews_by_type_one' page=0 type='by_school' first_id=0 %}">All Review at School #0</a></li>
-    <li><a href="{% url 'reviews_by_type_one' page=0 type='by_professor' first_id=0 %}">All Reviews for  Professor #0</a></li>
-    <li><a href="{% url 'reviews_by_type_two' page=0 type='by_school_professor' first_id=0 second_id=0 %}">All Review Professor #0 at School #0</a></li>
-  </ul>
-
-  {% for var in numbers %}
-    {{ var }}<br />
-  {% endfor %}
-  -->
-
-
-  <div ng-app="lumxWrap" id="demo">
-  
-    <h2>This is a form</h2><br />
-    <form method="post" action="">
-      {% csrf_token %}
-      {{ form }} 
-      <br />
-      <input type="submit" value="Submit Review" class="btn btn--xl btn--blue btn--raised" lx-ripple />
-    </form>
-    <div class="divider divider" style="height: 40px;"></div>
-
-    <div flex-item>
-        <lx-select ng-model="ajax.selected" change="cbSelect.exec(newValue, oldValue)" placeholder="Lorem Ipsum"
-                   choices="ajax.list"  filter="ajax.update(newValue, oldValue)" loading="{{ ajax.loading }}"
-                   min-length="2" allow-clear="true" selection-to-model="ajax.toModel(data, callback)"
-                   model-to-selection="ajax.toSelection(data, callback)">
-            <lx-select-selected>
-               <!-- Variables go here... -->
-            </lx-select-selected>
-
-            <lx-select-choices>
-                <!-- More variables go here-->
-            </lx-select-choices>
-        </lx-select>
-
-        <button class="btn btn--m btn--blue btn--raised mt" ng-click="ajax.selected = 'Inception'" lx-ripple>Set to 'Inception'</button>
-    </div>
-    
+  <div ng-app="lumxWrap">
+    {% if reviews|length > 0 %}
+      {% for review in reviews %}
+      <div class="divider divider--dark" ></div>
+      <div class="card bgc-grey-300 tc-black-1 p+" review-id="{{ review.id }}">
+        <li class="list-row">
+          <div flex-container="row" flex-gutter="24">
+            <div flex-item="8">
+              <div flex-container="column" align="left">
+                <div>
+                  <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                          action="up" lx-ripple>
+                    <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i>
+                  </button>
+                </div>
+                <div>
+                  <i style="display: hidden;"
+                     class="icon icon--xs icon--blue icon--flat mdi mdi-brightness-1 tc-grey-300"></i>
+                </div>
+                <div>
+                  <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                          action="down" lx-ripple>
+                    <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div flex-item="2">
+              <div class="list-row__primary" >
+                <a href="{% url 'profile' review.owner.id %}"><img src="{% gravatar_url review.owner.email 200 %}" width="100" height="100" class="img-round" ></a>
+              </div>
+            </div>
+          </div>
+          {% if review.owner.first_name or review.owner.last_name %}
+          <div flex-item>
+            <div class="list-row__content">
+              <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</a></span>
+              <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}
+                -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
+            </div>
+          </div>
+          {% else %}
+          <div class="list-row__content">
+            <span class="display-block">{{ review.owner.username }}</a></span>
+            <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}</span>
+          </div>
+          <div class="list-row__secondary">
+            <i class="icon icon--xs icon--blue icon--flat mdi mdi-information"></i>
+          </div>
+                    
+          {% endif %}
+        </li>
+      </div>
+      {% endfor %}
+    {% else %}
+      <h2>There are no reviews</h2>
+    {% endif %}
   </div>
 {% endblock %}

@@ -169,6 +169,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     """
     template = "browse/reviews.html"
     context = RequestContext(request)
+    context["reviews"] = Review.objects.all()
 
     if type == "by_school":
         context["message"] =\
