@@ -57,38 +57,25 @@ def profile(request, id=None, page=0):
 
     return render(request, template, context)
 
-def schools(request, type="all", first_id=None, second_id=None, page=0):
-    """
-    This is the general-purpose review-viewing page. It allows for returning
-    views of specific requests from the user.
-
-    :Parameters:
-        * *page*: (``int``) --
-            The page to start listing from.
-        * *type*: (``str``) --
-            The type of review view page to get. Valid types are:
-                * all (default)
-                * by_school
-                * by_professor
-                * by_school_professor
-        * *first_id*: (``int``) --
-            The first id of the requested view type (ie professor).
-        * *second_id*: (``int``) --
-            The second id of the requested view type (ie school).
-    """
-    template = "browse/schools.html"
+def schools(request):
+    template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
 
-    if type == "by_name":
-        context["message"] =\
-            "This is the page that lists all schools by name {1}"\
-            "(pg {0}).".format(page, first_id)
-    else:
-        context["message"] =\
-            "This is the page that lists all schools (pg {0})."\
-            .format(page)
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
 
-    return render(request, template, context)
+    context["schools"] = School.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
+
+    return HttpResponse(template.render(context))
 
 
 def school(request, id=None, page=0):
@@ -109,38 +96,25 @@ def school(request, id=None, page=0):
     return HttpResponse(template.render(context))
 
 
-def professors(request, type="all", first_id=None, second_id=None, page=0):
-    """
-    This is the general-purpose review-viewing page. It allows for returning
-    views of specific requests from the user.
-
-    :Parameters:
-        * *page*: (``int``) --
-            The page to start listing from.
-        * *type*: (``str``) --
-            The type of review view page to get. Valid types are:
-                * all (default)
-                * by_school
-                * by_professor
-                * by_school_professor
-        * *first_id*: (``int``) --
-            The first id of the requested view type (ie professor).
-        * *second_id*: (``int``) --
-            The second id of the requested view type (ie school).
-    """
-    template = "browse/professors.html"
+def professors(request):
+    template = loader.get_template("browse/professors.html")
     context = RequestContext(request)
 
-    if type == "by_last_name":
-        context["message"] =\
-            "This is the page that lists all professors by last name {1}"\
-            "(pg {0}).".format(page, first_id)
-    else:
-        context["message"] =\
-            "This is the page that lists all professors (pg {0})."\
-            .format(page)
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
 
-    return render(request, template, context)
+    context["professors"] = Professor.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
+
+    return HttpResponse(template.render(context))
 
 
 def professor(request, id=None, page=0):
