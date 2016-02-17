@@ -1,6 +1,7 @@
 from browse.models import Review, Course, Professor
 from django.forms import ModelForm
 
+
 class ReviewForm(ModelForm):
     class Meta:
         model = Review

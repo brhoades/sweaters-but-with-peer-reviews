@@ -2,12 +2,13 @@
 {% load staticfiles %}
 {% block title %}New Review{% endblock %}
 {% block js %}
-  <script src="{% static 'browse/js/new_review.js' %}"></script>
+  <script src="{% static 'new/js/new.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <div>
-    <div ng-controller="getReviewForm">
+  <!-- Type here passes off to our controller in its scope !-->
+  <div ng-app"lumxWrap">
+    <div ng-controller="form-handler" model="review">
 
       <form method="post" ng-submit="submit()">
         {% csrf_token %}
@@ -23,7 +24,7 @@
         <div flex-container="row" flex-gutter="24">
 
           <div flex-item style="margin-left: 5%; margin-right: 5%" class="bgc-light-blue-800 p+">
-            <lx-select ng-model="data.target" change="cbSelect.exec('target', newValue)" placeholder="Professor"
+            <lx-select ng-model="data.target" placeholder="Professor"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'professors_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                        error="valid.target != ''"
@@ -40,7 +41,7 @@
             <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
           </div>
           <div flex-item style="margin-right: 5%; margin-left: 5%" class="bgc-light-blue-800 p+">
-            <lx-select ng-model="data.course" change="cbSelect.exec('course', newValue)"  placeholder="Course"
+            <lx-select ng-model="data.course" placeholder="Course"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'courses_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                        error="valid.course != ''"
@@ -60,7 +61,7 @@
         <div flex-container="row">
           <div flex-item>
             <lx-text-field label="Write your review here" error="valid.text != ''">
-              <input ng-model="data.text" change="description.update(newValue)" type="text"></input>
+              <input ng-model="data.text"  type="text" ng-minlength="50"></input>
             </lx-text-field>
             <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
           </div>
