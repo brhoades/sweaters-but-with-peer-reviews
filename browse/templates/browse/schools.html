@@ -42,7 +42,8 @@
         </div>
         <div class="list-row__content">
           <span class="display-block">{{ school.name }}</a></span>
-          <span class="display-block fs-body-1 tc-black-2">{{ school.email_pattern }}</span>
+          <span class="display-block fs-body-1 tc-black-2">
+            <a href="{{ school.url }}">{{ school.url }}</a></span>
         </div>
         <div class="list-row__secondary">
           <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>

@@ -42,8 +42,15 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
                     // Always expects, if any elements, a fields item in it
                     $scope.ajax.list = [];
                     data.forEach(function(e, i, l) {
-                      e.fields["id"] = e.pk;  // move this over for later
-                      $scope.ajax.list.push(e.fields);
+                      if(e.fields != undefined && e.fields.id == undefined)
+                      {
+                        e.fields["id"] = e.pk;  // move this over for later
+                        $scope.ajax.list.push(e.fields);
+                      }
+                      else
+                      {
+                        $scope.ajax.list.push(e);
+                      }
                     });
                       $scope.ajax.loading = false;
                   }).
