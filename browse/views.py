@@ -5,7 +5,7 @@ from django.contrib import messages
 
 from browse.forms import ReviewForm
 
-from browse.models import Review, User, ReviewVote
+from browse.models import Review, User, Professor, School, ReviewVote
 from django.contrib.auth import authenticate, login as auth_login, \
     logout as auth_logout
 
@@ -79,11 +79,10 @@ def school(request, id=None, page=0):
     template = loader.get_template("browse/school.html")
     context = RequestContext(request)
 
-    if id is None:
-        context["message"] = "This is a school listing, since there's no id"
-    else:
-        context["message"] = "This is a school overview for school {0}"\
-                             .format(id)
+    context["school"] = get_object_or_404(School, id=id)
+    # Review id does not exist
+    print(context["school"].__dict__)
+
     return HttpResponse(template.render(context))
 
 
@@ -98,12 +97,10 @@ def professor(request, id=None, page=0):
     template = loader.get_template("browse/professor.html")
     context = RequestContext(request)
 
-    if id is None:
-        context["message"] =\
-            "This is a professor listing, since there's no id"
-    else:
-        context["message"] = "This is a professor overview for prof #{0}"\
-                             .format(id)
+    context["professor"] = get_object_or_404(Professor, id=id)
+    # Review id does not exist
+    print(context["professor"].__dict__)
+
     return HttpResponse(template.render(context))
 
 

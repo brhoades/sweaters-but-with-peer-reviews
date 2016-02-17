@@ -3,9 +3,8 @@ import browse.views as bviews
 
 urlpatterns = [
     url(r'^user/(?P<id>[0-9]+)?$', bviews.profile, name="profile"),
-    url(r'^school/(P?<id>[0-9]+)?$', bviews.school, name="school"),
-    url(r'^professor/(P?<id>[0-9]+)?$', bviews.professor, name="professor"),
-
+    url(r'^school/(?P<id>[0-9]+)?$', bviews.school, name="school"),
+    url(r'^professor/(?P<id>[0-9]+)?$', bviews.professor, name="professor"),
     url(r'^review/(?P<review_id>[0-9]+)/?$', bviews.review, name="review"),
     url(r'^new_review/?$', bviews.new_review,
         name="new_review"),
