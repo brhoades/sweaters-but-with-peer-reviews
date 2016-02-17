@@ -113,9 +113,14 @@ def new(request, page=None):
         print("ERROR: " + str(e))
         return HttpResponse(json_error({"error": str(e)}))
 
+    for field in model_form_map[page].Meta.fields:
+        response["error"][field] = ""  # clear errors
+
+    response["id"] = new.id  # return new id at top level.
+
     # Save and return all info
     new.save()
-    return HttpResponse(json.dumps({"id": new.id, "error": {}}))
+    return HttpResponse(json.dumps(response))
 
 
 def addVote(request):

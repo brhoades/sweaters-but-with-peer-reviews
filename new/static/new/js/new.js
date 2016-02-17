@@ -71,8 +71,7 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
           $scope.valid = data.error;
         }
         if(data != undefined && data.id != undefined) {
-          $http.get("/get/view_for_model_at_id/" + type + "/" + data.id).
-              $scope.ajax.loading = true;
+          $http.get("/get/view_for_model_at_id/" + $scope.type + "/" + data.id).
               success(function(data) {
                 // Always expects, if any elements, a fields item in it
                   $window.location.href = data.url;

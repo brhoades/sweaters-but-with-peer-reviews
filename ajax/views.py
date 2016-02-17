@@ -52,18 +52,22 @@ def get_fields_categories_matching(request, partial):
                         FieldCategory.objects.filter(name__icontains=partial)))
 
 
-def get_form_from_model(request, model):
+def get_form_from_model(model):
+    """
+    Returns an array of fields which must be filled. Raises ValueError
+    if unknown model is passed.
+    """
     modelforms = [ReviewForm, ProfessorForm, CourseForm, SchoolForm,
                   DepartmentForm, FieldForm, FieldCategoryForm]
 
     for form in modelforms:
-        if form.model is model:
-            return form.model
+        if form.Meta.model is model:
+            return form
     else:
         raise ValueError("Unknown model passed.")
 
 
-def get_model_from_string(request, model):
+def get_model_from_string(model):
     modelmap = {}
     models = [Review, Professor, Course, School, Department, Field,
               FieldCategory]
