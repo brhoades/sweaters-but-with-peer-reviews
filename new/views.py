@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from browse.models import ReviewVote, Review
-from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 import json

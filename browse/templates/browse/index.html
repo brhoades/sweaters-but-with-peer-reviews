@@ -19,9 +19,9 @@
   
     <div flex-container="row">
       <div flex-item="6">
-        {% if reviews|length > 0 %}
-          <h2 class="tc-white-1 p+" align="left">Latest {{reviews|length}} Review(s)</h2>
-          {% for review in reviews %}
+        {% if review_votes|length > 0 %}
+          <h2 class="tc-white-1 p+" align="left">Latest {{review_votes|length}} Review(s)</h2>
+          {% for review, vote in review_votes %}
           <div class="divider divider--dark" ></div>
           <div class="card bgc-grey-400 tc-white-1 p+" review-id="{{ review.id }}">
             <li class="list-row">
@@ -30,13 +30,13 @@
                   <div flex-container="column" align="left">
                     <div ng-app="lumxWrap">
                       <div>
-                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" action="up" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i></button>
+                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700 {{ vote|yesno:"active," }}" action="up" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i></button>
                       </div>
                       <div>
                         <i class="icon icon--xs icon--white icon--flat mdi mdi-brightness-1 tc-grey-400"></i>
                       </div>
                       <div>
-                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" action="down" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i></button>
+                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700 {{ vote|yesno:",active," }}" action="down" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i></button>
                       </div>
                     </div>
                   </div>
