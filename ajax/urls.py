@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^professors_matching/(?P<partial>.+)$',
         aviews.get_professors_matching),
     url(r'^course_per_professor$', aviews.get_course_per_professor),
+    url(r'^get_fields_for_model/(?P<model>[A-Za-z_]+)$',
+        aviews.get_fields_for_model),
 ]
