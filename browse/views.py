@@ -66,7 +66,28 @@ def profile(request, id=None, page=0):
     return render(request, template, context)
 
 
-def school(request, id=None, page=0):
+def schools(request):
+    template = loader.get_template("browse/schools.html")
+    context = RequestContext(request)
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
+
+    context["schools"] = School.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
+
+    return HttpResponse(template.render(context))
+
+
+def school(request, school_id=None, page=0):
     """
     This is a school page. If no id is provided, it displays a listing of
     all schoosl with information about each. If one is provided, it provides
@@ -77,14 +98,35 @@ def school(request, id=None, page=0):
     template = loader.get_template("browse/school.html")
     context = RequestContext(request)
 
-    context["school"] = get_object_or_404(School, id=id)
+    context["school"] = get_object_or_404(School, id=school_id)
     # Review id does not exist
     print(context["school"].__dict__)
 
     return HttpResponse(template.render(context))
 
 
-def professor(request, id=None, page=0):
+def professors(request):
+    template = loader.get_template("browse/professors.html")
+    context = RequestContext(request)
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
+
+    context["professors"] = Professor.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
+
+    return HttpResponse(template.render(context))
+
+
+def professor(request, professor_id=None, page=0):
     """
     This is a professor profile page (not a user). It provides information
     about courses taught, latest reviews, and aggregate ratings. If an id is
@@ -95,7 +137,7 @@ def professor(request, id=None, page=0):
     template = loader.get_template("browse/professor.html")
     context = RequestContext(request)
 
-    context["professor"] = get_object_or_404(Professor, id=id)
+    context["professor"] = get_object_or_404(Professor, id=professor_id)
     # Review id does not exist
     print(context["professor"].__dict__)
 
@@ -137,6 +179,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     """
     template = "browse/reviews.html"
     context = RequestContext(request)
+    context["reviews"] = Review.objects.all()
 
     if type == "by_school":
         context["message"] =\

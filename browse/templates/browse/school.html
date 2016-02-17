@@ -7,7 +7,7 @@
   <strong>School</strong>: {{ school.name }}<br />
   <strong>Location</strong>: {{ school.location }}<br />
   <strong>Email Pattern</strong>:{{ school.email_patter }}<br />
-  <strong>Website</strong>:{{ school.url }}<br />
+  <strong>Website</strong>:<a href="{{school.url}}">{{ school.url }}<a /><br />
   <br />
   Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
   {% if professor.update_ts %}

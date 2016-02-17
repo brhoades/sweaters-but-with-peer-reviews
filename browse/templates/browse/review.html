@@ -3,10 +3,12 @@
 {% block title %}View Review{% endblock %}
 
 {% block content %}
+<div id="demo">
   <br />
-  <strong>School</strong>: {{ review.course.department.school.name }}<br ?>
-  <strong>Department</strong>: {{ review.course.department.name }}<br >
+  <strong>School</strong>: {{ review.course.department.school.name }}<br />
+  <strong>Department</strong>: {{ review.course.department.name }}<br />
   <strong>Course</strong>: {{ review.course.name }} ({{ review.course.number }})<br />
+  <strong>Professor</strong>: {{ review.target.first_name }} {{ review.target.last_name }}<br />
   <strong>Reviewer</strong>:
   {% if review.owner.first_name or review.owner.last_name %}
     {{ review.owner.first_name }} {{review.owner.last_name }} ({{ review.owner.username }})<br />
@@ -22,4 +24,5 @@
   {% if review.update_ts %}
     Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}<br />
   {% endif %}
+</div>
 {% endblock %}

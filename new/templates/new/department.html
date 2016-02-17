@@ -8,7 +8,7 @@
 {% block content %}
   <!-- Type here passes off to our controller in its scope !-->
   <div ng-app"lumxWrap">
-    <div ng-controller="form-handler" model="department">
+    <div ng-controller="form-handler" model="department" id="demo" class="card">
 
       <form method="post" ng-submit="submit()">
         {% csrf_token %}

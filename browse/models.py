@@ -58,14 +58,15 @@ class Department(models.Model):
     def to_json(self):
         # Forcing school to be expanded
         return {
+            "id": self.pk,
             "name": self.name,
-            "school": self.school,
-            "schoo_name": self.school_name,
-            "fields": self.fields,
+            "school": self.school.id,
+            "school_name": self.school.name,
+            # "fields": serializers.serialize("json", self.fields),
             "url": self.url,
-            "created_ts": self.created_ts,
-            "updated_ts": self.updated_ts,
-            "created_by": self.created_by,
+            "created_ts": str(self.created_ts),
+            "updated_ts": str(self.updated_ts),
+            "created_by": str(self.created_by),
             }
 
 

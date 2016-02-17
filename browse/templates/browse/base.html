@@ -32,7 +32,7 @@
     {% block header %}{% endblock %}
   </head>
 
-  <body class="bgc-light-blue-A400 p+">
+  <body class="bgc-blue-200 p+">
     <div class="top-bar bgc-light-blue-800"></div>
 
     <div ng-app="lumxWrap">
@@ -122,14 +122,29 @@
             </li>
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                    <a href="{% url 'school' %}" class="c-menu__link fs-headline display-block">School</a>
+                    <a href="{% url 'schools' %}" class="c-menu__link fs-headline display-block">Schools</a>
                 </div>
             </li>
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                    <a href="{% url 'professor' %}" class="c-menu__link fs-headline display-block">Professor</a>
+                    <a href="{% url 'professors' %}" class="c-menu__link fs-headline display-block">Professors</a>
+                </div>
+            </li>  
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">New Course</a>
+                </div>
+            </li>  
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">New Professor</a>
                 </div>
             </li>         
+            <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                    <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">New Review</a>
+                </div>
+            </li>  
         </ul>
         
       </ul>

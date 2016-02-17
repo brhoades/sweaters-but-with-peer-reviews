@@ -8,7 +8,7 @@
 {% block content %}
   <!-- Type here passes off to our controller in its scope !-->
   <div ng-app"lumxWrap">
-    <div ng-controller="form-handler" model="course">
+    <div ng-controller="form-handler" model="course" id="demo" class="card">
 
       <form method="post" ng-submit="submit()">
         {% csrf_token %}
@@ -21,8 +21,8 @@
             {{ valid.error }}
           </center>
         </div>
-          <div flex-item style="margin-left: 5%; margin-right: 5%" class="bgc-light-blue-800 p+">
-            <lx-select ng-model="data.department" placeholder="department"
+          <div flex-item style="margin-left: 5%; margin-right: 5%">
+            <lx-select ng-model="data.department" placeholder="Department (School)"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'departments_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                        error="valid.department != ''"
@@ -50,24 +50,16 @@
               </lx-text-field>
               <span class="text-field-error" ng-show="valid.number != ''">{{ valid.number }}</span>
           </div>
-        </div>
-
-        <div flex-container="row">
-          <div flex-item>
-            <button class="btn btn--l btn--blue btn--raised"type="submit"
-                    ng-submit="submit()" lx-ripple />Add Course</button>
+          <div flex-container="row">
+            <div flex-item>
+              <button class="btn btn--l btn--blue btn--raised"type="submit"
+                      ng-submit="submit()" lx-ripple />Add Course</button>
+            </div>
           </div>
+
         </div>
 
         {% endverbatim %}
-
-
-          <div class="toolbar__right">
-              <lx-search-filter model="searchFilter.third" position="right" filter-width="400px" theme="dark" closed></lx-search-filter>
-          </div>
-
-
-
         </form>
       </div>
     </div>
