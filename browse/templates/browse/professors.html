@@ -21,20 +21,27 @@
     <h2 class="tc-white-1 p+" align="left">Latest {{professors|length}} Professor(s)</h2>
     {% for professor in professors %}
       <div class="divider divider--dark" ></div>
-      <div class="card bgc-grey-400 tc-white-1 p+" professor-id="{{ professor.id }}">
+      <div class="card bgc-grey-300 tc-black-1 p+" professor-id="{{ professor.id }}">
         <li class="list-row">
           <div flex-container="row" flex-gutter="24">
             <div flex-item="8">
               <div flex-container="column" align="left">
                 <div ng-app="lumxWrap">
                   <div>
-                    <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" action="up" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i></button>
+                    <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                            action="up" lx-ripple>
+                      <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i>
+                    </button>
                   </div>
                   <div>
-                    <i class="icon icon--xs icon--white icon--flat mdi mdi-brightness-1 tc-grey-400"></i>
+                    <i style="display: hidden;"
+                       class="icon icon--xs icon--blue icon--flat mdi mdi-brightness-1 tc-grey-300"></i>
                   </div>
                   <div>
-                    <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" action="down" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i></button>
+                    <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                            action="down" lx-ripple>
+                      <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i>
+                    </button>
                   </div>
                 </div>
               </div>
