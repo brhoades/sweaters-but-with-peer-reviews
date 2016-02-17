@@ -60,13 +60,13 @@
         <div flex-container="row">
           <div flex-item>
               <lx-text-field label="Last name">
-                  <input type="text" ng-model="data.last_name" error="data.last_name != ''">
+                  <input type="text" ng-model="data.last_name" error="valid.last_name != ''">
               </lx-text-field>
           </div>
 
           <div flex-item>
               <lx-text-field label="First name">
-                  <input type="text" ng-model="data.first_name" error="data.first_name != ''">
+                  <input type="text" ng-model="data.first_name" error="valid.first_name != ''">
               </lx-text-field>
               <span class="text-field-error" ng-show="valid.first_name != ''">{{ valid.text }}</span>
           </div>
