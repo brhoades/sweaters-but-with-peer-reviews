@@ -25,6 +25,8 @@
       <li class="list-row">
         <div flex-container="row" flex-gutter="24">
           <div flex-item="8">
+            {% comment %}
+            Why do schools have up/down arrows?
             <div flex-container="column" align="left">
               <div ng-app="lumxWrap">
                 <div>
@@ -45,6 +47,7 @@
                 </div>
               </div>
             </div>
+            {% endcomment %}
           </div>
         </div>
         <div class="list-row__content">
@@ -53,7 +56,7 @@
             <a href="{{ school.url }}">{{ school.url }}</a></span>
         </div>
         <div class="list-row__secondary">
-          <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
+          <i class="icon icon--xs icon--blue icon--flat mdi mdi-information"></i>
         </div>
       </li>
     </div>
