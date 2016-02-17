@@ -62,11 +62,13 @@ def new(request, page=None):
             if "id" not in data[key]:
                 response["error"][key] = "No {} specified".format(
                     field.target_field.model.__name__)
-            elif not field.target_field.model.objects.filter(id=data[key]["id"]).count():
+            elif not field.target_field.model.objects.filter(
+                    id=data[key]["id"]).count():
                 response["error"][key] = "{} does not exist".format(
                     field.target_field.model.__name__)
             else:
-                data[key] = field.target_field.model.objects.get(id=data[key]["id"])
+                data[key] = field.target_field.model.objects.get(
+                    id=data[key]["id"])
 
     # Look for any errors
     for k, v in response["error"].items():
