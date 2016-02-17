@@ -55,6 +55,7 @@ def profile(request, id=None, page=0):
 
     return render(request, template, context)
 
+
 def schools(request):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
