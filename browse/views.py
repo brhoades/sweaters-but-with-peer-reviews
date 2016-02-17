@@ -13,7 +13,7 @@ def index(request):
     context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam Sucks and Dzu Rocks</h3>"
+    context["message"] = "<h3>Sam does not suck</h3>"
     context["numbers"] = []
 
     context["reviews"] = Review.objects.order_by('-created_ts')
@@ -56,6 +56,27 @@ def profile(request, id=None, page=0):
     return render(request, template, context)
 
 
+def schools(request):
+    template = loader.get_template("browse/schools.html")
+    context = RequestContext(request)
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
+
+    context["schools"] = School.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
+
+    return HttpResponse(template.render(context))
+
+
 def school(request, id=None, page=0):
     """
     This is a school page. If no id is provided, it displays a listing of
@@ -70,6 +91,27 @@ def school(request, id=None, page=0):
     context["school"] = get_object_or_404(School, id=id)
     # Review id does not exist
     print(context["school"].__dict__)
+
+    return HttpResponse(template.render(context))
+
+
+def professors(request):
+    template = loader.get_template("browse/professors.html")
+    context = RequestContext(request)
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
+
+    context["professors"] = Professor.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
 
     return HttpResponse(template.render(context))
 
