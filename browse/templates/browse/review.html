@@ -3,6 +3,7 @@
 {% block title %}View Review{% endblock %}
 
 {% block content %}
+<div id="demo">
   <br />
   <strong>School</strong>: {{ review.course.department.school.name }}<br ?>
   <strong>Department</strong>: {{ review.course.department.name }}<br >
@@ -22,4 +23,5 @@
   {% if review.update_ts %}
     Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}<br />
   {% endif %}
+</div>
 {% endblock %}

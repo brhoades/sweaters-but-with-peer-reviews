@@ -3,11 +3,11 @@ import browse.views as bviews
 
 urlpatterns = [
     url(r'^user/(?P<id>[0-9]+)?$', bviews.profile, name="profile"),
-    url(r'^school/(?P<id>[0-9]+)?$', bviews.school, name="school"),
+    url(r'^school/(?P<school_id>[0-9]+)?$', bviews.school, name="school"),
     url(r'^schools/?$', bviews.schools, name="schools"),
 
     url(r'^professors/?$', bviews.professors, name="professors"),
-    url(r'^professor/(?P<id>[0-9]+)?$', bviews.professor, name="professor"),
+    url(r'^professor/(?P<professor_id>[0-9]+)?$', bviews.professor, name="professor"),
 
     url(r'^review/(?P<review_id>[0-9]+)/?$', bviews.review, name="review"),
     url(r'^reviews/?$', bviews.reviews, name="reviews_overview"),
