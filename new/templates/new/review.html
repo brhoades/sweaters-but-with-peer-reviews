@@ -61,7 +61,7 @@
         <div flex-container="row">
           <div flex-item>
             <lx-text-field label="Write your review here" error="valid.text != ''">
-              <input ng-model="data.text"  type="text"></input>
+              <input ng-model="data.text"  type="text" ng-minlength="50"></input>
             </lx-text-field>
             <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
           </div>

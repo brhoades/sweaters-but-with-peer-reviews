@@ -26,12 +26,12 @@
               <lx-text-field label="Name">
                   <input type="text" ng-model="data.name" error="valid.name != ''">
               </lx-text-field>
-              <span class="text-field-error" ng-show="valid.name != ''">{{ valid.name }}</span>
+              <span class="text-field-error" ng-show="valid.name != ''" min-length="5">{{ valid.name }}</span>
           </div>
 
           <div flex-item>
               <lx-text-field label="URL">
-                  <input type="text" ng-model="data.url" error="valid.url != ''">
+                  <input type="url" ng-model="data.url" error="valid.url != ''">
               </lx-text-field>
               <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
           </div>
@@ -45,13 +45,17 @@
           </div>
         </div>
           {% endverbatim %}
+          {{ form.media }}
+          {{ form.as_p }}
 
-        <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Add School</button>
+        <button class="btn btn--l btn--blue btn--raised"type="submit" 
+                ng-submit="submit()" lx-ripple />Add School</button>
 
 
 
           <div class="toolbar__right">
-              <lx-search-filter model="searchFilter.third" position="right" filter-width="400px" theme="dark" closed></lx-search-filter>
+              <lx-search-filter model="searchFilter.third" position="right" 
+                                filter-width="400px" theme="dark" closed></lx-search-filter>
           </div>
 
 

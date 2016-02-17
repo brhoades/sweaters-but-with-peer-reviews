@@ -1,12 +1,14 @@
 from django.http import HttpResponse
-from django.core import serializers
 from browse.models import ReviewVote, Review, Professor, School
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
+
 import json
 
+from new.forms import ReviewForm, ProfessorForm, SchoolForm
 
-def get_template_for_model(request, page):
+
+def get_template_for_model(request, model_form_map, page):
     template = None
     context = RequestContext(request)
 
@@ -19,6 +21,7 @@ def get_template_for_model(request, page):
     else:
         return HttpResponse("Put a 404 here or something.")
 
+    context["form"] = model_form_map[page]
     return HttpResponse(template.render(context))
 
 
@@ -34,9 +37,13 @@ def new(request, page=None):
                  "professor": Professor,
                  "school": School
                  }
+    model_form_map = {"review": ReviewForm,
+                      "professor": ProfessorForm,
+                      "school": SchoolForm
+                      }
 
     if request.method != "POST":
-        return get_template_for_model(request, page)
+        return get_template_for_model(request, model_form_map, page)
 
     data = json.loads(request.body.decode())
 
@@ -72,6 +79,12 @@ def new(request, page=None):
             else:
                 data[key] = field.target_field.model.objects.get(
                     id=data[key]["id"])
+
+    # Check for required keys
+    for field in model_form_map[page].Meta.fields:
+        if field not in data or data[field] == "":
+            response["error"][field] = "No {} specified".format(
+                field)
 
     # Look for any errors
     for k, v in response["error"].items():
