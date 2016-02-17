@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.core import serializers
 from browse.models import ReviewVote, Review, Professor
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
@@ -41,7 +42,14 @@ def new(request, page=None):
 
     model = model_map[page]
 
+    # Otherwise we will complain about it existing
     del data["error"]
+
+    # If model has an owner or created by field, add us
+    if "owner" in model._meta.get_all_field_names():
+        data["owner"] = {"id": request.user.id}
+    elif "created_by" in model._meta.get_all_field_names():
+        data["created_by"] = {"id": request.user.id}
 
     for key in data.keys():
         # Check that this is a key that exists
@@ -50,24 +58,20 @@ def new(request, page=None):
                                        key]))
         # Check that an id field exists for required foreign key fields
         field = model._meta.get_field(key)
-        if field.is_relation:
+        if field.is_relation and isinstance(data[key], dict):
             if "id" not in data[key]:
                 response["error"][key] = "No {} specified".format(
                     field.target_field.model.__name__)
-            elif not model.objects.exists(id=data[key]["id"]):
+            elif not field.target_field.model.objects.filter(id=data[key]["id"]).count():
                 response["error"][key] = "{} does not exist".format(
                     field.target_field.model.__name__)
+            else:
+                data[key] = field.target_field.model.objects.get(id=data[key]["id"])
 
     # Look for any errors
     for k, v in response["error"].items():
         if len(v) > 0:
             return HttpResponse(json.dumps(response))
-
-    # If model has an owner or created by field, add us
-    if "owner" in model.get_all_field_names():
-        data["owner"] = request.user
-    elif "created_by" in model.get_all_field_names():
-        data["created_by"] = request.user
 
     # Try to create it
     try:
@@ -77,9 +81,7 @@ def new(request, page=None):
 
     # Save and return all info
     new.save()
-    return HttpResponse(json.dumps({"success": True,
-                                    "new": new
-                                    }))
+    return HttpResponse(serializers.serialize("json", new))
 
 
 def addVote(request):

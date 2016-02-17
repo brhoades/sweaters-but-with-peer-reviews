@@ -7,8 +7,10 @@ $.ajaxSetup({
   }
 );
 
-// expects a ng-init to be defined with a internal "type" set (the name of the model)
-angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $window) {
+// Expects a model param
+angular.module('lumxWrap').controller('form-handler', function($scope, $http, $window, $attrs) {
+  $scope.type = $attrs.model;
+
   $scope.data = {
     error: ""
   };
@@ -18,18 +20,12 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $
   };
 
   // Get our field names automatically
-  $http.get("/get/get_fields_for_model/review").success(function(data) {
+  $http.get("/get/get_fields_for_model/" + $scope.type).success(function(data) {
     data.forEach(function(e, i, l) {
       $scope.data[e] = "";
       $scope.valid[e] = "";
     });
   });
-
-  $scope.description = {
-    update: function(newVal) {
-      $scope.formData["text"] = newVal;
-    }
-  };
 
   $scope.ajax = {
       list: [],
@@ -57,16 +53,9 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $
       loading: false
   };
 
-  $scope.cbSelect = {
-    exec: function(type, newVal) {
-      // $scope.data[type] = newVal;
-      // console.log($scope.formData);
-    }
-  };
-
   $scope.submit = function() {
     $scope.ajax.loading = true;
-    $http.post("/new/review", JSON.stringify($scope.data)).
+    $http.post("/new/" + $scope.type, JSON.stringify($scope.data)).
       success(function(data) {
         // Always expects, if any elements, a fields item in it
         $scope.ajax.list = [];
