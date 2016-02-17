@@ -28,3 +28,11 @@
   position: relative;
   top: -7.5px;
 }
+
+.custom-form {
+  margin-top: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+}

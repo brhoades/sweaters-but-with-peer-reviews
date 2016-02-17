@@ -8,8 +8,8 @@
 {% block content %}
   <!-- Type here passes off to our controller in its scope !-->
   <div ng-app"lumxWrap">
+    <!--<div ng-controller="form-handler" model="review" class="custom-form card tc-black-1 bgc-grey-400 p+">--!>
     <div ng-controller="form-handler" model="review">
-
       <form method="post" ng-submit="submit()">
         {% csrf_token %}
 
@@ -23,7 +23,6 @@
         </div>
         <div flex-container="row" flex-gutter="24">
 
-          <div flex-item style="margin-left: 5%; margin-right: 5%" class="bgc-light-blue-800 p+">
             <lx-select ng-model="data.target" placeholder="Professor"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'professors_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
@@ -39,8 +38,7 @@
               </lx-select-choices>
             </lx-select>
             <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
-          </div>
-          <div flex-item style="margin-right: 5%; margin-left: 5%" class="bgc-light-blue-800 p+">
+          <div flex-item style="margin-right: 5%; margin-left: 5%">
             <lx-select ng-model="data.course" placeholder="Course"
                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'courses_matching')" 
                        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
@@ -69,15 +67,6 @@
           {% endverbatim %}
 
         <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
-
-
-
-          <div class="toolbar__right">
-              <lx-search-filter model="searchFilter.third" position="right" filter-width="400px" theme="dark" closed></lx-search-filter>
-          </div>
-
-
-
         </form>
       </div>
     </div>
