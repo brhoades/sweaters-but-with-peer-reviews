@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from browse.forms import ReviewForm
-
 from browse.models import Review, User, Professor, School, ReviewVote
 from django.contrib.auth import authenticate, login as auth_login, \
     logout as auth_logout
@@ -160,37 +158,6 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
             .format(page)
 
     return render(request, template, context)
-
-
-def new_review(request):
-    """
-    View a single review given an ID.
-    """
-    template = loader.get_template("browse/new_review.html")
-    context = RequestContext(request)
-
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
-
-        # If the form was submitted, but user was not logged in, redirect them.
-        if not request.user.is_authenticated():
-            messages.info(request, "Please Login to post reviews.")
-            return redirect("login")
-
-        # Process form if it is valid
-        if form.is_valid():
-            model_instance = form.save(commit=False)
-            model_instance.owner = request.user
-            # Here we can change things in the model.
-            model_instance.save()
-            return redirect("review")
-    else:
-        form = ReviewForm()
-        context["form"] = form
-        print(form["target"])
-        context["targets"] = form["target"]
-
-    return HttpResponse(template.render(context))
 
 
 def login(request, user=None):
