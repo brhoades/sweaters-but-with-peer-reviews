@@ -1,5 +1,6 @@
 from django.db import models
-from django.core.validators import RegexValidator, URLValidator
+from django.core.validators import RegexValidator, URLValidator, \
+    MinLengthValidator
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 
@@ -88,7 +89,8 @@ class Review(models.Model):
     target = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
     # 100k otta be enough for nebody.
-    text = models.TextField(max_length=100000)
+    text = models.TextField(max_length=100000,
+                            validators=[MinLengthValidator(40)])
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)

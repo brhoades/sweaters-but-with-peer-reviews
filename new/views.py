@@ -1,7 +1,5 @@
 from django.http import HttpResponse
 from browse.models import ReviewVote, Review, Professor
-from django.core import serializers
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
 import json
@@ -14,62 +12,72 @@ def get_template_for_model(request, page):
     if page == "review":
         template = loader.get_teamplate("new/review.html")
     elif page == "professor":
-        template = loader.get_template("new/professor.html").render(context)
+        template = loader.get_template("new/professor.html")
+    else:
+        return HttpResponse("Put a 404 here or something.")
 
     return HttpResponse(template.render(context))
+
+
+def json_error(data):
+    return HttpResponse(json.dumps({"error": data}))
+
 
 @login_required
 def new(request, page=None):
     model = None
+    response = {"error": {}}
+    model_map = {"review": Review,
+                 "professor": Professor
+                 }
+
     if request.method != "POST":
         return get_template_for_model(request, page)
 
-    if page == "review":
-        model = Review
-    elif page == "professor":
-        model = Professor
-    else:
-        return HttpResponse(json.dumps({"error": "Unknown page requested"}))
-
-    # context = RequestContext(request)
     data = json.loads(request.body.decode())
-    new = None
-    response = {"error":
-                {
-                    "error": "",
-                    "text": "",
-                    "target": "",
-                    "course": ""
-                }
-                }
 
-    if "target" not in data or "id" not in data["target"]:
-        response["error"]["target"] = "No professor specified"
-    if "course" not in data or "id" not in data["course"]:
-        response["error"]["course"] = "No course specified"
-    if "text" not in data or len(data["text"]) < 50:
-        response["error"]["text"] = "Review is not long enough."
+    if page not in model_map.keys():
+        return json_error("Unknown page requested.")
+
+    model = model_map[page]
+
+    for key in data.keys():
+        # Check that this is a key that exists
+        if key not in model._meta.get_all_field_names():
+            return json_error(''.join(["No field for ", str(model), ": ",
+                                       key]))
+        # Check that an id field exists for required foreign key fields
+        field = model._meta.get_field(key)
+        if field.get_internal_name() == "ForeignKey":
+            if "id" not in data[key]:
+                response["error"][key] = "No {} specified".format(
+                    field.target_field.model.__name__)
+            elif not model.objects.exists(id=data[key]["id"]):
+                response["error"][key] = "{} does not exist".format(
+                    field.target_field.model.__name__)
 
     # Look for any errors
     for k, v in response["error"].items():
         if len(v) > 0:
             return HttpResponse(json.dumps(response))
+
+    # If model has an owner or created by field, add us
+    if "owner" in model.get_all_field_names():
+        data["owner"] = request.user
+    elif "created_by" in model.get_all_field_names():
+        data["created_by"] = request.user
+
+    # Try to create it
     try:
-        new = Review(target_id=data["target"]["id"],
-                     course_id=data["course"]["id"],
-                     text=data["text"],
-                     owner=request.user)
+        new = model(**data)
     except Exception as e:
         return HttpResponse(json.dumps({"error": str(e)}))
 
+    # Save and return all info
     new.save()
-    return HttpResponse(json.dumps(
-        {"redirect": reverse('review', kwargs={"review_id": new.id})}))
-
-    return HttpResponse(template.render(context))
-
-
-    return HttpResponse(json.dumps({"error": "Unknown query."}))
+    return HttpResponse(json.dumps({"success": True,
+                                    "new": new
+                                    }))
 
 
 def addVote(request):
