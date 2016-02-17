@@ -3,7 +3,6 @@ from django.core.validators import RegexValidator, URLValidator, \
     MinLengthValidator
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
-from django.core import serializers
 
 
 class School(models.Model):

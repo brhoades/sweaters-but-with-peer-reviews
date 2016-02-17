@@ -42,9 +42,10 @@
           {% if review.owner.first_name or review.owner.last_name %}
           <div flex-item>
             <div class="list-row__content">
-              <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</a></span>
-              <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}
-                -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
+              <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</span>
+              <span class="display-block fs-body-1 tc-black-2"><b>{{ review.course.name }}</b> <br />
+                    with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
+                    -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
             </div>
           </div>
           {% else %}
