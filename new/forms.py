@@ -1,4 +1,5 @@
-from browse.models import Review, Course, Professor, School, Department
+from browse.models import Review, Course, Professor, School, Department,\
+    Field, FieldCategory
 from django.forms import ModelForm
 
 
@@ -34,11 +35,11 @@ class DepartmentForm(ModelForm):
 
 class FieldForm(ModelForm):
     class Meta:
-        model = Department
+        model = Field
         fields = ['name', 'categories']
 
 
 class FieldCategoryForm(ModelForm):
     class Meta:
-        model = Department
+        model = FieldCategory
         fields = ['name']
