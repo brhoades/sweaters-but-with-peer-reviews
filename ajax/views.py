@@ -31,8 +31,9 @@ def get_schools_matching(request, partial):
 
 
 def get_departments_matching(request, partial):
-    return HttpResponse(serializers.serialize("json",
-                        Department.objects.filter(name__icontains=partial)))
+    # Smash in school names too
+    depts = Department.objects.filter(name__icontains=partial)
+    return HttpResponse(json.dumps([x.to_json() for x in depts]))
 
 
 def get_professors_matching(request, partial):

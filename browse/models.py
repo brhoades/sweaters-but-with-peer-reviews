@@ -55,6 +55,19 @@ class Department(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
+    def to_json(self):
+        # Forcing school to be expanded
+        return {
+            "name": self.name,
+            "school": self.school,
+            "schoo_name": self.school_name,
+            "fields": self.fields,
+            "url": self.url,
+            "created_ts": self.created_ts,
+            "updated_ts": self.updated_ts,
+            "created_by": self.created_by,
+            }
+
 
 class Professor(models.Model):
     owner = models.ForeignKey(User, blank=True, null=True)
