@@ -1,3 +1,9 @@
-# from django.test import TestCase
+from django.test import TestCase
+import random
 
-# Create your tests here.
+
+def srs(model):
+    """
+    Get a Single Random Sample from a passed model. Just a simple alias.
+    """
+    return random.sample(list(model.objects.all()), 1)[0]

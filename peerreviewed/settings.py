@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'djangular',
     'geoposition',
     'django_gravatar',
+    'autofixture',
 
     # Local
     'browse',
