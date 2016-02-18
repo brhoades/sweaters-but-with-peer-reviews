@@ -49,10 +49,10 @@ build:
     - script:
         name: built-in unit tests
         code: |
-          echo "./manage.py test browse"
+           python manage.py test browse"
 
     - script:
         name: built-in unit tests
         code: |
-          echo "./manage.py test new"
+           python manage.py test new
 
