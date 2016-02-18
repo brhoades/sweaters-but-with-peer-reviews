@@ -33,23 +33,23 @@ build:
     #     clean_wheel_dir: true
 
     - script:
-        name: PEP8 Compliancec
+        name: PEP 0008 Compliance
         code: |
            pip install flake8
            flake8 --show-pep8 --show-source --exclude=settings.py,wsgi.py browse/*.py peerreviewed/*.py new/*.py
 
     - script:
-        name: Setup test environment.
+        name: Test Environment Setup
         code: |
            cp peerreviewed/sensitive.wercker.py peerreviewed/sensitive.py
 
     - script:
-        name: Browse App Test
+        name: Browse App Unit Tests
         code: |
            python manage.py test browse
 
     - script:
-        name: New App Tests
+        name: New App Unit Tests
         code: |
            python manage.py test new
 
