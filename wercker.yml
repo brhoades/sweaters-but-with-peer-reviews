@@ -41,7 +41,7 @@ build:
     - script:
         name: Browse App Test
         code: |
-           python manage.py test browse"
+           python manage.py test browse
 
     - script:
         name: New App Tests
