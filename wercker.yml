@@ -55,3 +55,4 @@ build:
         channel: "#git"
         username: wrecker
         icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
+        notify_on: "failed"
