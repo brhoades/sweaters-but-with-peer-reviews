@@ -48,10 +48,10 @@ build:
         code: |
           echo "./manage.py test new"
 
-    after-steps:
-        - sherzberg/slack-notify:
-            subdomain: django-chained
-            token: $SLACK_TOKEN
-            channel: "#git"
-            username: wrecker
-            icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
+  after-steps:
+    - sherzberg/slack-notify:
+        subdomain: django-chained
+        token: $SLACK_TOKEN
+        channel: "#git"
+        username: wrecker
+        icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
