@@ -134,7 +134,7 @@ class TestBrowseViews(TestCase):
         self.assertEqual(resp.status_code, 200)
 
 
-class TestBrowseReviewContent(TestCase):
+class ReviewContent(TestCase):
     def setUp(self):
         # Every test needs access to the request factory.
         self.factory = RequestFactory()
