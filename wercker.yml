@@ -44,9 +44,15 @@ build:
            cp peerreviewed/sensitive.wercker.py peerreviewed/sensitive.py
 
     - script:
-        name: Browse App Unit Tests
+        name: Browse Pages Load and Login
         code: |
-           python manage.py test browse
+           python manage.py test browse.TestBrowseViews
+
+    - script:
+        name: Review Content Present
+        code: |
+           python manage.py test browse.BrowseReviewContent
+
 
     - script:
         name: New App Unit Tests

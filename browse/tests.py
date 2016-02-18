@@ -7,9 +7,10 @@ from autofixture import AutoFixture
 from browse.models import FieldCategory, Field, Department, Review, Professor,\
     School, ReviewVote, Course
 from new.tests import srs
+from django.utils import formats
 
 
-class BrowseViewsTestCase(TestCase):
+class TestBrowseViews(TestCase):
     @classmethod
     def setUpClass(cls):
         # Every test needs access to the request factory.
@@ -23,7 +24,7 @@ class BrowseViewsTestCase(TestCase):
 
         cls.two_review_types = ["by_school", "by_professor"]
         cls.three_review_types = ["by_school_professor"]
-        super(BrowseViewsTestCase, cls).setUpClass()
+        super(TestBrowseViews, cls).setUpClass()
 
         cls.creds = {"username": "test_user", "password": "tesT_pass"}
 
@@ -131,3 +132,85 @@ class BrowseViewsTestCase(TestCase):
         resp = self.client.get(reverse("professor",
                                args=[srs(Professor).id]))
         self.assertEqual(resp.status_code, 200)
+
+
+class TestBrowseReviewContent(TestCase):
+    def setUp(self):
+        # Every test needs access to the request factory.
+        self.factory = RequestFactory()
+        self.NUM_EVERYTHING = 100
+
+        # AutoFixture(User).create(50)
+        # Create reviews, recursively creating models where needed
+        AutoFixture(Review, generate_fk=True).create(20)
+
+    def test_index(self):
+        """
+        Index should show at least five (20 total) reviews.
+        """
+        resp = self.client.get(reverse("index"))
+
+        self.assertIn("reviews", resp.context)
+        self.assertGreater(len(resp.context["reviews"]), 5)
+        content = resp.content.decode()
+
+        for review in resp.context["reviews"]:
+            # Check that all information is there
+            self.assertIn(review.target.last_name, content)
+            self.assertIn(review.target.first_name, content)
+            self.assertIn(review.course.name, content)
+            self.assertIn(review.owner.first_name, content)
+            self.assertIn(review.owner.last_name, content)
+
+            # Check for a link to the full review
+            self.assertIn(reverse('review', args=[review.id]), content)
+
+    def test_reviews(self):
+        """
+        Should list every single review.
+        """
+        resp = self.client.get(reverse("reviews_overview"))
+
+        self.assertIn("reviews", resp.context)
+        self.assertGreater(len(resp.context["reviews"]), 5)
+        content = resp.content.decode()
+
+        for review in Review.objects.all():
+            # Check that all information is there
+            self.assertIn(review.target.last_name, content)
+            self.assertIn(review.target.first_name, content)
+            self.assertIn(review.course.name, content)
+            self.assertIn(review.owner.first_name, content)
+            self.assertIn(review.owner.last_name, content)
+
+            # Check for a link to the full review
+            self.assertIn(reverse('review', args=[review.id]), content)
+
+    def test_view_review(self):
+        """
+        Should have individual review pages for every review with all
+        required information.
+        """
+        for review in Review.objects.all():
+            resp = self.client.get(reverse("review", args=[review.id]))
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("review", resp.context)
+            content = resp.content.decode()
+
+            # check for all professor details
+            self.assertIn(review.target.last_name, content)
+            self.assertIn(review.target.first_name, content)
+            self.assertIn(review.course.name, content)
+            self.assertIn(str(review.course.number), content)
+            self.assertIn(review.course.department.name, content)
+
+            # Check for reviewer details
+            self.assertIn(review.owner.first_name, content)
+            self.assertIn(review.owner.last_name, content)
+            self.assertIn(review.owner.username, content)
+            self.assertIn(formats.date_format(review.created_ts,
+                                              "DATETIME_FORMAT"), content)
+            if review.updated_ts:
+                self.assertIn(formats.date_format(review.updated_ts,
+                                                  "DATETIME_FORMAT"), content)
