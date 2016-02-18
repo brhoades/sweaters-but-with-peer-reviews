@@ -197,8 +197,8 @@ def login(request, user=None):
     """
     Our view for logging in.
     """
-    template = "browse/login.html"
-    context = {}
+    template = loader.get_template("browse/login.html")
+    context = RequestContext(request)
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -211,12 +211,12 @@ def login(request, user=None):
                 return redirect("index")
             else:
                 context["message"] = "Your account is disabled."
-                return render(request, template, context)
+                return HttpResponse(template.render(context))
         else:
             context["message"] = "Invalid login details supplied."
-            return render(request, template, context)
+            return HttpResponse(template.render(context))
     else:
-        return render(request, template, context)
+        return HttpResponse(template.render(context))
 
 
 def logout(request):
