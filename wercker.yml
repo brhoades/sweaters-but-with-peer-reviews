@@ -39,6 +39,11 @@ build:
            flake8 --show-pep8 --show-source --exclude=settings.py,wsgi.py browse/*.py peerreviewed/*.py new/*.py
 
     - script:
+        name: Setup test environment.
+        code: |
+           cp peerreviewed/sensitive.wercker.py peerreviewed/sensitive.py
+
+    - script:
         name: Browse App Test
         code: |
            python manage.py test browse
