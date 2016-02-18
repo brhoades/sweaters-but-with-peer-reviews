@@ -1,0 +1,68 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Professors{% endblock %}
+
+{% block content %}
+  <!--
+  <ul>
+    <li><a href="{% url 'reviews_overview' %}">Reviews Overview</a></li>
+    <li><a href="{% url 'reviews' 2 %}">Reviews Pg 2</a></li>
+    <li><a href="{% url 'reviews_by_type_one' page=0 type='by_school' first_id=0 %}">All Review at School #0</a></li>
+    <li><a href="{% url 'reviews_by_type_one' page=0 type='by_professor' first_id=0 %}">All Reviews for  Professor #0</a></li>
+    <li><a href="{% url 'reviews_by_type_two' page=0 type='by_school_professor' first_id=0 second_id=0 %}">All Review Professor #0 at School #0</a></li>
+  </ul>
+
+  {% for var in numbers %}
+    {{ var }}<br />
+  {% endfor %}
+  -->
+
+  {% if professors|length > 0 %}
+    <h2 class="tc-white-1 p+" align="left">Latest {{professors|length}} Professor(s)</h2>
+    {% for professor in professors %}
+      <div class="divider divider--dark" ></div>
+      <div class="card bgc-grey-300 tc-black-1 p+" professor-id="{{ professor.id }}">
+        <li class="list-row">
+          <div flex-container="row" flex-gutter="24">
+            {% comment %}
+            Why do professors have up/down arrows?
+            <div flex-item="8">
+              <div flex-container="column" align="left">
+                <div ng-app="lumxWrap">
+                  <div>
+                    <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                            action="up" lx-ripple>
+                      <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i>
+                    </button>
+                  </div>
+                  <div>
+                    <i style="display: hidden;"
+                       class="icon icon--xs icon--blue icon--flat mdi mdi-brightness-1 tc-grey-300"></i>
+                  </div>
+                  <div>
+                    <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                            action="down" lx-ripple>
+                      <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endcomment %}
+          </div>
+          <div class="list-row__content">
+            <span class="display-block">{{ professor.first_name }} {{ professor.last_name }}</a></span>
+            <span class="display-block fs-body-1 tc-black-2">{{ professor.school.name }}</span>
+            <a href="{% url 'professor' professor_id=professor.id %}">View</a><br />
+          </div>
+          <div class="list-row__secondary">
+            <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
+          </div>
+        </li>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h2>There are no professors</h2>
+  {% endif %}
+{% endblock %}
+

@@ -23,20 +23,27 @@
           <h2 class="tc-white-1 p+" align="left">Latest {{reviews|length}} Review(s)</h2>
           {% for review in reviews %}
           <div class="divider divider--dark" ></div>
-          <div class="card bgc-grey-400 tc-white-1 p+" review-id="{{ review.id }}">
+          <div class="card bgc-grey-300 tc-black-1 p+" review-id="{{ review.id }}">
             <li class="list-row">
               <div flex-container="row" flex-gutter="24">
                 <div flex-item="8">
                   <div flex-container="column" align="left">
                     <div ng-app="lumxWrap">
                       <div>
-                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" action="up" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i></button>
+                        <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                                action="up" lx-ripple>
+                          <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i>
+                        </button>
                       </div>
                       <div>
-                        <i class="icon icon--xs icon--white icon--flat mdi mdi-brightness-1 tc-grey-400"></i>
+                        <i style="display: hidden;"
+                           class="icon icon--xs icon--blue icon--flat mdi mdi-brightness-1 tc-grey-300"></i>
                       </div>
                       <div>
-                        <button class="btn btn--l btn--deep-purple btn--fab bgc-deep-purple-A700" action="down" lx-ripple><i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i></button>
+                        <button class="btn btn--l btn--blue btn--fab bgc-blue-600"
+                                action="down" lx-ripple>
+                          <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -51,7 +58,8 @@
               <div flex-item>
                 <div class="list-row__content">
                   <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</a></span>
-                  <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}
+                  <span class="display-block fs-body-1 tc-black-2"><b>{{ review.course.name }}</b> <br />
+                    with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
                     -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
                 </div>
               </div>
@@ -61,7 +69,7 @@
                 <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}</span>
               </div>
               <div class="list-row__secondary">
-                <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
+                <i class="icon icon--xs icon--blue icon--flat mdi mdi-information"></i>
               </div>
                         
               {% endif %}

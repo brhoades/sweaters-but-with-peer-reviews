@@ -7,25 +7,30 @@ $.ajaxSetup({
   }
 );
 
-angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $window) {
+// Expects a model param
+angular.module('lumxWrap').controller('form-handler', function($scope, $http, $window, $attrs) {
+  $scope.type = $attrs.model;
+
   $scope.data = {
-      text: '',
-      target: '',
-      course: ''
+    error: ""
   };
 
   $scope.valid = {
     error: "",
-    text: "",
-    target: "",
-    course: ""
   };
-  
-  $scope.description = {
-    update: function(newVal) {
-      $scope.formData["text"] = newVal;
-    }
+
+  $scope.original = {
+    error: "",
   };
+
+  // Get our field names automatically
+  $http.get("/get/get_fields_for_model/" + $scope.type).success(function(data) {
+    data.forEach(function(e, i, l) {
+      $scope.data[e] = "";
+      $scope.valid[e] = "";
+      $scope.original[e] = "";
+    });
+  });
 
   $scope.ajax = {
       list: [],
@@ -37,8 +42,15 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $
                     // Always expects, if any elements, a fields item in it
                     $scope.ajax.list = [];
                     data.forEach(function(e, i, l) {
-                      e.fields["id"] = e.pk;  // move this over for later
-                      $scope.ajax.list.push(e.fields);
+                      if(e.fields != undefined && e.fields.id == undefined)
+                      {
+                        e.fields["id"] = e.pk;  // move this over for later
+                        $scope.ajax.list.push(e.fields);
+                      }
+                      else
+                      {
+                        $scope.ajax.list.push(e);
+                      }
                     });
                       $scope.ajax.loading = false;
                   }).
@@ -53,31 +65,27 @@ angular.module('lumxWrap').controller('getReviewForm', function($scope, $http, $
       loading: false
   };
 
-  $scope.cbSelect = {
-    exec: function(type, newVal) {
-      // $scope.data[type] = newVal;
-      // console.log($scope.formData);
-    }
-  };
-
   $scope.submit = function() {
     $scope.ajax.loading = true;
-    $http.post("/new/review", JSON.stringify($scope.data)).
+    $http.post("/new/" + $scope.type, JSON.stringify($scope.data)).
       success(function(data) {
         // Always expects, if any elements, a fields item in it
         $scope.ajax.list = [];
         $scope.ajax.loading = false;
-        $scope.valid = {
-          error: "",
-          text: "",
-          target: "",
-          course: ""
-        };
+        $scope.valid = angular.copy($scope.original);
+
         if(data != undefined && data.error != undefined) {
           $scope.valid = data.error;
         }
-        if(data.redirect != undefined) {
-          $window.location.href = data.redirect;
+        if(data != undefined && data.id != undefined) {
+          $http.get("/get/view_for_model_at_id/" + $scope.type + "/" + data.id).
+              success(function(data) {
+                // Always expects, if any elements, a fields item in it
+                  $window.location.href = data.url;
+              }).
+              error(function() {
+                  $scope.ajax.loading = false;
+              });
         }
       }).
     error(function() {

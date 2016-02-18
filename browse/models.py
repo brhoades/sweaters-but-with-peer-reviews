@@ -1,5 +1,6 @@
 from django.db import models
-from django.core.validators import RegexValidator, URLValidator
+from django.core.validators import RegexValidator, URLValidator, \
+    MinLengthValidator
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 
@@ -54,6 +55,20 @@ class Department(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
+    def to_json(self):
+        # Forcing school to be expanded
+        return {
+            "id": self.pk,
+            "name": self.name,
+            "school": self.school.id,
+            "school_name": self.school.name,
+            # "fields": serializers.serialize("json", self.fields),
+            "url": self.url,
+            "created_ts": str(self.created_ts),
+            "updated_ts": str(self.updated_ts),
+            "created_by": str(self.created_by),
+            }
+
 
 class Professor(models.Model):
     owner = models.ForeignKey(User, blank=True, null=True)
@@ -88,7 +103,8 @@ class Review(models.Model):
     target = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
     # 100k otta be enough for nebody.
-    text = models.TextField(max_length=100000)
+    text = models.TextField(max_length=100000,
+                            validators=[MinLengthValidator(40)])
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)

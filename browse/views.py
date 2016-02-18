@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from browse.forms import ReviewForm
-
 from browse.models import Review, User, Professor, School
 from django.contrib.auth import authenticate, login as auth_login, \
     logout as auth_logout
@@ -15,7 +13,7 @@ def index(request):
     context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam Sucks and Dzu Rocks</h3>"
+    context["message"] = "<h3>Sam does not suck</h3>"
     context["numbers"] = []
 
     context["reviews"] = Review.objects.order_by('-created_ts')
@@ -58,7 +56,28 @@ def profile(request, id=None, page=0):
     return render(request, template, context)
 
 
-def school(request, id=None, page=0):
+def schools(request):
+    template = loader.get_template("browse/schools.html")
+    context = RequestContext(request)
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
+
+    context["schools"] = School.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
+
+    return HttpResponse(template.render(context))
+
+
+def school(request, school_id=None, page=0):
     """
     This is a school page. If no id is provided, it displays a listing of
     all schoosl with information about each. If one is provided, it provides
@@ -69,14 +88,35 @@ def school(request, id=None, page=0):
     template = loader.get_template("browse/school.html")
     context = RequestContext(request)
 
-    context["school"] = get_object_or_404(School, id=id)
+    context["school"] = get_object_or_404(School, id=school_id)
     # Review id does not exist
     print(context["school"].__dict__)
 
     return HttpResponse(template.render(context))
 
 
-def professor(request, id=None, page=0):
+def professors(request):
+    template = loader.get_template("browse/professors.html")
+    context = RequestContext(request)
+
+    # HTML passthrough has to be enabled in the template... this is serialized.
+    context["message"] = "<h3>Sam does not suck</h3>"
+    context["numbers"] = []
+
+    context["professors"] = Professor.objects.order_by('-created_ts')
+
+    for x in range(1, 101):
+        if x % 15 == 0:
+            context["numbers"].append("{0} fizzbuzz".format(x))
+        elif x % 5 == 0:
+            context["numbers"].append("{0} buzz".format(x))
+        elif x % 3 == 0:
+            context["numbers"].append("{0} fizz".format(x))
+
+    return HttpResponse(template.render(context))
+
+
+def professor(request, professor_id=None, page=0):
     """
     This is a professor profile page (not a user). It provides information
     about courses taught, latest reviews, and aggregate ratings. If an id is
@@ -87,7 +127,7 @@ def professor(request, id=None, page=0):
     template = loader.get_template("browse/professor.html")
     context = RequestContext(request)
 
-    context["professor"] = get_object_or_404(Professor, id=id)
+    context["professor"] = get_object_or_404(Professor, id=professor_id)
     # Review id does not exist
     print(context["professor"].__dict__)
 
@@ -129,6 +169,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     """
     template = "browse/reviews.html"
     context = RequestContext(request)
+    context["reviews"] = Review.objects.all()
 
     if type == "by_school":
         context["message"] =\
@@ -150,37 +191,6 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
             .format(page)
 
     return render(request, template, context)
-
-
-def new_review(request):
-    """
-    View a single review given an ID.
-    """
-    template = loader.get_template("browse/new_review.html")
-    context = RequestContext(request)
-
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
-
-        # If the form was submitted, but user was not logged in, redirect them.
-        if not request.user.is_authenticated():
-            messages.info(request, "Please Login to post reviews.")
-            return redirect("login")
-
-        # Process form if it is valid
-        if form.is_valid():
-            model_instance = form.save(commit=False)
-            model_instance.owner = request.user
-            # Here we can change things in the model.
-            model_instance.save()
-            return redirect("review")
-    else:
-        form = ReviewForm()
-        context["form"] = form
-        print(form["target"])
-        context["targets"] = form["target"]
-
-    return HttpResponse(template.render(context))
 
 
 def login(request, user=None):
@@ -215,4 +225,3 @@ def logout(request):
     """
     auth_logout(request)
     return redirect("index")
-
