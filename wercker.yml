@@ -32,27 +32,26 @@ build:
     # - pip-install:
     #     clean_wheel_dir: true
 
-    # A custom script step, name value is used in the UI
-    # and the code value contains the command that get executed
     - script:
-        name: echo python information
-        code: |
-          echo "python version $(python --version) running"
-          echo "pip version $(pip --version) running"
-
-    - script:
-        name: check style
+        name: PEP8 Compliancec
         code: |
            pip install flake8
            flake8 --show-pep8 --show-source --exclude=settings.py,wsgi.py browse/*.py peerreviewed/*.py new/*.py
 
     - script:
-        name: built-in unit tests
+        name: Browse App Test
         code: |
           echo "./manage.py test browse"
 
     - script:
-        name: built-in unit tests
+        name: New App Tests
         code: |
           echo "./manage.py test new"
 
+    after-steps:
+        - sherzberg/slack-notify:
+            subdomain: django-chained
+            token: $SLACK_TOKEN
+            channel: "#git"
+            username: wrecker
+            icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
