@@ -3,30 +3,40 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from browse.models import Review, User, Professor, School
+from browse.models import Review, User, Professor, School, ReviewVote
 from django.contrib.auth import authenticate, login as auth_login, \
     logout as auth_logout
 
 
 def index(request):
-    template = loader.get_template("browse/index.html")
+    template = "browse/index.html"
     context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam does not suck</h3>"
-    context["numbers"] = []
+    context["message"] = "<h3>Sam Sucks and Dzu Rocks</h3>"
 
-    context["reviews"] = Review.objects.order_by('-created_ts')
+    reviewList = Review.objects.order_by('-created_ts')
 
-    for x in range(1, 101):
-        if x % 15 == 0:
-            context["numbers"].append("{0} fizzbuzz".format(x))
-        elif x % 5 == 0:
-            context["numbers"].append("{0} buzz".format(x))
-        elif x % 3 == 0:
-            context["numbers"].append("{0} fizz".format(x))
+    if request.user.is_authenticated():
+        voteList = []
+        for review in reviewList:
+            vote = ReviewVote.objects.filter(owner=request.user,
+                                             target=review)
 
-    return HttpResponse(template.render(context))
+            # Add true if the vote is 'up', false if the vote is 'down'
+            # Add None if the user has not voted on the review
+            if vote.exists():
+                voteList.append(vote[0].quality)
+            else:
+                voteList.append(None)
+    else:
+        voteList = [None for review in reviewList]
+
+    context["review_votes"] = []
+    for rev, vote in zip(reviewList, voteList):
+        context["review_votes"].append((rev, vote))
+
+    return render(request, template, context)
 
 
 def profile(request, id=None, page=0):
