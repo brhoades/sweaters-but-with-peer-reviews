@@ -1,46 +1,35 @@
 from django.test import TestCase, RequestFactory
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, resolve
 from django.contrib.auth.models import User
+from django.contrib.sessions.middleware import SessionMiddleware
+from autofixture import AutoFixture
 
-from browse.models import Professor, School, Course, Review, Department
+from browse.models import FieldCategory, Field, Department, Review, Professor,\
+    School, ReviewVote, Course
+from new.tests import srs
+from django.utils import formats
 
 
-class BrowseViewsTestCase(TestCase):
-    def setUp(self):
+class TestBrowseViews(TestCase):
+    @classmethod
+    def setUpClass(cls):
         # Every test needs access to the request factory.
-        self.factory = RequestFactory()
+        cls.factory = RequestFactory()
+        cls.NUM_EVERYTHING = 100
+        models = [User, FieldCategory, Field, School, Department, Course,
+                  Professor, Review, ReviewVote]
 
-        self.creds = {"username": "jason", "password": "top_secret"}
-        self.two_review_types = ["by_school", "by_professor"]
-        self.three_review_types = ["by_school_professor"]
-        self.user = User.objects.create_user(**self.creds,
-                                             email="jsholm@mst.edu",
-                                             first_name="Jason",
-                                             last_name="Holm")
+        for m in models:
+            AutoFixture(m).create(20)
 
-        self.mst = School(name="Missouri S&T", url="http://mst.edu/")
-        self.mst.save()
+        cls.two_review_types = ["by_school", "by_professor"]
+        cls.three_review_types = ["by_school_professor"]
+        super(TestBrowseViews, cls).setUpClass()
 
-        # Create a professor
-        self.price = Professor(created_by=self.user, first_name="Clayton",
-                               last_name="Price", school=self.mst)
-        self.price.save()
+        cls.creds = {"username": "test_user", "password": "tesT_pass"}
 
-        # With a department
-        self.cs = Department(created_by=self.user, name="Computer Science",
-                             school=self.mst, url="http://cs.mst.edu")
-        self.cs.save()
-
-        # and a course
-        self.course = Course(name="Object Oriented Numerical Modeling I",
-                             number="5201", department=self.cs,
-                             created_by=self.user)
-        self.course.save()
-
-        # Create a review
-        self.review = Review(owner=self.user, text="Good stuff",
-                             target=self.price, course=self.course)
-        self.review.save()
+    def setUp(self):
+        User.objects.create_user(**self.creds).save()
 
     def test_index(self):
         resp = self.client.get(reverse("index"))
@@ -48,51 +37,64 @@ class BrowseViewsTestCase(TestCase):
 
     def test_profile_not_logged_in(self):
         resp = self.client.get(reverse("profile"))
-        self.assertEqual(resp.status_code, 200)
-
-        # Should be someone else.
-        self.assertNotEqual(resp.context["user"].username, self.user.username)
+        self.assertEqual(resp.status_code, 302)  # redirect to login
 
     def test_profile_logged_in(self):
-        self.client.login(**self.creds)
-        resp = self.client.get(reverse("profile"))
+        url = reverse("profile")
+        req = self.factory.get(url)
 
-        # Should be feeding it the profile for our user.
-        self.assertEqual(resp.context["user"].username, self.user.username)
+        req.user = srs(User)
+
+        resp = resolve(url).func(req)
+
+        self.assertEqual(resp.status_code, 200)
 
     def test_profile_specific(self):
-        resp = self.client.get(reverse("profile", kwargs={"id": 2}))
+        resp = self.client.get(reverse("profile", args=[srs(User).id]))
         self.assertEqual(resp.status_code, 200)
 
         self.client.login(**self.creds)
-        resp = self.client.get(reverse("profile", kwargs={"id": 2}))
+        resp = self.client.get(reverse("profile", args=[srs(User).id]))
         self.assertEqual(resp.status_code, 200)
-
-    def test_login(self):
-        resp = self.client.get(reverse("login"))
-        self.assertEqual(resp.status_code, 200)
+        self.client.logout()
 
     def test_login_login(self):
-        resp = self.client.post(reverse("login"), {
-                                "username": self.user.username,
-                                "password": self.user.password})
-        self.assertEqual(resp.status_code, 200)
+        url = reverse("login")
+        req = self.factory.post(url, self.creds)
 
+        # Set up our session
+        middleware = SessionMiddleware()
+        middleware.process_request(req)
+        req.session.save()
+
+        resp = resolve(url).func(req)
+
+        # Redirect to index
+        self.assertEqual(resp.status_code, 302)
+
+    """
     def test_logout(self):
-        self.client.login(**self.creds)
+        url = reverse("login")
+        req = self.factory.post(url, {"username": self.creds["username"],
+                                      "password": self.creds["password"]})
 
-        resp = self.client.get(reverse("logout"))
-        self.assertEqual(resp.status_code, 302)  # redir to index
+        resp = resolve(url).func(req)
 
-        resp = self.client.get(reverse("index"))
-        self.assertEqual(str(resp.context["user"]), "AnonymousUser")
+        url = reverse("logout")
+        req = self.factory.get(url)
+
+        req.user = srs(User)
+        resp = resolve(url).func(req)
+
+        self.assertEqual(str(resp.context["user"].username), "")
+    """
 
     def test_review_specific(self):
-        resp = self.client.get(reverse("review", kwargs={"review_id": 2}))
+        resp = self.client.get(reverse("review", args=[srs(Review).id]))
         self.assertEqual(resp.status_code, 200)
 
     def test_reviews_overview(self):
-        resp = self.client.get(reverse("review", kwargs={"review_id": 2}))
+        resp = self.client.get(reverse("reviews_overview"))
         self.assertEqual(resp.status_code, 200)
 
     def test_reviews_page(self):
@@ -101,30 +103,114 @@ class BrowseViewsTestCase(TestCase):
 
     def test_reviews_by_type(self):
         for type in self.two_review_types:
-            resp = self.client.get(reverse("reviews",
+            resp = self.client.get(reverse("reviews_by_type_one",
                                    kwargs={"page": 1, "type": type,
                                            "first_id": 1}))
             self.assertEqual(resp.status_code, 200)
 
         for type in self.three_review_types:
-            resp = self.client.get(reverse("reviews",
+            resp = self.client.get(reverse("reviews_by_type_two",
                                    kwargs={"page": 1, "type": type,
                                            "first_id": 1,
                                            "second_id": 1}))
             self.assertEqual(resp.status_code, 200)
 
-    def test_school(self):
-        resp = self.client.get(reverse("school"))
+    def test_schools(self):
+        resp = self.client.get(reverse("schools"))
         self.assertEqual(resp.status_code, 200)
 
     def test_school_specific(self):
-        resp = self.client.get(reverse("school", kwargs={"id": 1}))
+        resp = self.client.get(reverse("school",
+                               args=[srs(School).id]))
         self.assertEqual(resp.status_code, 200)
 
     def test_professor(self):
-        resp = self.client.get(reverse("professor"))
+        resp = self.client.get(reverse("professors"))
         self.assertEqual(resp.status_code, 200)
 
     def test_professor_specific(self):
-        resp = self.client.get(reverse("professor", kwargs={"id": 1}))
+        resp = self.client.get(reverse("professor",
+                               args=[srs(Professor).id]))
         self.assertEqual(resp.status_code, 200)
+
+
+class ReviewContent(TestCase):
+    def setUp(self):
+        # Every test needs access to the request factory.
+        self.factory = RequestFactory()
+        self.NUM_EVERYTHING = 100
+
+        # AutoFixture(User).create(50)
+        # Create reviews, recursively creating models where needed
+        AutoFixture(Review, generate_fk=True).create(20)
+
+    def test_index(self):
+        """
+        Index should show at least five (20 total) reviews.
+        """
+        resp = self.client.get(reverse("index"))
+
+        self.assertIn("reviews", resp.context)
+        self.assertGreater(len(resp.context["reviews"]), 5)
+        content = resp.content.decode()
+
+        for review in resp.context["reviews"]:
+            # Check that all information is there
+            self.assertIn(review.target.last_name, content)
+            self.assertIn(review.target.first_name, content)
+            self.assertIn(review.course.name, content)
+            self.assertIn(review.owner.first_name, content)
+            self.assertIn(review.owner.last_name, content)
+
+            # Check for a link to the full review
+            self.assertIn(reverse('review', args=[review.id]), content)
+
+    def test_reviews(self):
+        """
+        Should list every single review.
+        """
+        resp = self.client.get(reverse("reviews_overview"))
+
+        self.assertIn("reviews", resp.context)
+        self.assertGreater(len(resp.context["reviews"]), 5)
+        content = resp.content.decode()
+
+        for review in Review.objects.all():
+            # Check that all information is there
+            self.assertIn(review.target.last_name, content)
+            self.assertIn(review.target.first_name, content)
+            self.assertIn(review.course.name, content)
+            self.assertIn(review.owner.first_name, content)
+            self.assertIn(review.owner.last_name, content)
+
+            # Check for a link to the full review
+            self.assertIn(reverse('review', args=[review.id]), content)
+
+    def test_view_review(self):
+        """
+        Should have individual review pages for every review with all
+        required information.
+        """
+        for review in Review.objects.all():
+            resp = self.client.get(reverse("review", args=[review.id]))
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("review", resp.context)
+            content = resp.content.decode()
+
+            # check for all professor details
+            self.assertIn(review.target.last_name, content)
+            self.assertIn(review.target.first_name, content)
+            self.assertIn(review.course.name, content)
+            self.assertIn(str(review.course.number), content)
+            self.assertIn(review.course.department.name, content)
+
+            # Check for reviewer details
+            self.assertIn(review.owner.first_name, content)
+            self.assertIn(review.owner.last_name, content)
+            self.assertIn(review.owner.username, content)
+            self.assertIn(formats.date_format(review.created_ts,
+                                              "DATETIME_FORMAT"), content)
+            if review.updated_ts:
+                self.assertIn(formats.date_format(review.updated_ts,
+                                                  "DATETIME_FORMAT"), content)

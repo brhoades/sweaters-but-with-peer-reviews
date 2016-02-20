@@ -99,8 +99,6 @@ def school(request, school_id=None, page=0):
     context = RequestContext(request)
 
     context["school"] = get_object_or_404(School, id=school_id)
-    # Review id does not exist
-    print(context["school"].__dict__)
 
     return HttpResponse(template.render(context))
 
@@ -138,8 +136,6 @@ def professor(request, professor_id=None, page=0):
     context = RequestContext(request)
 
     context["professor"] = get_object_or_404(Professor, id=professor_id)
-    # Review id does not exist
-    print(context["professor"].__dict__)
 
     return HttpResponse(template.render(context))
 
@@ -152,8 +148,6 @@ def review(request, review_id=0):
     context = RequestContext(request)
 
     context["review"] = get_object_or_404(Review, id=review_id)
-    # Review id does not exist
-    print(context["review"].__dict__)
 
     return HttpResponse(template.render(context))
 
@@ -207,8 +201,8 @@ def login(request, user=None):
     """
     Our view for logging in.
     """
-    template = "browse/login.html"
-    context = {}
+    template = loader.get_template("browse/login.html")
+    context = RequestContext(request)
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -221,12 +215,12 @@ def login(request, user=None):
                 return redirect("index")
             else:
                 context["message"] = "Your account is disabled."
-                return render(request, template, context)
+                return HttpResponse(template.render(context))
         else:
             context["message"] = "Invalid login details supplied."
-            return render(request, template, context)
+            return HttpResponse(template.render(context))
     else:
-        return render(request, template, context)
+        return HttpResponse(template.render(context))
 
 
 def logout(request):

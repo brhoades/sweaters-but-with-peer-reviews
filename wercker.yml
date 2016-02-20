@@ -33,20 +33,31 @@ build:
     #     clean_wheel_dir: true
 
     - script:
-        name: PEP8 Compliancec
+        name: PEP 0008 Compliance
         code: |
            pip install flake8
            flake8 --show-pep8 --show-source --exclude=settings.py,wsgi.py browse/*.py peerreviewed/*.py new/*.py
 
     - script:
-        name: Browse App Test
+        name: Test Environment Setup
         code: |
-          echo "./manage.py test browse"
+           cp peerreviewed/sensitive.wercker.py peerreviewed/sensitive.py
 
     - script:
-        name: New App Tests
+        name: Browse Pages Load and Login
         code: |
-          echo "./manage.py test new"
+           python manage.py test browse.tests.TestBrowseViews
+
+    - script:
+        name: Review Content Present
+        code: |
+           python manage.py test browse.tests.ReviewContent
+
+
+    - script:
+        name: New App Unit Tests
+        code: |
+           python manage.py test new
 
   after-steps:
     - sherzberg/slack-notify:
@@ -55,3 +66,4 @@ build:
         channel: "#git"
         username: wrecker
         icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
+        notify_on: "failed"
