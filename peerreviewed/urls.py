@@ -10,7 +10,7 @@ urlpatterns = [
 
     # Shitty catch for need to be logged in error
     url(r'^logged_in.*', bviews.index,
-        {"message": "You must be logged in to view that page."}),
+        kwargs={"message": "You must be logged in to view that page."}),
 
     # Other modules
     url(r'^browse/', include('browse.urls')),

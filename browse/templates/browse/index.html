@@ -8,15 +8,17 @@
 {% block content %}
 {% csrf_token %}
 
-  {% if message %}
+  {% if messages %}
     <!-- FIXME: Open login dialog and run that --!>
-      <div flex-container="row"> 
-        <div flex-item class="tc-black-1 p+ error bgc-red-500">
-          <center>
-            {{ message }}
-          </center>
+      {% for message in messages %}
+        <div flex-container="row"> 
+          <div flex-item class="tc-black-1 p+ error bgc-red-500">
+            <center>
+              {{ message }}
+            </center>
+          </div>
         </div>
-      </div>
+      {% endfor %}
   {% endif %}
   
   <div class="fs-display-4 display-block tc-white-1">

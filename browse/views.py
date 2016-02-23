@@ -9,10 +9,12 @@ from django.contrib.auth import logout as auth_logout
 
 def index(request, message=""):
     template = "browse/index.html"
-    context = RequestContext(request)
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = message
+    if message:
+        messages.info(request, message)
+
+    context = RequestContext(request)
+    context["messages"] = messages.get_messages(request)
 
     reviewList = Review.objects.order_by('-created_ts')
 
@@ -59,8 +61,8 @@ def profile(request, id=None, page=0):
     # No Profile specified and user is not logged in
     else:
         # One option is redirect as such.
-        messages.info(request, "Please Login to view your profile.")
-        return redirect("login")
+        messages.info(request, "Please login to view your profile.")
+        return redirect("index")
 
     return render(request, template, context)
 
@@ -201,4 +203,5 @@ def logout(request):
     Our view for logging out.
     """
     auth_logout(request)
+    messages.info(request, "You have been logged out.")
     return redirect("index")
