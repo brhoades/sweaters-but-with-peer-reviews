@@ -134,21 +134,24 @@
                 <a href="{% url 'professors' %}" class="c-menu__link fs-headline display-block">Professors</a>
               </div>
             </li>  
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">New Course</a>
-              </div>
-            </li>  
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">New Professor</a>
-              </div>
-            </li>         
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">New Review</a>
-              </div>
-            </li>  
+
+            {% if user.is_authenticated %}
+              <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                  <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">New Course</a>
+                </div>
+              </li>  
+              <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                  <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">New Professor</a>
+                </div>
+              </li>         
+              <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                  <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">New Review</a>
+                </div>
+              </li>  
+            {% endif %}
           </ul>
 
         </ul>
