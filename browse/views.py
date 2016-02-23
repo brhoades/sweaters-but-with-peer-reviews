@@ -4,16 +4,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from browse.models import Review, User, Professor, School, ReviewVote
-from django.contrib.auth import authenticate, login as auth_login, \
-    logout as auth_logout
+from django.contrib.auth import logout as auth_logout
 
 
-def index(request):
+def index(request, message=""):
     template = "browse/index.html"
     context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam Sucks and Dzu Rocks</h3>"
+    context["message"] = message
 
     reviewList = Review.objects.order_by('-created_ts')
 
