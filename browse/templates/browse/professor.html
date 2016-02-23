@@ -7,12 +7,14 @@
   <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />
   <strong>School</strong>: {{ professor.school.name }}<br />
   <strong>Owner</strong>:
+
   {% if professor.owner.first_name or professor.owner.last_name %}
     {{ professor.owner.first_name }} {{professor.owner.last_name }} ({{ professor.owner.username }})<br />
   {% else %}
     {{ professor.owner.username }}<br />
   {% endif %}
   <br />
+
   Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
   {% if professor.update_ts %}
     Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />

@@ -9,6 +9,7 @@
   <strong>Department</strong>: {{ review.course.department.name }}<br />
   <strong>Course</strong>: {{ review.course.name }} ({{ review.course.number }})<br />
   <strong>Professor</strong>: {{ review.target.first_name }} {{ review.target.last_name }}<br />
+
   <strong>Reviewer</strong>:
   {% if review.owner.first_name or review.owner.last_name %}
     {{ review.owner.first_name }} {{review.owner.last_name }} ({{ review.owner.username }})<br />
@@ -16,10 +17,12 @@
     {{ review.owner.username }}<br />
   {% endif %}
   <br />
+
   <strong>Review</strong>:
   <br />
   {{ review.text }}<br />
   <br />
+
   Created: {{ review.created_ts|date:"DATETIME_FORMAT" }}<br />
   {% if review.update_ts %}
     Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}<br />
