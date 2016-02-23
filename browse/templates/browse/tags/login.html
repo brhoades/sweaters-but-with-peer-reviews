@@ -1,28 +1,27 @@
-  {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-    
-  <form method="post" action="{% url 'login' %}">{% csrf_token %}
-    {% if message %}
-      {{ message }}
-    {% endif %}
+<form method="post">
+  {% csrf_token %}
 
-
+  {% verbatim %} 
+    <div flex-container="row" ng-model="message" 
+                              class="p+ error bgc-red-500 tc-white-1"
+                              ng-show="message != ''">
+      <center>
+        {{ message }}
+      </center>
+    </div>
     <div id="loginData">
         <lx-text-field label="Username">
-            <input type="text" ng-model="textField.username" name="username" value="{{ form.username }}">
+          <input type="text" ng-model="user.username" name="username">
         </lx-text-field>
 
         <lx-text-field label="Password">
-            <input type="password" ng-model="textField.password" name="password" value="{{ form.password }}">
+          <input type="password" ng-model="user.password" name="password">
         </lx-text-field>
 
-         <button class="btn btn--l btn--blue btn--raised" lx-ripple type="submit">Login</button>
-        <input type="hidden" name="next" value="/home" />
+         <button class="btn btn--l btn--blue btn--raised" 
+                 lx-ripple type="submit" ng-click="submit(user);">
+           Login
+         </button>
     </div>
-  </form>
-</div>
+  {% endverbatim %}
+</form>
