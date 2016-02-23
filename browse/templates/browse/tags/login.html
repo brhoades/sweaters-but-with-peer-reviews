@@ -1,0 +1,28 @@
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+    
+  <form method="post" action="{% url 'login' %}">{% csrf_token %}
+    {% if message %}
+      {{ message }}
+    {% endif %}
+
+
+    <div id="loginData">
+        <lx-text-field label="Username">
+            <input type="text" ng-model="textField.username" name="username" value="{{ form.username }}">
+        </lx-text-field>
+
+        <lx-text-field label="Password">
+            <input type="password" ng-model="textField.password" name="password" value="{{ form.password }}">
+        </lx-text-field>
+
+         <button class="btn btn--l btn--blue btn--raised" lx-ripple type="submit">Login</button>
+        <input type="hidden" name="next" value="/home" />
+    </div>
+  </form>
+</div>
