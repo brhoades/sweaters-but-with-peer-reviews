@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^view_for_model_at_id/(?P<model>[^\/]+)/(?P<id>[0-9]+)$',
         aviews.get_view_for_model),
 
-    url(r'login/?$', aviews.login, name="ajax_login"),
+    url(r'login/?$', aviews.login, name="login"),
 ]
