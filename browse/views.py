@@ -197,32 +197,6 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     return render(request, template, context)
 
 
-def login(request, user=None):
-    """
-    Our view for logging in.
-    """
-    template = loader.get_template("browse/login.html")
-    context = RequestContext(request)
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                auth_login(request, user)
-                return redirect("index")
-            else:
-                context["message"] = "Your account is disabled."
-                return HttpResponse(template.render(context))
-        else:
-            context["message"] = "Invalid login details supplied."
-            return HttpResponse(template.render(context))
-    else:
-        return HttpResponse(template.render(context))
-
-
 def logout(request):
     """
     Our view for logging out.

@@ -2,8 +2,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.db.models import Q
 from django.core.urlresolvers import reverse
-from django.contrib.auth import (authenticate, login as auth_login,
-                                 logout as auth_logout)
+from django.contrib.auth import authenticate
 from django.http import JsonResponse
 
 import json
