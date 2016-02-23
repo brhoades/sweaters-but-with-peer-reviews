@@ -61,7 +61,7 @@ def profile(request, id=None, page=0):
     else:
         # One option is redirect as such.
         messages.info(request, "Please Login to view your profile.")
-        return redirect("login")
+        return redirect("index")
 
     return render(request, template, context)
 
