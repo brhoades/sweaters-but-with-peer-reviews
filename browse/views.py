@@ -3,30 +3,41 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from browse.models import Review, User, Professor, School
-from django.contrib.auth import authenticate, login as auth_login, \
-    logout as auth_logout
+from browse.models import Review, User, Professor, School, ReviewVote
+from django.contrib.auth import logout as auth_logout
 
 
-def index(request):
-    template = loader.get_template("browse/index.html")
+def index(request, message=""):
+    template = "browse/index.html"
+
+    if message:
+        messages.info(request, message)
+
     context = RequestContext(request)
+    context["messages"] = messages.get_messages(request)
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam does not suck</h3>"
-    context["numbers"] = []
+    reviewList = Review.objects.order_by('-created_ts')
 
-    context["reviews"] = Review.objects.order_by('-created_ts')
+    if request.user.is_authenticated():
+        voteList = []
+        for review in reviewList:
+            vote = ReviewVote.objects.filter(owner=request.user,
+                                             target=review)
 
-    for x in range(1, 101):
-        if x % 15 == 0:
-            context["numbers"].append("{0} fizzbuzz".format(x))
-        elif x % 5 == 0:
-            context["numbers"].append("{0} buzz".format(x))
-        elif x % 3 == 0:
-            context["numbers"].append("{0} fizz".format(x))
+            # Add true if the vote is 'up', false if the vote is 'down'
+            # Add None if the user has not voted on the review
+            if vote.exists():
+                voteList.append(vote[0].quality)
+            else:
+                voteList.append(None)
+    else:
+        voteList = [None for review in reviewList]
 
-    return HttpResponse(template.render(context))
+    context["review_votes"] = []
+    for rev, vote in zip(reviewList, voteList):
+        context["review_votes"].append((rev, vote))
+
+    return render(request, template, context)
 
 
 def profile(request, id=None, page=0):
@@ -50,8 +61,8 @@ def profile(request, id=None, page=0):
     # No Profile specified and user is not logged in
     else:
         # One option is redirect as such.
-        messages.info(request, "Please Login to view your profile.")
-        return redirect("login")
+        messages.info(request, "Please login to view your profile.")
+        return redirect("index")
 
     return render(request, template, context)
 
@@ -89,8 +100,6 @@ def school(request, school_id=None, page=0):
     context = RequestContext(request)
 
     context["school"] = get_object_or_404(School, id=school_id)
-    # Review id does not exist
-    print(context["school"].__dict__)
 
     return HttpResponse(template.render(context))
 
@@ -128,8 +137,6 @@ def professor(request, professor_id=None, page=0):
     context = RequestContext(request)
 
     context["professor"] = get_object_or_404(Professor, id=professor_id)
-    # Review id does not exist
-    print(context["professor"].__dict__)
 
     return HttpResponse(template.render(context))
 
@@ -142,8 +149,6 @@ def review(request, review_id=0):
     context = RequestContext(request)
 
     context["review"] = get_object_or_404(Review, id=review_id)
-    # Review id does not exist
-    print(context["review"].__dict__)
 
     return HttpResponse(template.render(context))
 
@@ -193,35 +198,10 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     return render(request, template, context)
 
 
-def login(request, user=None):
-    """
-    Our view for logging in.
-    """
-    template = "browse/login.html"
-    context = {}
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                auth_login(request, user)
-                return redirect("index")
-            else:
-                context["message"] = "Your account is disabled."
-                return render(request, template, context)
-        else:
-            context["message"] = "Invalid login details supplied."
-            return render(request, template, context)
-    else:
-        return render(request, template, context)
-
-
 def logout(request):
     """
     Our view for logging out.
     """
     auth_logout(request)
+    messages.info(request, "You have been logged out.")
     return redirect("index")

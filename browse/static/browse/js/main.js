@@ -1,20 +1,13 @@
-var app = angular.module('lumxWrap', ['lumx'])
-	
-
-app.controller('loginData', function($scope, LxDialogService, LxNotificationService) {
-    $scope.opendDialog = function(dialogId)
-    {
-        LxDialogService.open(dialogId);
-    };
-    $scope.closingDialog = function()
-    {
-        LxNotificationService.info('Box Closed!');
-    };
-});
-
-app.controller('myCount', function($scope) {
-  $scope.count = 0;
-});
+/* 
+ *
+ * These are at the top for a reason.
+ * Do not move them.
+ *
+ */
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
 
 function getCookie(name) {
     var cookieValue = null;
@@ -32,17 +25,61 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         }
+        console.log("HELLO!");
     }
   }
 );
 
+/*
+ *
+ * This ends "must be at top" stuff."
+ *
+ */
+
+// Configure lumx to use csrf
+var app = angular.module('lumxWrap', ['lumx']).config(function($httpProvider) {
+  $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+  $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+});
+
+app.controller('loginData', function($scope, $http, LxDialogService,
+                                     LxNotificationService, $window) {
+  $scope.message = "";
+  $scope.user = {username: "", password: ""};
+
+  $scope.opendDialog = function(dialogId) {
+    LxDialogService.open(dialogId);
+  };
+
+  $scope.closingDialog = function() {
+  };
+
+  // Someone hit submit
+  $scope.submit = function(form) {
+    $http.post("/get/login", JSON.stringify(form)).
+      success(function(data) {
+          if(data["message"] != undefined) {
+            $scope.message = data["message"];
+          }
+
+          // refresh
+          if(data["refresh"]) {
+            $scope.closingDialog();
+            LxNotificationService.info("Successfully identified.");
+            $window.location.href = $window.location.href;
+          }
+        }).
+      error(function() {
+        $scope.message = "Network error";
+      });
+    }
+});
+
+app.controller('myCount', function($scope) {
+  $scope.count = 0;
+});

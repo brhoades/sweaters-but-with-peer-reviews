@@ -2,3 +2,4 @@ django==1.9.2
 django-geoposition==0.2.2
 djangular==0.2.7
 django-gravatar2
+django-autofixture

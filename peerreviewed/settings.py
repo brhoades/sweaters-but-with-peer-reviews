@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'djangular',
     'geoposition',
     'django_gravatar',
+    'autofixture',
 
     # Local
     'browse',
@@ -83,3 +84,5 @@ TEMPLATE_DIRS = (
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+LOGIN_URL = '/logged_in'

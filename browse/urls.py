@@ -21,6 +21,5 @@ urlpatterns = [
         '/(?P<second_id>[0-9]+)/?$', bviews.reviews,
         name="reviews_by_type_two"),
 
-    url(r'login/?$', bviews.login, name="login"),
     url(r'logout/?$', bviews.logout, name="logout"),
 ]

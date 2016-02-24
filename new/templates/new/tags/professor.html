@@ -1,0 +1,58 @@
+<div ng-app"lumxWrap">
+  <div ng-controller="form-handler" model="professor">
+
+    <form method="post" ng-submit="submit()">
+      {% csrf_token %}
+
+      {% verbatim %}
+      <div flex-container="row" ng-model="vald" 
+           class="p+ error bgc-red-500 tc-white-1"
+           ng-show="valid.error != ''">
+        <center>
+          {{ valid.error }}
+        </center>
+      </div>
+      <div flex-container="row" flex-gutter="24">
+        <div flex-item style="margin-left: 5%; margin-right: 5%">
+          <lx-select ng-model="data.school" placeholder="School"
+                     choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'schools_matching')" 
+                     loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
+                     error="valid.school != ''"
+                     class="tc-white-1">
+            <lx-select-selected>
+              {{ $selected.name }}
+            </lx-select-selected>
+
+            <lx-select-choices>
+              <!-- {{ $choice.name + ' (' + $selected.location + ')' }} --!>
+              {{ $choice.name }}
+            </lx-select-choices>
+          </lx-select>
+        </div>
+
+        <div flex-item>
+            <lx-text-field label="Last name">
+                <input type="text" ng-model="data.last_name" error="valid.last_name != ''">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.last_name != ''">{{ valid.last_name }}</span>
+        </div>
+
+        <div flex-item>
+            <lx-text-field label="First name">
+                <input type="text" ng-model="data.first_name" error="valid.first_name != ''">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.first_name != ''">{{ valid.first_name }}</span>
+        </div>
+      </div>
+
+      <div flex-container="row">
+        <div flex-item>
+          <button class="btn btn--l btn--blue btn--raised" type="submit"
+                  ng-submit="submit()" lx-ripple />Add Professor</button>
+        </div>
+      </div>
+
+      {% endverbatim %}
+      </form>
+    </div>
+  </div>

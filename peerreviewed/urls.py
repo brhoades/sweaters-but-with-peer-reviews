@@ -8,6 +8,10 @@ urlpatterns = [
     # Prolly should move, but it's more of a browse thing
     url(r'^$', bviews.index, name="index"),
 
+    # Shitty catch for need to be logged in error
+    url(r'^logged_in.*', bviews.index,
+        kwargs={"message": "You must be logged in to view that page."}),
+
     # Other modules
     url(r'^browse/', include('browse.urls')),
     url(r'^new/', include('new.urls')),
