@@ -45,14 +45,18 @@
           </button>
         </div>
         <div class="desktop">
-          <lx-tabs>
-            <lx-tab lx-label="Lorem">
-                <p>Hi there</p>
-            </lx-tab>
-            <lx-tab lx-label="Lorem">
-                <p>Hi again!</p>
-            </lx-tab>
-          </lx-tabs>
+            <lx-button lx-color="blue">
+                <a href="{% url 'index' %}" class="c-menu__link fs-headline display-block">Index</a>
+            </lx-button>
+            <lx-button lx-color="blue">
+                <a href="{% url 'reviews_overview' %}" class="c-menu__link fs-headline display-block">Reviews</a>
+            </lx-button>
+            <lx-button lx-color="blue">
+                <a href="{% url 'schools' %}" class="c-menu__link fs-headline display-block">Schools</a>
+            </lx-button>
+            <lx-button lx-color="blue">
+                <a href="{% url 'professors' %}" class="c-menu__link fs-headline display-block">Professors</a>
+            </lx-button>
         </div>
         <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
         <div class="toolbar__right">
