@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
@@ -38,10 +39,20 @@
 
     <div ng-app="lumxWrap">
       <div class="toolbar">
-        <div class="toolbar__left mr+++">
+        <div class="toolbar__left mr+++ mobile">
           <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
             <i class="mdi mdi-menu"></i>
           </button>
+        </div>
+        <div class="desktop">
+          <lx-tabs>
+            <lx-tab lx-label="Lorem">
+                <p>Hi there</p>
+            </lx-tab>
+            <lx-tab lx-label="Lorem">
+                <p>Hi again!</p>
+            </lx-tab>
+          </lx-tabs>
         </div>
         <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
         <div class="toolbar__right">
