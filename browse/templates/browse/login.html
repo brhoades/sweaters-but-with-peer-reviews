@@ -1,0 +1,71 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if messages %}
+  <ul class="messages">
+  {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+  </ul>
+{% endif %}
+  
+  <form method="post" action="{% url 'login' %}">{% csrf_token %}
+    {% if message %}
+      {{ message }}
+    {% endif %}
+
+
+    <div id="loginData">
+        <lx-text-field label="Username">
+            <input type="text" ng-model="textField.username" name="username" value="{{ form.username }}">
+        </lx-text-field>
+
+        <lx-text-field label="Password">
+            <input type="password" ng-model="textField.password" name="password" value="{{ form.password }}">
+        </lx-text-field>
+
+         <button class="btn btn--l btn--blue btn--raised" lx-ripple type="submit">Login</button>
+        <input type="hidden" name="next" value="/home" />
+    </div>
+  </form>
+
+
+
+
+<div ng-controller="loginData">
+
+    <button class="btn btn--m btn--black btn--flat" ng-click="opendDialog('loginCall')" lx-ripple>Open dialog</button>
+
+    <lx-dialog class="dialog dialog--l" id="loginCall" auto-close="true" onclose="closingDialog()" onscrollend="scrollEndDialog()">
+        <div class="dialog__header">
+            <div class="toolbar bgc-light-blue-500 pl++">
+                <span class="toolbar__label tc-white fs-title">
+                    Welcome!
+                </span>
+            </div>
+        </div>
+
+        <div class="dialog__content" id="loginData">
+
+            <lx-text-field label="Username">
+                <input type="text" ng-model="textField.username" name="username" value="{{ form.username }}">
+            </lx-text-field>
+
+            <lx-text-field label="Password">
+                <input type="password" ng-model="textField.password" name="password" value="{{ form.password }}">
+            </lx-text-field>
+
+        </div>
+
+        <div class="dialog__actions">
+            <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>Login</button>
+            <button class="btn btn--l btn--blue btn--raised" lx-ripple type="submit" >Login</button>
+            <input type="hidden" name="next" value="/home" />
+        </div>
+    </lx-dialog>
+</div>
+
+
+{% endblock %}
