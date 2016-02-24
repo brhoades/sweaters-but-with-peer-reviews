@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load authentication %}
 {% load gravatar %}
 
 <!DOCTYPE html>
@@ -69,21 +70,27 @@
               <button class="btn" lx-ripple lx-dropdown-toggle >
                 <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
               </button>
-              <lx-dropdown-menu>
-                <ul>
-                  <li>
-                    <a href="{% url 'login' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Login</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
-                  </li>
+              <div ng-controller="loginData">
+                <lx-dropdown-menu>
+                  <ul>
+                    <li>
+                        <a  class="fs-body-1 display-block dropdown-link dropdown-link--is-large"
+                            ng-click="opendDialog('loginCall')">
+                           Login
+                        </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
+                    </li>
 
-                  <li>
-                    <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
-                  </li>
+                    <li>
+                      <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
+                    </li>
 
-                </ul>
-              </lx-dropdown-menu>
+                  </ul>
+                </lx-dropdown-menu>
+              {% login_popup %}
+              </div>
               {% endif %} 
         </div>
       </div>
@@ -127,21 +134,24 @@
                 <a href="{% url 'professors' %}" class="c-menu__link fs-headline display-block">Professors</a>
               </div>
             </li>  
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">New Course</a>
-              </div>
-            </li>  
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">New Professor</a>
-              </div>
-            </li>         
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">New Review</a>
-              </div>
-            </li>  
+
+            {% if user.is_authenticated %}
+              <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                  <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">New Course</a>
+                </div>
+              </li>  
+              <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                  <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">New Professor</a>
+                </div>
+              </li>         
+              <li class="list-row list-row--has-separator">
+                <div class="list-row__content" align="right">
+                  <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">New Review</a>
+                </div>
+              </li>  
+            {% endif %}
           </ul>
 
         </ul>

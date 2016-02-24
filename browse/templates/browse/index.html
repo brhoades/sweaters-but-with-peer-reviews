@@ -7,16 +7,24 @@
 
 {% block content %}
 {% csrf_token %}
-  <!--
-  <div class="card bgc-indigo-900 tc-grey-50 p+">
-  Sweaters But With Peer Reviews
-  </div>
-  -->
 
+  {% if messages %}
+    <!-- FIXME: Open login dialog and run that --!>
+      {% for message in messages %}
+        <div flex-container="row"> 
+          <div flex-item class="tc-black-1 p+ error bgc-red-500">
+            <center>
+              {{ message }}
+            </center>
+          </div>
+        </div>
+      {% endfor %}
+  {% endif %}
+  
   <div class="fs-display-4 display-block tc-white-1">
     Sweaters But With Peer Reviews
   </div>
-  
+
     <div flex-container="row">
       <div flex-item="6">
         {% if review_votes|length > 0 %}

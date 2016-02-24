@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.db.models import Q
 from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login as auth_login
+from django.http import JsonResponse
 
 import json
 
@@ -123,3 +125,33 @@ def get_view_for_model(request, model="", id=-1):
         json_error("Unknown/unsupported model specified")
 
     return HttpResponse(json.dumps({"url": reverse(model, args=[id])}))
+
+
+def login(request):
+    """
+    Our view for logging in.
+    """
+    response = {"refresh": False, "message": "Unknown communication method"}
+
+    if request.method == 'POST':
+        data = json.loads(request.body.decode())
+        if "username" not in data:
+            response["message"] = "Missing username"
+        elif "password" not in data:
+            response["message"] = "Missing password"
+        else:
+            username = data["username"]
+            password = data["password"]
+
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    auth_login(request, user)
+                    response["message"] = ""
+                    response["refresh"] = True
+                else:
+                    response["message"] = "Your account is disabled."
+            else:
+                response["message"] = "Invalid login details."
+
+    return JsonResponse(response)

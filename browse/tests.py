@@ -9,6 +9,8 @@ from browse.models import FieldCategory, Field, Department, Review, Professor,\
 from new.tests import srs
 from django.utils import formats
 
+import json
+
 
 class TestBrowseViews(TestCase):
     @classmethod
@@ -60,7 +62,8 @@ class TestBrowseViews(TestCase):
 
     def test_login_login(self):
         url = reverse("login")
-        req = self.factory.post(url, self.creds)
+        req = self.factory.post(url, json.dumps(self.creds),
+                                content_type="text/json")
 
         # Set up our session
         middleware = SessionMiddleware()
@@ -70,7 +73,7 @@ class TestBrowseViews(TestCase):
         resp = resolve(url).func(req)
 
         # Redirect to index
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
     """
     def test_logout(self):

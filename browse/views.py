@@ -4,16 +4,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from browse.models import Review, User, Professor, School, ReviewVote
-from django.contrib.auth import authenticate, login as auth_login, \
-    logout as auth_logout
+from django.contrib.auth import logout as auth_logout
 
 
-def index(request):
+def index(request, message=""):
     template = "browse/index.html"
-    context = RequestContext(request)
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam Sucks and Dzu Rocks</h3>"
+    if message:
+        messages.info(request, message)
+
+    context = RequestContext(request)
+    context["messages"] = messages.get_messages(request)
 
     reviewList = Review.objects.order_by('-created_ts')
 
@@ -60,8 +61,8 @@ def profile(request, id=None, page=0):
     # No Profile specified and user is not logged in
     else:
         # One option is redirect as such.
-        messages.info(request, "Please Login to view your profile.")
-        return redirect("login")
+        messages.info(request, "Please login to view your profile.")
+        return redirect("index")
 
     return render(request, template, context)
 
@@ -197,35 +198,10 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     return render(request, template, context)
 
 
-def login(request, user=None):
-    """
-    Our view for logging in.
-    """
-    template = loader.get_template("browse/login.html")
-    context = RequestContext(request)
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                auth_login(request, user)
-                return redirect("index")
-            else:
-                context["message"] = "Your account is disabled."
-                return HttpResponse(template.render(context))
-        else:
-            context["message"] = "Invalid login details supplied."
-            return HttpResponse(template.render(context))
-    else:
-        return HttpResponse(template.render(context))
-
-
 def logout(request):
     """
     Our view for logging out.
     """
     auth_logout(request)
+    messages.info(request, "You have been logged out.")
     return redirect("index")
