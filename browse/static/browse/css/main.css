@@ -36,3 +36,9 @@
   padding-left: 10%;
   padding-right: 10%;
 }
+
+#profile_header { 
+  height:300px; 
+  background: url("../img/missourist_puck.jpg") 50% 0 no-repeat fixed; 
+  width: auto;
+}

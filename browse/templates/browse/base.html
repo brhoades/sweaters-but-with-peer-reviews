@@ -44,50 +44,44 @@
         </div>
         <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
         <div class="toolbar__right">
-          <lx-dropdown position="right" from-top>
+            <lx-dropdown position="right" from-top>
             {% if user.is_authenticated %}
             
-              <button class="btn" lx-ripple lx-dropdown-toggle >
-                <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
-              </button>
-              <lx-dropdown-menu>
-                <ul>
-                  <li>
-                    <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'profile' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
-                  </li>
-                
-                  <li>
-                    <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
-                  </li>
-          
-                </ul>
-              </lx-dropdown-menu>
+                <button class="btn" lx-ripple lx-dropdown-toggle >
+                    <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
+                </button>
+                <lx-dropdown-menu>
+                    <ul>
+                    <li>
+                        <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'profile' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
+                    </li>
+                    </ul>
+                 </lx-dropdown-menu>
             {% else %}
-              <button class="btn" lx-ripple lx-dropdown-toggle >
-                <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
-              </button>
-              <lx-dropdown-menu>
+                <button class="btn" lx-ripple lx-dropdown-toggle >
+                    <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
+                </button>
+                <lx-dropdown-menu>
                 <ul>
-                  <li>
-                    <a href="{% url 'login' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Login</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
-                  </li>
-                
-                  <li>
-                    <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
-                  </li>
-          
+                    <li>
+                        <a href="{% url 'login' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
+                    </li>
                 </ul>
-              </lx-dropdown-menu>
+                </lx-dropdown-menu>
             {% endif %} 
-              
-                
-                  
+            </lx-dropdown>>    
         </div>
       </div>
       <!--
@@ -107,8 +101,8 @@
     </div>
 
     <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-light-blue-800 p+" style="overflow: hidden;">
-      <button class="c-menu__close bgc-light-blue-800 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
-      <ul class="c-menu__items light-blue-800 p+">
+        <button class="c-menu__close bgc-light-blue-800 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
+        <ul class="c-menu__items light-blue-800 p+">
         <ul class="list mt++">
             <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
@@ -145,11 +139,10 @@
                     <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">New Review</a>
                 </div>
             </li>  
+        </ul>    
         </ul>
-        
-      </ul>
     </nav>
-    </div>
+</div>
 
     <div id="c-mask" class="c-mask"></div>
 

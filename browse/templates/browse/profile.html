@@ -22,39 +22,48 @@
 
 <body>
 
+<div class="profile_banner">
+	<div class="profile_picture">
+		<figure class="profile-picture"
+			style="background-image: url('{% gravatar_url profile.email 200 %}')">
+		 </figure>
+
+		 <div class="profile_data">
+		 	<h3 class="profile"> 
+		 		<font color = "#737373" >School: </font> <p> Misssouri Sciecne and Technology </p>
+		 		<p> <font color = "#737373" >Review{{ profile.review_set.count|pluralize }}: </font>{{ profile.review_set.count }} </p>
+		 		<p> <font color = "#737373" >Rated: </font> 4 </p>
+		 	</h3>
+		 </div>
+	</div>
+
+	<div class="profile_slider">
+		<div class="profile_name">
+			<h1 class="profile">{{ profile.first_name }} {{ profile.last_name }}</h1>
+			<h1 class="profile"> Doug Dude </h1>
+			<h4><font color = "#333333">{{ profile.username }}</font></h4>
+		</div>
+		<div class="picture_box">
+			<div class="box_left"></div>
+			<!--<section id="profile_header" data-speed="8" data-type="background"></section>-->
+			<div class="box_mid"></div>
+			<div class="box_right"></div>
+		</div>
+	</div>
+	
+	
+</div>
+
+
   <div>
-	<!-- Section #1 / Intro -->
-	<section id="profile_header" class="story" data-speed="8" data-type="background">    
-		<article>
-			<figure class="profile-picture"
-				style="background-image: url('{% gravatar_url profile.email 200 %}')">
-		  </figure>
-
-		  <!-- This is where profile data gets called and displayed -->
-			<div class="profile-stats">
-				<ul>
-					<li><span class="fs-display-1 display-block">{{ profile.first_name }} {{ profile.last_name }}</span></li>
-					<li><span class="fs-headline display-block">{{ profile.username }}</span><small>username</small></li>
-					<li><span class="fs-headline display-block">15</span><small>rated</small></li>
-          <li>
-            <span class="fs-headline display-block">{{ profile.review_set.count }}</span>
-            <small>Review{{ profile.review_set.count|pluralize }}</small>
-          </li>
-				</ul>
-
-			</div>
-
-		</article>
-	</section>
 
 	<!-- Section #2 / Background Only -->
 	<section id="profile_body" class="story" data-speed="4" data-type="background">
 		<article>
-			<h2>Background Only</h2>
-	    	<p>In this section we are sliding the background at a different speed to the rest of the page.</p>
-	    	<p>As this text box is scrolling at the same speed as the page, and faster than the background, it creates this lovely parallax effect.</p>
-	    	<p>You can find all the HTML, CSS and the all important JavaScript files over at GitHub - so why don't you drop by for some hardcore forking action?</p>
-	    	<p>Backgrounds for this article were taken from the May/June 2011 Smashing Magazine Desktop backgrounds.</p>	
+			<h1>Background Only</h1>
+	    	<p>Testing this section</p>
+	    	<p>EVERYONE PUT THE CONTENT IN THIS AREA</p>
+	    	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>	
 		    		
 		</article>
 
