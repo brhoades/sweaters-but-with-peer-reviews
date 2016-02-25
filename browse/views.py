@@ -64,6 +64,15 @@ def profile(request, id=None, page=0):
         messages.info(request, "Please login to view your profile.")
         return redirect("index")
 
+    userReviews = context["profile"].review_set.all()
+
+    voteCount = 0
+    for review in userReviews:
+        votes = review.reviewvote_set.all()
+        voteCount += sum([1 if vote.quality else -1 for vote in votes])
+
+    context["user_rating"] = voteCount
+
     return render(request, template, context)
 
 
