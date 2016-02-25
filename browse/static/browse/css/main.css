@@ -36,7 +36,17 @@
   padding-left: 10%;
   padding-right: 10%;
 }
+@media (min-width: 1000px){
+    .mobile {
+        visibility: hidden;
+    }
+}
 
+@media (max-width: 1001px){
+    .desktop {
+        visibility: hidden;
+    }
+}
 /* Body and html should span whole page
  * https://www.kirupa.com/html5/make_body_take_up_full_browser_height.htm
  */

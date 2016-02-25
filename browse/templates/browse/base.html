@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
@@ -36,10 +37,24 @@
 
     <div ng-app="lumxWrap">
       <div class="toolbar">
-        <div class="toolbar__left mr+++">
+        <div class="toolbar__left mr+++ mobile">
           <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
             <i class="mdi mdi-menu"></i>
           </button>
+        </div>
+        <div class="desktop">
+            <lx-button lx-color="blue">
+                <a href="{% url 'index' %}" class="c-menu__link fs-headline display-block">Index</a>
+            </lx-button>
+            <lx-button lx-color="blue">
+                <a href="{% url 'reviews_overview' %}" class="c-menu__link fs-headline display-block">Reviews</a>
+            </lx-button>
+            <lx-button lx-color="blue">
+                <a href="{% url 'schools' %}" class="c-menu__link fs-headline display-block">Schools</a>
+            </lx-button>
+            <lx-button lx-color="blue">
+                <a href="{% url 'professors' %}" class="c-menu__link fs-headline display-block">Professors</a>
+            </lx-button>
         </div>
         <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
         <div class="toolbar__right">
