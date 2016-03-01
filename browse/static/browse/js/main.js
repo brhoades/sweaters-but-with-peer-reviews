@@ -83,3 +83,15 @@ app.controller('loginData', function($scope, $http, LxDialogService,
 app.controller('myCount', function($scope) {
   $scope.count = 0;
 });
+
+
+//This changes the css class based on the size of the window. 
+$(window).on('resize', function() {
+    if($(window).width() < 1001 ) {
+        $('#testing').removeClass('fs-display-4 display-block tc-white-1')
+        $('#testing').addClass('fs-display-2 display-block tc-white-1')
+    }else {
+        $('#testing').removeClass('fs-display-2 display-block tc-white-1')
+        $('#testing').addClass('fs-display-4 display-block tc-white-1')
+    }
+})

@@ -46,6 +46,10 @@
     .desktop {
         visibility: hidden;
     }
+    .mFont {
+        background-color: red;
+        font-size: 70px;
+    }
 }
 /* Body and html should span whole page
  * https://www.kirupa.com/html5/make_body_take_up_full_browser_height.htm
