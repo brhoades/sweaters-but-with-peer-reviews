@@ -80,6 +80,3 @@ app.controller('loginData', function($scope, $http, LxDialogService,
     }
 });
 
-app.controller('myCount', function($scope) {
-  $scope.count = 0;
-});

@@ -13,6 +13,11 @@ def new_professor():
     return {}
 
 
+@register.inclusion_tag("new/tags/new_professor_popup.html")
+def new_professor_popup():
+    return {}
+
+
 @register.inclusion_tag("new/tags/course.html")
 def new_course():
     return {}

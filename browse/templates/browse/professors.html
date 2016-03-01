@@ -1,6 +1,10 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load formlets %}
 {% block title %}Professors{% endblock %}
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
 
 {% block content %}
   {% if professors|length > 0 %}
@@ -23,5 +27,17 @@
   {% else %}
     <h2>There are no professors</h2>
   {% endif %}
+  <lx-button 
+      lx-type="icon" 
+      lx-tooltip="Add Professor" 
+      lx-tooltip-position="left" 
+      ng-click="opendDialog('professorCall')">
+      <i class="mdi mdi-plus"></i>
+  </lx-button>
+
+  {% new_professor_popup %}
+
+       
+
 {% endblock %}
 

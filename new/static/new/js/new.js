@@ -97,3 +97,4 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
   $httpProvider.defaults.xsrfCookieName = 'csrftoken';
   $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
+
