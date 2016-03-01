@@ -8,6 +8,10 @@
 
 {% block content %}
   <div id="demo" class="card">
-    {% new_professor %}
+    <div ng-app"lumxWrap">
+      <div ng-controller="form-handler" model="professor">
+        {% new_professor %}
+      </div>
+    </div>
   </div>
 {% endblock %}

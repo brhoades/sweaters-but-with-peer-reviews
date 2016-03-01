@@ -1,8 +1,5 @@
 {% load formlets %}
 
-
-{{ button }}
-
 <lx-dialog class="dialog dialog--l" id="professorCall" auto-close="true"
            onclose="closingDialog()" onscrollend="scrollEndDialog()">
   <div class="dialog__header">
@@ -13,5 +10,5 @@
     </div>
   </div>
 
-  {% new_professor noouter=True %}
+  {% new_professor %}
 </lx-dialog>
