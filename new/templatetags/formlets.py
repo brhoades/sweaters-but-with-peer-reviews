@@ -9,13 +9,13 @@ register = template.Library()
 
 
 @register.inclusion_tag("new/tags/professor.html")
-def new_professor():
-    return {}
+def new_professor(noouter=False):
+    return {"noouter": noouter}
 
 
 @register.inclusion_tag("new/tags/new_professor_popup.html")
-def new_professor_popup():
-    return {}
+def new_professor_popup(button=None):
+    return {"button": button}
 
 
 @register.inclusion_tag("new/tags/course.html")

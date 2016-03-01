@@ -1,6 +1,8 @@
-<div ng-app"lumxWrap">
 
+{% if outer %}
+<div ng-app"lumxWrap">
   <div ng-controller="form-handler" model="professor">
+{% endif %}
 
     <form method="post">
       {% csrf_token %}
@@ -55,5 +57,8 @@
 
       {% endverbatim %}
       </form>
+
+{% if outer %}
     </div>
   </div>
+{% endif %}

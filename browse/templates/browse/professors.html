@@ -27,15 +27,13 @@
   {% else %}
     <h2>There are no professors</h2>
   {% endif %}
-  <lx-button 
-      lx-type="icon" 
-      lx-tooltip="Add Professor" 
-      lx-tooltip-position="left" 
-      ng-click="opendDialog('professorCall')">
-      <i class="mdi mdi-plus"></i>
-  </lx-button>
 
-  {% new_professor_popup %}
+  <div ng-app"lumxWrap">
+    <div ng-controller="form-handler" model="professor">
+      {% new_professor_popup "<lx-button lx-type=\"icon\" lx-tooltip=\"Add Professor\" lx-tooltip-position=\"left\" ng-click=\"opendDialog('professorCall')\"><i class=\"mdi mdi-plus\"></i></lx-button>" %}
+    </div>
+  </div>
+
 
        
 
