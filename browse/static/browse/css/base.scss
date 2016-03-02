@@ -1,9 +1,8 @@
 @import "lumx/dist/scss/lumx";
 @import "settings";
 
-/*
-                  <button lx-type="flat" class="up btn btn--l btn--blue btn--flat {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="up" lx-ripple>
-                  */
+
+/* Begin voting classes */
 .vote-button {
   @extend .btn;
   @extend .btn--$vote-button-color-name;
@@ -40,6 +39,28 @@
   @extend .vote-button-icon;
   @extend .mdi-chevron-down;
 }
+/* End Voting Classes */
+
+
+/* Main Page Classes */
+.title-block {
+  @extend .fs-display-4;
+  @extend .display-block;
+  @extend .tc-white-1;
+}
+
+.subtitle-block {
+  @extend .fs-display-1;
+  @extend .display-block;
+  @extend .tc-white-1;
+}
+
+.sweaters-error {
+  @extend .tc-black-1;
+  @extend .p+;
+  @extend .error;
+  @extend .bgc-red-500;
+}
 
 /* Body and html should span whole page
  * https://www.kirupa.com/html5/make_body_take_up_full_browser_height.htm
@@ -51,3 +72,5 @@ html {
 body {
   min-height: 100%;
 }
+
+/* End Main Page Classes */
