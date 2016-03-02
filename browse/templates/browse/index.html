@@ -29,57 +29,40 @@
         {% if review_votes|length > 0 %}
           <h2 class="tc-white-1 p+" align="left">Latest {{review_votes|length}} Review(s)</h2>
           {% for review, vote in review_votes %}
-          <div class="divider divider--dark" ></div>
-          <div class="card bgc-grey-300 tc-black-1 p+" review-id="{{ review.id }}">
-            <li class="list-row">
-              <div flex-container="row" flex-gutter="24">
-                <div flex-item="8">
-                  <div flex-container="column" align="left">
-                    <div ng-app="lumxWrap">
-                      <div>
-                        <button class="up btn btn--l btn--deep-purple btn--fab {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="up" lx-ripple>
-                          <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-up"></i>
-                        </button>
-                      </div>
-                      <div>
-                        <i style="display: hidden;"
-                           class="icon icon--xs icon--blue icon--flat mdi mdi-brightness-1 tc-grey-300"></i>
-                      </div>
-                      <div>
-                        <button class="down btn btn--l btn--deep-purple btn--fab {{ vote|yesno:"bgc-deep-purple-A500,bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="down" lx-ripple>
-                          <i class="icon icon--l icon--white icon--flat mdi mdi-chevron-down"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div flex-item="2">
-                  <div class="list-row__primary" >
-                    <a href="{% url 'profile' review.owner.id %}"><img src="{% gravatar_url review.owner.email 200 %}" width="100" height="100" class="img-round" ></a>
-                  </div>
-                </div>
-              </div>
-              {% if review.owner.first_name or review.owner.last_name %}
-              <div flex-item>
-                <div class="list-row__content">
-                  <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</a></span>
-                  <span class="display-block fs-body-1 tc-black-2"><b>{{ review.course.name }}</b> <br />
-                    with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
-                    -- <a href="{% url 'review' review_id=review.id %}">View</a><br /></span>
-                </div>
-              </div>
-              {% else %}
-              <div class="list-row__content">
-                <span class="display-block">{{ review.owner.username }}</a></span>
-                <span class="display-block fs-body-1 tc-black-2">{{ review.course.name }}</span>
-              </div>
-              <div class="list-row__secondary">
-                <i class="icon icon--xs icon--blue icon--flat mdi mdi-information"></i>
-              </div>
-                        
-              {% endif %}
-            </li>
+      <div class="card" style="margin-bottom: 35px;">
+        <div flex-container="row">
+          <div class="card__img card__img--left" style="height: 100px;">
+            <a href="{% url 'profile' review.owner.id %}">
+              <img src="{% gravatar_url review.owner.email 200 %}" style="margin-right:20px;">
+            </a>
           </div>
+          <div flex-item flex-container="column">
+            <a href="{% url 'review' review_id=review.id %}">
+              <div flex-item align="left">
+                <strong class="fs-headline display-block">Title of Review</strong>
+                <span class="display-block fs-body-1 tc-black-2"><b>{{ review.course.name }}</b> <br />
+                  with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
+                <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</span>
+              </div>
+            </a>
+          </div>
+              <div ng-app="lumxWrap">
+              <div flex-container="row" align="right">
+                <div style="margin-top:15%">
+                  <button lx-type="flat" class="up btn btn--l btn--blue btn--flat {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="up" lx-ripple>
+                    <i class="icon icon--l icon--blue icon--flat mdi mdi-chevron-up"></i>
+                  </button>
+                </div>
+                <div style="margin-top:15%; margin-right:50px;">
+                  <button lx-type="flat"class="down btn btn--l btn--blue btn--flat  {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="down" lx-ripple>
+                    <i class="icon icon--l icon--blue icon--flat mdi mdi-chevron-down"></i>
+                  </button>
+                </div>
+              </div>
+              </div>
+          
+        </div>
+      </div>
           {% endfor %}
         {% else %}
           <h2>There are no reviews</h2>

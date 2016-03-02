@@ -10,7 +10,7 @@
     {% if reviews|length > 0 %}
       {% for review in reviews %}
       <div class="divider divider--dark" ></div>
-      <div class="card" style="margin-bottom: 50px;">
+      <div class="card" style="margin-bottom: 35px;">
         <div flex-container="row">
           <div class="card__img card__img--left" style="height: 100px;">
             <a href="{% url 'profile' review.owner.id %}">
