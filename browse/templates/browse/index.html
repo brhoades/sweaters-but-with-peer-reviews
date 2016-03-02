@@ -49,13 +49,13 @@
               <div ng-app="lumxWrap">
               <div flex-container="row" align="right">
                 <div style="margin-top:15%">
-                  <button lx-type="flat" class="up btn btn--l btn--blue btn--flat {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="up" lx-ripple>
-                    <i class="icon icon--l icon--blue icon--flat mdi mdi-chevron-up"></i>
+                  <button lx-type="flat" class="vote-button-up {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="up" lx-ripple>
+                    <i class="vote-button-up-icon"></i>
                   </button>
                 </div>
                 <div style="margin-top:15%; margin-right:50px;">
-                  <button lx-type="flat"class="down btn btn--l btn--blue btn--flat  {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="down" lx-ripple>
-                    <i class="icon icon--l icon--blue icon--flat mdi mdi-chevron-down"></i>
+                  <button lx-type="flat"class="vote-button-down {{ vote|yesno:"bgc-deep-purple-900 active,bgc-deep-purple-A500" }}" action="down" lx-ripple>
+                    <i class="vote-button-down-icon"></i>
                   </button>
                 </div>
               </div>

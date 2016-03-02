@@ -82,6 +82,7 @@ TEMPLATE_DIRS = (
 BOWER_DIR = os.path.join(BASE_DIR, "browse", "static", "browse",
                          "bower_components")
 SASS_PROCESSOR_INCLUDE_DIRS = (
+    os.path.join(BASE_DIR, "browse", "static", "browse", "scss"),
     BOWER_DIR,
     os.path.join(BOWER_DIR, "bourbon", "app", "assets", "stylesheets"),
     os.path.join(BOWER_DIR, "mdi", "scss"),
