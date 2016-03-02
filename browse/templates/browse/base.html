@@ -43,18 +43,15 @@
           </button>
         </div>
         <div class="desktop">
-            <lx-button lx-color="blue">
-                <a href="{% url 'index' %}" class="c-menu__link fs-headline display-block">Index</a>
-            </lx-button>
-            <lx-button lx-color="blue">
-                <a href="{% url 'reviews_overview' %}" class="c-menu__link fs-headline display-block">Reviews</a>
-            </lx-button>
-            <lx-button lx-color="blue">
-                <a href="{% url 'schools' %}" class="c-menu__link fs-headline display-block">Schools</a>
-            </lx-button>
-            <lx-button lx-color="blue">
-                <a href="{% url 'professors' %}" class="c-menu__link fs-headline display-block">Professors</a>
-            </lx-button>
+          {% for name, link in page_links %}
+            <a href="{% url link %}">
+              <lx-button lx-color="blue">
+                <div class="c-menu__link fs-headline display-block">
+                  {{ name }}
+                </div>
+              </lx-button>
+            </a>
+          {% endfor %}
         </div>
         <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
         <div class="toolbar__right">
@@ -127,44 +124,41 @@
         <button class="c-menu__close bgc-light-blue-800 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
         <ul class="c-menu__items light-blue-800 p+">
           <ul class="list mt++">
+            {% for name, link in page_links %}
             <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'index' %}" class="c-menu__link fs-headline display-block">Index</a>
-              </div>
+              <a href="{% url link %}" class="c-menu__link fs-headline display-block">
+                <div class="list-row__content" align="right">
+                  {{ name }}
+                </div>
+              </a>
             </li>
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'reviews_overview' %}" class="c-menu__link fs-headline display-block">Reviews</a>
-              </div>
-            </li>
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'schools' %}" class="c-menu__link fs-headline display-block">Schools</a>
-              </div>
-            </li>
-            <li class="list-row list-row--has-separator">
-              <div class="list-row__content" align="right">
-                <a href="{% url 'professors' %}" class="c-menu__link fs-headline display-block">Professors</a>
-              </div>
-            </li>  
+            {% endfor %}
 
+            {% comment %}
             {% if user.is_authenticated %}
               <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                  <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">New Course</a>
+                  <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">
+                    New Course
+                  </a>
                 </div>
               </li>  
               <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                  <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">New Professor</a>
+                  <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">
+                    New Professor
+                  </a>
                 </div>
               </li>         
               <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
-                  <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">New Review</a>
+                  <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">
+                    New Review
+                  </a>
                 </div>
               </li>  
             {% endif %}
+            {% endcomment %}
           </ul>
 
         </ul>

@@ -98,6 +98,11 @@ STATICFILES_FINDERS = (
     'sass_processor.finders.CssFinder',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'middleware.links.link_processor',
+)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
