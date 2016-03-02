@@ -25,31 +25,24 @@ $(document).ready(function() {
     var up = $(review_div).find("button.vote-button-up");
     var down = $(review_div).find("button.vote-button-down");
 
-
     if (action == "up") {
-      $(up).toggleClass("active");
-      $(up).toggleClass("bgc-deep-purple-A500");
-      $(up).toggleClass("bgc-deep-purple-900");
-      if ($(down).hasClass("active")) {
-        $(down).removeClass("active");
-        $(down).removeClass("bgc-deep-purple-900");
-        $(down).addClass("bgc-deep-purple-A500");
-      }
+      var toggler = up;
+      var remover = down;
     }
     else if (action == "down") {
-      $(down).toggleClass("active");
-      $(down).toggleClass("bgc-deep-purple-A500");
-      $(down).toggleClass("bgc-deep-purple-900");
-      if ($(up).hasClass("active")) {
-        $(up).removeClass("active");
-        $(up).removeClass("bgc-deep-purple-900");
-        $(up).addClass("bgc-deep-purple-A500");
-      }
+      var toggler = down;
+      var remover = up;
     }
     else {
       return;
     }
-    
+
+    if (remover) {
+      $(remover).removeClass("vote-button-active");
+    }
+    if (toggler) {
+      $(toggler).toggleClass("vote-button-active");
+    }
 
     $.ajax({
       url: "new/add_vote",

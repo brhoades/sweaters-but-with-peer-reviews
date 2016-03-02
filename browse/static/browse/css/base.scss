@@ -39,6 +39,10 @@
   @extend .vote-button-icon;
   @extend .mdi-chevron-down;
 }
+
+.vote-button-active {
+  @extend .bgc-grey-300;
+}
 /* End Voting Classes */
 
 
