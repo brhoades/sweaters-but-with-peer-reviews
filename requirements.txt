@@ -3,3 +3,6 @@ django-geoposition==0.2.2
 djangular==0.2.7
 django-gravatar2
 django-autofixture
+libsass
+django-compressor
+django-sass-processor

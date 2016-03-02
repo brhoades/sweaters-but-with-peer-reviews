@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'geoposition',
     'django_gravatar',
     'autofixture',
+    'sass_processor',
 
     # Local
     'browse',
@@ -78,6 +79,17 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "new", "templates"),
 )
 
+SASS_PROCESSOR_INCLUDE_DIRS = (
+    os.path.join(BASE_DIR, "static", "scss"),
+)
+
+SASS_OUTPUT_STYLE = 'compact'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
