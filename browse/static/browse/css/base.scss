@@ -5,7 +5,7 @@
 /* Begin voting classes */
 .vote-button {
   @extend .btn;
-  @extend .btn--$vote-button-color-name;
+  @extend .btn--blue;
   @extend .button--blue;
   @extend .btn--l;
   @extend .btn--flat;
@@ -25,7 +25,7 @@
 .vote-button-icon {
   @extend .icon;
   @extend .icon--l;
-  @extend .icon--$vote-button-color-name;
+  @extend .icon--blue;
   @extend .icon--flat;
   @extend .mdi;
 }
