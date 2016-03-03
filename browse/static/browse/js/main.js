@@ -95,3 +95,12 @@ $(window).on('resize', function() {
         $('#title').addClass('title-block')
     }
 })
+
+window.onload = function() {
+    if($(window).width() < 1001 ) {
+        $('#title').addClass('mobile-title-block')
+    }
+    else if($(window).width() >= 1001 ) {
+        $('#title').addClass('title-block')
+    }
+}

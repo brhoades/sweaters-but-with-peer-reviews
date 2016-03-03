@@ -21,19 +21,19 @@
       {% endfor %}
   {% endif %}
   
-  <div id="title" class="title-block">
-    <div>Cardigans But With Peer Reviews</div>
+  <div id="title">
+    <div class="tc-black">Cardigans But With Peer Reviews</div>
   </div>
     <div flex-container="row">
       <div flex-item="6">
         {% if review_votes|length > 0 %}
           <h2 class="tc-white-1 p+" align="left">Latest {{review_votes|length}} Review(s)</h2>
           {% for review, vote in review_votes %}
-      <div class="card" style="margin-bottom: 35px;">
+      <div class="card card-color" style="margin-bottom: 35px;">
         <div flex-container="row">
           <div class="card__img card__img--left" style="height: 100px;">
             <a href="{% url 'profile' review.owner.id %}">
-              <img src="{% gravatar_url review.owner.email 200 %}" style="margin-right:20px;">
+              <img src="{% gravatar_url review.owner.email 200 %}" style="margin-right:30px;">
             </a>
           </div>
           <div flex-item flex-container="column">
