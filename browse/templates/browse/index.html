@@ -29,7 +29,7 @@
         {% if review_votes|length > 0 %}
           <h2 class="tc-white-1 p+" align="left">Latest {{review_votes|length}} Review(s)</h2>
           {% for review, vote in review_votes %}
-      <div class="card card-color" style="margin-bottom: 35px;">
+          <div class="card card-color" style="margin-bottom: 35px;" review-id="{{review.id}}">
         <div flex-container="row">
           <div class="card__img card__img--left" style="height: 100px;">
             <a href="{% url 'profile' review.owner.id %}">
