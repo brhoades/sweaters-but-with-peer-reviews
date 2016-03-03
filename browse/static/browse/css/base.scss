@@ -49,6 +49,12 @@
   @extend .tc-white-1;
 }
 
+.mobile-title-block {
+    @extend .fs-display-3;
+    @extend .display-block;
+    @extend .tc-white-1;
+}
+
 .subtitle-block {
   @extend .fs-display-1;
   @extend .display-block;
