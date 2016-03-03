@@ -1,31 +1,63 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load sass_tags %}
+{% load gravatar %}
+
 {% block title %}View Review{% endblock %}
+{% block header %}
+<link href="{% sass_src "browse/scss/review.scss" %}" rel="stylesheet"
+      type="text/css" />
+{% endblock %}
 
 {% block content %}
-<div id="demo">
-  <br />
-  <strong>School</strong>: {{ review.course.department.school.name }}<br />
-  <strong>Department</strong>: {{ review.course.department.name }}<br />
-  <strong>Course</strong>: {{ review.course.name }} ({{ review.course.number }})<br />
-  <strong>Professor</strong>: {{ review.target.first_name }} {{ review.target.last_name }}<br />
+<div id="demo" class="card card-color">
+  <div class="professor-title">
+    <a href="{% url "professor" professor_id=review.target.id %}">
+      <img src="{% gravatar_url review.owner.email 100 %}"
+           class="professor-avatar">
+      <div class="professor-name">
+        {{ review.target.first_name }} 
+        {{ review.target.last_name }}
+      </div>
+    </a>
+  </div>
+  <div class="professor-info">
+    <a href="{% url "school" review.course.department.school.id %}">
+      {{ review.course.department.school.name }}
+    </a> - 
+    {% comment %}
+    <a href="{% url "department" review.course.department.id %}">
+    {% endcomment %}
 
-  <strong>Reviewer</strong>:
-  {% if review.owner.first_name or review.owner.last_name %}
-    {{ review.owner.first_name }} {{review.owner.last_name }} ({{ review.owner.username }})<br />
-  {% else %}
-    {{ review.owner.username }}<br />
-  {% endif %}
-  <br />
+      {{ review.course.department.name }}
 
-  <strong>Review</strong>:
-  <br />
-  {{ review.text }}<br />
-  <br />
+    {% comment %}
+    </a>
+    {% endcomment %}
+    <br />
+    &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
+  </div>
 
-  Created: {{ review.created_ts|date:"DATETIME_FORMAT" }}<br />
-  {% if review.update_ts %}
-    Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}<br />
-  {% endif %}
+  <strong class="review-title">Title of Review</strong>
+  <div class="review-info">
+    <a href="{% url "profile" review.owner.id %}">
+      {% if review.owner.first_name or review.owner.last_name %}
+        {{ review.owner.first_name }} {{ review.owner.last_name }} 
+        ({{ review.owner.username }})
+      {% else %}
+        {{ review.owner.username }}
+      {% endif %}
+
+      {% if not review.update_ts %}
+        {{ review.created_ts|date:"DATETIME_FORMAT" }}
+      {% else %}
+        Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}
+      {% endif %}
+    </a>
+  </div>
+
+  <div class="review-text">
+    {{ review.text }}
+  </div>
 </div>
 {% endblock %}
