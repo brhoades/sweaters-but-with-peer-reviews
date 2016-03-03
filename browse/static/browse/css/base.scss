@@ -1,0 +1,76 @@
+@import "lumx/dist/scss/lumx";
+@import "settings";
+
+
+/* Begin voting classes */
+.vote-button {
+  @extend .btn;
+  @extend .btn--blue;
+  @extend .btn--l;
+  @extend .btn--flat;
+}
+
+.vote-button-up {
+  @extend .vote-button;
+}
+
+.vote-button-down {
+  @extend .vote-button;
+}
+
+.vote-button-icon {
+  @extend .icon;
+  @extend .icon--l;
+  @extend .icon--blue;
+  @extend .icon--flat;
+  @extend .mdi;
+}
+
+.vote-button-up-icon {
+  @extend .vote-button-icon;
+  @extend .mdi-chevron-up;
+}
+
+.vote-button-down-icon {
+  @extend .vote-button-icon;
+  @extend .mdi-chevron-down;
+}
+
+.vote-button-active {
+  @extend .bgc-grey-300;
+}
+/* End Voting Classes */
+
+
+/* Main Page Classes */
+.title-block {
+  @extend .fs-display-4;
+  @extend .display-block;
+  @extend .tc-white-1;
+}
+
+.subtitle-block {
+  @extend .fs-display-1;
+  @extend .display-block;
+  @extend .tc-white-1;
+}
+
+.sweaters-error {
+  @extend .tc-black-1;
+  @extend .p+;
+  @extend .error !optional;
+  @extend .bgc-red-500;
+}
+
+/* Body and html should span whole page
+ * https://www.kirupa.com/html5/make_body_take_up_full_browser_height.htm
+ */
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+/* End Main Page Classes */

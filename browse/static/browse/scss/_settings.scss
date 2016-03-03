@@ -1,0 +1,20 @@
+
+// Lumx colors
+$primary:               $blue-500 !default;
+$primary-hue-1:         $blue-100 !default;
+$primary-hue-2:         $blue-700 !default;
+$accent:                $pink-A200  !default;
+$accent-hue-1:          $pink-A100  !default;
+$accent-hue-2:          $pink-A400  !default;
+
+$button-color-name: "blue";
+$button-color: $primary;
+
+$vote-button-color-name: $button-color-name;
+$vote-button-color: $button-color;
+$vote-button-color-up: $button-color;
+$vote-button-color-down: $button-color;
+
+$vote-button-activate-color: $primary-hue-1;
+$vote-button-activate-color-up: $vote-button-activate-color;
+$vote-button-activate-color-down: $vote-button-activate-color;

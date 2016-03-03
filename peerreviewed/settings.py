@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'geoposition',
     'django_gravatar',
     'autofixture',
+    'sass_processor',
 
     # Local
     'browse',
@@ -78,6 +79,29 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "new", "templates"),
 )
 
+BOWER_DIR = os.path.join(BASE_DIR, "browse", "static", "browse",
+                         "bower_components")
+SASS_PROCESSOR_INCLUDE_DIRS = (
+    os.path.join(BASE_DIR, "browse", "static", "browse", "scss"),
+    BOWER_DIR,
+    os.path.join(BOWER_DIR, "bourbon", "app", "assets", "stylesheets"),
+    os.path.join(BOWER_DIR, "mdi", "scss"),
+)
+
+SASS_PRECISION = 8
+
+SASS_OUTPUT_STYLE = 'compact'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'middleware.links.link_processor',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

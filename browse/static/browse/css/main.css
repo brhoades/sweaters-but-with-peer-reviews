@@ -51,12 +51,3 @@
         font-size: 70px;
     }
 }
-/* Body and html should span whole page
- * https://www.kirupa.com/html5/make_body_take_up_full_browser_height.htm
- */
-html {
-  height: 100%;
-}
-
-body {
-  min-height: 100%;
