@@ -88,19 +88,10 @@ app.controller('myCount', function($scope) {
 //This changes the css class based on the size of the window. 
 $(window).on('resize', function() {
     if($(window).width() < 1001 ) {
-        $('#title').removeClass('title-block')
-        $('#title').addClass('mobile-title-block')
+        $('#title').removeClass('fs-display-4 display-block tc-white-1')
+        $('#title').addClass('fs-display-3 display-block tc-white-1')
     }else {
-        $('#title').removeClass('mobile-title-block')
-        $('#title').addClass('title-block')
+        $('#title').removeClass('fs-display-3 display-block tc-white-1')
+        $('#title').addClass('fs-display-4 display-block tc-white-1')
     }
 })
-
-window.onload = function() {
-    if($(window).width() < 1001 ) {
-        $('#title').addClass('mobile-title-block')
-    }
-    else if($(window).width() >= 1001 ) {
-        $('#title').addClass('title-block')
-    }
-}

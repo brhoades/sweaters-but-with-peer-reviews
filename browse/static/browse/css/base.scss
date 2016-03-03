@@ -3,14 +3,6 @@
 
 
 /* Begin voting classes */
-.card-color {
-    background-color: #FFFFFF;
-}
-
-.background-color {
-    background-color: #EEEEEE;
-}
-
 .vote-button {
   @extend .btn;
   @extend .btn--blue;
@@ -53,12 +45,6 @@
 /* Main Page Classes */
 .title-block {
   @extend .fs-display-4;
-  @extend .display-block;
-  @extend .tc-white-1;
-}
-
-.mobile-title-block {
-  @extend .fs-display-3;
   @extend .display-block;
   @extend .tc-white-1;
 }
