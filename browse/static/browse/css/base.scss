@@ -6,20 +6,16 @@
 .vote-button {
   @extend .btn;
   @extend .btn--blue;
-  @extend .button--blue;
   @extend .btn--l;
   @extend .btn--flat;
 }
 
 .vote-button-up {
   @extend .vote-button;
-  @extend .up;
 }
-
 
 .vote-button-down {
   @extend .vote-button;
-  @extend .down;
 }
 
 .vote-button-icon {
@@ -62,7 +58,7 @@
 .sweaters-error {
   @extend .tc-black-1;
   @extend .p+;
-  @extend .error;
+  @extend .error !optional;
   @extend .bgc-red-500;
 }
 
