@@ -40,18 +40,20 @@
 
   <strong class="review-title">Title of Review</strong>
   <div class="review-info">
-    {% if review.owner.first_name or review.owner.last_name %}
-      {{ review.owner.first_name }} {{ review.owner.last_name }} 
-      ({{ review.owner.username }})
-    {% else %}
-      {{ review.owner.username }}
-    {% endif %}
+    <a href="{% url "profile" review.owner.id %}">
+      {% if review.owner.first_name or review.owner.last_name %}
+        {{ review.owner.first_name }} {{ review.owner.last_name }} 
+        ({{ review.owner.username }})
+      {% else %}
+        {{ review.owner.username }}
+      {% endif %}
 
-    {% if not review.update_ts %}
-      {{ review.created_ts|date:"DATETIME_FORMAT" }}
-    {% else %}
-      Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}
-    {% endif %}
+      {% if not review.update_ts %}
+        {{ review.created_ts|date:"DATETIME_FORMAT" }}
+      {% else %}
+        Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}
+      {% endif %}
+    </a>
   </div>
 
   <div class="review-text">
