@@ -1,50 +1,30 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
-{% load gravatar %}
+{% load sass_tags %}
+{% load cards %}
+
 {% block title %}Home{% endblock %}
+{% block header %} 
+  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+        type="text/css" />
+{% endblock %}
 
 {% block content %}
   <br />
   <br />
   <div ng-app="lumxWrap">
-    {% if reviews|length > 0 %}
-      {% for review in reviews %}
-      <div class="divider divider--dark" ></div>
-      <div class="card" style="margin-bottom: 35px;">
-        <div flex-container="row">
-          <div class="card__img card__img--left" style="height: 100px;">
-            <a href="{% url 'profile' review.owner.id %}">
-              <img src="{% gravatar_url review.owner.email 200 %}" style="margin-right:20px;">
-            </a>
-          </div>
-          <div flex-item flex-container="column">
-            <a href="{% url 'review' review_id=review.id %}">
-              <div flex-item align="left">
-                <strong class="fs-headline display-block">Title of Review</strong>
-                <span class="display-block fs-body-1 tc-black-2"><b>{{ review.course.name }}</b> <br />
-                  with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
-                <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</span>
-              </div>
-            </a>
-          </div>
-              <div flex-container="row" align="right">
-                <div style="margin-top:15%">
-                  <button lx-type="flat" class="btn btn--l btn--blue btn--flat"
-                          action="up" lx-ripple>
-                    <i class="icon icon--l icon--blue icon--flat mdi mdi-chevron-up"></i>
-                  </button>
-                </div>
-                <div style="margin-top:15%; margin-right:50px;">
-                  <button lx-type="flat"class="btn btn--l btn--blue btn--flat"
-                          action="down" lx-ripple>
-                    <i class="icon icon--l icon--blue icon--flat mdi mdi-chevron-down"></i>
-                  </button>
-                </div>
-              </div>
-          
-        </div>
+    {% if review_votes|length > 0 %}
+      <div class=latest-block">
+        <h2 style="text-align: left;">
+          Latest {{review_votes|length}} Review(s)
+        </h2>
       </div>
-
+      {% for review, vote in review_votes %}
+        {% review_card review vote %}
+        {% comment %}
+          <div class="divider divider--dark" ></div>
+          </div>
+        {% endcomment %}
       {% endfor %}
     {% else %}
       <h2>There are no reviews</h2>
