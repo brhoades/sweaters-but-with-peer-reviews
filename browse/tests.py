@@ -174,8 +174,8 @@ class ReviewContent(TestCase):
         """
         resp = self.client.get(reverse("reviews_overview"))
 
-        self.assertIn("reviews", resp.context)
-        self.assertGreater(len(resp.context["reviews"]), 5)
+        self.assertIn("review_votes", resp.context)
+        self.assertGreater(len(resp.context["review_votes"]), 5)
         content = resp.content.decode()
 
         for review in Review.objects.all():
