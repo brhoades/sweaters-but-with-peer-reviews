@@ -1,6 +1,10 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load formlets %}
 {% block title %}Professors{% endblock %}
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
 
 {% block content %}
   {% if professors|length > 0 %}
@@ -27,5 +31,61 @@
   {% else %}
     <h2>There are no professors</h2>
   {% endif %}
+
+  <div ng-app"lumxWrap">
+    <div ng-controller="form-handler" model="professor">
+      <lx-button 
+          lx-type="icon" 
+          lx-tooltip="Add Professor" 
+          lx-tooltip-position="left" 
+          ng-click="opendDialog('professorCall')">
+          <i class="mdi mdi-plus"></i>
+      </lx-button>
+      {% new_professor_popup %}
+    </div>
+
+
+
+<!-- Left direction -->
+    <lx-fab lx-direction="left">
+        <lx-fab-trigger>
+            <lx-button lx-size="xl" lx-type="fab" lx-tooltip="Add Menu" lx-tooltip-position="top">
+                <i class="mdi mdi-library-plus"></i>
+                <i class="mdi mdi-plus"></i>
+            </lx-button>
+        </lx-fab-trigger>
+ 
+        <lx-fab-actions>
+            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Professor" lx-tooltip-position="top">
+                <i class="mdi mdi-account-plus"></i>
+                <div ng-controller="form-handler" model="professor">
+                  <lx-button 
+                      lx-type="icon" 
+                      lx-tooltip="Add Professor" 
+                      lx-tooltip-position="left" 
+                      ng-click="opendDialog('professorCall')">
+                      <i class="mdi mdi-plus"></i>
+                  </lx-button>
+                  {% new_professor_popup %}
+                </div>
+            </lx-button>
+ 
+            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add School" lx-tooltip-position="top">
+                <i class="mdi mdi-chair-school"></i>
+            </lx-button>
+ 
+            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Review" lx-tooltip-position="top">
+                <i class="mdi mdi-newspaper"></i>
+            </lx-button>
+        </lx-fab-actions>
+    </lx-fab>
+
+
+
+  </div>
+
+
+       
+
 {% endblock %}
 
