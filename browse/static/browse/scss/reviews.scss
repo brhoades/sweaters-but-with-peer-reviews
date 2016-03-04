@@ -1,6 +1,24 @@
 @import "lumx/dist/scss/lumx";
 @import "settings";
 
+.vote-button-down-container {
+  margin-top:15%;
+  margin-right:50px;
+}
+
+.vote-button-up-container {
+  margin-top:15%;
+}
+
+.review-card-small {
+  @extend .card;
+
+  .review-title {
+    @extend .fs-headline;
+    @extend .display-block;
+  }
+}
+
 .professor-title {
   display: block;
   text-align: left;
@@ -24,13 +42,17 @@
   margin-top: 15px;
 }
 
-.review-title {
-  @extend .tc-black-1;
-  @extend .fs-headline;
+.review-card-large {
+  @extend .card;
 
-  text-align: left;
-  display: block;
-  margin-top: 25px;
+  .review-title {
+    @extend .tc-black-1;
+    @extend .fs-headline;
+
+    text-align: left;
+    display: block;
+    margin-top: 25px;
+  }
 }
 
 .review-info {

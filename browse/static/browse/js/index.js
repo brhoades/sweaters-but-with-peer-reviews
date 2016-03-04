@@ -19,7 +19,7 @@ $(document).ready(function() {
   $('button').click(function() {
     var action = $(this).attr('action');
 
-    var review_div = $(this).closest('.card');
+    var review_div = $(this).closest('.review-card-small,.card');
     var review_id = review_div.attr('review-id');
 
     var up = $(review_div).find("button.vote-button-up");

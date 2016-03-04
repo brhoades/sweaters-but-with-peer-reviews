@@ -1,8 +1,13 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
-{% block title %}Home{% endblock %}
 {% load gravatar %}
+{% load sass_tags %}
 
+{% block title %}Home{% endblock %}
+{% block header %} 
+  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+        type="text/css" />
+{% endblock %}
 
 
 {% block content %}
@@ -29,7 +34,8 @@
         {% if review_votes|length > 0 %}
           <h2 class="tc-white-1 p+" align="left">Latest {{review_votes|length}} Review(s)</h2>
           {% for review, vote in review_votes %}
-        <div class="card" style="margin-bottom: 35px;" review-id="{{review.id}}">
+        <div class="review-card-small"
+             style="margin-bottom: 35px;" review-id="{{review.id}}">
         <div flex-container="row">
           <div class="card__img card__img--left" style="height: 100px;">
             <a href="{% url 'profile' review.owner.id %}">
@@ -39,7 +45,7 @@
           <div flex-item flex-container="column">
             <a href="{% url 'review' review_id=review.id %}">
               <div flex-item align="left">
-                <strong class="fs-headline display-block">Title of Review</strong>
+                <strong class="review-title" >Title of Review</strong>
                 <span class="display-block fs-body-1 tc-black-2"><b>{{ review.course.name }}</b> <br />
                   with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
                 <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</span>
@@ -48,13 +54,17 @@
           </div>
           <div ng-app="lumxWrap">
           <div flex-container="row" align="right">
-            <div style="margin-top:15%">
-              <button lx-type="flat" class="vote-button-up {{ vote|yesno:"vote-button-active,," }}" action="up" lx-ripple>
+            <div class="vote-button-up-container">
+              <button lx-type="flat"
+                      class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
+                      action="up" lx-ripple>
                 <i class="vote-button-up-icon"></i>
               </button>
             </div>
-            <div style="margin-top:15%; margin-right:50px;">
-              <button lx-type="flat"class="vote-button-down {{ vote|yesno:",vote-button-active," }}" action="down" lx-ripple>
+            <div class="vote-button-down-container">
+              <button lx-type="flat"
+                      class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
+                      action="down" lx-ripple>
                 <i class="vote-button-down-icon"></i>
               </button>
             </div>

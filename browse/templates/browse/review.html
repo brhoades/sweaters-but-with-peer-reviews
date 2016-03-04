@@ -5,12 +5,12 @@
 
 {% block title %}View Review{% endblock %}
 {% block header %}
-<link href="{% sass_src "browse/scss/review.scss" %}" rel="stylesheet"
+<link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
       type="text/css" />
 {% endblock %}
 
 {% block content %}
-<div id="demo" class="card card-color">
+<div id="demo" class="review-card-large card-color">
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}">
       <img src="{% gravatar_url review.owner.email 100 %}"
