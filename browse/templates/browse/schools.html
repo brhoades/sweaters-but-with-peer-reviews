@@ -4,7 +4,11 @@
 
 {% block content %}
   {% if schools|length > 0 %}
-    <h2 class="tc-white-1 p+" align="left">Latest {{schools|length}} School(s)</h2>
+    <div class="latest-block">
+      <h2>
+        Latest {{schools|length}} School(s)
+      </h2>
+    </div>
     {% for school in schools %}
     <div class="divider divider--dark" ></div>
     <div class="card bgc-grey-300 tc-black-1 p+" school-id="{{ school.id }}">

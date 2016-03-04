@@ -14,6 +14,11 @@
   <br />
   <div ng-app="lumxWrap">
     {% if review_votes|length > 0 %}
+      <div class=latest-block">
+        <h2 style="text-align: left;">
+          Latest {{review_votes|length}} Review(s)
+        </h2>
+      </div>
       {% for review, vote in review_votes %}
         {% review_card review vote %}
         {% comment %}

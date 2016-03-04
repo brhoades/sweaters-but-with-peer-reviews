@@ -29,10 +29,17 @@
   <div id="title" class="title-block">
     <div>Cardigans But With Peer Reviews</div>
   </div>
+  {% if review_votes|length > 0 %}
+    <div class=latest-block">
+      <h2 style="text-align: left;">
+        Latest {{review_votes|length}} Review(s)
+      </h2>
+    </div>
+  {% endif %}
+
     <div flex-container="row">
       <div flex-item="6">
         {% if review_votes|length > 0 %}
-          <h2 class="tc-white-1 p+" align="left">Latest {{review_votes|length}} Review(s)</h2>
           {% for review, vote in review_votes %}
             {% review_card review vote %}
           {% endfor %}

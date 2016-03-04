@@ -62,6 +62,17 @@
   @extend .bgc-red-500;
 }
 
+.latest-block {
+  h2 {
+    @extend .tc-black-1;
+    @extend .p+;
+    text-align: left;
+  }
+
+  display: block;
+  padding-bottom: 25px;
+}
+
 /* Body and html should span whole page
  * https://www.kirupa.com/html5/make_body_take_up_full_browser_height.htm
  */
