@@ -9,21 +9,34 @@
         Latest {{schools|length}} School(s)
       </h2>
     </div>
-    {% for school in schools %}
-    <div class="divider divider--dark" ></div>
-    <div class="card bgc-grey-300 tc-black-1 p+" school-id="{{ school.id }}">
-      <li class="list-row">
-        <div class="list-row__content">
-          <span class="display-block">{{ school.name }}</a></span>
-          <span class="display-block fs-body-1 tc-black-2">
-            <a href="{{ school.url }}">{{ school.url }}</a></span>
-          <br />
-          <a href="{% url 'school' school.id %}">View School Reviews</a></span>
+    {% for s in schools %}
+    <div class="padded-card" school-id="{{ s.school.id }}">
+      <div class="rating">
+        <!-- We should decide color and set it here --!>
+        <div class="average">3.4</div>
+        <div class="out-of">
+          /5
         </div>
-        <div class="list-row__secondary">
-          <i class="icon icon--xs icon--blue icon--flat mdi mdi-information"></i>
+      </div>
+      <div class="information">
+        <div class="name">
+          <a href="{% url "school" s.school.id %}">
+            {{ s.school.name }}
+          </a>
         </div>
-      </li>
+        <div class="card-stats">
+          <div class="location">{{ s.school.location }} </div>
+          <div class="item">
+            {{ s.num_professors }}<br />
+            Professor{% if s.num_professors != 1 %}s{% endif %}
+          </div>
+
+          <div class="item">
+            {{ s.num_reviews }}<br />
+            Review{% if s.num_reviews != 1 %}s{% endif %}
+          </div>
+        </div>
+      </div>
     </div>
     {% endfor %}
   {% else %}

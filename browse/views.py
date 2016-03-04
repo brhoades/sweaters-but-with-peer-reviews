@@ -63,18 +63,17 @@ def schools(request):
     context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam does not suck</h3>"
-    context["numbers"] = []
+    schools = []
+    context["schools"] = schools
 
-    context["schools"] = School.objects.order_by('-created_ts')
-
-    for x in range(1, 101):
-        if x % 15 == 0:
-            context["numbers"].append("{0} fizzbuzz".format(x))
-        elif x % 5 == 0:
-            context["numbers"].append("{0} buzz".format(x))
-        elif x % 3 == 0:
-            context["numbers"].append("{0} fizz".format(x))
+    for sch in School.objects.order_by("-created_ts"):
+        thisschool = {}
+        thisschool["school"] = sch
+        thisschool["num_professors"] = (Professor.objects
+                                        .filter(school_id=sch.id).count)
+        thisschool["num_reviews"] = (Review.objects
+                                     .filter(target__school_id=sch.id).count)
+        schools.append(thisschool)
 
     return HttpResponse(template.render(context))
 

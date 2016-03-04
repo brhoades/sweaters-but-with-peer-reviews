@@ -85,3 +85,75 @@ body {
 }
 
 /* End Main Page Classes */
+
+/* Supporting classes */
+
+
+/* School / Professor Page Classes */ 
+.padded-card {
+  @extend .card;
+  @extend .tc-black-1;
+  
+  padding: 5px;
+  position: relative;
+
+  .information {
+    display: inline-block;
+    width: 80%;
+    z-index: 3;
+
+    .name {
+      @extend .tc-black-1;
+      @extend .fs-headline;
+
+      display: inline-block;
+      position: relative;
+      left: -5%;
+    }
+
+    /* Fields which, at the bottom of a card, give statistics. */
+    .card-stats {
+      display: block;
+      text-align: right;
+      margin-top: 10px;
+
+      .item {
+        display: inline-block;
+        width: 75px;
+        line-height: 17px;
+        text-align: center;
+      }
+
+      .location {
+        display: inline-block;
+        text-align: left;
+        position: relative;
+      }
+    }
+  }
+
+  .rating {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-35%);
+    z-index: 2;
+
+    .average {
+      @extend .tc-black-1;
+      @extend .fs-display-2;
+
+      display: inline-block;
+      width: 60px;
+    }
+    
+    .out-of {
+      color: $grey-500;
+
+      display: inline-block;
+    }
+  }
+
+}
+/* End School / Professor Page Classes */ 
