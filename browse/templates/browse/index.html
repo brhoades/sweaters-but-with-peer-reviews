@@ -1,7 +1,7 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
-{% load gravatar %}
 {% load sass_tags %}
+{% load cards %}
 
 {% block title %}Home{% endblock %}
 {% block header %} 
@@ -15,15 +15,15 @@
 
   {% if messages %}
     <!-- FIXME: Open login dialog and run that --!>
-      {% for message in messages %}
-        <div flex-container="row"> 
-          <div flex-item class="sweaters-error">
-            <center>
-              {{ message }}
-            </center>
-          </div>
+    {% for message in messages %}
+      <div flex-container="row"> 
+        <div flex-item class="sweaters-error">
+          <center>
+            {{ message }}
+          </center>
         </div>
-      {% endfor %}
+      </div>
+    {% endfor %}
   {% endif %}
   
   <div id="title" class="title-block">
@@ -34,45 +34,7 @@
         {% if review_votes|length > 0 %}
           <h2 class="tc-white-1 p+" align="left">Latest {{review_votes|length}} Review(s)</h2>
           {% for review, vote in review_votes %}
-        <div class="review-card-small"
-             style="margin-bottom: 35px;" review-id="{{review.id}}">
-        <div flex-container="row">
-          <div class="card__img card__img--left" style="height: 100px;">
-            <a href="{% url 'profile' review.owner.id %}">
-              <img src="{% gravatar_url review.owner.email 200 %}" style="margin-right:20px;">
-            </a>
-          </div>
-          <div flex-item flex-container="column">
-            <a href="{% url 'review' review_id=review.id %}">
-              <div flex-item align="left">
-                <strong class="review-title" >Title of Review</strong>
-                <span class="display-block fs-body-1 tc-black-2"><b>{{ review.course.name }}</b> <br />
-                  with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
-                <span class="display-block">{{ review.owner.first_name }} {{ review.owner.last_name }}</span>
-              </div>
-            </a>
-          </div>
-          <div ng-app="lumxWrap">
-          <div flex-container="row" align="right">
-            <div class="vote-button-up-container">
-              <button lx-type="flat"
-                      class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
-                      action="up" lx-ripple>
-                <i class="vote-button-up-icon"></i>
-              </button>
-            </div>
-            <div class="vote-button-down-container">
-              <button lx-type="flat"
-                      class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
-                      action="down" lx-ripple>
-                <i class="vote-button-down-icon"></i>
-              </button>
-            </div>
-          </div>
-          </div>
-          
-        </div>
-      </div>
+            {% review_card review vote %}
           {% endfor %}
         {% else %}
           <h2>There are no reviews</h2>
