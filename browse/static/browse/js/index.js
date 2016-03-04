@@ -1,3 +1,5 @@
+var primary_color = "blue";
+
 // This just toggles the follow/following of the button
 $('a.follow').click(function () {
   $(this).toggleClass('followed');
@@ -17,37 +19,30 @@ $(document).ready(function() {
   $('button').click(function() {
     var action = $(this).attr('action');
 
-    var review_div = $(this).closest('.card');
+    var review_div = $(this).closest('.review-card-small,.card');
     var review_id = review_div.attr('review-id');
 
-    var up = $(review_div).find("button.up");
-    var down = $(review_div).find("button.down");
-
+    var up = $(review_div).find("button.vote-button-up");
+    var down = $(review_div).find("button.vote-button-down");
 
     if (action == "up") {
-      $(up).toggleClass("active");
-      $(up).toggleClass("bgc-deep-purple-A500");
-      $(up).toggleClass("bgc-deep-purple-900");
-      if ($(down).hasClass("active")) {
-        $(down).removeClass("active");
-        $(down).removeClass("bgc-deep-purple-900");
-        $(down).addClass("bgc-deep-purple-A500");
-      }
+      var toggler = up;
+      var remover = down;
     }
     else if (action == "down") {
-      $(down).toggleClass("active");
-      $(down).toggleClass("bgc-deep-purple-A500");
-      $(down).toggleClass("bgc-deep-purple-900");
-      if ($(up).hasClass("active")) {
-        $(up).removeClass("active");
-        $(up).removeClass("bgc-deep-purple-900");
-        $(up).addClass("bgc-deep-purple-A500");
-      }
+      var toggler = down;
+      var remover = up;
     }
     else {
       return;
     }
-    
+
+    if (remover) {
+      $(remover).removeClass("vote-button-active");
+    }
+    if (toggler) {
+      $(toggler).toggleClass("vote-button-active");
+    }
 
     $.ajax({
       url: "new/add_vote",
@@ -60,3 +55,10 @@ $(document).ready(function() {
   });
 });
 
+
+// Hacky, but we have to have btn--color for all vote buttons as ripple uses it.
+$(document).ready(function() {
+  $('.vote-button-up,.vote-button-down').each(function() {
+    $(this).addClass("btn--" + primary_color);
+  });
+});

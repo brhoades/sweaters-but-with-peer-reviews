@@ -8,7 +8,11 @@
 
 {% block content %}
   {% if professors|length > 0 %}
-    <h2 class="tc-white-1 p+" align="left">Latest {{professors|length}} Professor(s)</h2>
+    <div class="latest-block">
+      <h2>
+        Latest {{professors|length}} Professor(s)
+      </h2>
+    </div>
     {% for professor in professors %}
       <div class="divider divider--dark" ></div>
       <div class="card bgc-grey-300 tc-black-1 p+" professor-id="{{ professor.id }}">

@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from browse.models import Review, User, Professor, School, ReviewVote
+from browse.models import Review, User, Professor, School
 from django.contrib.auth import logout as auth_logout
+from browse.get_utils import _get_all_review_votes
 
 
 def index(request, message=""):
@@ -16,26 +17,7 @@ def index(request, message=""):
     context = RequestContext(request)
     context["messages"] = messages.get_messages(request)
 
-    reviewList = Review.objects.order_by('-created_ts')
-
-    if request.user.is_authenticated():
-        voteList = []
-        for review in reviewList:
-            vote = ReviewVote.objects.filter(owner=request.user,
-                                             target=review)
-
-            # Add true if the vote is 'up', false if the vote is 'down'
-            # Add None if the user has not voted on the review
-            if vote.exists():
-                voteList.append(vote[0].quality)
-            else:
-                voteList.append(None)
-    else:
-        voteList = [None for review in reviewList]
-
-    context["review_votes"] = []
-    for rev, vote in zip(reviewList, voteList):
-        context["review_votes"].append((rev, vote))
+    context["review_votes"] = _get_all_review_votes(request)
 
     return render(request, template, context)
 
@@ -81,18 +63,17 @@ def schools(request):
     context = RequestContext(request)
 
     # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam does not suck</h3>"
-    context["numbers"] = []
+    schools = []
+    context["schools"] = schools
 
-    context["schools"] = School.objects.order_by('-created_ts')
-
-    for x in range(1, 101):
-        if x % 15 == 0:
-            context["numbers"].append("{0} fizzbuzz".format(x))
-        elif x % 5 == 0:
-            context["numbers"].append("{0} buzz".format(x))
-        elif x % 3 == 0:
-            context["numbers"].append("{0} fizz".format(x))
+    for sch in School.objects.order_by("-created_ts"):
+        thisschool = {}
+        thisschool["school"] = sch
+        thisschool["num_professors"] = (Professor.objects
+                                        .filter(school_id=sch.id).count)
+        thisschool["num_reviews"] = (Review.objects
+                                     .filter(target__school_id=sch.id).count)
+        schools.append(thisschool)
 
     return HttpResponse(template.render(context))
 
@@ -183,7 +164,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     """
     template = "browse/reviews.html"
     context = RequestContext(request)
-    context["reviews"] = Review.objects.all()
+    context["review_votes"] = _get_all_review_votes(request)
 
     if type == "by_school":
         context["message"] =\
