@@ -30,5 +30,3 @@ def _get_all_review_votes(request):
         voteList = [None for review in reviewList]
 
     return [(x, y,) for x, y in zip(reviewList, voteList)]
-
-
