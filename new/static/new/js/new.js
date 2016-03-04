@@ -8,7 +8,7 @@ $.ajaxSetup({
 );
 
 // Expects a model param
-angular.module('lumxWrap').controller('form-handler', function($scope, $http, $window, $attrs) {
+angular.module('lumxWrap').controller('form-handler', function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
 
   $scope.data = {
@@ -21,6 +21,13 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
 
   $scope.original = {
     error: "",
+  };
+
+  $scope.opendDialog = function(dialogId) {
+    LxDialogService.open(dialogId);
+  };
+
+  $scope.closingDialog = function() {
   };
 
   // Get our field names automatically
@@ -97,3 +104,4 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
   $httpProvider.defaults.xsrfCookieName = 'csrftoken';
   $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
+

@@ -7,7 +7,11 @@
 {% endblock %}
 
 {% block content %}
-  <div id="demo" class="card">
-    {% new_field_category %}
+<div ng-app"lumxWrap">
+  <div ng-controller="form-handler" model="fieldcategory">
+    <div id="demo" class="card">
+      {% new_field_category %}
+    </div>
   </div>
+</div>
 {% endblock %}

@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
+    <title>Cardigans but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
     <link href="{% sass_src "browse/scss/base.scss" %}" rel="stylesheet" type="text/css" />
@@ -32,7 +32,7 @@
     {% block header %}{% endblock %}
   </head>
 
-  <body class="bgc-blue-200 p+">
+  <body class="background-color">
     <div class="top-bar bgc-light-blue-800"></div>
 
     <div ng-app="lumxWrap">
@@ -89,10 +89,6 @@
                            Login
                         </a>
                     </li>
-                    <li>
-                      <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
-                    </li>
-
                     <li>
                       <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
                     </li>

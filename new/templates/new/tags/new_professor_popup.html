@@ -1,0 +1,14 @@
+{% load formlets %}
+
+<lx-dialog class="dialog dialog--l" id="professorCall" auto-close="true"
+           onclose="closingDialog()" onscrollend="scrollEndDialog()">
+  <div class="dialog__header">
+    <div class="toolbar bgc-light-blue-500 pl++">
+      <span class="toolbar__label tc-white fs-title">
+        New Professor
+      </span>
+    </div>
+  </div>
+
+  {% new_professor %}
+</lx-dialog>

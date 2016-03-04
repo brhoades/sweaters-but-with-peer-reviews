@@ -14,7 +14,8 @@
 {% csrf_token %}
 
   {% if messages %}
-    <!-- FIXME: Open login dialog and run that --!>
+
+    <!-- FIXME: Open login dialog and run that -->
     {% for message in messages %}
       <div flex-container="row"> 
         <div flex-item class="sweaters-error">
@@ -26,11 +27,11 @@
     {% endfor %}
   {% endif %}
   
-  <div id="title" class="title-block">
+  <div id="title">
     <div>Cardigans But With Peer Reviews</div>
   </div>
   {% if review_votes|length > 0 %}
-    <div class=latest-block">
+    <div class=latest-block>
       <h2 style="text-align: left;">
         Latest {{review_votes|length}} Review(s)
       </h2>
