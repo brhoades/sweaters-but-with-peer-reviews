@@ -7,7 +7,7 @@ figure.profile-banner {
 }
 
 figure.profile-picture {
-    border: 5px #77b300 solid;
+    border: 5px #FE9A2E solid;
     box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), 1px 1px 4px rgba(0,0,0,0.3);
     height: 200px;
     width: 200px;
@@ -31,7 +31,7 @@ div.profile_banner {
     width: auto;
     height: 500px;
     padding: 40px;
-    background-color: #595959;
+    background-color: #E6E6E6;
     border-top: 1px solid rgba(255,255,255,0.3); 
     -webkit-box-shadow: 0 19px 50px 0 rgba(0,0,0,0.8);
     -moz-box-shadow: 0 19px 50px 0 rgba(0,0,0,0.8);
@@ -45,7 +45,10 @@ div.profile_picture {
     width: 250px;
     height: 400px;
     padding: 10px;
-    background-color: #002533;
+    background-color: #595959;
+    -webkit-box-shadow: 5px 10px 15px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 10px 15px -3px rgba(0,0,0,0.75);
+    box-shadow: 5px 10px 15px -3px rgba(0,0,0,0.75);
 }
 
 div.profile_name {
@@ -76,7 +79,7 @@ h3.profile {
 
 h1.profile {
     font-size: 50px;
-    color: #333333;
+    color: #E6E6E6;
 }
 
 div.picture_box {
@@ -93,9 +96,10 @@ div.box_left {
     width: 30%;
     margin-right: 0px;
     position: absolute;
-    border-top: 400px solid #b3b3b3;
+    border-top: 400px solid #084B8A;
     border-right: 200px solid transparent;
     z-index: 1;
+
 }
 
 div.box_right {
@@ -103,15 +107,21 @@ div.box_right {
     width: 30%;
     right: 0;
     position: absolute;
-    border-bottom: 400px solid #b3b3b3;
+    border-bottom: 400px solid #084B8A;
     border-left: 200px solid transparent;
+    -webkit-box-shadow: 12px 10px 15px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 12px 10px 15px -8px rgba(0,0,0,0.75);
+    box-shadow: 12px 10px 15px -8px rgba(0,0,0,0.75);
 }
 
 div.box_mid {
     margin-top: 90px;
     height: 230px; 
     width: 90%;
-    background-color: #77b300;
+    background-color: #FE9A2E;
+    -webkit-box-shadow: 0px 10px 15px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 15px -8px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 15px -8px rgba(0,0,0,0.75);
 }
 
 /*.box_fill:before {
@@ -144,7 +154,7 @@ div.box_mid {
 
 #profile_body { 
     /*background: url("../img/slide2.jpg") 50% 0 no-repeat fixed; */
-    background-color: #d9d9d9;
+    background-color: #848484;
     -webkit-box-shadow: 0 19px 50px 0 rgba(0,0,0,0.8);
     -moz-box-shadow: 0 19px 50px 0 rgba(0,0,0,0.8);
     box-shadow: 0 19px 50px 0 rgba(0,0,0,0.8);

@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block content %}
+<div ng-controller="form-handler" model="course">
   <div id="demo" class="card">
     {% new_course %}
   </div>
+</div>
 {% endblock %}
