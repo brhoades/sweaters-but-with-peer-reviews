@@ -13,75 +13,82 @@
         Latest {{professors|length}} Professor(s)
       </h2>
     </div>
-    {% for professor in professors %}
-      <div class="divider divider--dark" ></div>
-      <div class="card bgc-grey-300 tc-black-1 p+" professor-id="{{ professor.id }}">
-        <li class="list-row">
-          <div class="list-row__content">
-            <span class="display-block">{{ professor.first_name }} {{ professor.last_name }}</a></span>
-            <span class="display-block fs-body-1 tc-black-2">{{ professor.school.name }}</span>
-            <a href="{% url 'professor' professor_id=professor.id %}">View</a><br />
-          </div>
-          <div class="list-row__secondary">
-            <i class="icon icon--xs icon--grey icon--flat mdi mdi-information"></i>
-          </div>
-        </li>
+    {% for p in professors %}
+    <div class="padded-card" professor-id="{{ p.professor.id }}">
+      <div class="rating">
+        <!-- We should decide color and set it here -->
+        <div class="average">3.4</div>
+        <div class="out-of">
+          /5
+        </div>
       </div>
+      <div class="information">
+        <div class="name">
+          <a href="{% url "professor" p.professor.id %}">
+          {{ p.professor.first_name }} {{ p.professor.last_name }}
+          </a>
+        </div>
+        <div class="card-stats">
+          <div class="location">
+            <a href="{% url "school" p.school.id %}">
+              {{ p.school.name }}
+            </a>
+          </div>
+          <div class="item">
+            {{ p.num_courses }}<br />
+            Course{% if p.num_courses != 1 %}s{% endif %}
+          </div>
+
+          <div class="item">
+            {{ p.num_reviews }}<br />
+            Review{% if p.num_reviews != 1 %}s{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
     {% endfor %}
   {% else %}
     <h2>There are no professors</h2>
   {% endif %}
 
   <div ng-app"lumxWrap">
-    <div ng-controller="form-handler" model="professor">
-      <lx-button 
-          lx-type="icon" 
-          lx-tooltip="Add Professor" 
-          lx-tooltip-position="left" 
-          ng-click="opendDialog('professorCall')">
-          <i class="mdi mdi-plus"></i>
-      </lx-button>
-      {% new_professor_popup %}
-    </div>
-
-
-
-<!-- Left direction -->
+    <!-- Left direction add menu -->
     <lx-fab lx-direction="left">
         <lx-fab-trigger>
             <lx-button lx-size="xl" lx-type="fab" lx-tooltip="Add Menu" lx-tooltip-position="top">
-                <i class="mdi mdi-library-plus"></i>
-                <i class="mdi mdi-plus"></i>
+              <i class="mdi mdi-library-plus"></i>
+              <i class="mdi mdi-plus"></i>
             </lx-button>
         </lx-fab-trigger>
- 
+
         <lx-fab-actions>
-            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Professor" lx-tooltip-position="top">
-                <i class="mdi mdi-account-plus"></i>
-                <div ng-controller="form-handler" model="professor">
-                  <lx-button 
-                      lx-type="icon" 
-                      lx-tooltip="Add Professor" 
-                      lx-tooltip-position="left" 
-                      ng-click="opendDialog('professorCall')">
-                      <i class="mdi mdi-plus"></i>
-                  </lx-button>
-                  {% new_professor_popup %}
-                </div>
+
+          <div ng-controller="form-handler" model="professor">
+            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Professor" 
+                lx-tooltip-position="top" ng-click="opendDialog('professorCall')">
+              <i class="mdi mdi-account-plus"></i>
             </lx-button>
- 
-            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add School" lx-tooltip-position="top">
-                <i class="mdi mdi-chair-school"></i>
+            {% new_professor_popup %}
+          </div>
+
+          <div ng-controller="form-handler" model="school">
+            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add School" 
+                lx-tooltip-position="top" ng-click="opendDialog('schoolCall')">
+              <i class="mdi mdi-chair-school"></i>
             </lx-button>
- 
-            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Review" lx-tooltip-position="top">
-                <i class="mdi mdi-newspaper"></i>
+            {% new_school_popup %}
+          </div>
+          
+          <div ng-controller="form-handler" model="review">
+            <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Review" 
+                lx-tooltip-position="top" ng-click="opendDialog('reviewCall')">
+              <i class="mdi mdi-newspaper"></i>
             </lx-button>
+            {% new_review_popup %}
+          </div>
+
         </lx-fab-actions>
     </lx-fab>
-
-
-
   </div>
 
 

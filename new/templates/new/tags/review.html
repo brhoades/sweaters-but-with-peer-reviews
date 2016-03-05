@@ -3,20 +3,18 @@
 
   {% verbatim %}
   <div flex-container="row" ng-model="valid.error" 
-                            class="p+ error bgc-red-500 tc-white-1"
-                            ng-show="valid.error != ''">
+       class="p+ error bgc-red-500 tc-white-1" ng-show="valid.error != ''">
     <center>
       {{ valid.error }}
     </center>
   </div>
   <div flex-container="row" flex-gutter="24">
 
-    <lx-select ng-model="data.target" placeholder="Professor"
-                                      choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'professors_matching')" 
-                                                           loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-                                                                                                       error="valid.target != ''"
-                                                                                                       id="target"
-                                                                                                       class="tc-white-1">
+    <lx-select ng-model="data.target" placeholder="Professor" choices="ajax.list"  
+        filter="ajax.update(newValue, oldValue, 'professors_matching')" 
+        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
+        error="valid.target != ''" id="target" class="tc-white-1">
+
       <lx-select-selected>
         {{ $selected.last_name + ', ' + $selected.first_name }}
       </lx-select-selected>
@@ -27,11 +25,11 @@
     </lx-select>
     <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
     <div flex-item style="margin-right: 5%; margin-left: 5%">
-      <lx-select ng-model="data.course" placeholder="Course"
-                                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'courses_matching')" 
-                                                             loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-                                                                                                         error="valid.course != ''"
-                                                                                                         id="course">
+      <lx-select ng-model="data.course" placeholder="Course" choices="ajax.list"
+        filter="ajax.update(newValue, oldValue, 'courses_matching')" 
+        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
+        error="valid.course != ''" id="course">
+
         <lx-select-selected>
           {{ $selected.name }} ({{ $selected.number }})
         </lx-select-selected>
