@@ -90,23 +90,17 @@ $(window).on('resize', function() {
     if($(window).width() < 1001 ) {
         $('#title').removeClass('title-block')
         $('#title').addClass('mobile-title-block')
-        $('#eye_candy').removeClass('index_layout')
-        ${'#eye_candy').addClass('index_layout-mobile')
     }else {
         $('#title').removeClass('mobile-title-block')
         $('#title').addClass('title-block')
-        $('#eye_candy').removeClass('index_layout-mobile')
-        $('#eye_candy').addClass('index_layout')
     }
 })
 
 window.onload = function() {
     if($(window).width() < 1001 ) {
         $('#title').addClass('mobile-title-block')
-        $('#eye_candy').addClass('index_layout-mobile')
     }
     else if($(window).width() >= 1001 ) {
         $('#title').addClass('title-block')
-        $('#eye_candy').addClass('index_layout')
     }
 }

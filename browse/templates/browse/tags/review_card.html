@@ -4,14 +4,11 @@
 <div class="review-card-small"
      style="margin-bottom: 35px;" review-id="{{review.id}}">
   <div flex-container="row">
-    <div style="width: 20%; float: left;">
     <div class="card__img card__img--left" style="height: 100px;">
       <a href="{% url 'profile' review.owner.id %}">
         <img src="{% gravatar_url review.owner.email 200 %}" style="margin-right:20px;">
       </a>
     </div>
-    </div>
-    <div style="width: 40%; float: left;">
     <div flex-item flex-container="column">
       <a href="{% url 'review' review_id=review.id %}">
         <div flex-item align="left">
@@ -26,11 +23,9 @@
         </div>
       </a>
     </div>
-    </div>
     <div ng-app="lumxWrap">
     {% if can_vote %}
-    <div style="float: right; width: 20%">
-      <div flex-container="row" >
+      <div flex-container="row" align="right">
         <div class="vote-button-up-container">
           <button lx-type="flat"
                   class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
@@ -46,7 +41,6 @@
           </button>
         </div>
       </div>
-    </div>
     {% endif %}
     </div>
   </div>
