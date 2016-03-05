@@ -98,6 +98,29 @@ body {
   min-height: 100%;
 }
 
+.header-button {
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.toolbar {
+  position: relative;
+  top: 5px;
+}
+
+.o-wrapper {
+  padding-top: 20px;
+}
+
+.top-bar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 80px;
+  z-index: 0;
+  float: top;
+}
 /* End Main Page Classes */
 
 /* Supporting classes */
