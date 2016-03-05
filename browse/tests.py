@@ -6,11 +6,15 @@ from autofixture import AutoFixture
 
 from browse.models import FieldCategory, Field, Department, Review, Professor,\
     School, ReviewVote, Course
-from new.tests import srs
 from django.utils import formats
 
 import json
 
+def srs(model):
+    """
+    Get a Single Random Sample from a passed model. Just a simple alias.
+    """
+    return model.objects.order_by('?').first()
 
 class TestBrowseViews(TestCase):
     @classmethod

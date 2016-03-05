@@ -1,5 +1,7 @@
 from django.conf.urls import url
 import ajax.views as aviews
+# import ajax.new_views as nviews
+import new.views as nviews
 
 urlpatterns = [
     url(r'^professors?$', aviews.get_professors),
@@ -26,4 +28,10 @@ urlpatterns = [
         aviews.get_view_for_model),
 
     url(r'login/?$', aviews.login, name="login"),
+
+
+    url(r'^(?P<page>(school|department|professor|review|course|field'
+        '|fieldcategory))$',
+        nviews.new, name="new"),
+    url(r'^add_vote$', nviews.addVote, name="addVote"),
 ]
