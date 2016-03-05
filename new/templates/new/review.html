@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block content %}
-<div ng-app"lumxWrap">
-  <div ng-controller="form-handler" model="review">
-    <div id="demo" class="card">
-      {% new_review %}
-    </div>
-  </div>
+<div id="demo" class="card">
+	<div ng-app"lumxWrap">
+	  <div ng-controller="form-handler" model="review">
+	    {% new_review %}
+	  </div>
+	</div>
 </div>
 {% endblock %}
