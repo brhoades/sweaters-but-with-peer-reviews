@@ -11,6 +11,16 @@
     background-color: #EEEEEE;
 }
 
+.index_layout {
+    float: left;
+    width: 50%;
+}
+
+.index_layout-mobile {
+    float:bottom;
+    width: 100%;
+}
+
 .vote-button {
   @extend .btn;
   @extend .btn--blue;

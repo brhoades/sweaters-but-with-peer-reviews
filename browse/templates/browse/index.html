@@ -37,24 +37,20 @@
       </h2>
     </div>
   {% endif %}
-
-    <div flex-container="row">
-      <div flex-item="6">
-        {% if review_votes|length > 0 %}
-          {% for review, vote in review_votes %}
-            {% review_card review vote %}
-          {% endfor %}
-        {% else %}
-          <h2>There are no reviews</h2>
-        {% endif %}
-      </div>
-      <div flex-item="6">
-        <div class="fs-display-1 display-block tc-white-1">
-          Let's Put Some "Eye Candy" Here!
-        </div>
-      </div>
+  <div id="reviews">
+    {% if review_votes|length > 0 %}
+      {% for review, vote in review_votes %}
+        {% review_card review vote %}
+      {% endfor %}
+    {% else %}
+      <h2>There are no reviews</h2>
+    {% endif %}
+  </div>
+  <div id="eye_candy">
+    <div class="fs-display-1 display-block tc-white-1">
+      Let's Put Some "Eye Candy" Here!
     </div>
-  
+  </div>
   <br /> <br />
 
 
