@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" ng-submit="submit()">
   {% csrf_token %}
 
   {% verbatim %}
@@ -12,10 +12,10 @@
   <div id="addProfessor" flex-container="column" flex-gutter="24">
     <div flex-item style="margin-left: 5%; margin-right: 5%">
       <lx-select ng-model="data.school" placeholder="School"
-                 choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'schools_matching')" 
+                 choices="ajax.list" filter="ajax.update(newValue, oldValue, 'schools_matching')" 
                  loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
                  error="valid.school != ''"
-                 class="tc-white-1">
+                 class="tc-black-1">
         <lx-select-selected>
           {{ $selected.name }}
         </lx-select-selected>

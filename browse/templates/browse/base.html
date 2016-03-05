@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardigans but with Peer Reviews - {% block title %}Default{% endblock %}</title>
+    <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
     <link href="{% sass_src "browse/scss/base.scss" %}" rel="stylesheet" type="text/css" />
@@ -45,49 +45,38 @@
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              <div class="header-button">
-                <lx-button lx-color="blue">
-                  <div class="c-menu__link fs-headline display-block">
-                    {{ name }}
-                  </div>
-                </lx-button>
-              </div>
+              <lx-button lx-color="blue">
+                <div class="c-menu__link fs-headline display-block">
+                  {{ name }}
+                </div>
+              </lx-button>
             </a>
           {% endfor %}
         </div>
         <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
         <div class="toolbar__right">
           <lx-dropdown position="right" from-top>
-
             {% if user.is_authenticated %}
-            <button class="btn" lx-ripple lx-dropdown-toggle>
+
+            <button class="btn" lx-ripple lx-dropdown-toggle >
               <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
             </button>
               <lx-dropdown-menu>
                 <ul>
                   <li>
-                    <a href="{% url 'logout' %}"
-                       class="fs-headline display-block dropdown-link dropdown-link--is-large">
-                      Logout
-                    </a>
+                    <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
                   </li>
                   <li>
-                    <a href="{% url 'profile' %}"
-                       class="fs-headline display-block dropdown-link dropdown-link--is-large">
-                      Profile
-                    </a>
+                    <a href="{% url 'profile' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
                   </li>
 
                   <li>
-                    <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">
-                      Settings
-                    </a>
+                    <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
                   </li>
+
                 </ul>
               </lx-dropdown-menu>
-
               {% else %}
-
               <button class="btn" lx-ripple lx-dropdown-toggle >
                 <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
               </button>
@@ -101,6 +90,10 @@
                         </a>
                     </li>
                     <li>
+                      <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
+                    </li>
+
+                    <li>
                       <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
                     </li>
 
@@ -108,7 +101,6 @@
                 </lx-dropdown-menu>
               {% login_popup %}
               </div>
-
               {% endif %} 
         </div>
       </div>
@@ -129,9 +121,7 @@
       </div>
 
       <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-light-blue-800 p+" style="overflow: hidden;">
-        <button class="c-menu__close bgc-light-blue-800 p+">
-          <i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i>
-        </button>
+        <button class="c-menu__close bgc-light-blue-800 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
         <ul class="c-menu__items light-blue-800 p+">
           <ul class="list mt++">
             {% for name, link in page_links %}
