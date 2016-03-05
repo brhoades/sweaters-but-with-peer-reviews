@@ -8,54 +8,76 @@
       {{ valid.error }}
     </center>
   </div>
-  <div flex-container="row" flex-gutter="24">
+  <div flex-container="column" flex-gutter="24">
+    <div flex-item style="margin: 30px">
 
-    <lx-select ng-model="data.target" placeholder="Professor" choices="ajax.list"  
-        filter="ajax.update(newValue, oldValue, 'professors_matching')" 
-        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-        error="valid.target != ''" id="target" class="tc-white-1">
+      <div flex-container="row" flex-gutter="24">
+        <div flex-item>
+          <lx-select ng-model="data.target" 
+              placeholder="Professor" 
+              choices="ajax.list"  
+              filter="ajax.update(newValue, oldValue, 'professors_matching')" 
+              loading="{{ ajax.loading }}" 
+              min-length="2" 
+              allow-clear="true"
+              error="valid.target != ''" 
+              id="target" 
+              class="tc-white-1">
 
-      <lx-select-selected>
-        {{ $selected.last_name + ', ' + $selected.first_name }}
-      </lx-select-selected>
+            <lx-select-selected>
+              {{ $selected.last_name + ', ' + $selected.first_name }}
+            </lx-select-selected>
 
-      <lx-select-choices>
-        {{ $choice.last_name + ', ' + $choice.first_name }}
-      </lx-select-choices>
-    </lx-select>
-    <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
-    <div flex-item style="margin-right: 5%; margin-left: 5%">
-      <lx-select ng-model="data.course" placeholder="Course" choices="ajax.list"
-        filter="ajax.update(newValue, oldValue, 'courses_matching')" 
-        loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-        error="valid.course != ''" id="course">
+            <lx-select-choices>
+              {{ $choice.last_name + ', ' + $choice.first_name }}
+            </lx-select-choices>
+          </lx-select>
 
-        <lx-select-selected>
-          {{ $selected.name }} ({{ $selected.number }})
-        </lx-select-selected>
+          <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
+        </div>
 
-        <lx-select-choices>
-          {{ $choice.name }} ({{ $choice.number }})
-        </lx-select-choices>
-      </lx-select>
-      <span class="text-field-error" ng-show="valid.course != ''">{{ valid.course }}</span>
+        <div flex-item>
+          <lx-select ng-model="data.course" 
+              placeholder="Course" 
+              choices="ajax.list"
+              filter="ajax.update(newValue, oldValue, 'courses_matching')" 
+              loading="{{ ajax.loading }}" 
+              min-length="2" 
+              allow-clear="true"
+              error="valid.course != ''" 
+              id="course">
+
+            <lx-select-selected>
+              {{ $selected.name }} ({{ $selected.number }})
+            </lx-select-selected>
+
+            <lx-select-choices>
+              {{ $choice.name }} ({{ $choice.number }})
+            </lx-select-choices>
+          </lx-select>
+
+          <span class="text-field-error" ng-show="valid.course != ''">{{ valid.course }}</span>
+        </div>
+      </div>
+
+
+      <div flex-item>
+        <lx-text-field label="Write your review here (minimum 50 characters)" error="valid.text != ''">
+          <textarea ng-model="data.text" type="text" ng-minlength="50"></textarea>
+        </lx-text-field>
+        <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
+      </div>
+    
+
+    <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
+
     </div>
   </div>
 
-  <div flex-container="row">
-    <div flex-item>
-      <lx-text-field label="Write your review here" error="valid.text != ''">
-        <input ng-model="data.text"  type="text" ng-minlength="50"></input>
-      </lx-text-field>
-      <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
-    </div>
-  </div>
+  
+    
 
-  <div flex-container="row">
-    <div flex-item>
-      <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
-    </div>
-  </div>
+
   {% endverbatim %}
 
 </form>

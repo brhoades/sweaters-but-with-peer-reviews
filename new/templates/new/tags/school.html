@@ -9,33 +9,37 @@
       {{ valid.error }}
     </center>
   </div>
-  <div flex-container="row" flex-gutter="24">
-    <div flex-item>
-        <lx-text-field label="Name">
-            <input type="text" ng-model="data.name" error="valid.name != ''">
-        </lx-text-field>
-        <span class="text-field-error" ng-show="valid.name != ''" min-length="5">{{ valid.name }}</span>
-    </div>
+  <div flex-container="column" flex-gutter="24">
+    <div flex-item style="margin: 30px;">
+      <div flex-container="row" flex-gutter="24">
+        <div flex-item>
+            <lx-text-field label="Name">
+                <input type="text" ng-model="data.name" error="valid.name != ''">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.name != ''" min-length="5">{{ valid.name }}</span>
+        </div>
 
-    <div flex-item>
-        <lx-text-field label="URL">
-            <input type="url" ng-model="data.url" error="valid.url != ''">
-        </lx-text-field>
-        <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
-    </div>
-
-    <div flex-item>
-        <lx-text-field label="Email Pattern">
-            <input type="text" ng-model="data.email_pattern" error="valid.email_pattern != ''"
-                   ng-model-updates="{ debounce: 1000 }">
-        </lx-text-field>
-        <span class="text-field-error" ng-show="valid.email_pattern != ''">{{ valid.email_pattern }}</span>
+         <div flex-item>
+            <lx-text-field label="Email Pattern">
+                <input type="text" ng-model="data.email_pattern" error="valid.email_pattern != ''"
+                       ng-model-updates="{ debounce: 1000 }">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.email_pattern != ''">{{ valid.email_pattern }}</span>
+        </div>
+      </div>
+      <div flex-item>
+          <lx-text-field label="URL">
+              <input type="url" ng-model="data.url" error="valid.url != ''">
+          </lx-text-field>
+          <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
+      </div>
+      <button class="btn btn--l btn--blue btn--raised"type="submit" 
+            ng-submit="submit()" lx-ripple />Add School</button>
     </div>
   </div>
     {% endverbatim %}
     {{ form.media }}
     {{ form.location }}
 
-  <button class="btn btn--l btn--blue btn--raised"type="submit" 
-          ng-submit="submit()" lx-ripple />Add School</button>
+  
 </form>

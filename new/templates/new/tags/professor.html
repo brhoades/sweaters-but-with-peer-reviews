@@ -10,22 +10,21 @@
     </center>
   </div>
   <div id="addProfessor" flex-container="column" flex-gutter="24">
-    <div flex-item style="margin-left: 5%; margin-right: 5%">
-      <lx-select ng-model="data.school" placeholder="School"
-                 choices="ajax.list" filter="ajax.update(newValue, oldValue, 'schools_matching')" 
-                 loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-                 error="valid.school != ''"
-                 class="tc-black-1">
+    <div flex-item style="margin: 30px;">
+
+      <lx-select ng-model="data.school" 
+          placeholder="School"
+          choices="ajax.list" 
+          filter="ajax.update(newValue, oldValue, 'schools_matching')" 
+          loading="{{ ajax.loading }}" 
+          min-length="2" 
+          allow-clear="true"
+          error="valid.school != ''"
+          class="tc-black-1">
+
         <lx-select-selected>
           {{ $selected.name }}
         </lx-select-selected>
-
-         <div class="toolbar">
-                <lx-search-filter>
-                    <input type="text" ng-model="vm.searchFilter.first">
-                </lx-search-filter>
-            </div>
-
         
         <lx-select-choices>
           <!-- {{ $choice.name + ' (' + $selected.location + ')' }} -->
@@ -50,12 +49,9 @@
         </div>
         
       </div>
-    </div>
-  </div>
-
-  <div>
-    <button class="btn btn--l btn--blue btn--raised" type="submit"
+       <button class="btn btn--l btn--blue btn--raised" type="submit"
             ng-submit="submit(data)" lx-ripple />Add Professor</button>
+    </div>
   </div>
 
   {% endverbatim %}

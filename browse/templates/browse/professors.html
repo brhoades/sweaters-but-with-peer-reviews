@@ -6,6 +6,8 @@
   <script src="{% static 'new/js/new.js' %}"></script>
 {% endblock %}
 
+
+
 {% block content %}
   {% if professors|length > 0 %}
     <div class="latest-block">
@@ -51,9 +53,10 @@
     <h2>There are no professors</h2>
   {% endif %}
 
-  <div ng-app"lumxWrap">
-    <!-- Left direction add menu -->
-    <lx-fab lx-direction="left">
+  <div id="addButton">
+    <div ng-app"lumxWrap">
+      <!-- Left direction add menu -->
+      <lx-fab lx-direction="left">
         <lx-fab-trigger>
             <lx-button lx-size="xl" lx-color="orange" lx-type="fab" lx-tooltip="Add Things" lx-tooltip-position="top">
               <i class="mdi mdi-library-plus"></i>
@@ -90,9 +93,7 @@
         </lx-fab-actions>
     </lx-fab>
   </div>
-
-
-       
+</div>
 
 {% endblock %}
 
