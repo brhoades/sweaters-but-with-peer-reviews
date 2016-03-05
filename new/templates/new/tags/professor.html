@@ -9,7 +9,7 @@
       {{ valid.error }}
     </center>
   </div>
-  <div id="addProfessor" flex-container="row" flex-gutter="24">
+  <div id="addProfessor" flex-container="column" flex-gutter="24">
     <div flex-item style="margin-left: 5%; margin-right: 5%">
       <lx-select ng-model="data.school" placeholder="School"
                  choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'schools_matching')" 
@@ -20,33 +20,42 @@
           {{ $selected.name }}
         </lx-select-selected>
 
+         <div class="toolbar">
+                <lx-search-filter>
+                    <input type="text" ng-model="vm.searchFilter.first">
+                </lx-search-filter>
+            </div>
+
+        
         <lx-select-choices>
           <!-- {{ $choice.name + ' (' + $selected.location + ')' }} -->
           {{ $choice.name }}
         </lx-select-choices>
       </lx-select>
-    </div>
+    
+      <div flex-container="row" flex-gutter="24">
 
-    <div flex-item>
-        <lx-text-field label="Last name">
-            <input type="text" ng-model="data.last_name" error="valid.last_name != ''">
-        </lx-text-field>
-        <span class="text-field-error" ng-show="valid.last_name != ''">{{ valid.last_name }}</span>
-    </div>
+        <div flex-item>
+            <lx-text-field label="First name">
+                <input type="text" ng-model="data.first_name" error="valid.first_name != ''">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.first_name != ''">{{ valid.first_name }}</span>
+        </div>
 
-    <div flex-item>
-        <lx-text-field label="First name">
-            <input type="text" ng-model="data.first_name" error="valid.first_name != ''">
-        </lx-text-field>
-        <span class="text-field-error" ng-show="valid.first_name != ''">{{ valid.first_name }}</span>
+        <div flex-item>
+            <lx-text-field label="Last name">
+                <input type="text" ng-model="data.last_name" error="valid.last_name != ''">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.last_name != ''">{{ valid.last_name }}</span>
+        </div>
+        
+      </div>
     </div>
   </div>
 
-  <div flex-container="row">
-    <div flex-item>
-      <button class="btn btn--l btn--blue btn--raised" type="submit"
-              ng-submit="submit(data)" lx-ripple />Add Professor</button>
-    </div>
+  <div>
+    <button class="btn btn--l btn--blue btn--raised" type="submit"
+            ng-submit="submit(data)" lx-ripple />Add Professor</button>
   </div>
 
   {% endverbatim %}
