@@ -1,0 +1,43 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Sandbox{% endblock %}
+
+{% block content %}
+<body>
+
+	
+<div class="tc-white-1 p+" flex-container="row" flex-column="12">
+  <div flex-item="1"><div class="p+ bgc-red-500">1</div></div>
+  <div flex-item="1"><div class="p+ bgc-blue-500">2</div></div>
+  <div flex-item="1"><div class="p+ bgc-green-500">3</div></div>
+  <div flex-item="1"><div class="p+ bgc-pink-500">4</div></div>
+  <div flex-item="1"><div class="p+ bgc-orange-500">5</div></div>
+  <div flex-item="1"><div class="p+ bgc-purple-500">6</div></div>
+  <div flex-item="1"><div class="p+ bgc-cyan-500">7</div></div>
+  <div flex-item="1"><div class="p+ bgc-teal-500">8</div></div>
+  <div flex-item="1"><div class="p+ bgc-deep-purple-500">9</div></div>
+  <div flex-item="1"><div class="p+ bgc-lime-500">10</div></div>
+  <div flex-item="1"><div class="p+ bgc-yellow-500">11</div></div>
+  <div flex-item="1"><div class="p+ bgc-brown-500">12</div></div>
+</div>
+
+
+	<div>
+		<p>
+			Welcome to the developer's sandbox
+		</p>
+	</div>
+
+	<div style="margin: 10%;">
+	  <lx-text-field label="First Name">
+	    <input type="text" ng-model="textFields.first.name"name="firstname">
+	  </lx-text-field>
+	 <lx-text-field label="Last Name">
+	    <input type="text" ng-model="textFields.last.name"name="lastname">
+	  </lx-text-field>
+	</div>
+  
+
+
+</body>
+{% endblock %}
