@@ -64,16 +64,14 @@
               <lx-dropdown-menu>
                 <ul>
                   <li>
-                    <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
-                  </li>
-                  <li>
                     <a href="{% url 'profile' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
                   </li>
-
                   <li>
                     <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
                   </li>
-
+                  <li>
+                    <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
+                  </li>
                 </ul>
               </lx-dropdown-menu>
               {% else %}
@@ -89,10 +87,6 @@
                            Login
                         </a>
                     </li>
-                    <li>
-                      <a href="{% url 'profile' %}" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Profile</a>
-                    </li>
-
                     <li>
                       <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
                     </li>
