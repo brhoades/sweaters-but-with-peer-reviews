@@ -59,6 +59,18 @@ def profile(request, id=None, page=0):
     return render(request, template, context)
 
 
+def setting(request, id=None):
+    """
+    Settings stuff goes here, like messing with first names last names, etc.
+    It should display the data of the user unless they are not logged in. 
+    """
+    template = "browse/setting.html"
+    context = RequestContext(request)
+
+
+    return render(request, template, context)
+
+
 def schools(request):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
@@ -206,3 +218,11 @@ def logout(request):
     auth_logout(request)
     messages.info(request, "You have been logged out.")
     return redirect("index")
+
+
+def sandbox(request):
+    """
+    A place where we can test out different things for the site
+    """
+    template = "browse/sandbox.html"
+    return render(request, template)

@@ -3,6 +3,7 @@ import browse.views as bviews
 
 urlpatterns = [
     url(r'^user/(?P<id>[0-9]+)?$', bviews.profile, name="profile"),
+    url(r'^user/?$', bviews.setting, name="setting"),
     url(r'^school/(?P<school_id>[0-9]+)?$', bviews.school, name="school"),
     url(r'^schools/?$', bviews.schools, name="schools"),
 
@@ -22,4 +23,6 @@ urlpatterns = [
         name="reviews_by_type_two"),
 
     url(r'logout/?$', bviews.logout, name="logout"),
+
+    url(r'^sandbox/?$', bviews.sandbox, name="sandbox")
 ]
