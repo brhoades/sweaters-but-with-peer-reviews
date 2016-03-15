@@ -15,5 +15,7 @@ urlpatterns = [
     # Other modules
     url(r'^browse/', include('browse.urls')),
     # url(r'^new/', include('new.urls')),
-    url(r'^(new|get)/', include('ajax.urls')),
+    # url(r'^get/', include('ajax.urls')),
+    url(r'^new/', include('ajax.urls')),
+    url(r'^get/', include('ajax.urls')),
 ]

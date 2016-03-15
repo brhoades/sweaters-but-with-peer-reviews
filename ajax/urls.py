@@ -1,7 +1,7 @@
 from django.conf.urls import url
 import ajax.views as aviews
-# import ajax.new_views as nviews
-import new.views as nviews
+import ajax.new_views as nviews
+# import new.views as nviews
 
 urlpatterns = [
     url(r'^professors?$', aviews.get_professors),
