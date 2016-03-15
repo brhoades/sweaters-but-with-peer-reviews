@@ -8,8 +8,6 @@ def link_processor(request):
 
     These are used to automatically populate the sidebars.
     """
-
-    print("CALLED!")
     # These are names which go to url tags.
     SIDEBAR_URLS = OrderedDict()
     SIDEBAR_URLS["Index"] = "index"

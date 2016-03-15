@@ -43,6 +43,14 @@ def new_school():
     """
     return {}
 
+@register.inclusion_tag("new/tags/school_popup.html")
+def new_school_popup(button=None, wrap_controller=True):
+    """
+    Must be within a ng-controller="form-handler" with a parameter for this
+    form model.
+    """
+    return {}
+
 
 @register.inclusion_tag("new/tags/department.html")
 def new_department():
@@ -55,6 +63,14 @@ def new_department():
 
 @register.inclusion_tag("new/tags/review.html")
 def new_review():
+    """
+    Must be within a ng-controller="form-handler" with a parameter for this
+    form model.
+    """
+    return {}
+
+@register.inclusion_tag("new/tags/review_popup.html")
+def new_review_popup(button=None, wrap_controller=True):
     """
     Must be within a ng-controller="form-handler" with a parameter for this
     form model.

@@ -11,6 +11,16 @@
     background-color: #EEEEEE;
 }
 
+.index_layout {
+    float: left;
+    width: 50%;
+}
+
+.index_layout-mobile {
+    float:bottom;
+    width: 100%;
+}
+
 .vote-button {
   @extend .btn;
   @extend .btn--blue;
@@ -54,19 +64,19 @@
 .title-block {
   @extend .fs-display-4;
   @extend .display-block;
-  @extend .tc-white-1;
+  @extend .tc-black-1;
 }
 
 .mobile-title-block {
   @extend .fs-display-3;
   @extend .display-block;
-  @extend .tc-white-1;
+  @extend .tc-black-1;
 }
 
 .subtitle-block {
   @extend .fs-display-1;
   @extend .display-block;
-  @extend .tc-white-1;
+  @extend .tc-black-1;
 }
 
 .sweaters-error {
@@ -98,6 +108,29 @@ body {
   min-height: 100%;
 }
 
+.header-button {
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.toolbar {
+  position: relative;
+  top: 5px;
+}
+
+.o-wrapper {
+  padding-top: 20px;
+}
+
+.top-bar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 80px;
+  z-index: 0;
+  float: top;
+}
 /* End Main Page Classes */
 
 /* Supporting classes */

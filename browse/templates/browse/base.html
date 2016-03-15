@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardigans but with Peer Reviews - {% block title %}Default{% endblock %}</title>
+    <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
     <link href="{% sass_src "browse/scss/base.scss" %}" rel="stylesheet" type="text/css" />
@@ -64,16 +64,14 @@
               <lx-dropdown-menu>
                 <ul>
                   <li>
-                    <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
-                  </li>
-                  <li>
                     <a href="{% url 'profile' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
                   </li>
-
                   <li>
                     <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
                   </li>
-
+                  <li>
+                    <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
+                  </li>
                 </ul>
               </lx-dropdown-menu>
               {% else %}

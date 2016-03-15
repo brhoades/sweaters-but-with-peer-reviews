@@ -2,8 +2,9 @@ from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.db.models import Count
 
-from browse.models import Review, User, Professor, School
+from browse.models import Review, User, Professor, School, Course
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes
 
@@ -98,19 +99,29 @@ def professors(request):
     template = loader.get_template("browse/professors.html")
     context = RequestContext(request)
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
-    context["message"] = "<h3>Sam does not suck</h3>"
-    context["numbers"] = []
+    professors = []
+    context["professors"] = professors
 
-    context["professors"] = Professor.objects.order_by('-created_ts')
+    for p in Professor.objects.order_by('-created_ts'):
+        thisprof = {}
+        thisprof["professor"] = p
 
-    for x in range(1, 101):
-        if x % 15 == 0:
-            context["numbers"].append("{0} fizzbuzz".format(x))
-        elif x % 5 == 0:
-            context["numbers"].append("{0} buzz".format(x))
-        elif x % 3 == 0:
-            context["numbers"].append("{0} fizz".format(x))
+        thisprof["num_reviews"] = Review.objects.filter(target_id=p.id).count()
+        thisprof["num_courses"] = (Review.objects.filter(target_id=p.id)
+                                   .values("course").distinct().count())
+        # Choose a school by the one they have the most reviews for.
+        thisprof["school"] = (Review.objects.filter(target_id=p.id)
+                              .annotate(Count("course", distinct=True))
+                              .order_by())
+        r = (Review.objects.values("course").annotate(count=Count("course"))
+             .order_by())
+        if len(r) > 0:
+            thisprof["school"] = (Course.objects.get(id=r[0]["course"])
+                                  .department.school)
+        else:
+            thisprof["school"] = ""
+
+        professors.append(thisprof)
 
     return HttpResponse(template.render(context))
 
