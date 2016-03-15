@@ -120,10 +120,10 @@ def new(request, page=None):
     for field in model_form_map[page].Meta.fields:
         response["error"][field] = ""  # clear errors
 
-    response["id"] = new.id  # return new id at top level.
-
-    # Save and return all info
     new.save()
+    response["id"] = new.id  # return new id at top level.
+    # Save and return all info
+    
     return HttpResponse(json.dumps(response))
 
 
