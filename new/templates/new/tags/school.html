@@ -27,11 +27,20 @@
             <span class="text-field-error" ng-show="valid.email_pattern != ''">{{ valid.email_pattern }}</span>
         </div>
       </div>
-      <div flex-item>
-          <lx-text-field label="URL">
-              <input type="url" ng-model="data.url" error="valid.url != ''">
-          </lx-text-field>
-          <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
+      <div flex-container="row" flex-gutter="24">
+        <div flex-item>
+            <lx-text-field label="URL">
+                <input type="url" ng-model="data.url" error="valid.url != ''">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
+        </div>
+        <div flex-item>
+            <lx-text-field label="Location">
+                <input type="text" ng-model="data.location" error="valid.location != ''"
+                         ng-model-updates="{ debounce: 1000 }">
+            </lx-text-field>
+            <span class="text-field-error" ng-show="valid.location != ''">{{ valid.location }}</span>
+        </div>
       </div>
       <button class="btn btn--l btn--blue btn--raised"type="submit" 
             ng-submit="submit(data)" lx-ripple />Add School</button>
