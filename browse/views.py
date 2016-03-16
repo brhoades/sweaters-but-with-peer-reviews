@@ -62,6 +62,9 @@ def profile(request, id=None, page=0):
 
 
 def school_get_location(loc):
+    if not loc:
+        return None
+
     url = ("http://maps.googleapis.com/maps/api/geocode/json"
            "?latlng={},{}&sensor=false").format(loc.latitude, loc.longitude)
     data = urllib.urlopen(url).read()
