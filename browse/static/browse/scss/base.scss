@@ -188,20 +188,46 @@ body {
     transform: translateY(-35%);
     z-index: 2;
 
-    .average {
-      @extend .tc-black-1;
-      @extend .fs-display-2;
-
-      display: inline-block;
-      width: 60px;
-    }
-    
-    .out-of {
-      color: $grey-500;
-
-      display: inline-block;
-    }
   }
+}
+
+.review-rating {
+  margin-right: 10px;
+
+  display: inline-block;
+
+  .average {
+    width: 50px;
+    line-height: 50px;
+  }
+}
+
+.average {
+  @extend .tc-black-1;
+  @extend .fs-display-2;
+
+  display: inline-block;
+  width: 60px;
+}
+
+.out-of {
+  color: $grey-500;
+
+  display: inline-block;
+}
+
+.sub-rating {
+  @extend .tc-black-1;
+  @extend .fs-display-1;
+
+  display: inline-block;
+  width: 45px;
+  line-height: 50px;
+}
+
+.rating-title {
+  color: $grey-500;
 
 }
+
 /* End School / Professor Page Classes */ 

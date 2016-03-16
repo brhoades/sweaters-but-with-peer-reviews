@@ -22,7 +22,7 @@
               allow-clear="true"
               error="valid.target != ''" 
               id="target" 
-              class="tc-white-1">
+              class="tc-black-1">
 
             <lx-select-selected>
               {{ $selected.last_name + ', ' + $selected.first_name }}
@@ -60,6 +60,44 @@
         </div>
       </div>
 
+      <div flex-container="row" style="margin-top: 15px;">
+        <div flex-item>
+          <md-slider-container>
+            <span class="md-body-1">Overall Rating</span>
+            <md-slider flex class="md-primary" md-discrete ng-model="data.rating_overall"
+                       step="0.1" min="0" max="5" aria-label="blue"
+                       aria-controls="blue-slider">
+            </md-slider>
+          </md-slider-container>
+          <span class="text-field-error" ng-show="valid.rating_overall != ''">
+            {{ valid.rating_overall }}
+          </span>
+        </div>
+        <div flex-item>
+          <md-slider-container>
+            <span class="md-body-1">Course Value</span>
+            <md-slider flex class="md-primary" md-discrete ng-model="data.rating_value"
+                       step="0.1" min="0" max="5" aria-label="blue"
+                       aria-controls="blue-slider">
+            </md-slider>
+          </md-slider-container>
+          <span class="text-field-error" ng-show="valid.rating_value != ''">
+            {{ valid.rating_value }}
+          </span>
+        </div>
+        <div flex-item>
+          <md-slider-container>
+            <span class="md-body-1">Course Difficulty</span>
+            <md-slider flex class="md-primary" md-discrete ng-model="data.rating_difficulty"
+                       step="0.1" min="0" max="5" aria-label="blue"
+                       aria-controls="blue-slider">
+            </md-slider>
+          </md-slider-container>
+          <span class="text-field-error" ng-show="valid.rating_difficulty != ''">
+            {{ valid.rating_difficulty }}
+          </span>
+        </div>
+      </div>
 
       <div flex-item>
         <lx-text-field label="Write your review here (minimum 50 characters)" error="valid.text != ''">
