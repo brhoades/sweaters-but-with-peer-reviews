@@ -7,9 +7,11 @@
   <div class="card card-color">
     <br />
     <strong>School</strong>: {{ school.name }}<br />
-    <strong>Location</strong>: {{ school.location }}<br />
-    <strong>Email Pattern</strong>:{{ school.email_patter }}<br />
-    <strong>Website</strong>:<a href="{{school.url}}">{{ school.url }}<a /><br />
+    <strong>Location</strong>: {{ school_location }}<br />
+    <strong>Email Pattern</strong>:{{ school.email_pattern }}<br />
+    {% if school.url %}
+      <strong>Website</strong>:<a href="{{school.url}}">{{ school.url }}<a /><br />
+    {% endif %}
     <br />
 
     Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
