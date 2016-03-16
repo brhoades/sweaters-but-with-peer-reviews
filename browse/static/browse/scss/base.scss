@@ -21,6 +21,12 @@
     width: 100%;
 }
 
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+}
+
 .vote-button {
   @extend .btn;
   @extend .btn--blue;

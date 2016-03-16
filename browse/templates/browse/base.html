@@ -42,14 +42,29 @@
             <i class="mdi mdi-menu"></i>
           </button>
         </div>
+        <div class="logo" style="background-color: red;"></div>
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              <lx-button lx-color="blue">
-                <div class="c-menu__link fs-headline display-block">
-                  {{ name }}
-                </div>
-              </lx-button>
+              {% if request.path == "/" and link == "index" %}
+                  <lx-button lx-color="blue" lx-type="raised">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% elif name|lower in request.path %}
+                  <lx-button lx-color="blue" lx-type="raised">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% else %}
+                  <lx-button lx-color="black" lx-type="flat">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% endif %}
             </a>
           {% endfor %}
         </div>
