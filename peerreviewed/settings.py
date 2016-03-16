@@ -37,8 +37,8 @@ INSTALLED_APPS = (
 
     # Local
     'browse',
-    'new',
-    'ajax',
+    # 'new',
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (

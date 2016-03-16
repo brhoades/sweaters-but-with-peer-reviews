@@ -16,6 +16,6 @@ urlpatterns = [
     url(r'^browse/', include('browse.urls')),
     # url(r'^new/', include('new.urls')),
     # url(r'^get/', include('ajax.urls')),
-    url(r'^new/', include('ajax.urls')),
-    url(r'^get/', include('ajax.urls')),
+    url(r'^new/', include('api.urls')),
+    url(r'^get/', include('api.urls')),
 ]

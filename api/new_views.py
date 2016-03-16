@@ -1,45 +1,14 @@
-'''
-
-from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
-from django.template import loader, RequestContext
+from django.http import HttpResponse, HttpResponseNotAllowed
 
 import json
 
+from api.utils import get_template_for_model
+
 from browse.models import Review, ReviewVote, Professor, School, Department, \
     Field, FieldCategory, Course
-from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
+from api.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm
-
-
-def get_template_for_model(request, model_form_map, page):
-    template = None
-    context = RequestContext(request)
-
-    if page == "review":
-        template = loader.get_template("new/review.html")
-    elif page == "professor":
-        template = loader.get_template("new/professor.html")
-    elif page == "school":
-        template = loader.get_template("new/school.html")
-    elif page == "department":
-        template = loader.get_template("new/department.html")
-    elif page == "course":
-        template = loader.get_template("new/course.html")
-    elif page == "field":
-        template = loader.get_template("new/field.html")
-    elif page == "fieldcategory":
-        template = loader.get_template("new/fieldcategory.html")
-    else:
-        return HttpResponse("Put a 404 here or something.")
-
-    context["form"] = model_form_map[page]
-    return HttpResponse(template.render(context))
-
-
-def json_error(data):
-    return HttpResponse(json.dumps({"error": data}))
-
 
 @login_required
 def new(request, page=None):
@@ -177,4 +146,3 @@ def addVote(request):
                             content_type="application/json")
     else:
         return HttpResponseNotAllowed(["POST"])
-'''
