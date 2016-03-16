@@ -102,6 +102,11 @@ class Review(models.Model):
     course = models.ForeignKey(Course)
     target = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
+    # [0,5]
+    rating_value = models.FloatField()
+    rating_difficulty = models.FloatField()
+    rating_overall = models.FloatField()
+
     # 100k otta be enough for nebody.
     text = models.TextField(max_length=100000,
                             validators=[MinLengthValidator(40)])

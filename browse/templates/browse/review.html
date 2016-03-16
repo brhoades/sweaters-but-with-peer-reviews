@@ -21,6 +21,35 @@
       </div>
     </a>
   </div>
+  <div style="float: right;">
+    <div class="review-rating">
+      <div class="rating-title">
+        Overall
+      </div>
+      <div class="average">{{ review.rating_overall }}</div>
+      <div class="out-of">
+        /5
+      </div>
+    </div>
+    <div class="review-rating">
+      <div class="rating-title">
+        Difficulty
+      </div>
+      <div class="sub-rating">{{ review.rating_difficulty }}</div>
+      <div class="out-of">
+        /5
+      </div>
+    </div>
+    <div class="review-rating">
+      <div class="rating-title">
+        Value
+      </div>
+      <div class="sub-rating">{{ review.rating_value }}</div>
+      <div class="out-of">
+        /5
+      </div>
+    </div>
+  </div>
   <div class="professor-info">
     <a href="{% url "school" review.course.department.school.id %}">
       {{ review.course.department.school.name }}
