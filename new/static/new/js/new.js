@@ -8,7 +8,7 @@ $.ajaxSetup({
 );
 
 // Expects a model param
-angular.module('lumxWrap').controller('form-handler', function($scope, $http, $window, $attrs, LxDialogService) {
+angular.module('lumxWrap', ['lumx', 'ngMaterial']).controller('form-handler', function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
 
   $scope.data = {
@@ -29,6 +29,11 @@ angular.module('lumxWrap').controller('form-handler', function($scope, $http, $w
 
   $scope.closingDialog = function() {
   };
+
+  // school slider
+  $scope.rating_overall = 2.5;
+  $scope.rating_value = 2.5;
+  $scope.rating_difficulty = 2.5;
 
   // Get our field names automatically
   $http.get("/get/get_fields_for_model/" + $scope.type).success(function(data) {
