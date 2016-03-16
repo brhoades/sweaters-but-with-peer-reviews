@@ -3,12 +3,13 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 
 import json
 
-from api.utils import get_template_for_model
+from api.utils import get_template_for_model, json_error
 
 from browse.models import Review, ReviewVote, Professor, School, Department, \
     Field, FieldCategory, Course
 from api.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm
+
 
 @login_required
 def new(request, page=None):
