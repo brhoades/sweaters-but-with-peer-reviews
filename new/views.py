@@ -101,7 +101,7 @@ def new(request, page=None):
 
     # Check for required keys
     for field in model_form_map[page].Meta.fields:
-        if field not in data or data[field] == "":
+        if field not in data or data[field] == "" and field != "location":
             response["error"][field] = "No {} specified".format(
                 field)
 
@@ -120,10 +120,10 @@ def new(request, page=None):
     for field in model_form_map[page].Meta.fields:
         response["error"][field] = ""  # clear errors
 
-    response["id"] = new.id  # return new id at top level.
-
-    # Save and return all info
     new.save()
+    response["id"] = new.id  # return new id at top level.
+    # Save and return all info
+
     return HttpResponse(json.dumps(response))
 
 

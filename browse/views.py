@@ -62,11 +62,10 @@ def profile(request, id=None, page=0):
 def setting(request, id=None):
     """
     Settings stuff goes here, like messing with first names last names, etc.
-    It should display the data of the user unless they are not logged in. 
+    It should display the data of the user unless they are not logged in.
     """
     template = "browse/setting.html"
     context = RequestContext(request)
-
 
     return render(request, template, context)
 
