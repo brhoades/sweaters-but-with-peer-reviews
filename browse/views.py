@@ -159,8 +159,8 @@ def professors(request):
             rating = "-"
         else:
             rating = round(rating, 1)
-        thisprof["rating"] = round(rating, 1)
 
+        thisprof["rating"] = rating
         professors.append(thisprof)
 
     return HttpResponse(template.render(context))
