@@ -1,4 +1,3 @@
-'''
 from browse.models import Review, Course, Professor, School, Department,\
     Field, FieldCategory
 from django.forms import ModelForm
@@ -65,4 +64,3 @@ class FieldCategoryForm(ModelForm):
     class Meta:
         model = FieldCategory
         fields = ['name']
-'''

@@ -7,10 +7,11 @@ from django.http import JsonResponse
 
 import json
 
-from new.views import json_error
+from ajax.utils import json_error
+
 from browse.models import Review, Professor, School, Department, Course, \
     Field, FieldCategory
-from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
+from ajax.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm
 
 

@@ -1,3 +1,4 @@
+'''
 from browse.models import Review, Course, Professor
 from django.forms import ModelForm
 
@@ -18,3 +19,4 @@ class ProfessorForm(ModelForm):
     class Meta:
         model = Professor
         fields = ['first_name', 'last_name', 'school']
+'''

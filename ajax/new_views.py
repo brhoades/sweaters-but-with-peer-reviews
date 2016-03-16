@@ -7,7 +7,7 @@ from ajax.utils import get_template_for_model
 
 from browse.models import Review, ReviewVote, Professor, School, Department, \
     Field, FieldCategory, Course
-from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
+from ajax.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm
 
 @login_required

@@ -1,3 +1,5 @@
+'''
+
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
@@ -175,3 +177,4 @@ def addVote(request):
                             content_type="application/json")
     else:
         return HttpResponseNotAllowed(["POST"])
+'''
