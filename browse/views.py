@@ -2,7 +2,7 @@ from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.db.models import Count
+from django.db.models import Count, Avg
 import urllib.request as urllib
 import json
 
@@ -90,6 +90,18 @@ def schools(request):
                                      .filter(target__school_id=sch.id).count)
         thisschool["school_location"] = \
             school_get_location(thisschool["school"].location)
+
+        rating = (Review.objects.filter(target__school_id=sch.id)
+                  .aggregate(Avg("rating_overall"))["rating_overall__avg"])
+
+        if rating is None:
+            rating = "-"
+        else:
+            rating = round(rating, 1)
+
+        print("RATING: {}".format(rating))
+
+        thisschool["rating"] = rating
         schools.append(thisschool)
 
     return HttpResponse(template.render(context))
@@ -139,6 +151,15 @@ def professors(request):
                                   .department.school)
         else:
             thisprof["school"] = ""
+
+        rating = (Review.objects.filter(target_id=p.id)
+                  .aggregate(Avg("rating_overall"))["rating_overall__avg"])
+
+        if rating is None:
+            rating = "-"
+        else:
+            rating = round(rating, 1)
+        thisprof["rating"] = round(rating, 1)
 
         professors.append(thisprof)
 
