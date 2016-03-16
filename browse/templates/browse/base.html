@@ -42,24 +42,24 @@
             <i class="mdi mdi-menu"></i>
           </button>
         </div>
-        <div class="logo" style="background-color: red;"></div>
+        <div class="logo"> <img src="browse/static/browse/img/blue-cardigan-sweater.png"></div>
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
               {% if request.path == "/" and link == "index" %}
-                  <lx-button lx-color="blue" lx-type="raised">
+                  <button class="btn btn--m btn--raised bgc-white tc-black">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
                     </div>
-                  </lx-button>
+                  </button>
               {% elif name|lower in request.path %}
-                  <lx-button lx-color="blue" lx-type="raised">
+                  <lx-button lx-color="white" lx-type="raised">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
                     </div>
                   </lx-button>
               {% else %}
-                  <lx-button lx-color="black" lx-type="flat">
+                  <lx-button lx-color="white" lx-type="flat">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
                     </div>
@@ -121,7 +121,7 @@
         {% endif %}
       -->
 
-      <div id="o-wrapper" class="o-wrapper">
+      <div id="o-wrapper" class="o-wrapper" style="margin: 30px;">
         <div class="c-buttons">
           <div id="content">
             {% block content %}{% endblock %}

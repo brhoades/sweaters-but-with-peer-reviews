@@ -71,6 +71,7 @@
   @extend .fs-display-4;
   @extend .display-block;
   @extend .tc-black-1;
+  text-align: center;
 }
 
 .mobile-title-block {
@@ -83,6 +84,7 @@
   @extend .fs-display-1;
   @extend .display-block;
   @extend .tc-black-1;
+  text-align: right;
 }
 
 .sweaters-error {
@@ -136,6 +138,7 @@ body {
   height: 80px;
   z-index: 0;
   float: top;
+  box-shadow: 0 9px 20px 0 rgba(0,0,0,9.8);
 }
 /* End Main Page Classes */
 
