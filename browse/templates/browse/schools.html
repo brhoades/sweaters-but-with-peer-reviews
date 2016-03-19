@@ -17,8 +17,13 @@
     {% for s in schools %}
     <div class="padded-card" school-id="{{ s.school.id }}">
       <div class="rating">
+<<<<<<< HEAD
         <!-- We should decide color and set it here -->
         <div class="average">3.4</div>
+=======
+        <!-- We should decide color and set it here --!>
+        <div class="average">{{ s.rating }}</div>
+>>>>>>> 66e13acc43f2964ad48cc365ddcc6495603fbc6d
         <div class="out-of">
           /5
         </div>
@@ -30,7 +35,7 @@
           </a>
         </div>
         <div class="card-stats">
-          <div class="location">{{ s.school.location }} </div>
+          <div class="location">{{ s.school_location }} </div>
           <div class="item">
             {{ s.num_professors }}<br />
             Professor{% if s.num_professors != 1 %}s{% endif %}
