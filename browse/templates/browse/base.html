@@ -54,7 +54,9 @@
             <i class="mdi mdi-menu"></i>
           </button>
         </div>
-        <div class="logo"> <img src="browse/static/browse/img/blue-cardigan-sweater.png"></div>
+        <div class="small_logo">
+            <img src="{% static 'browse/img/Logo_No_Words.jpg' %}">
+        </div>
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
