@@ -54,14 +54,31 @@
             <i class="mdi mdi-menu"></i>
           </button>
         </div>
+        <div class="small_logo">
+            <img src="{% static 'browse/img/Logo_No_Words.jpg' %}">
+        </div>
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              <lx-button lx-color="blue">
-                <div class="c-menu__link fs-headline display-block">
-                  {{ name }}
-                </div>
-              </lx-button>
+              {% if request.path == "/" and link == "index" %}
+                  <lx-button lx-color="white" lx-type="raised" style="width:150px;">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% elif name|lower in request.path %}
+                  <lx-button lx-color="white" lx-type="raised" style="width:200px;">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% else %}
+                  <lx-button lx-color="white" lx-type="flat" style="width:200px">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% endif %}
             </a>
           {% endfor %}
         </div>
@@ -118,7 +135,7 @@
         {% endif %}
       -->
 
-      <div id="o-wrapper" class="o-wrapper">
+      <div id="o-wrapper" class="o-wrapper" style="margin: 30px;">
         <div class="c-buttons">
           <div id="content">
             {% block content %}{% endblock %}

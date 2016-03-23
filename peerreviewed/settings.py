@@ -101,6 +101,7 @@ STATICFILES_FINDERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'middleware.links.link_processor',
+    'django.core.context_processors.request',
 )
 
 # Static files (CSS, JavaScript, Images)
