@@ -21,6 +21,20 @@
     width: 100%;
 }
 
+.small_logo {
+    width: 50px;
+    height: 70px;
+    margin-top: -10px;
+    margin-right: 40px;
+}
+
+.logo {
+    width:300px;
+    height: 300px;
+    display: block;
+    margin: 0 auto;
+}
+
 .vote-button {
   @extend .btn;
   @extend .btn--blue;
@@ -65,6 +79,7 @@
   @extend .fs-display-4;
   @extend .display-block;
   @extend .tc-black-1;
+  text-align: center;
 }
 
 .mobile-title-block {
@@ -77,6 +92,7 @@
   @extend .fs-display-1;
   @extend .display-block;
   @extend .tc-black-1;
+  text-align: right;
 }
 
 .sweaters-error {
@@ -115,11 +131,12 @@ body {
 
 .toolbar {
   position: relative;
-  top: 5px;
+  margin-top: -10px;
+  margin-right: 20px;
 }
 
 .o-wrapper {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .top-bar {
@@ -130,6 +147,7 @@ body {
   height: 80px;
   z-index: 0;
   float: top;
+  box-shadow: 0 9px 20px 0 rgba(0,0,0,1);
 }
 /* End Main Page Classes */
 
@@ -188,20 +206,46 @@ body {
     transform: translateY(-35%);
     z-index: 2;
 
-    .average {
-      @extend .tc-black-1;
-      @extend .fs-display-2;
-
-      display: inline-block;
-      width: 60px;
-    }
-    
-    .out-of {
-      color: $grey-500;
-
-      display: inline-block;
-    }
   }
+}
+
+.review-rating {
+  margin-right: 10px;
+
+  display: inline-block;
+
+  .average {
+    width: 50px;
+    line-height: 50px;
+  }
+}
+
+.average {
+  @extend .tc-black-1;
+  @extend .fs-display-2;
+
+  display: inline-block;
+  width: 60px;
+}
+
+.out-of {
+  color: $grey-500;
+
+  display: inline-block;
+}
+
+.sub-rating {
+  @extend .tc-black-1;
+  @extend .fs-display-1;
+
+  display: inline-block;
+  width: 45px;
+  line-height: 50px;
+}
+
+.rating-title {
+  color: $grey-500;
 
 }
+
 /* End School / Professor Page Classes */ 

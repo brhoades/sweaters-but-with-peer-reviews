@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
+    <title>Cardigans but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
     <link href="{% sass_src "browse/scss/base.scss" %}" rel="stylesheet" type="text/css" />
@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/style.min.css' %}">
     <!-- CSS pre-built -->
     <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/font-awesome.min.css' %}">
+    <!-- slider -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <!-- lumx dependencies -->
     <script src="{% static 'browse/bower_components/jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'browse/bower_components/velocity/velocity.js' %}"></script>
@@ -26,8 +28,18 @@
     <script src="{% static 'browse/bower_components/angular/angular.js' %}"></script>
     <script src="{% static 'browse/bower_components/lumx/dist/lumx.js' %}"></script>
     <!-- side bar dependencies -->
+  https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc1/angular-material.css
     <script src="{% static 'browse/Slide-Push-Menus/js/src/menu.js' %}"></script>
     <script src="{% static 'browse/Slide-Push-Menus/gulpfile.js' %}"></script>
+
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
 
     {% block header %}{% endblock %}
   </head>
@@ -42,14 +54,31 @@
             <i class="mdi mdi-menu"></i>
           </button>
         </div>
+        <div class="small_logo">
+            <img src="{% static 'browse/img/Logo_No_Words.jpg' %}">
+        </div>
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              <lx-button lx-color="blue">
-                <div class="c-menu__link fs-headline display-block">
-                  {{ name }}
-                </div>
-              </lx-button>
+              {% if request.path == "/" and link == "index" %}
+                  <lx-button lx-color="white" lx-type="raised" style="width:200px;">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% elif name|lower in request.path %}
+                  <lx-button lx-color="white" lx-type="raised" style="width:200px;">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% else %}
+                  <lx-button lx-color="white" lx-type="flat" style="width:200px">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% endif %}
             </a>
           {% endfor %}
         </div>
@@ -106,7 +135,7 @@
         {% endif %}
       -->
 
-      <div id="o-wrapper" class="o-wrapper">
+      <div id="o-wrapper" class="o-wrapper" style="margin: 30px;">
         <div class="c-buttons">
           <div id="content">
             {% block content %}{% endblock %}
