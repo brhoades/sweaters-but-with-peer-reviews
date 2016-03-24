@@ -134,6 +134,9 @@ class ReviewVote(models.Model):
 
 
 class ReviewComment(models.Model):
+    class Meta:
+        verbose_name_plural = "Review Comments"
+
     target = models.ForeignKey(Review)
     owner = models.ForeignKey(User)
 

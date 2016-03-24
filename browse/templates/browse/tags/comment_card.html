@@ -1,0 +1,22 @@
+{% load gravatar %}
+
+<div class="review-card-small" style="margin-bottom: 35px;">
+  <div flex-container="row">
+    <div class="card__img card__img--left" style="height: 100px;">
+      <a href="{% url 'profile' comment.owner.id %}">
+        <img src="{% gravatar_url comment.owner.email 200 %}" style="margin-right:20px;">
+      </a>
+    </div>
+    <div flex-item flex-container="column">
+      <div flex-item align="left">
+        <strong class="review-title" >Title of Comment</strong>
+        <span class="display-block">
+          {{ comment.owner.first_name }} {{ comment.owner.last_name }}
+        </span>
+        <span class="display-block">
+          {{ comment.text }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

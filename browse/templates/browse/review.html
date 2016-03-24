@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load gravatar %}
+{% load cards %}
 
 {% block title %}View Review{% endblock %}
 {% block header %}
@@ -88,5 +89,8 @@
   <div class="review-text">
     {{ review.text }}
   </div>
+  {% for comment in comments %}
+    {% comment_card comment %}
+  {% endfor %}
 </div>
 {% endblock %}

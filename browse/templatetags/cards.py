@@ -15,3 +15,7 @@ def review_card(review_data, vote_data, can_vote=True):
     """
     return {"review": review_data, "vote": vote_data,
             "can_vote": can_vote}
+
+@register.inclusion_tag("browse/tags/comment_card.html")
+def comment_card(comment):
+    return {"comment": comment}
