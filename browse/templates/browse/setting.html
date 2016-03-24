@@ -1,0 +1,89 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Setting{% endblock %}
+
+{% block content %}
+<body>
+
+<link rel="stylesheet" type="text/css" href="{% static 'browse/css/profile_style.css' %}"> 
+	
+<div class="tc-white-1 p+" flex-container="row" flex-column="12">
+    <div flex-item="1"><div class="p+ bgc-red-500">1</div></div>
+    <div flex-item="1"><div class="p+ bgc-blue-500">2</div></div>
+    <div flex-item="1"><div class="p+ bgc-green-500">3</div></div>
+    <div flex-item="1"><div class="p+ bgc-pink-500">4</div></div>
+    <div flex-item="1"><div class="p+ bgc-orange-500">5</div></div>
+    <div flex-item="1"><div class="p+ bgc-purple-500">6</div></div>
+    <div flex-item="1"><div class="p+ bgc-cyan-500">7</div></div>
+    <div flex-item="1"><div class="p+ bgc-teal-500">8</div></div>
+    <div flex-item="1"><div class="p+ bgc-deep-purple-500">9</div></div>
+    <div flex-item="1"><div class="p+ bgc-lime-500">10</div></div>
+    <div flex-item="1"><div class="p+ bgc-yellow-500">11</div></div>
+    <div flex-item="1"><div class="p+ bgc-brown-500">12</div></div>
+</div>
+
+
+	<div>
+		<p>
+			add email<br>
+			password<br>
+			repeat password<br>
+		</p>
+	</div>
+
+	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
+		<div flex-item="5">
+		  <h1>First Name: {{ profile.first_name }}</h1>
+		</div>
+		<div flex-item="5">
+		  <lx-text-field label="First Name">
+		      <input type="text" ng-model="textFields.first.name"name="firstname">
+		  </lx-text-field>
+		</div>
+	</div>
+
+	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
+		<div flex-item="5">
+		  <h1>Last Name: {{ profile.last_name }}</h1>
+		</div>
+		<div flex-item="5">
+		  <lx-text-field label="Last Name">
+	      <input type="text" ng-model="textFields.last.name"name="lastname">
+	  	</lx-text-field>
+		</div>
+	</div>
+
+	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
+		<div flex-item="5">
+		  <h1>Username: {{ profile.username }}</h1>
+		</div>
+		<div flex-item="5">
+		  <lx-text-field label="Username">
+	      <input type="text" ng-model="textFields.username"name="username">
+	  	</lx-text-field>
+		</div>
+	</div>
+
+	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
+		<div flex-item="5">
+		  <h1>Birthday:</h1>
+		</div>
+		<div flex-item="5">
+		  <h2>Birthday button for calander</h2>
+		</div>
+	</div>
+
+	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
+		<div flex-item="5">
+		  <h1>E-mail:</h1>
+		</div>
+		<div flex-item="5">
+		  <lx-text-field label="E-mail">
+	      <input type="text" ng-model="textFields.email.name"name="email">
+	  	</lx-text-field>
+		</div>
+	</div>  
+
+
+</body>
+{% endblock %}
