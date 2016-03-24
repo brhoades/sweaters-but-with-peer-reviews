@@ -10,7 +10,7 @@ def link_processor(request):
     """
     # These are names which go to url tags.
     SIDEBAR_URLS = OrderedDict()
-    SIDEBAR_URLS["Index"] = "index"
+    SIDEBAR_URLS["Home"] = "index"
     SIDEBAR_URLS["Schools"] = "schools"
     SIDEBAR_URLS["Professors"] = "professors"
     SIDEBAR_URLS["Reviews"] = "reviews_overview"
