@@ -7,7 +7,7 @@ import urllib.request as urllib
 import json
 
 from browse.models import Review, User, Professor, School, Course,\
-                          ReviewComment
+    ReviewComment
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes
 
