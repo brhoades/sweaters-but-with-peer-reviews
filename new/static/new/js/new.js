@@ -81,6 +81,7 @@ angular.module('lumxWrap', ['lumx', 'ngMaterial']).controller('form-handler', fu
     $scope.ajax.loading = true;
     $http.post("/new/" + $scope.type, JSON.stringify($scope.data)).
       success(function(data) {
+        console.log(data);
         // Always expects, if any elements, a fields item in it
         $scope.ajax.list = [];
         $scope.ajax.loading = false;
