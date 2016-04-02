@@ -189,6 +189,8 @@ def professor(request, professor_id=None, page=0):
     context = RequestContext(request)
 
     context["professor"] = get_object_or_404(Professor, id=professor_id)
+    context["review_votes"] = _get_all_review_votes(request,
+                                                    {"target": professor_id})
 
     return HttpResponse(template.render(context))
 
