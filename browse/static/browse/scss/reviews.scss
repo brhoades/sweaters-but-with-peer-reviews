@@ -68,3 +68,10 @@
   overflow: visible;
   text-align: left;
 }
+
+
+.comment-card {
+  @extend .card;
+  
+  @extend .background-color;
+}
