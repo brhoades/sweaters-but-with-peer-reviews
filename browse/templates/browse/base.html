@@ -10,12 +10,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sweaters but with Peer Reviews - {% block title %}Default{% endblock %}</title>
+    <title>Cardigans but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}">
     <link href="{% sass_src "browse/scss/base.scss" %}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/styles.css' %}"> 
-    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/reset.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'browse/css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/style.min.css' %}">
     <!-- CSS pre-built -->
     <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/font-awesome.min.css' %}">
@@ -54,14 +54,31 @@
             <i class="mdi mdi-menu"></i>
           </button>
         </div>
+        <div class="small_logo">
+            <img src="{% static 'browse/img/Logo_No_Words.jpg' %}">
+        </div>
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              <lx-button lx-color="blue">
-                <div class="c-menu__link fs-headline display-block">
-                  {{ name }}
-                </div>
-              </lx-button>
+              {% if request.path == "/" and link == "index" %}
+                  <lx-button lx-color="white" lx-type="raised" style="width:200px;" class="header-button">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% elif name|lower in request.path %}
+                  <lx-button lx-color="white" lx-type="raised" style="width:200px;" class="header-button">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% else %}
+                  <lx-button lx-color="white" lx-type="flat" style="width:200px" class="header-button">
+                    <div class="c-menu__link fs-headline display-block">
+                      {{ name }}
+                    </div>
+                  </lx-button>
+              {% endif %}
             </a>
           {% endfor %}
         </div>
@@ -79,7 +96,7 @@
                     <a href="{% url 'profile' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
                   </li>
                   <li>
-                    <a href="#" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
+                    <a href="{% url 'setting' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>
                   </li>
                   <li>
                     <a href="{% url 'logout' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Logout</a>
@@ -99,15 +116,12 @@
                            Login
                         </a>
                     </li>
-                    <li>
-                      <a href="#" class="fs-body-1 display-block dropdown-link dropdown-link--is-large">Settings</a>
-                    </li>
 
                   </ul>
                 </lx-dropdown-menu>
               {% login_popup %}
               </div>
-              {% endif %} 
+              {% endif %}
         </div>
       </div>
       <!--
@@ -118,7 +132,7 @@
         {% endif %}
       -->
 
-      <div id="o-wrapper" class="o-wrapper">
+      <div id="o-wrapper" class="o-wrapper" style="margin: 30px;">
         <div class="c-buttons">
           <div id="content">
             {% block content %}{% endblock %}
@@ -148,21 +162,21 @@
                     New Course
                   </a>
                 </div>
-              </li>  
+              </li>
               <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
                   <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">
                     New Professor
                   </a>
                 </div>
-              </li>         
+              </li>
               <li class="list-row list-row--has-separator">
                 <div class="list-row__content" align="right">
                   <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">
                     New Review
                   </a>
                 </div>
-              </li>  
+              </li>
             {% endif %}
             {% endcomment %}
           </ul>

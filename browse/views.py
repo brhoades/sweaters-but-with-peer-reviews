@@ -83,6 +83,7 @@ def school_get_location(loc):
 
     return data["results"][0]["formatted_address"]
 
+
 def schools(request):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)

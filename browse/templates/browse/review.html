@@ -10,13 +10,13 @@
 {% endblock %}
 
 {% block content %}
-<div id="demo" class="review-card-large card-color">
+<div class="review-card-large card-color">
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}">
       <img src="{% gravatar_url review.owner.email 100 %}"
            class="professor-avatar">
       <div class="professor-name">
-        {{ review.target.first_name }} 
+        {{ review.target.first_name }}
         {{ review.target.last_name }}
       </div>
     </a>
@@ -53,7 +53,7 @@
   <div class="professor-info">
     <a href="{% url "school" review.course.department.school.id %}">
       {{ review.course.department.school.name }}
-    </a> - 
+    </a> -
     {% comment %}
     <a href="{% url "department" review.course.department.id %}">
     {% endcomment %}
@@ -71,7 +71,7 @@
   <div class="review-info">
     <a href="{% url "profile" review.owner.id %}">
       {% if review.owner.first_name or review.owner.last_name %}
-        {{ review.owner.first_name }} {{ review.owner.last_name }} 
+        {{ review.owner.first_name }} {{ review.owner.last_name }}
         ({{ review.owner.username }})
       {% else %}
         {{ review.owner.username }}
@@ -89,4 +89,5 @@
     {{ review.text }}
   </div>
 </div>
+
 {% endblock %}

@@ -11,6 +11,10 @@
     background-color: #EEEEEE;
 }
 
+.header-button {
+    font-family: Roboto, Helvetica, Neue, sans-serif;
+}
+
 .index_layout {
     float: left;
     width: 50%;
@@ -19,6 +23,20 @@
 .index_layout-mobile {
     float:bottom;
     width: 100%;
+}
+
+.small_logo {
+    width: 50px;
+    height: 70px;
+    margin-top: -10px;
+    margin-right: 40px;
+}
+
+.logo {
+    width:300px;
+    height: 300px;
+    display: block;
+    margin: 0 auto;
 }
 
 .vote-button {
@@ -65,6 +83,7 @@
   @extend .fs-display-4;
   @extend .display-block;
   @extend .tc-black-1;
+  text-align: center;
 }
 
 .mobile-title-block {
@@ -77,6 +96,7 @@
   @extend .fs-display-1;
   @extend .display-block;
   @extend .tc-black-1;
+  text-align: right;
 }
 
 .sweaters-error {
@@ -115,11 +135,12 @@ body {
 
 .toolbar {
   position: relative;
-  top: 5px;
+  margin-top: -10px;
+  margin-right: 20px;
 }
 
 .o-wrapper {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .top-bar {
@@ -130,6 +151,7 @@ body {
   height: 80px;
   z-index: 0;
   float: top;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,1);
 }
 /* End Main Page Classes */
 
