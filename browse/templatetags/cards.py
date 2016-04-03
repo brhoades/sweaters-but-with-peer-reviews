@@ -1,4 +1,5 @@
 from django import template
+from django.shortcuts import render, redirect, get_object_or_404
 
 register = template.Library()
 
@@ -15,3 +16,12 @@ def review_card(review_data, vote_data, can_vote=True):
     """
     return {"review": review_data, "vote": vote_data,
             "can_vote": can_vote}
+
+
+@register.inclusion_tag("browse/tags/mini_review.html")
+def mini_review(review_id=0):
+    """
+    View a single review given an
+    """
+
+    return {}

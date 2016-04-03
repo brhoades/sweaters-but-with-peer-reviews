@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * These are at the top for a reason.
  * Do not move them.
@@ -85,7 +85,7 @@ app.controller('myCount', function($scope) {
 });
 
 
-//This changes the css class based on the size of the window. 
+//This changes the css class based on the size of the window.
 $(window).on('resize', function() {
     if($(window).width() < 1001 ) {
         $('#title').removeClass('title-block')
