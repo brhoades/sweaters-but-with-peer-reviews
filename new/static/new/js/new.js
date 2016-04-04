@@ -7,8 +7,6 @@ $.ajaxSetup({
   }
 );
 
-var app = angular.module('lumxWrap', ['lumx', 'ngMaterial']);
-
 app.config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('blue', {
