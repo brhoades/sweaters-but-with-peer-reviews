@@ -9,13 +9,13 @@
   </div>
   <div class="information">
     <div class="name">
-      <div onclick="window.location='{% url "professor" professor.id %}';">
+      <div class="hyperlink" onclick="window.location='{% url "professor" professor.id %}';">
       {{ professor.first_name }} {{ professor.last_name }}
       </div>
     </div>
     <div class="card-stats">
       <div class="location">
-        <div onclick="window.location='{% url "school" school.id %}';">
+        <div onclick="window.location='{% url "school" school.id %}';" class="hyperlink" >
           {{ professor.school.name }}
         </div>
       </div>

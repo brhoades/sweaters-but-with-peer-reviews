@@ -2,9 +2,6 @@ from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.db.models import Count, Avg
-import urllib.request as urllib
-import json
 
 from browse.models import Review, User, Professor, School, Course
 from django.contrib.auth import logout as auth_logout
@@ -72,48 +69,14 @@ def setting(request, id=None):
     return render(request, template, context)
 
 
-def school_get_location(loc):
-    if not loc:
-        return None
-
-    url = ("http://maps.googleapis.com/maps/api/geocode/json"
-           "?latlng={},{}&sensor=false").format(loc.latitude, loc.longitude)
-    data = urllib.urlopen(url).read()
-    data = json.loads(data.decode("UTF-8"))
-
-    return data["results"][0]["formatted_address"]
-
-
 def schools(request, page):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
 
-    schools = []
-    context["schools"] = schools
     # Get our page numbers to display, our page, all objects, and the
     # range of that all we're going to send back.
     context["pages"], context["page"], all, start, end = paginate(page, School)
-
-    for sch in all[start:end]:
-        thisschool = {}
-        thisschool["school"] = sch
-        thisschool["num_professors"] = (Professor.objects
-                                        .filter(school_id=sch.id).count)
-        thisschool["num_reviews"] = (Review.objects
-                                     .filter(target__school_id=sch.id).count)
-        thisschool["school_location"] = \
-            school_get_location(thisschool["school"].location)
-
-        rating = (Review.objects.filter(target__school_id=sch.id)
-                  .aggregate(Avg("rating_overall"))["rating_overall__avg"])
-
-        if rating is None:
-            rating = "-"
-        else:
-            rating = round(rating, 1)
-
-        thisschool["rating"] = rating
-        schools.append(thisschool)
+    context["schools"] = all[start:end]
 
     return HttpResponse(template.render(context))
 
@@ -131,8 +94,7 @@ def school(request, school_id=None, page=0):
 
     context["school"] = get_object_or_404(School, id=school_id)
 
-    context["school_location"] \
-        = school_get_location(context["school"].location)
+    context["school_location"] = context["school"].human_location
 
     # FIXME: Paginate
     context["review_votes"] = \

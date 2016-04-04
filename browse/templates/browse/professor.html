@@ -60,7 +60,7 @@
         <md-content style="margin-top: 20px;">
           {% if schools|length > 0 %}
             {% for school in schools %}
-              {{ school.name }}
+              {% school_card school %}
             {% endfor %}
           {% else %}
             <h2>There are no schools that this professor is associated with.</h2>

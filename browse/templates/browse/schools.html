@@ -1,6 +1,7 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load formlets %}
+{% load cards %}
 {% block title %}Schools{% endblock %}
 {% block js %}
   <script src="{% static 'new/js/new.js' %}"></script>
@@ -24,33 +25,7 @@
 
   {% if schools|length > 0 %}
     {% for s in schools %}
-    <div class="padded-card" school-id="{{ s.school.id }}">
-      <div class="rating">
-        <div class="average">{{ s.rating }}</div>
-        <div class="out-of">
-          /5
-        </div>
-      </div>
-      <div class="information">
-        <div class="name">
-          <a href="{% url "school" s.school.id %}">
-            {{ s.school.name }}
-          </a>
-        </div>
-        <div class="card-stats">
-          <div class="location">{{ s.school_location }} </div>
-          <div class="item">
-            {{ s.num_professors }}<br />
-            Professor{% if s.num_professors != 1 %}s{% endif %}
-          </div>
-
-          <div class="item">
-            {{ s.num_reviews }}<br />
-            Review{% if s.num_reviews != 1 %}s{% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
+      {% school_card s %}
     {% endfor %}
   {% else %}
     <h2>There are no more schools</h2>
