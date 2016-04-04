@@ -1,11 +1,18 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load sass_tags %}
+{% load cards %}
 {% block title %}Professor{% endblock %}
+
+{% block header %} 
+  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+        type="text/css" />
+{% endblock %}
 
 {% block content %}
   <br />
 
-  <div class="card">
+  <div class="card" style="margin-bottom: 10px;">
     <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />
     <strong>School</strong>: {{ professor.school.name }}<br />
     <strong>Owner</strong>:
@@ -22,4 +29,17 @@
       Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
     {% endif %}
   </div>
+
+  <div flex-container="row">
+    <div flex-item="6">
+      {% if review_votes|length > 0 %}
+        {% for review, vote in review_votes %}
+          {% review_card review vote %}
+        {% endfor %}
+      {% else %}
+        <h2>There are no reviews for this professor.</h2>
+      {% endif %}
+    </div>
+  </div>
+
 {% endblock %}

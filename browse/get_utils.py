@@ -6,13 +6,15 @@ for example.
 from browse.models import Review, ReviewVote
 
 
-def _get_all_review_votes(request):
+def _get_all_review_votes(request, review_filter={}):
     """
     Simply returns a list of zipped reviews and votes.
 
     :rtype: list
     """
-    reviewList = Review.objects.order_by('-created_ts')
+
+    reviewList = Review.objects.filter(**review_filter).order_by("-created_ts")
+
     voteList = []
 
     if request.user.is_authenticated():
