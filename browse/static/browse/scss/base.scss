@@ -266,3 +266,9 @@ body {
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* For professor / school view, the error about no x found for this y. */
+.no-items {
+  padding-bottom: 50px;
+  padding-top: 20px;
+}

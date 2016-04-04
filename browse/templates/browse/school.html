@@ -35,7 +35,7 @@
               {% review_card review vote %}
             {% endfor %}
           {% else %}
-            <h2>There are no reviews for professors at this school.</h2>
+            <h2 class="no-items">There are no reviews for professors at this school.</h2>
           {% endif %}
         </md-content>
       </md-tab>
@@ -47,7 +47,7 @@
             {{ course.name }}
             {% endfor %}
           {% else %}
-            <h2>There are no courses listed for this school.</h2>
+            <h2 class="no-items">There are no courses listed for this school.</h2>
           {% endif %}
         </md-content>
       </md-tab>
@@ -59,7 +59,7 @@
               {% professor_card professor %}
             {% endfor %}
           {% else %}
-            <h2>There are no professors listed for this school.</h2>
+            <h2 class="no-items">There are no professors listed for this school.</h2>
           {% endif %}
         </md-content>
       </md-tab>
