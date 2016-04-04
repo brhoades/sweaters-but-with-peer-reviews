@@ -86,13 +86,7 @@
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              {% if request.path == "/" and link == "index" %}
-                  <lx-button lx-color="white" lx-type="raised" style="width:200px;">
-                    <div class="c-menu__link fs-headline display-block">
-                      {{ name }}
-                    </div>
-                  </lx-button>
-              {% elif name|lower in request.path %}
+              {% if name|lower in current_page_name %}
                   <lx-button lx-color="white" lx-type="raised" style="width:200px;">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
