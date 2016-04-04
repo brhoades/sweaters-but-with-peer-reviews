@@ -15,3 +15,19 @@ def review_card(review_data, vote_data, can_vote=True):
     """
     return {"review": review_data, "vote": vote_data,
             "can_vote": can_vote}
+
+
+@register.inclusion_tag("browse/tags/professor_card.html")
+def professor_card(professor):
+    """
+    Displays a professor card for the provided professor.
+    """
+    return {"professor": professor}
+
+
+@register.inclusion_tag("browse/tags/school_card.html")
+def school_card(school):
+    """
+    Displays a school card for the provided school.
+    """
+    return {"school": school}
