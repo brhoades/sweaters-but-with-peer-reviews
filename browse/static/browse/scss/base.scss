@@ -11,10 +11,6 @@
     background-color: #EEEEEE;
 }
 
-.header-button {
-    font-family: Roboto, Helvetica, Neue, sans-serif;
-}
-
 .index_layout {
     float: left;
     width: 50%;
@@ -126,6 +122,7 @@ html {
 
 body {
   min-height: 100%;
+  font-family: Roboto, Helvetica, Neue, Sans-Serif !important;
 }
 
 .header-button {
