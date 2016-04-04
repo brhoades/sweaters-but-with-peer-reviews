@@ -202,6 +202,15 @@ def professor(request, professor_id=None, page=0):
     # FIXME: Paginate
     context["review_votes"] = _get_all_review_votes(request,
                                                     {"target": professor_id})
+    context["courses"] = []
+    courses = (Review.objects.filter(target_id=professor_id).values("course")
+               .distinct())
+
+    for course in courses:
+        context["courses"].append(Course.objects.get(id=course["course"]))
+
+    context["schools"] = [course.department.school for course
+                          in context["courses"]]
 
     return HttpResponse(template.render(context))
 
