@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.db.models import Count, Avg
 import urllib.request as urllib
 import json
+import math
 
 from browse.models import Review, User, Professor, School, Course
 from django.contrib.auth import logout as auth_logout
@@ -84,15 +85,17 @@ def school_get_location(loc):
     return data["results"][0]["formatted_address"]
 
 
-def schools(request):
+def schools(request, page):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
     schools = []
     context["schools"] = schools
+    # Get our page numbers to display, our page, all objects, and the
+    # range of that all we're going to send back.
+    context["pages"], context["page"], all, start, end = paginate(page, School)
 
-    for sch in School.objects.order_by("-created_ts"):
+    for sch in all[start:end]:
         thisschool = {}
         thisschool["school"] = sch
         thisschool["num_professors"] = (Professor.objects
@@ -109,8 +112,6 @@ def schools(request):
             rating = "-"
         else:
             rating = round(rating, 1)
-
-        print("RATING: {}".format(rating))
 
         thisschool["rating"] = rating
         schools.append(thisschool)
@@ -267,3 +268,67 @@ def sandbox(request):
     """
     template = "browse/sandbox.html"
     return render(request, template)
+
+
+"""
+Supporting Functions. Move these elsewhere...
+"""
+
+
+def paginate(page, model):
+    """
+    Helps paging models.
+
+    Returns a tuple:
+        ([list of pages to show], current_page, [instances],
+         startobject, endobject)
+
+    Where the start object is an index of the object list.
+    """
+    if page is None:
+        page = 1
+    else:
+        page = int(page)
+
+    # Someone make this less dumb
+    num_per_page = 6
+    # Our start and end indices of our model list.
+    start = (page-1)*num_per_page
+    end = start + num_per_page
+    pages_to_show = 4  # the number of pages to show on the listing
+
+    all_instances = model.objects.order_by("-created_ts")
+    pages_available = math.ceil(len(all_instances) / num_per_page)
+
+    if page > pages_available or page <= 0:
+        start = 0
+        end = 0
+        page = 0
+
+    # Our start index and end index for our page numbers.
+    start_i = page - pages_to_show // 2
+    end_i = page + pages_to_show // 2
+
+    # If our page listing at the bottom of the page is above the number of
+    # pages available/< 0, overflow it into the other side.
+    if end_i > pages_available:
+        start_i -= end_i - pages_available
+        end_i = pages_available
+        if start_i < 1:
+            start_i = 1
+    elif start_i < 1:
+        end_i += 1 - start_i
+        start_i = 1
+
+        if end_i > pages_available:
+            end_i = pages_available
+
+    # If start is above the number of instances, make it equal to
+    # the last num_per_page instances.
+    if start > len(all_instances):
+        start = len(all_instances) - num_per_page
+        if start < 0:
+            start = 0
+        end = len(all_instances)
+
+    return list(range(start_i, end_i+1)), page, all_instances, start, end
