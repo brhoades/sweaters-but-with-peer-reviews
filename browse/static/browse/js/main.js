@@ -42,7 +42,7 @@ $.ajaxSetup({
  */
 
 // Configure lumx to use csrf
-var app = angular.module('lumxWrap', ['lumx']).config(function($httpProvider) {
+app.config(function($httpProvider) {
   $httpProvider.defaults.xsrfCookieName = 'csrftoken';
   $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });

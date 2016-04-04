@@ -5,9 +5,10 @@ urlpatterns = [
     url(r'^user/(?P<id>[0-9]+)?$', bviews.profile, name="profile"),
     url(r'^user/?$', bviews.setting, name="setting"),
     url(r'^school/(?P<school_id>[0-9]+)?$', bviews.school, name="school"),
-    url(r'^schools/?$', bviews.schools, name="schools"),
+    url(r'^schools/(?P<page>[0-9]+)?$', bviews.schools, name="schools"),
 
-    url(r'^professors/?$', bviews.professors, name="professors"),
+    url(r'^professors/(?P<page>[0-9]+)?$', bviews.professors,
+        name="professors"),
     url(r'^professor/(?P<professor_id>[0-9]+)?$',
         bviews.professor, name="professor"),
 
