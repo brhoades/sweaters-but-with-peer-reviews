@@ -20,7 +20,7 @@ def index(request, message=""):
     context = RequestContext(request)
     context["messages"] = messages.get_messages(request)
 
-    context["review_votes"] = _get_all_review_votes(request)
+    context["review_votes"] = _get_all_review_votes(request)[0:5]
 
     return render(request, template, context)
 
