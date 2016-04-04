@@ -1,30 +1,25 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
-{% load sass_tags %}
-{% load gravatar %}
-
-{% block title %}View Professor{% endblock %}
-{% block header %}
-<link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
-      type="text/css" />
-{% endblock %}
+{% block title %}Professor{% endblock %}
 
 {% block content %}
-<div id="demo" class="review-card-large card-color">
-  <div class="professor-title">
-      <img src="{% gravatar_url professor.owner.email 100 %}"
-           class="professor-avatar">
-      <div class="professor-name">
-        {{ professor.first_name }}
-        {{ professor.last_name }}
-      </div>
-    </a>
-  </div>
-  <div class="professor-info">
-    <a href="{% url "school" professor.school.id %}">
-      {{ professor.school.name }}
-    </a>
-  </div>
-</div>
+  <br />
 
+  <div class="card">
+    <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />
+    <strong>School</strong>: {{ professor.school.name }}<br />
+    <strong>Owner</strong>:
+
+    {% if professor.owner.first_name or professor.owner.last_name %}
+      {{ professor.owner.first_name }} {{professor.owner.last_name }} ({{ professor.owner.username }})<br />
+    {% else %}
+      {{ professor.owner.username }}<br />
+    {% endif %}
+    <br />
+
+    Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
+    {% if professor.update_ts %}
+      Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
+    {% endif %}
+  </div>
 {% endblock %}
