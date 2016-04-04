@@ -250,7 +250,26 @@ body {
 
 .rating-title {
   color: $grey-500;
+}
 
+.pagination-buttons {
+  margin-bottom: 20px;
 }
 
 /* End School / Professor Page Classes */ 
+
+/* All pages. A hyperlink class for nested cards in tabs. */
+.hyperlink {
+  color: #28aadc;
+}
+
+.hyperlink:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* For professor / school view, the error about no x found for this y. */
+.no-items {
+  padding-bottom: 50px;
+  padding-top: 20px;
+}

@@ -41,11 +41,6 @@ app.controller('form-handler',
   $scope.closingDialog = function() {
   };
 
-  // school slider
-  $scope.data.rating_overall = 2.5;
-  $scope.data.rating_value = 2.5;
-  $scope.data.rating_difficulty = 2.5;
-
   // Get our field names automatically
   $http.get("/get/get_fields_for_model/" + $scope.type).success(function(data) {
     data.forEach(function(e, i, l) {
@@ -54,6 +49,13 @@ app.controller('form-handler',
       $scope.original[e] = "";
     });
   });
+
+  // school slider
+  if($scope.data.rating_overall) {
+    $scope.data.rating_overall = 2.5;
+    $scope.data.rating_value = 2.5;
+    $scope.data.rating_difficulty = 2.5;
+  }
 
   $scope.ajax = {
       list: [],

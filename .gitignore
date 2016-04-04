@@ -4,3 +4,4 @@ peerreviewed/sensitive.py
 
 staticfiles/*
 *.sqlite3
+*.map
