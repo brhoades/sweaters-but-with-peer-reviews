@@ -28,10 +28,8 @@
     <script src="{% static 'browse/bower_components/angular/angular.js' %}"></script>
     <script src="{% static 'browse/bower_components/lumx/dist/lumx.js' %}"></script>
     <!-- side bar dependencies -->
-  https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc1/angular-material.css
     <script src="{% static 'browse/Slide-Push-Menus/js/src/menu.js' %}"></script>
     <script src="{% static 'browse/Slide-Push-Menus/gulpfile.js' %}"></script>
-
 
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
@@ -40,6 +38,10 @@
 
   <!-- Angular Material Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+    <script>
+      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial']);
+    </script>
 
     {% block header %}{% endblock %}
   </head>
@@ -186,10 +188,6 @@
     </div>
 
     <div id="c-mask" class="c-mask"></div>
-
-    <script>
-      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial']);
-    </script>
 
     <!-- Custom js files -->
     <script src="{% static 'browse/js/script.js' %}"></script>
