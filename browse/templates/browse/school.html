@@ -26,15 +26,43 @@
     {% endif %}
   </div>
 
-  <div flex-container="row" style="margin-top: 20px;">
-    <div flex-item="6">
-      {% if review_votes|length > 0 %}
-        {% for review, vote in review_votes %}
-          {% review_card review vote %}
-        {% endfor %}
-      {% else %}
-        <h2>There are no reviews for professors at this school.</h2>
-      {% endif %}
-    </div>
-  </div>
+<md-content ng-cloak="" style="margin-top: 20px;">
+  <md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Reviews">
+      <md-content style="margin-top: 20px;">
+        {% if review_votes|length > 0 %}
+          {% for review, vote in review_votes %}
+            {% review_card review vote %}
+          {% endfor %}
+        {% else %}
+          <h2>There are no reviews for professors at this school.</h2>
+        {% endif %}
+      </md-content>
+    </md-tab>
+
+    <md-tab label="Courses">
+      <md-content style="margin-top: 20px;">
+        {% if courses|length > 0 %}
+          {% for course in courses %}
+          {{ course.name }}
+          {% endfor %}
+        {% else %}
+          <h2>There are no courses listed for this school.</h2>
+        {% endif %}
+      </md-content>
+    </md-tab>
+
+    <md-tab label="Professors">
+      <md-content style="margin-top: 20px;">
+        {% if professor|length > 0 %}
+          {% for professor in professors %}
+            professor.name
+          {% endfor %}
+        {% else %}
+          <h2>There are no professors listed for this school.</h2>
+        {% endif %}
+      </md-content>
+    </md-tab>
+  </md-tabs>
+</md-content>
 {% endblock %}

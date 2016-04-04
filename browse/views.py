@@ -136,7 +136,10 @@ def school(request, school_id=None, page=0):
 
     # FIXME: Paginate
     context["review_votes"] = \
-        _get_all_review_votes(request, {"target__school_id": school_id})
+        _get_all_review_votes(request, {"target__school_id": school_id})[0:5]
+
+    context["courses"] = Course.objects.filter(
+        department__school__id=school_id)
 
     return HttpResponse(template.render(context))
 
@@ -195,6 +198,8 @@ def professor(request, professor_id=None, page=0):
     context = RequestContext(request)
 
     context["professor"] = get_object_or_404(Professor, id=professor_id)
+
+    # FIXME: Paginate
     context["review_votes"] = _get_all_review_votes(request,
                                                     {"target": professor_id})
 
