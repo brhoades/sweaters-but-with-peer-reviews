@@ -12,7 +12,7 @@
     <div flex-item flex-container="column">
       <a href="{% url 'review' review_id=review.id %}">
         <div flex-item align="left">
-          <strong class="review-title" >Title of Review</strong>
+          <strong class="review-title" >{{ review.title }}</strong>
           <span class="display-block fs-body-1 tc-black-2">
             <b>{{ review.course.name }}</b> <br />
             with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
