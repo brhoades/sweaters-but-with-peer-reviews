@@ -2,7 +2,7 @@
   {% csrf_token %}
 
   {% verbatim %}
-  <div flex-container="row" ng-model="valid.error" 
+  <div flex-container="row" ng-model="valid.error"
        class="p+ error bgc-red-500 tc-white-1" ng-show="valid.error != ''">
     <center>
       {{ valid.error }}
@@ -12,15 +12,15 @@
     <div flex-item style="margin: 30px">
       <div flex-container="row" flex-gutter="24">
         <div flex-item>
-          <lx-select ng-model="data.target" 
-              placeholder="Professor" 
-              choices="ajax.list"  
-              filter="ajax.update(newValue, oldValue, 'professors_matching')" 
-              loading="{{ ajax.loading }}" 
-              min-length="2" 
+          <lx-select ng-model="data.target"
+              placeholder="Professor"
+              choices="ajax.list"
+              filter="ajax.update(newValue, oldValue, 'professors_matching')"
+              loading="{{ ajax.loading }}"
+              min-length="2"
               allow-clear="true"
-              error="valid.target != ''" 
-              id="target" 
+              error="valid.target != ''"
+              id="target"
               class="tc-black-1">
 
             <lx-select-selected>
@@ -36,14 +36,14 @@
         </div>
 
         <div flex-item>
-          <lx-select ng-model="data.course" 
-              placeholder="Course" 
+          <lx-select ng-model="data.course"
+              placeholder="Course"
               choices="ajax.list"
-              filter="ajax.update(newValue, oldValue, 'courses_matching')" 
-              loading="{{ ajax.loading }}" 
-              min-length="2" 
+              filter="ajax.update(newValue, oldValue, 'courses_matching')"
+              loading="{{ ajax.loading }}"
+              min-length="2"
               allow-clear="true"
-              error="valid.course != ''" 
+              error="valid.course != ''"
               id="course">
 
             <lx-select-selected>
@@ -110,15 +110,15 @@
         </lx-text-field>
         <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
       </div>
-    
 
-    <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
+
+    <button id="siteButton" class="btn btn--l btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit Review</button>
 
     </div>
   </div>
 
-  
-    
+
+
 
 
   {% endverbatim %}

@@ -10,7 +10,7 @@
   {% endfor %}
   </ul>
 {% endif %}
-  
+
   <form method="post" action="{% url 'login' %}">{% csrf_token %}
     {% if message %}
       {{ message }}
@@ -26,7 +26,7 @@
             <input type="password" ng-model="textField.password" name="password" value="{{ form.password }}">
         </lx-text-field>
 
-         <button class="btn btn--l btn--blue btn--raised" lx-ripple type="submit">Login</button>
+         <button id="button" class="btn btn--l btn--blue btn--raised" lx-ripple type="submit">Login</button>
         <input type="hidden" name="next" value="/home" />
     </div>
   </form>

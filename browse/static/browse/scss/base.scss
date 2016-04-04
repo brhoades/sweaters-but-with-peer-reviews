@@ -10,6 +10,15 @@ $highlight: #f49832;
 
 /* End base materials */
 
+// Finds the IDs of the buttons and set it as the site color
+#siteButton {
+  background-color: $site-banner-color;
+}
+
+#popup {
+  background-color: $site-banner-color;
+}
+
 /* Begin voting classes */
 .card-color {
     background-color: #ffffff;
