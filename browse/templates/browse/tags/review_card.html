@@ -11,7 +11,7 @@
       <div align="left">
         <strong class="review-title hyperlink"
                 onclick="window.location=\"{% url 'review' review_id=review.id %}\"">
-          Title of Review
+          {{ review.title }}
         </strong>
         <span class="display-block fs-body-1 tc-black-2">
           <b>{{ review.course.name }}</b> <br />
