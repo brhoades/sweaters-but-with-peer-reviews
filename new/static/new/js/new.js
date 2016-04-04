@@ -7,8 +7,19 @@ $.ajaxSetup({
   }
 );
 
+app.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue', {
+      'default': '500'
+    })
+    .accentPalette('pink', {
+      'default': 'A200'
+    });
+});
+
 // Expects a model param
-angular.module('lumxWrap', ['lumx', 'ngMaterial']).controller('form-handler', function($scope, $http, $window, $attrs, LxDialogService) {
+app.controller('form-handler',
+    function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
 
   $scope.data = {
@@ -30,11 +41,6 @@ angular.module('lumxWrap', ['lumx', 'ngMaterial']).controller('form-handler', fu
   $scope.closingDialog = function() {
   };
 
-  // school slider
-  $scope.data.rating_overall = 2.5;
-  $scope.data.rating_value = 2.5;
-  $scope.data.rating_difficulty = 2.5;
-
   // Get our field names automatically
   $http.get("/get/get_fields_for_model/" + $scope.type).success(function(data) {
     data.forEach(function(e, i, l) {
@@ -43,6 +49,13 @@ angular.module('lumxWrap', ['lumx', 'ngMaterial']).controller('form-handler', fu
       $scope.original[e] = "";
     });
   });
+
+  // school slider
+  if($scope.data.rating_overall) {
+    $scope.data.rating_overall = 2.5;
+    $scope.data.rating_value = 2.5;
+    $scope.data.rating_difficulty = 2.5;
+  }
 
   $scope.ajax = {
       list: [],

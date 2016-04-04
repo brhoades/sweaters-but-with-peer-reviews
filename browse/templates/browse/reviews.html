@@ -17,21 +17,25 @@
   <br />
   <br />
   <div ng-app="lumxWrap">
+    <div class="pagination-buttons">
+      {% for i in pages %}
+        <a href="{% url 'reviews' page=i %}">
+          {% if i == page %}
+            <button class="md-raised md-button md-primary md-ink-ripple">
+          {% else %}
+            <button class="md-raised md-button md-ink-ripple">
+          {% endif %}
+            {{ i }}
+          </button>
+        </a>
+      {% endfor %}
+    </div>
     {% if review_votes|length > 0 %}
-      <div class=latest-block>
-        <h2 style="text-align: left;">
-          Latest {{review_votes|length}} Review(s)
-        </h2>
-      </div>
       {% for review, vote in review_votes %}
         {% review_card review vote %}
-        {% comment %}
-          <div class="divider divider--dark" ></div>
-          </div>
-        {% endcomment %}
       {% endfor %}
     {% else %}
-      <h2>There are no reviews</h2>
+      <h2>There are no more reviews</h2>
     {% endif %}
   </div>
 

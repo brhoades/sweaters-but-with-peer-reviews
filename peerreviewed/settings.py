@@ -109,5 +109,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+SASS_PROCESSOR_ROOT = os.path.join(STATIC_ROOT, 'scss')
 
 LOGIN_URL = '/logged_in'
