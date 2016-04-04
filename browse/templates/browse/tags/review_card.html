@@ -1,4 +1,4 @@
-<!-- we get a review and a vote object. We also get a can_vote bool --!>
+<!-- we get a review and a vote object. We also get a can_vote bool -->
 {% load gravatar %}
 
 <div class="review-card-small"
@@ -7,7 +7,9 @@
     <div class="hyperlink card__img card__img- - left" style="height: 100px;" >
       <img src="{% gravatar_url review.owner.email 100 %}" style="margin-right:20px;">
     </div>
+
     <div flex-item flex-container="column">
+<<<<<<< HEAD
       <div align="left">
         <strong class="review-title hyperlink"
                 onclick="window.location=\"{% url 'review' review_id=review.id %}\"">
@@ -22,6 +24,8 @@
         </span>
       </div>
     </div>
+
+
     <div ng-app="lumxWrap">
     {% if can_vote %}
       <div flex-container="row" align="right">
