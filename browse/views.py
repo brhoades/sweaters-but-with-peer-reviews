@@ -134,6 +134,10 @@ def school(request, school_id=None, page=0):
     context["school_location"] \
         = school_get_location(context["school"].location)
 
+    # FIXME: Paginate
+    context["review_votes"] = \
+        _get_all_review_votes(request, {"target__school_id": school_id})
+
     return HttpResponse(template.render(context))
 
 

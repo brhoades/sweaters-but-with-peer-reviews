@@ -1,6 +1,13 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load sass_tags %}
+{% load cards %}
 {% block title %}School{% endblock %}
+
+{% block header %} 
+  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+        type="text/css" />
+{% endblock %}
 
 <br />
 {% block content %}
@@ -13,10 +20,21 @@
       <strong>Website</strong>:<a href="{{school.url}}">{{ school.url }}<a /><br />
     {% endif %}
     <br />
-
     Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
     {% if professor.update_ts %}
       Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
     {% endif %}
+  </div>
+
+  <div flex-container="row" style="margin-top: 20px;">
+    <div flex-item="6">
+      {% if review_votes|length > 0 %}
+        {% for review, vote in review_votes %}
+          {% review_card review vote %}
+        {% endfor %}
+      {% else %}
+        <h2>There are no reviews for professors at this school.</h2>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}
