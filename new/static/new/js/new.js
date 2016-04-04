@@ -7,8 +7,21 @@ $.ajaxSetup({
   }
 );
 
+var app = angular.module('lumxWrap', ['lumx', 'ngMaterial']);
+
+app.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue', {
+      'default': '500'
+    })
+    .accentPalette('pink', {
+      'default': 'A200'
+    });
+});
+
 // Expects a model param
-angular.module('lumxWrap', ['lumx', 'ngMaterial']).controller('form-handler', function($scope, $http, $window, $attrs, LxDialogService) {
+app.controller('form-handler',
+    function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
 
   $scope.data = {
