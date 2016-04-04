@@ -80,6 +80,27 @@ class Professor(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, related_name='created_by')
 
+    @property
+    def num_reviews(self):
+        return Review.objects.filter(target_id=self.id).count()
+
+    @property
+    def num_courses(self):
+        return (Review.objects.filter(target_id=self.id).values("course")
+                .distinct().count())
+
+    @property
+    def rating(self):
+        rating = (Review.objects.filter(target_id=self.id)
+                  .aggregate(models.Avg("rating_overall"))
+                  ["rating_overall__avg"])
+
+        if rating is None:
+            rating = "-"
+        else:
+            rating = round(rating, 1)
+        return rating
+
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
 

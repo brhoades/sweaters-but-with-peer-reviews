@@ -56,7 +56,7 @@
         <md-content style="margin-top: 20px;">
           {% if professors|length > 0 %}
             {% for professor in professors %}
-              professor.name
+              {% professor_card professor %}
             {% endfor %}
           {% else %}
             <h2>There are no professors listed for this school.</h2>

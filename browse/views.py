@@ -141,6 +141,8 @@ def school(request, school_id=None, page=0):
     context["courses"] = Course.objects.filter(
         department__school__id=school_id)
 
+    context["professors"] = Professor.objects.filter(school_id=school_id)
+
     return HttpResponse(template.render(context))
 
 
@@ -154,34 +156,7 @@ def professors(request, page):
                                                                   Professor)
 
     for p in Professor.objects.order_by('-created_ts')[start:end]:
-        thisprof = {}
-        thisprof["professor"] = p
-
-        thisprof["num_reviews"] = Review.objects.filter(target_id=p.id).count()
-        thisprof["num_courses"] = (Review.objects.filter(target_id=p.id)
-                                   .values("course").distinct().count())
-        # Choose a school by the one they have the most reviews for.
-        thisprof["school"] = (Review.objects.filter(target_id=p.id)
-                              .annotate(Count("course", distinct=True))
-                              .order_by())
-        r = (Review.objects.values("course").annotate(count=Count("course"))
-             .order_by())
-        if len(r) > 0:
-            thisprof["school"] = (Course.objects.get(id=r[0]["course"])
-                                  .department.school)
-        else:
-            thisprof["school"] = ""
-
-        rating = (Review.objects.filter(target_id=p.id)
-                  .aggregate(Avg("rating_overall"))["rating_overall__avg"])
-
-        if rating is None:
-            rating = "-"
-        else:
-            rating = round(rating, 1)
-
-        thisprof["rating"] = rating
-        professors.append(thisprof)
+        professors.append(p)
 
     return HttpResponse(template.render(context))
 

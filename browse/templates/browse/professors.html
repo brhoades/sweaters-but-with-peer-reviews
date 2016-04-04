@@ -1,6 +1,7 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load formlets %}
+{% load cards %}
 {% block title %}Professors{% endblock %}
 {% block js %}
   <script src="{% static 'new/js/new.js' %}"></script>
@@ -24,38 +25,7 @@
   </div>
   {% if professors|length > 0 %}
     {% for p in professors %}
-    <div class="padded-card" professor-id="{{ p.professor.id }}">
-      <div class="rating">
-        <!-- We should decide color and set it here -->
-        <div class="average">{{ p.rating }}</div>
-        <div class="out-of">
-          /5
-        </div>
-      </div>
-      <div class="information">
-        <div class="name">
-          <a href="{% url "professor" p.professor.id %}">
-          {{ p.professor.first_name }} {{ p.professor.last_name }}
-          </a>
-        </div>
-        <div class="card-stats">
-          <div class="location">
-            <a href="{% url "school" p.school.id %}">
-              {{ p.school.name }}
-            </a>
-          </div>
-          <div class="item">
-            {{ p.num_courses }}<br />
-            Course{% if p.num_courses != 1 %}s{% endif %}
-          </div>
-
-          <div class="item">
-            {{ p.num_reviews }}<br />
-            Review{% if p.num_reviews != 1 %}s{% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
+      {% professor_card p %}
     {% endfor %}
   {% else %}
     <h2>There are no more professors</h2>
