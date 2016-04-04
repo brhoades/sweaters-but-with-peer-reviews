@@ -10,7 +10,6 @@
   </div>
   <div flex-container="column" flex-gutter="24">
     <div flex-item style="margin: 30px">
-
       <div flex-container="row" flex-gutter="24">
         <div flex-item>
           <lx-select ng-model="data.target" 
@@ -97,6 +96,12 @@
             {{ valid.rating_difficulty }}
           </span>
         </div>
+      </div>
+      <div flex-item>
+        <lx-text-field label="Review title">
+          <input type="text" ng-model="data.title" error="valid.title != ''">
+        </lx-text-field>
+        <span class="text-field-error" ng-show="valid.title != ''">{{ valid.title }}</span>
       </div>
 
       <div flex-item>

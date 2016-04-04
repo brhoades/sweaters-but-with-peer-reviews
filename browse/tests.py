@@ -154,7 +154,7 @@ class ReviewContent(TestCase):
         resp = self.client.get(reverse("index"))
 
         self.assertIn("review_votes", resp.context)
-        self.assertGreater(len(resp.context["review_votes"]), 5)
+        self.assertGreaterEqual(len(resp.context["review_votes"]), 5)
         content = resp.content.decode()
 
         for review, vote in resp.context["review_votes"]:
@@ -175,10 +175,11 @@ class ReviewContent(TestCase):
         resp = self.client.get(reverse("reviews_overview"))
 
         self.assertIn("review_votes", resp.context)
-        self.assertGreater(len(resp.context["review_votes"]), 5)
+        self.assertGreaterEqual(len(resp.context["review_votes"]), 5)
         content = resp.content.decode()
 
-        for review in Review.objects.all():
+        # Check the last 5
+        for review in Review.objects.order_by('-created_ts')[0:5]:
             # Check that all information is there
             self.assertIn(review.target.last_name, content)
             self.assertIn(review.target.first_name, content)

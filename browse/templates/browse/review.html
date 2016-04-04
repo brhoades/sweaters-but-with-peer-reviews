@@ -67,7 +67,7 @@
     &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
   </div>
 
-  <strong class="review-title">Title of Review</strong>
+  <strong class="review-title">{{ review.title }}</strong>
   <div class="review-info">
     <a href="{% url "profile" review.owner.id %}">
       {% if review.owner.first_name or review.owner.last_name %}

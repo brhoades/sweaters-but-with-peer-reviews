@@ -4,6 +4,9 @@ from django.core.validators import RegexValidator, URLValidator, \
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 
+import urllib.request as urllib
+import json
+
 
 class School(models.Model):
     name = models.CharField(max_length=100)
@@ -14,6 +17,40 @@ class School(models.Model):
     location = GeopositionField()
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
+
+    @property
+    def num_professors(self):
+        return Professor.objects.filter(school_id=self.id).count
+
+    @property
+    def num_reviews(self):
+        return Review.objects.filter(target__school_id=self.id).count
+
+    @property
+    def human_location(self):
+        if not self.location:
+            return None
+
+        url = ("http://maps.googleapis.com/maps/api/geocode/json"
+               "?latlng={},{}&sensor=false").format(self.location.latitude,
+                                                    self.location.longitude)
+        data = urllib.urlopen(url).read()
+        data = json.loads(data.decode("UTF-8"))
+
+        return data["results"][0]["formatted_address"]
+
+    @property
+    def rating(self):
+        rating = (Review.objects.filter(target__school_id=self.id)
+                  .aggregate(models.Avg("rating_overall"))
+                  ["rating_overall__avg"])
+
+        if rating is None:
+            rating = "-"
+        else:
+            rating = round(rating, 1)
+
+        return rating
 
     def __str__(self):
         return "%s" % (self.name)
@@ -80,6 +117,27 @@ class Professor(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, related_name='created_by')
 
+    @property
+    def num_reviews(self):
+        return Review.objects.filter(target_id=self.id).count()
+
+    @property
+    def num_courses(self):
+        return (Review.objects.filter(target_id=self.id).values("course")
+                .distinct().count())
+
+    @property
+    def rating(self):
+        rating = (Review.objects.filter(target_id=self.id)
+                  .aggregate(models.Avg("rating_overall"))
+                  ["rating_overall__avg"])
+
+        if rating is None:
+            rating = "-"
+        else:
+            rating = round(rating, 1)
+        return rating
+
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
@@ -101,6 +159,9 @@ class Review(models.Model):
     owner = models.ForeignKey(User)
     course = models.ForeignKey(Course)
     target = models.ForeignKey(Professor, on_delete=models.CASCADE)
+
+    title = models.TextField(max_length=100,
+                             validators=[MinLengthValidator(3)])
 
     # [0,5]
     rating_value = models.FloatField()

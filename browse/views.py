@@ -2,13 +2,10 @@ from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.db.models import Count, Avg
-import urllib.request as urllib
-import json
 
 from browse.models import Review, User, Professor, School, Course
 from django.contrib.auth import logout as auth_logout
-from browse.get_utils import _get_all_review_votes
+from browse.get_utils import _get_all_review_votes, paginate
 
 
 def index(request, message=""):
@@ -20,7 +17,7 @@ def index(request, message=""):
     context = RequestContext(request)
     context["messages"] = messages.get_messages(request)
 
-    context["review_votes"] = _get_all_review_votes(request)
+    context["review_votes"] = _get_all_review_votes(request)[0:5]
 
     return render(request, template, context)
 
@@ -72,48 +69,14 @@ def setting(request, id=None):
     return render(request, template, context)
 
 
-def school_get_location(loc):
-    if not loc:
-        return None
-
-    url = ("http://maps.googleapis.com/maps/api/geocode/json"
-           "?latlng={},{}&sensor=false").format(loc.latitude, loc.longitude)
-    data = urllib.urlopen(url).read()
-    data = json.loads(data.decode("UTF-8"))
-
-    return data["results"][0]["formatted_address"]
-
-
-def schools(request):
+def schools(request, page):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
 
-    # HTML passthrough has to be enabled in the template... this is serialized.
-    schools = []
-    context["schools"] = schools
-
-    for sch in School.objects.order_by("-created_ts"):
-        thisschool = {}
-        thisschool["school"] = sch
-        thisschool["num_professors"] = (Professor.objects
-                                        .filter(school_id=sch.id).count)
-        thisschool["num_reviews"] = (Review.objects
-                                     .filter(target__school_id=sch.id).count)
-        thisschool["school_location"] = \
-            school_get_location(thisschool["school"].location)
-
-        rating = (Review.objects.filter(target__school_id=sch.id)
-                  .aggregate(Avg("rating_overall"))["rating_overall__avg"])
-
-        if rating is None:
-            rating = "-"
-        else:
-            rating = round(rating, 1)
-
-        print("RATING: {}".format(rating))
-
-        thisschool["rating"] = rating
-        schools.append(thisschool)
+    # Get our page numbers to display, our page, all objects, and the
+    # range of that all we're going to send back.
+    context["pages"], context["page"], all, start, end = paginate(page, School)
+    context["schools"] = all[start:end]
 
     return HttpResponse(template.render(context))
 
@@ -131,48 +94,31 @@ def school(request, school_id=None, page=0):
 
     context["school"] = get_object_or_404(School, id=school_id)
 
-    context["school_location"] \
-        = school_get_location(context["school"].location)
+    context["school_location"] = context["school"].human_location
+
+    # FIXME: Paginate
+    context["review_votes"] = \
+        _get_all_review_votes(request, {"target__school_id": school_id})[0:5]
+
+    context["courses"] = Course.objects.filter(
+        department__school__id=school_id)
+
+    context["professors"] = Professor.objects.filter(school_id=school_id)
 
     return HttpResponse(template.render(context))
 
 
-def professors(request):
+def professors(request, page):
     template = loader.get_template("browse/professors.html")
     context = RequestContext(request)
 
     professors = []
     context["professors"] = professors
+    context["pages"], context["page"], all, start, end = paginate(page,
+                                                                  Professor)
 
-    for p in Professor.objects.order_by('-created_ts'):
-        thisprof = {}
-        thisprof["professor"] = p
-
-        thisprof["num_reviews"] = Review.objects.filter(target_id=p.id).count()
-        thisprof["num_courses"] = (Review.objects.filter(target_id=p.id)
-                                   .values("course").distinct().count())
-        # Choose a school by the one they have the most reviews for.
-        thisprof["school"] = (Review.objects.filter(target_id=p.id)
-                              .annotate(Count("course", distinct=True))
-                              .order_by())
-        r = (Review.objects.values("course").annotate(count=Count("course"))
-             .order_by())
-        if len(r) > 0:
-            thisprof["school"] = (Course.objects.get(id=r[0]["course"])
-                                  .department.school)
-        else:
-            thisprof["school"] = ""
-
-        rating = (Review.objects.filter(target_id=p.id)
-                  .aggregate(Avg("rating_overall"))["rating_overall__avg"])
-
-        if rating is None:
-            rating = "-"
-        else:
-            rating = round(rating, 1)
-
-        thisprof["rating"] = rating
-        professors.append(thisprof)
+    for p in Professor.objects.order_by('-created_ts')[start:end]:
+        professors.append(p)
 
     return HttpResponse(template.render(context))
 
@@ -189,8 +135,19 @@ def professor(request, professor_id=None, page=0):
     context = RequestContext(request)
 
     context["professor"] = get_object_or_404(Professor, id=professor_id)
+
+    # FIXME: Paginate
     context["review_votes"] = _get_all_review_votes(request,
                                                     {"target": professor_id})
+    context["courses"] = []
+    courses = (Review.objects.filter(target_id=professor_id).values("course")
+               .distinct())
+
+    for course in courses:
+        context["courses"].append(Course.objects.get(id=course["course"]))
+
+    context["schools"] = [course.department.school for course
+                          in context["courses"]]
 
     return HttpResponse(template.render(context))
 
@@ -207,7 +164,7 @@ def review(request, review_id=0):
     return HttpResponse(template.render(context))
 
 
-def reviews(request, type="all", first_id=None, second_id=None, page=0):
+def reviews(request, type="all", first_id=None, second_id=None, page=1):
     """
     This is the general-purpose review-viewing page. It allows for returning
     views of specific requests from the user.
@@ -228,7 +185,8 @@ def reviews(request, type="all", first_id=None, second_id=None, page=0):
     """
     template = "browse/reviews.html"
     context = RequestContext(request)
-    context["review_votes"] = _get_all_review_votes(request)
+    context["pages"], context["page"], all, start, end = paginate(page, Review)
+    context["review_votes"] = _get_all_review_votes(request)[start:end]
 
     if type == "by_school":
         context["message"] =\

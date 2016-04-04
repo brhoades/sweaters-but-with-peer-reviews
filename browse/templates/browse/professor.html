@@ -53,6 +53,32 @@
           {% endif %}
         </md-content>
       </md-tab>
+      
+  <md-content ng-cloak="" style="margin-top: 20px;">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Reviews">
+        <md-content style="margin-top: 20px;">
+          {% if review_votes|length > 0 %}
+            {% for review, vote in review_votes %}
+              {% review_card review vote %}
+            {% endfor %}
+          {% else %}
+            <h2 class="no-items">There are no reviews for this professor.</h2>
+          {% endif %}
+        </md-content>
+      </md-tab>
+
+      <md-tab label="Courses">
+        <md-content style="margin-top: 20px;">
+          {% if courses|length > 0 %}
+            {% for course in courses %}
+            {{ course.name }}
+            {% endfor %}
+          {% else %}
+            <h2 class="no-items">There are no courses listed for this professor.</h2>
+          {% endif %}
+        </md-content>
+      </md-tab>
 
       <md-tab label="Schools">
         <md-content style="margin-top: 20px;">
