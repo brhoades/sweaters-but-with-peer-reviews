@@ -1,11 +1,18 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
+{% load sass_tags %}
+{% load cards %}
 {% block title %}Professor{% endblock %}
+
+{% block header %} 
+  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+        type="text/css" />
+{% endblock %}
 
 {% block content %}
   <br />
 
-  <div class="card">
+  <div class="card" style="margin-bottom: 10px;">
     <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />
     <strong>School</strong>: {{ professor.school.name }}<br />
     <strong>Owner</strong>:
@@ -22,4 +29,45 @@
       Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
     {% endif %}
   </div>
+
+  <md-content ng-cloak="" style="margin-top: 20px;">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Reviews">
+        <md-content style="margin-top: 20px;">
+          {% if review_votes|length > 0 %}
+            {% for review, vote in review_votes %}
+              {% review_card review vote %}
+            {% endfor %}
+          {% else %}
+            <h2 class="no-items">There are no reviews for this professor.</h2>
+          {% endif %}
+        </md-content>
+      </md-tab>
+
+      <md-tab label="Courses">
+        <md-content style="margin-top: 20px;">
+          {% if courses|length > 0 %}
+            {% for course in courses %}
+            {{ course.name }}
+            {% endfor %}
+          {% else %}
+            <h2 class="no-items">There are no courses listed for this professor.</h2>
+          {% endif %}
+        </md-content>
+      </md-tab>
+
+      <md-tab label="Schools">
+        <md-content style="margin-top: 20px;">
+          {% if schools|length > 0 %}
+            {% for school in schools %}
+              {% school_card school %}
+            {% endfor %}
+          {% else %}
+            <h2 class="no-items">There are no schools that this professor is associated with.</h2>
+          {% endif %}
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+
 {% endblock %}

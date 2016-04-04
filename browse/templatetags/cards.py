@@ -18,4 +18,22 @@ def review_card(review_data, vote_data, can_vote=True):
 
 @register.inclusion_tag("browse/tags/comment_card.html")
 def comment_card(comment):
+    """
+    Displays a Comment card for the given comment text
+    """
     return {"comment": comment}
+
+@register.inclusion_tag("browse/tags/professor_card.html")
+def professor_card(professor):
+    """
+    Displays a professor card for the provided professor.
+    """
+    return {"professor": professor}
+
+
+@register.inclusion_tag("browse/tags/school_card.html")
+def school_card(school):
+    """
+    Displays a school card for the provided school.
+    """
+    return {"school": school}
