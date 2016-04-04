@@ -138,14 +138,16 @@ def school(request, school_id=None, page=0):
     return HttpResponse(template.render(context))
 
 
-def professors(request):
+def professors(request, page):
     template = loader.get_template("browse/professors.html")
     context = RequestContext(request)
 
     professors = []
     context["professors"] = professors
+    context["pages"], context["page"], all, start, end = paginate(page,
+                                                                  Professor)
 
-    for p in Professor.objects.order_by('-created_ts'):
+    for p in Professor.objects.order_by('-created_ts')[start:end]:
         thisprof = {}
         thisprof["professor"] = p
 
