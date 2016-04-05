@@ -60,6 +60,16 @@ def edit(request, page=None, id=None):
         return json_error({"error": "Unknown {} id {} provided."
                                     .format(page, id)})
 
+    owner = None
+    instance = instances[0]
+    if hasattr(instance, "created_by"):
+        owner = instance.created_by
+    elif hasattr(instance, "owner"):
+        owner = instance.owner
+
+    if owner and owner != request.user:
+        return json_error({"error": "You do not own this instance."})
+
     # Functionality is so similar to new, just hand it off
     return new(request, page=page, id=id, type="edit")
 
