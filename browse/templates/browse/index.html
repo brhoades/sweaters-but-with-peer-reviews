@@ -28,7 +28,11 @@
   {% endif %}
 
   <div id="title">
-      <div style="background-color:red;">hi<br> hello</div>
+    <div id="cycler">
+        <img class="active" src="{% static 'browse/img/missourist_puck.jpg' %}" alt="My Image"> 
+        <img src="{% static 'browse/img/mstpanorama.jpg' %}" alt="My Image">
+        <img src="{% static 'browse/img/PandaZu.jpg' %}" alt="My Image">
+    </div>
   </div>
 
   {% if review_votes|length > 0 %}
@@ -60,7 +64,6 @@
         </div>
       </div>
     </div>
-  </div>
   <br /> <br />
 
 
