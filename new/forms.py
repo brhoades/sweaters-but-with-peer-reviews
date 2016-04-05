@@ -65,6 +65,7 @@ class FieldCategoryForm(ModelForm):
         model = FieldCategory
         fields = ['name']
 
+
 class CommentForm(ModelForm):
     needs_owner = True
     needs_created_by = False
