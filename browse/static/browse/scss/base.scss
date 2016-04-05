@@ -1,14 +1,31 @@
 @import "lumx/dist/scss/lumx";
 @import "settings";
 
+/* Base materials for site layout */
+$site-background-color: #eeeeee;
+$site-banner-color: #0277bd;
+$highlight: #f49832;
+
+
+
+/* End base materials */
+
+// Finds the IDs of the buttons and set it as the site color
+#siteButton {
+  background-color: $site-banner-color;
+}
+
+#popup {
+  background-color: $site-banner-color;
+}
 
 /* Begin voting classes */
 .card-color {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
 
 .background-color {
-    background-color: #EEEEEE;
+    background-color: $site-background-color;
 }
 
 .index_layout {
@@ -121,7 +138,7 @@ html {
 }
 
 body {
-  min-height: 100%;
+  height: 100%;
   font-family: Roboto, Helvetica, Neue, Sans-Serif !important;
 }
 
@@ -148,18 +165,19 @@ body {
   height: 80px;
   z-index: 0;
   float: top;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.18);
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.68);
+  background-color: $site-banner-color;
 }
 /* End Main Page Classes */
 
 /* Supporting classes */
 
 
-/* School / Professor Page Classes */ 
+/* School / Professor Page Classes */
 .padded-card {
   @extend .card;
   @extend .tc-black-1;
-  
+
   padding: 5px;
   position: relative;
   margin-top: 15px;
@@ -252,7 +270,8 @@ body {
   margin-bottom: 20px;
 }
 
-/* End School / Professor Page Classes */ 
+
+/* End School / Professor Page Classes */
 
 /* All pages. A hyperlink class for nested cards in tabs. */
 .hyperlink {
@@ -269,3 +288,14 @@ body {
   padding-bottom: 50px;
   padding-top: 20px;
 }
+
+/* Text highlighting for the site */
+/*** Works on common browsers ***/
+::selection { background-color: $highlight; }
+/*** Mozilla based browsers ***/
+::-moz-selection { background-color: $highlight; }
+/***For Other Browsers ***/
+::-o-selection { background-color: $highlight; }
+::-ms-selection { background-color: $highlight; }
+/*** For Webkit ***/
+::-webkit-selection { background-color: $highlight; }
