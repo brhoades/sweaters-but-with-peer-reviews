@@ -26,13 +26,11 @@
       </div>
     {% endfor %}
   {% endif %}
-  <div class="cyc">
-    <div id="cycler">
+    <div id="cycler" class="cyc">
         <img class="active" src="{% static 'browse/img/missourist_puck.jpg' %}" alt="My Image"> 
         <img src="{% static 'browse/img/mstpanorama.jpg' %}" alt="My Image">
         <img src="{% static 'browse/img/PandaZu.jpg' %}" alt="My Image">
     </div>
-  </div>
   {% if review_votes|length > 0 %}
     <div class=latest-block>
       <h2>

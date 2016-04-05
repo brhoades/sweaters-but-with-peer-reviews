@@ -47,7 +47,6 @@
 
 #cycler {
     position:relative;
-    display:block;
 }
 #cycler img {
     position:absolute;
