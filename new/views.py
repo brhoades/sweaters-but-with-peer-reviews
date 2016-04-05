@@ -74,7 +74,6 @@ def new(request, page=None):
 
     # Otherwise we will complain about it existing
     del data["error"]
-  
 
     # If model has an owner or created by field, add us
     if model_form_map[page].needs_owner:
