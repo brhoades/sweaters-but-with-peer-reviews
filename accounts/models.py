@@ -7,8 +7,8 @@ from django.utils import timezone
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40, null=True)
-    key_expires = models.DateTimeField(default=timezone.now())
-      
+    key_expires = models.DateTimeField()
+
     def __str__(self):
         return self.user.username
 

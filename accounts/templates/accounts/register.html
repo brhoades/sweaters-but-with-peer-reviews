@@ -1,38 +1,48 @@
-    <h1>New Registration</h1>
-    <form class="form-signup" method="post" class="post-form">{% csrf_token %}
-    <h2>Create your account</h2>
+<h1>New Registration</h1>
+<h2>Create your account</h2>
+
+<form class="form-signup" method="post" class="post-form">{% csrf_token %}
     <div class="fieldWrapper">
-        <label>First name</label><br>
+        {{ form.first_name.errors }}
+        <label>First name</label>
+        <br>
         {{ form.first_name }}
-    </div>    
+    </div>
     <br>
     <div class="fieldWrapper">
-        <label>Last name</label><br>
+        {{ form.last_name.errors }}
+        <label>Last name</label>
+        <br>
         {{ form.last_name }}
-    </div>    
-    <br>
-    <div class="fieldWrapper">    
-        {{ form.email.errors }}            
-        <label>E-mail</label><br>
-        {{ form.email }}
-    </div>    
+    </div>
     <br>
     <div class="fieldWrapper">
-    {{form.errors.values.0}}                
-        <label>Username</label><br>
+        {{ form.email.errors }}
+        <label>E-mail</label>
+        <br>
+        {{ form.email }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        {{ form.username.errors }}
+        <label>Username</label>
+        <br>
         {{ form.username }}
     </div>
     <br>
-    <div class="fieldWrapper">        
-        {{form.errors.values.1}}            
-        <label>Password</label><br>                    
+    <div class="fieldWrapper">
+        {{ form.password2.errors }}
+        <label>Password</label>
+        <br>
         {{ form.password1 }}
     </div>
     <br>
-    <div class="fieldWrapper">           
-        <label>Password again</label><br>
+    <div class="fieldWrapper">
+        {{ form.password2.errors }}
+        <label>Password again</label>
+        <br>
         {{ form.password2 }}
-    </div>            
+    </div>
     <br></br>
     <input type="submit" name="submit" class="btn btn-primary" value="Create account">
 </form>
