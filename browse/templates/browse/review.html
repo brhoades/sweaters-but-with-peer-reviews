@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load gravatar %}
+{% load formlets %}
 
 {% block title %}View Review{% endblock %}
 {% block header %}
@@ -9,8 +10,23 @@
       type="text/css" />
 {% endblock %}
 
+{% block js %} 
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div id="demo" class="review-card-large card-color">
+  {% if user.is_authenticated and review.owner == user %}
+    <!-- this never happens as review lacks created_by -->
+    <div ng-controller="form-handler" model="review" edit="{{ review.id }}"
+         class="edit-icon-outer">
+      <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                 ng-click="opendDialog('reviewCall')">
+        <i class="edit-icon fa fa-pencil"></i>
+      </lx-button>
+      {% new_review_popup %}
+    </div>
+  {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}">
       <img src="{% gravatar_url review.owner.email 100 %}"

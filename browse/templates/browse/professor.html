@@ -18,6 +18,16 @@
   <br />
 
   <div class="card" style="margin-bottom: 10px;">
+    {% if user.is_authenticated and professor.created_by == user %}
+      <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}"
+           class="edit-icon-outer">
+        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                   ng-click="opendDialog('professorCall')">
+          <i class="edit-icon fa fa-pencil"></i>
+        </lx-button>
+        {% new_professor_popup %}
+      </div>
+    {% endif %}
     <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />
     <strong>School</strong>: {{ professor.school.name }}<br />
     <strong>Owner</strong>:
@@ -33,14 +43,6 @@
     {% if professor.update_ts %}
       Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
     {% endif %}
-
-    <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}">
-      <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Edit"
-          lx-tooltip-position="top" ng-click="opendDialog('professorCall')">
-        <i class="mdi mdi-edit"></i>
-      </lx-button>
-      {% new_professor_popup %}
-    </div>
   </div>
 
   <md-content ng-cloak="" style="margin-top: 20px;">

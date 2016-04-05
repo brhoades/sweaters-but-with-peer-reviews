@@ -272,3 +272,13 @@ body {
   padding-bottom: 50px;
   padding-top: 20px;
 }
+
+/* The outer edit icon container and the icon proper */
+.edit-icon-outer {
+  z-index: 20;
+  float: right;
+}
+
+.edit-icon {
+  color: grey;
+}
