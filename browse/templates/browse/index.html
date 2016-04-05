@@ -27,11 +27,10 @@
     {% endfor %}
   {% endif %}
 
-  <!--
   <div id="title">
-    <div>Cardigans But With Peer Reviews</div>
+      <div style="background-color:red;">hi<br> hello</div>
   </div>
-  -->
+
   {% if review_votes|length > 0 %}
     <div class=latest-block>
       <h2>
@@ -39,7 +38,7 @@
       </h2>
     </div>
   {% endif %}
-    <div flex-container="row">
+    <div flex-container="row" flex-gutter="24">
       <div flex-item="6">
         {% if review_votes|length > 0 %}
           {% for review, vote in review_votes %}
@@ -55,7 +54,8 @@
              About Us!
           </div> 
           <div flex-container="4">
-              Filler text!
+              This is the about section! We will fill this with information about
+              us! :D
           </div>
         </div>
       </div>

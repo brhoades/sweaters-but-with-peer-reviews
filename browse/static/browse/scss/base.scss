@@ -97,6 +97,10 @@ $highlight: #f49832;
   @extend .display-block;
   @extend .tc-black-1;
   text-align: center;
+  margin-top: -30px;
+  margin-left: -30px;
+  margin-right: -30px;
+  padding: 0px;
 }
 
 .mobile-title-block {
@@ -109,7 +113,7 @@ $highlight: #f49832;
   @extend .fs-display-1;
   @extend .display-block;
   @extend .tc-black-1;
-  text-align: right;
+  text-align: left;
 }
 
 .sweaters-error {
