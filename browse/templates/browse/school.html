@@ -2,7 +2,12 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load cards %}
+{% load formlets %}
 {% block title %}School{% endblock %}
+
+{% block js %} 
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
 
 {% block header %} 
   <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
@@ -12,6 +17,17 @@
 <br />
 {% block content %}
   <div class="card card-color">
+    {% if user.is_authenticated and school.created_by == user %}
+      <!-- this never happens as school lacks created_by -->
+      <div ng-controller="form-handler" model="school" edit="{{ school.id }}"
+           class="edit-icon-outer">
+        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                   ng-click="opendDialog('schoolCall')">
+          <i class="edit-icon fa fa-pencil"></i>
+        </lx-button>
+        {% new_school_popup True %}
+      </div>
+    {% endif %}
     <br />
     <strong>School</strong>: {{ school.name }}<br />
     <strong>Location</strong>: {{ school_location }}<br />

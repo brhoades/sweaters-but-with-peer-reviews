@@ -10,6 +10,16 @@ from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm
 
 
+MODEL_MAP = {"review": Review,
+             "professor": Professor,
+             "school": School,
+             "department": Department,
+             "course": Course,
+             "field": Field,
+             "fieldcategory": FieldCategory,
+             }
+
+
 def get_template_for_model(request, model_form_map, page):
     template = None
     context = RequestContext(request)
@@ -40,17 +50,35 @@ def json_error(data):
 
 
 @login_required
-def new(request, page=None):
+def edit(request, page=None, id=None):
+    # Check that id exists for page.
+    if page not in MODEL_MAP.keys():
+        return json_error({"error": "Unknown page requested."})
+
+    instances = MODEL_MAP[page].objects.filter(id=id)
+    if len(instances) != 1:
+        return json_error({"error": "Unknown {} id {} provided."
+                                    .format(page, id)})
+
+    owner = None
+    instance = instances[0]
+    if hasattr(instance, "created_by"):
+        owner = instance.created_by
+    elif hasattr(instance, "owner"):
+        owner = instance.owner
+
+    if owner and owner != request.user:
+        return json_error({"error": "You do not own this instance."})
+
+    # Functionality is so similar to new, just hand it off
+    return new(request, page=page, id=id, type="edit")
+
+
+@login_required
+def new(request, type="new", page=None, id=None):
     model = None
     response = {"error": {"error": ""}}
-    model_map = {"review": Review,
-                 "professor": Professor,
-                 "school": School,
-                 "department": Department,
-                 "course": Course,
-                 "field": Field,
-                 "fieldcategory": FieldCategory,
-                 }
+    model_map = MODEL_MAP
     model_form_map = {"review": ReviewForm,
                       "professor": ProfessorForm,
                       "school": SchoolForm,
@@ -109,10 +137,15 @@ def new(request, page=None):
     for k, v in response["error"].items():
         if len(v) > 0:
             return HttpResponse(json.dumps(response))
-
-    # Try to create it
     try:
-        new = model(**data)
+        if type == "new":
+            # Try to create it
+            new = model(**data)
+        elif type == "edit":
+            # We can assume it exists
+            new = model.objects.get(id=id)
+            for k, v in data.items():
+                setattr(new, k, data[k])
     except Exception as e:
         print("ERROR: " + str(e))
         return HttpResponse(json_error({"error": str(e)}))

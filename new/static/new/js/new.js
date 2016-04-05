@@ -21,6 +21,7 @@ app.config(function($mdThemingProvider) {
 app.controller('form-handler',
     function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
+  $scope.edit = $attrs.edit;
 
   $scope.data = {
     error: ""
@@ -48,40 +49,51 @@ app.controller('form-handler',
       $scope.valid[e] = "";
       $scope.original[e] = "";
     });
-  });
 
-  // review sliders
-  if($scope.type == "review") {
-    $scope.data.rating_overall = 2.5;
-    $scope.data.rating_value = 2.5;
-    $scope.data.rating_difficulty = 2.5;
-  }
+    // review sliders
+    if($scope.type == "review") {
+      $scope.data.rating_overall = 2.5;
+      $scope.data.rating_value = 2.5;
+      $scope.data.rating_difficulty = 2.5;
+    }
+
+    // FIXME make this an option for ^
+    if($scope.edit) {
+      // grab the data
+      $http.get("/get/model_values/" + $scope.type + "/" + $scope.edit + "/").success(function(form_data) {
+        // Pop it into our form, with only the necessary values
+        data.forEach(function(e, i, l) {
+          $scope.data[e] = form_data[e];
+        });
+        $scope.id = form_data["id"];
+      });
+    }
+  });
 
   $scope.ajax = {
       list: [],
       update: function(newFilter, oldFilter, subtext) {
           if(newFilter) {
-              $scope.ajax.loading = true;
-              $http.get("/get/" + subtext + "/" + escape(newFilter)).
-                  success(function(data) {
-                    // Always expects, if any elements, a fields item in it
-                    $scope.ajax.list = [];
-                    data.forEach(function(e, i, l) {
-                      if(e.fields != undefined && e.fields.id == undefined)
-                      {
-                        e.fields["id"] = e.pk;  // move this over for later
-                        $scope.ajax.list.push(e.fields);
-                      }
-                      else
-                      {
-                        $scope.ajax.list.push(e);
-                      }
-                    });
-                      $scope.ajax.loading = false;
-                  }).
-                  error(function() {
-                      $scope.ajax.loading = false;
+            $scope.ajax.loading = true;
+            $http.get("/get/" + subtext + "/" + escape(newFilter)).
+                success(function(data) {
+                  // Always expects, if any elements, a fields item in it
+                  $scope.ajax.list = [];
+                  data.forEach(function(e, i, l) {
+                    if(e.fields != undefined && e.fields.id == undefined) {
+                      e.fields["id"] = e.pk;  // move this over for later
+                      $scope.ajax.list.push(e.fields);
+                    }
+                    else {
+                      $scope.ajax.list.push(e);
+                    }
                   });
+
+                  $scope.ajax.loading = false;
+                }).
+                error(function() {
+                  $scope.ajax.loading = false;
+                });
           }
           else {
               $scope.ajax.list = false;
@@ -92,7 +104,12 @@ app.controller('form-handler',
 
   $scope.submit = function() {
     $scope.ajax.loading = true;
-    $http.post("/new/" + $scope.type, JSON.stringify($scope.data)).
+    var url = "/new/" + $scope.type;
+    if($scope.edit) {
+      url = "/edit/" + $scope.type + "/" + $scope.id;
+    }
+
+    $http.post(url, JSON.stringify($scope.data)).
       success(function(data) {
         console.log(data);
         // Always expects, if any elements, a fields item in it

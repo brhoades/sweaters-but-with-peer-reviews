@@ -155,3 +155,23 @@ def login(request):
                 response["message"] = "Invalid login details."
 
     return JsonResponse(response)
+
+
+def model_values(request, model_name, id):
+    """
+    Gets values for a model instance.
+    """
+    try:
+        # Create modelmap
+        model = get_model_from_string(model_name)
+    except ValueError:
+        return HttpResponse(json.dumps({"error":
+                                        {"error":
+                                         "Unknown model requested."}}))
+
+    instance = model.objects.filter(id=id)[0]
+
+    if not instance:
+        return json_error("Unknown id provided.")
+
+    return HttpResponse(instance.to_json())

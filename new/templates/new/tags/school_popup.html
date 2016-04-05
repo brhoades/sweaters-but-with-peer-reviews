@@ -5,10 +5,14 @@
   <div class="dialog__header">
     <div id="popup" class="toolbar pl++">
       <span class="toolbar__label tc-white fs-title">
-        New School
+        {% if not is_edit %}
+          New School
+        {% else %}
+          Edit School
+        {% endif %}
       </span>
     </div>
   </div>
 
-  {% new_school %}
+  {% new_school is_edit %}
 </lx-dialog>
