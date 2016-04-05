@@ -14,10 +14,6 @@
   <script src="{% static 'new/js/new.js' %}"></script>
 {% endblock %}
 
-{% block js %} 
-  <script src="{% static 'new/js/new.js' %}"></script>
-{% endblock %}
-
 {% block content %}
 <div id="demo" class="review-card-large card-color">
   {% if user.is_authenticated and review.owner == user %}

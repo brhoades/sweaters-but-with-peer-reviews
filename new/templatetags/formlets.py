@@ -98,15 +98,6 @@ def new_field_category():
     return {}
 
 
-@register.inclusion_tag("new/tags/school.html")
-def new_school():
-    """
-    Must be within a ng-controller="form-handler" with a parameter for this
-    form model.
-    """
-    return {}
-
-
 @register.inclusion_tag("new/tags/comment_popup.html")
 def new_comment_popup(review):
     """
