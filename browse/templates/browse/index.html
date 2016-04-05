@@ -26,44 +26,42 @@
       </div>
     {% endfor %}
   {% endif %}
-
-  <div id="title">
-    <div id="cycler">
-        <img class="active" src="{% static 'browse/img/missourist_puck.jpg' %}" alt="My Image"> 
-        <img src="{% static 'browse/img/mstpanorama.jpg' %}" alt="My Image">
-        <img src="{% static 'browse/img/PandaZu.jpg' %}" alt="My Image">
-    </div>
-  </div>
-
-  {% if review_votes|length > 0 %}
-    <div class=latest-block>
-      <h2>
-        Latest {{review_votes|length}} Review(s)
-      </h2>
-    </div>
-  {% endif %}
-    <div flex-container="row" flex-gutter="24">
-      <div flex-item="6">
-        {% if review_votes|length > 0 %}
-          {% for review, vote in review_votes %}
-            {% review_card review vote %}
-          {% endfor %}
-        {% else %}
-          <h2>There are no reviews</h2>
-        {% endif %}
-      </div>
-      <div flex-item="6">
-        <div flex-container="column">
-          <div flex-item="4" class="subtitle-block">
-             About Us!
-          </div> 
-          <div flex-container="4">
-              This is the about section! We will fill this with information about
-              us! :D
-          </div>
+      <div id="title">
+        <div id="cycler">
+            <img class="active" src="{% static 'browse/img/missourist_puck.jpg' %}" alt="My Image"> 
+            <img src="{% static 'browse/img/mstpanorama.jpg' %}" alt="My Image">
+            <img src="{% static 'browse/img/PandaZu.jpg' %}" alt="My Image">
         </div>
       </div>
-    </div>
+      {% if review_votes|length > 0 %}
+        <div class=latest-block>
+          <h2>
+            Latest {{review_votes|length}} Review(s)
+          </h2>
+        </div>
+      {% endif %}
+        <div flex-container="row" flex-gutter="24">
+          <div flex-item="6">
+            {% if review_votes|length > 0 %}
+              {% for review, vote in review_votes %}
+                {% review_card review vote %}
+              {% endfor %}
+            {% else %}
+              <h2>There are no reviews</h2>
+            {% endif %}
+          </div>
+          <div flex-item="6">
+            <div flex-container="column">
+              <div flex-item="4" class="subtitle-block">
+                 About Us!
+              </div> 
+              <div flex-container="4">
+                  This is the about section! We will fill this with information about
+                  us! :D
+              </div>
+            </div>
+          </div>
+        </div>
   <br /> <br />
 
 
