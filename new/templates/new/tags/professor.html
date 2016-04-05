@@ -2,7 +2,7 @@
   {% csrf_token %}
 
   {% verbatim %}
-  <div flex-container="row" ng-model="valid.error" 
+  <div flex-container="row" ng-model="valid.error"
        class="p+ error bgc-red-500 tc-white-1"
        ng-show="valid.error != ''">
     <center>
@@ -12,12 +12,12 @@
   <div id="addProfessor" flex-container="column" flex-gutter="24">
     <div flex-item style="margin: 30px;">
 
-      <lx-select ng-model="data.school" 
+      <lx-select ng-model="data.school"
           placeholder="School"
-          choices="ajax.list" 
-          filter="ajax.update(newValue, oldValue, 'schools_matching')" 
-          loading="{{ ajax.loading }}" 
-          min-length="2" 
+          choices="ajax.list"
+          filter="ajax.update(newValue, oldValue, 'schools_matching')"
+          loading="{{ ajax.loading }}"
+          min-length="2"
           allow-clear="true"
           error="valid.school != ''"
           class="tc-black-1">
@@ -25,13 +25,12 @@
         <lx-select-selected>
           {{ $selected.name }}
         </lx-select-selected>
-        
+
         <lx-select-choices>
-          <!-- {{ $choice.name + ' (' + $selected.location + ')' }} -->
           {{ $choice.name }}
         </lx-select-choices>
       </lx-select>
-    
+
       <div flex-container="row" flex-gutter="24">
 
         <div flex-item>
@@ -47,10 +46,10 @@
             </lx-text-field>
             <span class="text-field-error" ng-show="valid.last_name != ''">{{ valid.last_name }}</span>
         </div>
-        
+
       </div>
-       <button class="btn btn--l btn--blue btn--raised" type="submit"
-            ng-submit="submit(data)" lx-ripple />Add Professor</button>
+       <button id="siteButton" class="btn btn--l btn--raised" type="submit"
+            ng-submit="submit(data)" lx-ripple />Submit</button>
     </div>
   </div>
 

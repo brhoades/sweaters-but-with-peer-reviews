@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'browse',
     'new',
     'ajax',
+    'accounts',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,3 +113,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 SASS_PROCESSOR_ROOT = os.path.join(STATIC_ROOT, 'scss')
 
 LOGIN_URL = '/logged_in'
+
+BASE_URL = 'https://cardigansbutwithpeerreviews.xyz/'
+
+#Email Config
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'cardigansbutwithpeerreviews@gmail.com'
+EMAIL_HOST_EMAIL = 'cardigansbutwithpeerreviews@gmail.com'
+EMAIL_HOST_PASSWORD = 'K_N95=K.?FuVZL)%'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

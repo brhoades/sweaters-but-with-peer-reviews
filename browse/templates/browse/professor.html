@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load cards %}
+{% load formlets %}
 {% block title %}Professor{% endblock %}
 
 {% block header %} 
@@ -9,10 +10,24 @@
         type="text/css" />
 {% endblock %}
 
+{% block js %} 
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
+
 {% block content %}
   <br />
 
   <div class="card" style="margin-bottom: 10px;">
+    {% if user.is_authenticated and professor.created_by == user %}
+      <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}"
+           class="edit-icon-outer">
+        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                   ng-click="opendDialog('professorCall')">
+          <i class="edit-icon fa fa-pencil"></i>
+        </lx-button>
+        {% new_professor_popup True %}
+      </div>
+    {% endif %}
     <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />
     <strong>School</strong>: {{ professor.school.name }}<br />
     <strong>Owner</strong>:

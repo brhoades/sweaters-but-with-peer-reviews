@@ -45,7 +45,7 @@ def profile(request, id=None, page=0):
     else:
         # One option is redirect as such.
         messages.info(request, "Please login to view your profile.")
-        return redirect("index")
+        return redirect("home")
 
     userReviews = context["profile"].review_set.all()
 
@@ -219,7 +219,7 @@ def logout(request):
     """
     auth_logout(request)
     messages.info(request, "You have been logged out.")
-    return redirect("index")
+    return redirect("home")
 
 
 def sandbox(request):

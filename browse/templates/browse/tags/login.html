@@ -1,8 +1,8 @@
 <form method="post">
   {% csrf_token %}
 
-  {% verbatim %} 
-    <div flex-container="row" ng-model="message" 
+  {% verbatim %}
+    <div flex-container="row" ng-model="message"
                               class="p+ error bgc-red-500 tc-white-1"
                               ng-show="message != ''">
       <center>
@@ -18,7 +18,7 @@
           <input type="password" ng-model="user.password" name="password">
         </lx-text-field>
 
-         <button class="btn btn--l btn--blue btn--raised" 
+         <button id="siteButton" class="btn btn--l btn--blue btn--raised" 
                  lx-ripple type="submit" ng-click="submit(user);">
            Login
          </button>

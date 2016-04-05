@@ -28,7 +28,6 @@
     <script src="{% static 'browse/bower_components/angular/angular.js' %}"></script>
     <script src="{% static 'browse/bower_components/lumx/dist/lumx.js' %}"></script>
     <!-- side bar dependencies -->
-  https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc1/angular-material.css
     <script src="{% static 'browse/Slide-Push-Menus/js/src/menu.js' %}"></script>
 
     <!-- Angular Material requires Angular.js Libraries -->
@@ -66,12 +65,11 @@
 
 
     {% block js %}{% endblock %}
-
     {% block header %}{% endblock %}
   </head>
 
   <body class="background-color">
-    <div class="top-bar bgc-light-blue-800"></div>
+    <div class="top-bar bgc-light-blue-800" style="height:60px;"></div>
 
     <div ng-app="lumxWrap">
       <div class="toolbar" >
@@ -81,25 +79,19 @@
           </button>
         </div>
         <div class="small_logo">
-            <img src="{% static 'browse/img/Logo_No_Words.jpg' %}">
+            <img src="{% static 'browse/img/Logo_PNG.png' %}">
         </div>
         <div class="desktop">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              {% if request.path == "/" and link == "index" %}
-                  <lx-button lx-color="white" lx-type="raised" style="width:200px;" class="header-button">
-                    <div class="c-menu__link fs-headline display-block">
-                      {{ name }}
-                    </div>
-                  </lx-button>
-              {% elif name|lower in request.path %}
-                  <lx-button lx-color="white" lx-type="raised" style="width:200px;" class="header-button">
+              {% if name|lower in current_page_name %}
+                  <lx-button lx-color="white" lx-type="raised" style="width:200px;">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
                     </div>
                   </lx-button>
               {% else %}
-                  <lx-button lx-color="white" lx-type="flat" style="width:200px" class="header-button">
+                  <lx-button lx-color="white" lx-type="flat" style="width:200px;">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
                     </div>
@@ -130,7 +122,7 @@
                 </ul>
               </lx-dropdown-menu>
               {% else %}
-              <button class="btn" lx-ripple lx-dropdown-toggle >
+              <button class="btn" lx-ripple lx-dropdown-toggle  style="margin-top:-10px;">
                 <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
               </button>
               <div ng-controller="loginData">
@@ -142,7 +134,9 @@
                            Login
                         </a>
                     </li>
-
+                    <li>
+                        <a href="{% url 'user_registration' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Register</a>
+                    </li>
                   </ul>
                 </lx-dropdown-menu>
               {% login_popup %}

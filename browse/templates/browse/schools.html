@@ -13,7 +13,7 @@
     {% for i in pages %}
       <a href="{% url 'schools' i %}">
         {% if i == page %}
-          <button class="md-raised md-button md-primary md-ink-ripple">
+          <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
         {% else %}
           <button class="md-raised md-button md-ink-ripple">
         {% endif %}

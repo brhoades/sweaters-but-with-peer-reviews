@@ -1,3 +1,4 @@
+from django.db.models import Model
 from django.db import models
 from django.core.validators import RegexValidator, URLValidator, \
     MinLengthValidator
@@ -8,7 +9,30 @@ import urllib.request as urllib
 import json
 
 
-class School(models.Model):
+def to_json(self):
+    """
+    Tries to recursively serialize this object and its references.
+    """
+    ret = {}
+    for field in self._meta.get_fields():
+        # If we don't have the attribute (this happens), skip it
+        try:
+            ret[field.name] = getattr(self, field.name)
+        except:
+            continue
+
+        # FIXME: Add a catch for user. Don't return the password.
+        try:
+            ret[field.name] = json.loads(ret[field.name].to_json())
+        except:
+            ret[field.name] = str(ret[field.name])
+            pass
+    return json.dumps(ret)
+
+Model.to_json = to_json
+
+
+class School(Model):
     name = models.CharField(max_length=100)
     email_pattern = models.CharField(max_length=50,
                                      validators=[RegexValidator])
@@ -56,7 +80,7 @@ class School(models.Model):
         return "%s" % (self.name)
 
 
-class FieldCategory(models.Model):
+class FieldCategory(Model):
     class Meta:
         verbose_name_plural = "Field Categories"
 
@@ -68,7 +92,7 @@ class FieldCategory(models.Model):
         return "%s" % (self.name)
 
 
-class Field(models.Model):
+class Field(Model):
     name = models.CharField(max_length=100)
     categories = models.ManyToManyField(FieldCategory)
 
@@ -92,22 +116,8 @@ class Department(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
-    def to_json(self):
-        # Forcing school to be expanded
-        return {
-            "id": self.pk,
-            "name": self.name,
-            "school": self.school.id,
-            "school_name": self.school.name,
-            # "fields": serializers.serialize("json", self.fields),
-            "url": self.url,
-            "created_ts": str(self.created_ts),
-            "updated_ts": str(self.updated_ts),
-            "created_by": str(self.created_by),
-            }
 
-
-class Professor(models.Model):
+class Professor(Model):
     owner = models.ForeignKey(User, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -142,7 +152,7 @@ class Professor(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
 
-class Course(models.Model):
+class Course(Model):
     name = models.CharField(max_length=100)
     number = models.IntegerField()
     department = models.ForeignKey(Department)
@@ -155,7 +165,7 @@ class Course(models.Model):
         return "%s (%i)" % (self.name, self.number)
 
 
-class Review(models.Model):
+class Review(Model):
     owner = models.ForeignKey(User)
     course = models.ForeignKey(Course)
     target = models.ForeignKey(Professor, on_delete=models.CASCADE)
@@ -182,7 +192,7 @@ class Review(models.Model):
                                         self.target.last_name)
 
 
-class ReviewVote(models.Model):
+class ReviewVote(Model):
     class Meta:
         verbose_name_plural = "Review Votes"
 
