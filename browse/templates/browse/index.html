@@ -4,7 +4,7 @@
 {% load cards %}
 
 {% block title %}Home{% endblock %}
-{% block header %} 
+{% block header %}
   <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
         type="text/css" />
 {% endblock %}
@@ -17,7 +17,7 @@
 
     <!-- FIXME: Open login dialog and run that -->
     {% for message in messages %}
-      <div flex-container="row"> 
+      <div flex-container="row">
         <div flex-item class="sweaters-error">
           <center>
             {{ message }}
@@ -26,10 +26,7 @@
       </div>
     {% endfor %}
   {% endif %}
-  
-  <div class="logo">
-    <img src="{% static 'browse/img/Logo.jpg' %}">
-  </div>
+
   <!--
   <div id="title">
     <div>Cardigans But With Peer Reviews</div>

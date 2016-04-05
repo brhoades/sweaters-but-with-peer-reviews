@@ -5,7 +5,7 @@
 
 /* Override some lumx stuff to center buttons */
 
-#addButton { 
+#addButton {
   right: 0;
   margin-right: 30px;
   position: absolute;

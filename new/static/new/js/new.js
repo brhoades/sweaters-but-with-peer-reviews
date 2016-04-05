@@ -50,8 +50,8 @@ app.controller('form-handler',
     });
   });
 
-  // school slider
-  if($scope.data.rating_overall) {
+  // review sliders
+  if($scope.type == "review") {
     $scope.data.rating_overall = 2.5;
     $scope.data.rating_value = 2.5;
     $scope.data.rating_difficulty = 2.5;

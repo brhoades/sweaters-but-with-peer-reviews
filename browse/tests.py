@@ -33,8 +33,8 @@ class TestBrowseViews(TestCase):
     def setUp(self):
         User.objects.create_user(**self.creds).save()
 
-    def test_index(self):
-        resp = self.client.get(reverse("index"))
+    def test_home(self):
+        resp = self.client.get(reverse("home"))
         self.assertEqual(resp.status_code, 200)
 
     def test_profile_not_logged_in(self):
@@ -147,11 +147,11 @@ class ReviewContent(TestCase):
         # Create reviews, recursively creating models where needed
         AutoFixture(Review, generate_fk=True).create(20)
 
-    def test_index(self):
+    def test_home(self):
         """
         Index should show at least five (20 total) reviews.
         """
-        resp = self.client.get(reverse("index"))
+        resp = self.client.get(reverse("home"))
 
         self.assertIn("review_votes", resp.context)
         self.assertGreaterEqual(len(resp.context["review_votes"]), 5)
