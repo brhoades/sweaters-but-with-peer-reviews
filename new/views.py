@@ -10,6 +10,16 @@ from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm
 
 
+MODEL_MAP = {"review": Review,
+             "professor": Professor,
+             "school": School,
+             "department": Department,
+             "course": Course,
+             "field": Field,
+             "fieldcategory": FieldCategory,
+             }
+
+
 def get_template_for_model(request, model_form_map, page):
     template = None
     context = RequestContext(request)
@@ -43,14 +53,7 @@ def json_error(data):
 def new(request, page=None):
     model = None
     response = {"error": {"error": ""}}
-    model_map = {"review": Review,
-                 "professor": Professor,
-                 "school": School,
-                 "department": Department,
-                 "course": Course,
-                 "field": Field,
-                 "fieldcategory": FieldCategory,
-                 }
+    model_map = MODEL_MAP
     model_form_map = {"review": ReviewForm,
                       "professor": ProfessorForm,
                       "school": SchoolForm,
@@ -175,3 +178,17 @@ def addVote(request):
                             content_type="application/json")
     else:
         return HttpResponseNotAllowed(["POST"])
+
+
+def model_values(request, model_name, id):
+    """
+    Gets values for a model instance.
+    """
+    if request.method != "POST":
+        return json_error("Bad request, must be a POST request.")
+
+    if model_name not in MODEL_MAP:
+        return json_error("Unknown model.")
+
+    model = MODEL_MAP[model_name]
+    instance = model.objects.get(id=id)

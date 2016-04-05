@@ -21,6 +21,7 @@ app.config(function($mdThemingProvider) {
 app.controller('form-handler',
     function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
+  $scope.edit = $attrs.edit;
 
   $scope.data = {
     error: ""
@@ -48,7 +49,16 @@ app.controller('form-handler',
       $scope.valid[e] = "";
       $scope.original[e] = "";
     });
+
+    if($scope.edit) {
+      // grab the data
+      $http.get("/get/model_values/" + $scope.type + "/" + $scope.edit + "/").success(function(data) {
+        // Pop it into our form
+        $scope.data = data;
+      });
+    }
   });
+
 
   // school slider
   if($scope.data.rating_overall) {
