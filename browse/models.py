@@ -14,7 +14,6 @@ def to_json(self):
     Tries to recursively serialize this object and its references.
     """
     ret = {}
-    print(self._meta.get_fields())
     for field in self._meta.get_fields():
         # If we don't have the attribute (this happens), skip it
         try:
@@ -28,7 +27,6 @@ def to_json(self):
         except:
             ret[field.name] = str(ret[field.name])
             pass
-    print(ret)
     return json.dumps(ret)
 
 Model.to_json = to_json

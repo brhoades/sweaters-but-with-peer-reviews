@@ -25,7 +25,7 @@
                    ng-click="opendDialog('professorCall')">
           <i class="edit-icon fa fa-pencil"></i>
         </lx-button>
-        {% new_professor_popup %}
+        {% new_professor_popup True %}
       </div>
     {% endif %}
     <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />

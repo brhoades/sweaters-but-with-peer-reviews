@@ -2,15 +2,19 @@
 
 <lx-dialog class="dialog dialog--l" id="professorCall" auto-close="true"
     nclose="closingDialog()" onscrollend="scrollEndDialog()">
- 	<lx-dialog-header>
-	    <div id="popup" class="toolbar pl++">
-		      <span class="toolbar__label tc-white fs-title">
-		        New Professor
-		      </span>
-	    </div>
-	</lx-dialog-header>
+  <lx-dialog-header>
+    <div id="popup" class="toolbar pl++">
+      <span class="toolbar__label tc-white fs-title">
+        {% if not is_edit %}
+          New Professor
+        {% else %}
+          Edit Professor
+        {% endif %}
+      </span>
+    </div>
+  </lx-dialog-header>
 
   <lx-dialog-content>
-  	{% new_professor %}
-	</lx-dialog-content>
+    {% new_professor is_edit %}
+  </lx-dialog-content>
 </lx-dialog>
