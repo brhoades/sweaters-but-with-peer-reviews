@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     # Prolly should move, but it's more of a browse thing
-    url(r'^$', bviews.index, name="index"),
+    url(r'^$', bviews.index, name="home"),
 
     # Shitty catch for need to be logged in error
     url(r'^logged_in.*', bviews.index,
