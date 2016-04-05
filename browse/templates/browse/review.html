@@ -97,12 +97,12 @@
     {% comment_card comment %}
   {% endfor %}
 
-  <div ng-controller="form-handler" model="comment">
+  <div ng-controller="form-handler" model="reviewcomment">
     <lx-button lx-size="l" lx-color="orange" lx-type="fab" lx-tooltip="Add Comment" 
                 lx-tooltip-position="top" ng-click="opendDialog('commentCall')">
       <i class="mdi mdi-message-text"></i>
     </lx-button>
-    {% new_comment_popup %}
+    {% new_comment_popup review %}
   </div>
 
 </div>

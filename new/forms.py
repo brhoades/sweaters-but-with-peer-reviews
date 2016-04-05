@@ -72,4 +72,4 @@ class CommentForm(ModelForm):
 
     class Meta:
         model = ReviewComment
-        fields = ['text']
+        fields = ['text', 'target', 'owner']

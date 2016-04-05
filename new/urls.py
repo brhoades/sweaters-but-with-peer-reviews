@@ -3,7 +3,7 @@ import new.views as nviews
 
 urlpatterns = [
     url(r'^(?P<page>(school|department|professor|review|course|field'
-        '|fieldcategory|comment))$',
+        '|fieldcategory|reviewcomment))$',
         nviews.new, name="new"),
     url(r'^add_vote$', nviews.addVote, name="addVote"),
 ]

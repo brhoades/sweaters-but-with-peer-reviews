@@ -50,7 +50,7 @@ def new(request, page=None):
                  "course": Course,
                  "field": Field,
                  "fieldcategory": FieldCategory,
-                 "comment": ReviewComment,
+                 "reviewcomment": ReviewComment,
                  }
     model_form_map = {"review": ReviewForm,
                       "professor": ProfessorForm,
@@ -59,7 +59,7 @@ def new(request, page=None):
                       "department": DepartmentForm,
                       "field": FieldForm,
                       "fieldcategory": FieldCategoryForm,
-                      "comment": CommentForm
+                      "reviewcomment": CommentForm
                       }
 
     if request.method != "POST":
@@ -74,12 +74,19 @@ def new(request, page=None):
 
     # Otherwise we will complain about it existing
     del data["error"]
+  
 
     # If model has an owner or created by field, add us
     if model_form_map[page].needs_owner:
         data["owner"] = request.user
     elif model_form_map[page].needs_created_by:
         data["created_by"] = request.user
+
+    if page == "reviewcomment":
+        data["target"] = Review.objects.get(id=int(data["target"]))
+
+    print(data)
+    print(model)
 
     for key in data.keys():
         # Check that this is a key that exists
