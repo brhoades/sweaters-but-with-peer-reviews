@@ -9,7 +9,8 @@ class ReviewForm(ModelForm):
 
     class Meta:
         model = Review
-        fields = ['target', 'course', 'text']
+        fields = ['target', 'course', 'text', 'rating_overall', 'rating_value',
+                  'rating_difficulty']
 
 
 class CourseForm(ModelForm):

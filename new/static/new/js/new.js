@@ -50,6 +50,13 @@ app.controller('form-handler',
       $scope.original[e] = "";
     });
 
+    // review sliders
+    if($scope.type == "review") {
+      $scope.data.rating_overall = 2.5;
+      $scope.data.rating_value = 2.5;
+      $scope.data.rating_difficulty = 2.5;
+    }
+
     // FIXME make this an option for ^
     if($scope.edit) {
       // grab the data
@@ -62,13 +69,6 @@ app.controller('form-handler',
       });
     }
   });
-
-  // review sliders
-  if($scope.type == "review") {
-    $scope.data.rating_overall = 2.5;
-    $scope.data.rating_value = 2.5;
-    $scope.data.rating_difficulty = 2.5;
-  }
 
   $scope.ajax = {
       list: [],
