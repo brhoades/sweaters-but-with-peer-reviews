@@ -5,9 +5,9 @@ from django.template import loader, RequestContext
 import json
 
 from browse.models import Review, ReviewVote, Professor, School, Department, \
-    Field, FieldCategory, Course
+    Field, FieldCategory, Course, ReviewComment
 from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
-    FieldForm, FieldCategoryForm, CourseForm
+    FieldForm, FieldCategoryForm, CourseForm, CommentForm
 
 
 def get_template_for_model(request, model_form_map, page):
@@ -50,6 +50,7 @@ def new(request, page=None):
                  "course": Course,
                  "field": Field,
                  "fieldcategory": FieldCategory,
+                 "comment": ReviewComment,
                  }
     model_form_map = {"review": ReviewForm,
                       "professor": ProfessorForm,
@@ -58,6 +59,7 @@ def new(request, page=None):
                       "department": DepartmentForm,
                       "field": FieldForm,
                       "fieldcategory": FieldCategoryForm,
+                      "comment": CommentForm
                       }
 
     if request.method != "POST":

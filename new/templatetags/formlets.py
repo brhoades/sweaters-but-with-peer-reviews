@@ -103,3 +103,19 @@ def new_school():
     form model.
     """
     return {}
+
+@register.inclusion_tag("new/tags/comment_popup.html")
+def new_comment_popup():
+    """
+    Must be whithin a ng-controller="form-hanler" with a parameter for this
+    form model.
+    """
+    return {}
+
+@register.inclusion_tag("new/tags/comment.html")
+def new_comment():
+    """
+    Must be whithin a ng-controller="form-hanler" with a parameter for this
+    form model.
+    """
+    return {}

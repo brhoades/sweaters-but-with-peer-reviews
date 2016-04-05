@@ -3,11 +3,15 @@
 {% load sass_tags %}
 {% load gravatar %}
 {% load cards %}
+{% load formlets %}
 
 {% block title %}View Review{% endblock %}
 {% block header %}
 <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
       type="text/css" />
+{% endblock %}
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -92,6 +96,15 @@
   {% for comment in comments %}
     {% comment_card comment %}
   {% endfor %}
+
+  <div ng-controller="form-handler" model="comment">
+    <lx-button lx-size="l" lx-color="orange" lx-type="fab" lx-tooltip="Add Comment" 
+                lx-tooltip-position="top" ng-click="opendDialog('commentCall')">
+      <i class="mdi mdi-message-text"></i>
+    </lx-button>
+    {% new_comment_popup %}
+  </div>
+
 </div>
 
 {% endblock %}

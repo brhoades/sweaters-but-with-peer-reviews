@@ -69,9 +69,18 @@
   text-align: left;
 }
 
-
 .comment-card {
-  @extend .card;
-  
   @extend .background-color;
+  @extend .card;
+
+  margin-top: 15px;
+  margin-bottom: 15px;
+  
 }
+
+.comment-text {
+  overflow: visible;
+  text-align: left;
+  font-size: 13px;
+}
+

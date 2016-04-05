@@ -1,6 +1,6 @@
 {% load gravatar %}
 
-<div class="comment-card" style="margin-bottom: 35px;">
+<div class="comment-card">
   <div flex-container="row">
     <div class="card__img card__img--left" style="height: 80px; margin-right: 20px;">
       <a href="{% url 'profile' comment.owner.id %}">
@@ -10,12 +10,12 @@
           {{ comment.owner.first_name }}
         </span>
     </div>
-    <div flex-item flex-container="column">
+    <div flex-item flex-container="column" style="margin-bottom: 10px;">
       <div flex-item align="left">
         <strong class="review-title" >This is a comment</strong>
-        <span class="display-block">
+        <div class="comment-text">
           {{ comment.text }}
-        </span>
+        </div>
       </div>
     </div>
   </div>

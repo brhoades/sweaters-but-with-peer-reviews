@@ -1,0 +1,28 @@
+<form method="post" ng-submit="submit()">
+  {% csrf_token %}
+
+  {% verbatim %}
+  <div flex-container="row" ng-model="valid.error" 
+       class="p+ error bgc-red-500 tc-white-1" ng-show="valid.error != ''">
+    <center>
+      {{ valid.error }}
+    </center>
+  </div>
+  <div flex-container="column" flex-gutter="24">
+    <div flex-item style="margin: 30px">
+      <div flex-item>
+        <lx-text-field label="Write your review here (minimum 50 characters)" error="valid.text != ''">
+          <textarea ng-model="data.text" type="text" ng-minlength="50"></textarea>
+        </lx-text-field>
+        <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
+      </div>
+
+      <button class="btn btn--l btn--blue btn--raised"type="submit" ng-submit="submit()" lx-ripple />
+        Submit Comment
+      </button>
+    </div>
+  </div>
+
+  {% endverbatim %}
+
+</form>
