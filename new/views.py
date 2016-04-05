@@ -5,9 +5,9 @@ from django.template import loader, RequestContext
 import json
 
 from browse.models import Review, ReviewVote, Professor, School, Department, \
-    Field, FieldCategory, Course
+    Field, FieldCategory, Course, ReviewComment
 from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
-    FieldForm, FieldCategoryForm, CourseForm
+    FieldForm, FieldCategoryForm, CourseForm, CommentForm
 
 
 MODEL_MAP = {"review": Review,
@@ -17,6 +17,7 @@ MODEL_MAP = {"review": Review,
              "course": Course,
              "field": Field,
              "fieldcategory": FieldCategory,
+             "reviewcomment": ReviewComment,
              }
 
 
@@ -86,6 +87,7 @@ def new(request, type="new", page=None, id=None):
                       "department": DepartmentForm,
                       "field": FieldForm,
                       "fieldcategory": FieldCategoryForm,
+                      "reviewcomment": CommentForm
                       }
 
     if request.method != "POST":
@@ -106,6 +108,12 @@ def new(request, type="new", page=None, id=None):
         data["owner"] = request.user
     elif model_form_map[page].needs_created_by:
         data["created_by"] = request.user
+
+    if page == "reviewcomment":
+        data["target"] = Review.objects.get(id=int(data["target"]))
+
+    print(data)
+    print(model)
 
     for key in data.keys():
         # Check that this is a key that exists

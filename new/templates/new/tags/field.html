@@ -18,11 +18,10 @@
     </div>
 
     <div flex-item style="margin-left: 5%; margin-right: 5%" class="p+">
-      <lx-select ng-model="data.fieldcategory" placeholder="Field Categories"
-                                               choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'fieldcategories_matching')" 
-                                                                    loading="{{ ajax.loading }}" allow-clear="true"
-                                                                                                 error="valid.fieldcategory != ''"
-                                                                                                 class="tc-white-1" multiple floating-label>
+      <lx-select ng-model="data.categories" placeholder="Field Categories"
+                 choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'field_categories_matching')" 
+                 loading="{{ ajax.loading }}" allow-clear="true"
+                 error="valid.categories != ''" class="tc-white-1" multiple floating-label>
         <lx-select-selected>
           {{ $selected.name }}
         </lx-select-selected>
@@ -31,7 +30,7 @@
           {{ $choice.name }}
         </lx-select-choices>
       </lx-select>
-      <span class="text-field-error" ng-show="valid.fieldcategory != ''">{{ valid.fieldcategory }}</span>
+      <span class="text-field-error" ng-show="valid.categories != ''">{{ valid.categories }}</span>
     </div>
   </div>
 

@@ -61,7 +61,10 @@ class School(Model):
         data = urllib.urlopen(url).read()
         data = json.loads(data.decode("UTF-8"))
 
-        return data["results"][0]["formatted_address"]
+        if len(data["results"]) > 0:
+            return data["results"][0]["formatted_address"]
+        else:
+            return "Unknown"
 
     @property
     def rating(self):
@@ -180,7 +183,7 @@ class Review(Model):
 
     # 100k otta be enough for nebody.
     text = models.TextField(max_length=100000,
-                            validators=[MinLengthValidator(40)])
+                            validators=[MinLengthValidator(50)])
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
@@ -202,3 +205,23 @@ class ReviewVote(Model):
 
     def __str__(self):
         return "%s %s" % (self.owner.first_name, self.owner.last_name)
+
+
+class ReviewComment(models.Model):
+    class Meta:
+        verbose_name_plural = "Review Comments"
+
+    target = models.ForeignKey(Review)
+    owner = models.ForeignKey(User)
+
+    # 100k otta be enough for Billy
+    text = models.TextField(max_length=100000,
+                            validators=[MinLengthValidator(25)])
+
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "{} {} on {}".format(self.owner.first_name,
+                                    self.owner.last_name,
+                                    self.target.id)

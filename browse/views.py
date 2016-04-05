@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from browse.models import Review, User, Professor, School, Course
+from browse.models import Review, User, Professor, School, Course,\
+    ReviewComment
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
 
@@ -160,6 +161,8 @@ def review(request, review_id=0):
     context = RequestContext(request)
 
     context["review"] = get_object_or_404(Review, id=review_id)
+    context["comments"] = ReviewComment.objects.filter(target_id=review_id)\
+                                               .order_by("-created_ts")
 
     return HttpResponse(template.render(context))
 
