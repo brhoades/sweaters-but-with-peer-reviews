@@ -1,5 +1,5 @@
 from browse.models import Review, Course, Professor, School, Department,\
-    Field, FieldCategory
+    Field, FieldCategory, ReviewComment
 from django.forms import ModelForm
 
 
@@ -65,3 +65,12 @@ class FieldCategoryForm(ModelForm):
     class Meta:
         model = FieldCategory
         fields = ['name']
+
+
+class CommentForm(ModelForm):
+    needs_owner = True
+    needs_created_by = False
+
+    class Meta:
+        model = ReviewComment
+        fields = ['text', 'target', 'owner']

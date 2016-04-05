@@ -103,6 +103,7 @@ app.controller('form-handler',
   };
 
   $scope.submit = function() {
+    console.log(JSON.stringify($scope.data));
     $scope.ajax.loading = true;
     var url = "/new/" + $scope.type;
     if($scope.edit) {
@@ -121,7 +122,18 @@ app.controller('form-handler',
           $scope.valid = data.error;
         }
         if(data != undefined && data.id != undefined) {
-          $http.get("/get/view_for_model_at_id/" + $scope.type + "/" + data.id).
+          var redirectPage = "";
+          var redirectID = "";
+          if($scope.type == "reviewcomment") {
+            redirectPage = "review";
+            redirectID = $scope.data.target;
+          }
+          else {
+            redirectPage = $scope.type;
+            redirectID = data.id;
+          }
+
+          $http.get("/get/view_for_model_at_id/" + redirectPage + "/" + redirectID).
               success(function(data) {
                 // Always expects, if any elements, a fields item in it
                   $window.location.href = data.url;
