@@ -61,7 +61,10 @@ class School(Model):
         data = urllib.urlopen(url).read()
         data = json.loads(data.decode("UTF-8"))
 
-        return data["results"][0]["formatted_address"]
+        if len(data["results"]) > 0:
+            return data["results"][0]["formatted_address"]
+        else:
+            return "Unknown"
 
     @property
     def rating(self):
