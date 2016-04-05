@@ -16,8 +16,6 @@
     <link href="{% sass_src "browse/scss/base.scss" %}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/reset.css' %}">
-    <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/style.min.css' %}">
-    <!-- CSS pre-built -->
     <link rel="stylesheet" href="{% static 'browse/Slide-Push-Menus/css/font-awesome.min.css' %}">
     <!-- slider -->
     <link rel="stylesheet" href="{% static 'browse/bower_components/angular-material/angular-material.min.css' %}">
@@ -36,7 +34,7 @@
     <script src="{% static 'browse/bower_components/angular-messages/angular-messages.min.js' %}"></script>
 
   <!-- Angular Material Library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    <script src="{% static 'browse/bower_components/angular-material/angular-material.min.js' %}"></script>
 
     <script>
       var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages']);
@@ -45,24 +43,8 @@
     <!-- Custom js files -->
     <script src="{% static 'browse/js/script.js' %}"></script>
     <script src="{% static 'browse/js/index.js' %}"></script>
-    <script src="{% static 'browse/Slide-Push-Menus/js/dist/menu.js' %}"></script>
     <script src="{% static 'browse/bower_components/lumx/modules/dialog/js/dialog_directive.js' %}"></script>
     <script src="{% static 'browse/js/main.js' %}"></script>
-
-    <script>
-      var pushLeft = new Menu({
-        wrapper: '#o-wrapper',
-        type: 'push-left',
-        menuOpenerClass: '.c-button',
-        maskId: '#c-mask'
-      });
-      var pushLeftBtn = document.querySelector('#c-button--push-left');
-      pushLeftBtn.addEventListener('click', function(e) {
-        e.preventDefault;
-        pushLeft.open();
-      });
-    </script>
-
 
     {% block js %}{% endblock %}
     {% block header %}{% endblock %}
@@ -71,17 +53,19 @@
   <body class="background-color">
     <div class="top-bar bgc-light-blue-800"></div>
 
-    <div ng-app="lumxWrap">
-      <div class="toolbar" >
+    <div ng-app="lumxWrap" ng-controller="leftCtrl">
+      <div class="toolbar">
         <div class="toolbar__left mr+++ mobile">
-          <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple>
-            <i class="mdi mdi-menu"></i>
+          <button id="c-button--push-left" class="btn btn--xl btn--white btn--icon" lx-ripple
+                  ng-click="toggle()">
+           <i class="mdi mdi-menu"></i>
           </button>
         </div>
+
         <div class="small_logo">
             <img src="{% static 'browse/img/Logo_PNG.png' %}">
         </div>
-        <div class="desktop">
+        <div class="desktop nav-buttons">
           {% for name, link in page_links %}
             <a href="{% url link %}">
               {% if name|lower in current_page_name %}
@@ -101,7 +85,7 @@
           {% endfor %}
         </div>
         <span class="toolbar__label fs-title"><!--Current Page Title Could Go Here--></span>
-        <div class="toolbar__right">
+        <div class="toolbar__right profile-button">
           <lx-dropdown position="right" from-top>
             {% if user.is_authenticated %}
 
@@ -135,7 +119,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'user_registration' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Register</a>
+                      <a href="{% url 'user_registration' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Register</a>
                     </li>
                   </ul>
                 </lx-dropdown-menu>
@@ -144,13 +128,33 @@
               {% endif %}
         </div>
       </div>
-      <!--
-        {% if request.get_full_path %}
-        <h2>Index</h2>
-        {% else %}
-        <h2>Other</h2>
-        {% endif %}
-      -->
+
+        <!-- Mobile sidenav -->
+        <md-sidenav
+            class="md-sidenav-left"
+            md-component-id="left"
+            md-whiteframe="4">
+          <md-content>
+            <!-- this is 80px because the site's header fucks up -->
+            <md-toolbar class="bgc-light-blue-800" style="height: 80px;">
+              <h1 class="md-toolbar-tools">Navigation</h1>
+            </md-toolbar>
+            <ul class="c-menu__items light-blue-800 p+">
+              <ul class="list mt++">
+                {% for name, link in page_links %}
+                <li class="list-row list-row--has-separator">
+                  <a href="{% url link %}" class="c-menu__link fs-headline display-block">
+                    <div class="list-row__content" align="right">
+                      {{ name }}
+                    </div>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </ul>
+          </md-content>
+        </md-sidenav>
+
 
       <div id="o-wrapper" class="o-wrapper" style="margin: 30px;">
         <div class="c-buttons">
@@ -159,52 +163,7 @@
           </div>
         </div>
       </div>
-
-      <nav id="c-menu--push-left" class="c-menu c-menu--push-left bgc-light-blue-800 p+" style="overflow: hidden;">
-        <button class="c-menu__close bgc-light-blue-800 p+"><i class="icon icon--xl icon--white icon--flat mdi mdi-chevron-double-left"></i></button>
-        <ul class="c-menu__items light-blue-800 p+">
-          <ul class="list mt++">
-            {% for name, link in page_links %}
-            <li class="list-row list-row--has-separator">
-              <a href="{% url link %}" class="c-menu__link fs-headline display-block">
-                <div class="list-row__content" align="right">
-                  {{ name }}
-                </div>
-              </a>
-            </li>
-            {% endfor %}
-
-            {% comment %}
-            {% if user.is_authenticated %}
-              <li class="list-row list-row--has-separator">
-                <div class="list-row__content" align="right">
-                  <a href="{% url 'new' 'course' %}" class="c-menu__link fs-headline display-block">
-                    New Course
-                  </a>
-                </div>
-              </li>
-              <li class="list-row list-row--has-separator">
-                <div class="list-row__content" align="right">
-                  <a href="{% url 'new' 'professor' %}" class="c-menu__link fs-headline display-block">
-                    New Professor
-                  </a>
-                </div>
-              </li>
-              <li class="list-row list-row--has-separator">
-                <div class="list-row__content" align="right">
-                  <a href="{% url 'new' 'review' %}" class="c-menu__link fs-headline display-block">
-                    New Review
-                  </a>
-                </div>
-              </li>
-            {% endif %}
-            {% endcomment %}
-          </ul>
-
-        </ul>
-      </nav>
     </div>
-
     <div id="c-mask" class="c-mask"></div>
   </body>
 </html>
