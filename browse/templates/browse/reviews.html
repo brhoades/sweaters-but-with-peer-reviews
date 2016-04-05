@@ -16,12 +16,13 @@
 {% block content %}
   <br />
   <br />
+
   <div ng-app="lumxWrap">
     <div class="pagination-buttons">
       {% for i in pages %}
         <a href="{% url 'reviews' page=i %}">
           {% if i == page %}
-            <button class="md-raised md-button md-primary md-ink-ripple">
+            <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
           {% else %}
             <button class="md-raised md-button md-ink-ripple">
           {% endif %}
