@@ -155,3 +155,26 @@ def login(request):
                 response["message"] = "Invalid login details."
 
     return JsonResponse(response)
+
+
+def model_values(request, model_name, id):
+    """
+    Gets values for a model instance.
+    """
+    try:
+        # Create modelmap
+        model = get_model_from_string(model_name)
+    except ValueError:
+        return HttpResponse(json.dumps({"error":
+                                        {"error":
+                                         "Unknown model requested."}}))
+
+    form = get_form_from_model(model)
+    instance = model.objects.get(id=id)
+
+    if not instance:
+        return json_error("Unknown id provided.")
+
+    # Using the form, return Meta.fields and their values.
+    return HttpResponse(json.dumps({k: str(getattr(instance, k)) for k
+                                    in form.Meta.fields}))

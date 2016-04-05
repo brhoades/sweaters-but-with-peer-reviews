@@ -178,17 +178,3 @@ def addVote(request):
                             content_type="application/json")
     else:
         return HttpResponseNotAllowed(["POST"])
-
-
-def model_values(request, model_name, id):
-    """
-    Gets values for a model instance.
-    """
-    if request.method != "POST":
-        return json_error("Bad request, must be a POST request.")
-
-    if model_name not in MODEL_MAP:
-        return json_error("Unknown model.")
-
-    model = MODEL_MAP[model_name]
-    instance = model.objects.get(id=id)
