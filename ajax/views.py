@@ -169,12 +169,9 @@ def model_values(request, model_name, id):
                                         {"error":
                                          "Unknown model requested."}}))
 
-    form = get_form_from_model(model)
-    instance = model.objects.get(id=id)
+    instance = model.objects.filter(id=id)[0]
 
     if not instance:
         return json_error("Unknown id provided.")
 
-    # Using the form, return Meta.fields and their values.
-    return HttpResponse(json.dumps({k: str(getattr(instance, k)) for k
-                                    in form.Meta.fields}))
+    return HttpResponse(instance.to_json())

@@ -2,11 +2,16 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load cards %}
+{% load formlets %}
 {% block title %}Professor{% endblock %}
 
 {% block header %} 
   <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
         type="text/css" />
+{% endblock %}
+
+{% block js %} 
+  <script src="{% static 'new/js/new.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -28,6 +33,14 @@
     {% if professor.update_ts %}
       Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
     {% endif %}
+
+    <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}">
+      <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Edit"
+          lx-tooltip-position="top" ng-click="opendDialog('professorCall')">
+        <i class="mdi mdi-edit"></i>
+      </lx-button>
+      {% new_professor_popup %}
+    </div>
   </div>
 
   <md-content ng-cloak="" style="margin-top: 20px;">

@@ -50,7 +50,22 @@ def json_error(data):
 
 
 @login_required
-def new(request, page=None):
+def edit(request, page=None, id=None):
+    # Check that id exists for page.
+    if page not in MODEL_MAP.keys():
+        return json_error({"error": "Unknown page requested."})
+
+    instances = MODEL_MAP[page].objects.filter(id=id)
+    if len(instances) != 1:
+        return json_error({"error": "Unknown {} id {} provided."
+                                    .format(page, id)})
+
+    # Functionality is so similar to new, just hand it off
+    return new(request, page=page, id=id, type="edit")
+
+
+@login_required
+def new(request, type="new", page=None, id=None):
     model = None
     response = {"error": {"error": ""}}
     model_map = MODEL_MAP
@@ -112,10 +127,15 @@ def new(request, page=None):
     for k, v in response["error"].items():
         if len(v) > 0:
             return HttpResponse(json.dumps(response))
-
-    # Try to create it
     try:
-        new = model(**data)
+        if type == "new":
+            # Try to create it
+            new = model(**data)
+        elif type == "edit":
+            # We can assume it exists
+            new = model.objects.get(id=id)
+            for k, v in data.items():
+                setattr(new, k, data[k])
     except Exception as e:
         print("ERROR: " + str(e))
         return HttpResponse(json_error({"error": str(e)}))
