@@ -10,9 +10,18 @@
           {{ comment.owner.username }}
         </div>
     </div>
-    <div flex-item flex-container="column" style="margin-bottom: 10px;">
+    <div flex-container="column" style="margin-bottom: 10px;">
       <div flex-item align="left">
-        <strong class="review-title">{{ comment.owner.first_name }} {{ comment.owner.last_name }}</strong>
+        <strong class="review-title" style="margin-top: 0px;">
+          {{ comment.owner.first_name }} {{ comment.owner.last_name }}
+        </strong>
+        <div class="review-info">
+          {% if comment.created_ts == comment.update_ts %}
+            {{ comment.created_ts|date:"DATETIME_FORMAT" }}
+          {% else %}
+            {{ comment.updated_ts|date:"DATETIME_FORMAT" }}*
+          {% endif %}
+        </div>
         <div class="comment-text">
           {{ comment.text }}
         </div>
