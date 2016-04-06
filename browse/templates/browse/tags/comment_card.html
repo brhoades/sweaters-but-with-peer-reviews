@@ -1,18 +1,18 @@
 {% load gravatar %}
 
-<div class="comment-card">
+<div class="comment-card padded-card">
   <div flex-container="row">
     <div class="card__img card__img--left" style="margin-right: 20px;">
       <a href="{% url 'profile' comment.owner.id %}">
         <img src="{% gravatar_url comment.owner.email 80 %}">
       </a>
         <div class="display-block" style="align-content: center; font-size: 12px;">
-          {{ comment.owner.first_name }}
+          {{ comment.owner.username }}
         </div>
     </div>
     <div flex-item flex-container="column" style="margin-bottom: 10px;">
       <div flex-item align="left">
-        <strong class="review-title" >This is a comment</strong>
+        <strong class="review-title">{{ comment.owner.first_name }} {{ comment.owner.last_name }}</strong>
         <div class="comment-text">
           {{ comment.text }}
         </div>

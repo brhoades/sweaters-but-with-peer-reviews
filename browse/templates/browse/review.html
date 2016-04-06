@@ -165,10 +165,12 @@
           {{ review.owner.username }}
         {% endif %}
 
+        &nbsp;
+        &nbsp;
         {% if review.created_ts == review.update_ts %}
           {{ review.created_ts|date:"DATETIME_FORMAT" }}
         {% else %}
-          Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}
+          {{ review.updated_ts|date:"DATETIME_FORMAT" }}*
         {% endif %}
       </a>
     </div>
@@ -176,6 +178,11 @@
     <div class="review-text">
       {{ review.text }}
     </div>
+
+    {% if comments|length > 0 %}
+      <md-divider style="margin-top: 60px; margin-bottom: 40px;"></md-divider>
+    {% endif %}
+
     {% for comment in comments %}
       {% comment_card comment %}
     {% endfor %}
