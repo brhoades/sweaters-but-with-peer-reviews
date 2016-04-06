@@ -10,6 +10,10 @@
       type="text/css" />
 {% endblock %}
 
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
+
 {% block content %}
   <div id="demo" class="review-card-large card-color">
     <div class="professor-title">
@@ -25,7 +29,7 @@
     </div>
   </div>
 
-  <md-content ng-cloak="" style="margin-top: 20px;">
+  <md-content ng-cloak="" style="margin-top: 20px; background-color: #eeeeee;">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Reviews">
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
