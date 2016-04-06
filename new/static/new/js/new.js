@@ -66,6 +66,11 @@ app.controller('form-handler',
           $scope.data[e] = form_data[e];
         });
         $scope.id = form_data["id"];
+        if(force_rating) {
+          $scope.data.rating_overall = force_rating;
+          $scope.data.rating_value = force_rating;
+          $scope.data.rating_difficulty = force_rating;
+        }
       });
     }
   });
