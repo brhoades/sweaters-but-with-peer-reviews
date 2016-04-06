@@ -41,7 +41,7 @@
               {% review_card review vote %}
             {% endfor %}
           {% else %}
-            <h2 class="no-items">There are no reviews for professors at this school.</h2>
+            <h2 class="no-items">There are no reviews for this professor.</h2>
           {% endif %}
         </md-content>
       </md-tab>
@@ -53,19 +53,19 @@
              {% course_card course %}
             {% endfor %}
           {% else %}
-            <h2 class="no-items">There are no courses listed for this school.</h2>
+            <h2 class="no-items">There are no courses associated with this professor.</h2>
           {% endif %}
         </md-content>
       </md-tab>
-      
-      <md-tab label="Reviews">
-        <md-content style="margin-top: 20px; background-color: #eeeeee;"">
-          {% if review_votes|length > 0 %}
-            {% for review, vote in review_votes %}
-              {% review_card review vote %}
+
+      <md-tab label="Schools">
+        <md-content style="margin-top: 20px; background-color: #eeeeee;">
+          {% if schools|length > 0 %}
+            {% for school in schools %}
+              {% school_card school %}
             {% endfor %}
           {% else %}
-            <h2 class="no-items">There are no reviews for this professor.</h2>
+            <h2 class="no-items">There are no schools for this professor.</h2>
           {% endif %}
         </md-content>
       </md-tab>
