@@ -1,18 +1,34 @@
 @import "lumx/dist/scss/lumx";
 @import "settings";
 
+/* Base materials for site layout */
+$site-background-color: #eeeeee;
+$site-banner-color: #0277bd;
+$highlight: #f49832;
+$site-accent-color: #f49832;
+
+
+
+/* End base materials */
+
+// Finds the IDs of the buttons and set it as the site color
+#siteButton {
+  color: white;
+  background-color: $site-accent-color;
+}
+
+#popup {
+  background-color: $site-banner-color;
+  width: 100%;
+}
 
 /* Begin voting classes */
 .card-color {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
 
 .background-color {
-    background-color: #EEEEEE;
-}
-
-.header-button {
-    font-family: Roboto, Helvetica, Neue, sans-serif;
+    background-color: $site-background-color;
 }
 
 .index_layout {
@@ -28,7 +44,7 @@
 .small_logo {
     width: 50px;
     height: 70px;
-    margin-top: -10px;
+    margin-top: -3px;
     margin-right: 40px;
 }
 
@@ -37,6 +53,14 @@
     height: 300px;
     display: block;
     margin: 0 auto;
+}
+
+.nav-buttons {
+  padding-top: 3px;
+}
+
+.profile-button {
+  padding-top: 24px;
 }
 
 .vote-button {
@@ -122,10 +146,12 @@
  */
 html {
   height: 100%;
+  background-color: $site-background-color;
 }
 
 body {
-  min-height: 100%;
+  height: 100%;
+  font-family: Roboto, Helvetica, Neue, Sans-Serif !important;
 }
 
 .header-button {
@@ -135,7 +161,8 @@ body {
 
 .toolbar {
   position: relative;
-  margin-top: -10px;
+  padding-top: 30px;
+  margin-top: -20px;
   margin-right: 20px;
 }
 
@@ -151,18 +178,23 @@ body {
   height: 80px;
   z-index: 0;
   float: top;
-  box-shadow: 0 2px 10px 0 rgba(0,0,0,1);
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.68);
+  background-color: $site-banner-color;
+}
+
+.sidebar {
+  background-color: $primary;
 }
 /* End Main Page Classes */
 
 /* Supporting classes */
 
 
-/* School / Professor Page Classes */ 
+/* School / Professor Page Classes */
 .padded-card {
   @extend .card;
   @extend .tc-black-1;
-  
+
   padding: 5px;
   position: relative;
   margin-top: 15px;
@@ -255,7 +287,8 @@ body {
   margin-bottom: 20px;
 }
 
-/* End School / Professor Page Classes */ 
+
+/* End School / Professor Page Classes */
 
 /* All pages. A hyperlink class for nested cards in tabs. */
 .hyperlink {
@@ -272,3 +305,24 @@ body {
   padding-bottom: 50px;
   padding-top: 20px;
 }
+
+/* The outer edit icon container and the icon proper */
+.edit-icon-outer {
+  z-index: 20;
+  float: right;
+}
+
+.edit-icon {
+  color: grey;
+}
+
+/* Text highlighting for the site */
+/*** Works on common browsers ***/
+::selection { background-color: $highlight; }
+/*** Mozilla based browsers ***/
+::-moz-selection { background-color: $highlight; }
+/***For Other Browsers ***/
+::-o-selection { background-color: $highlight; }
+::-ms-selection { background-color: $highlight; }
+/*** For Webkit ***/
+::-webkit-selection { background-color: $highlight; }

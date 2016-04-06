@@ -13,7 +13,7 @@
     {% for i in pages %}
       <a href="{% url 'schools' i %}">
         {% if i == page %}
-          <button class="md-raised md-button md-primary md-ink-ripple">
+          <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
         {% else %}
           <button class="md-raised md-button md-ink-ripple">
         {% endif %}
@@ -36,7 +36,7 @@
       <!-- Left direction add menu -->
       <lx-fab lx-direction="left">
         <lx-fab-trigger>
-            <lx-button lx-size="xl" lx-color="orange" lx-type="fab" lx-tooltip="Add Things" lx-tooltip-position="top">
+            <lx-button id="siteButton" lx-size="xl" lx-type="fab" lx-tooltip="Add Things" lx-tooltip-position="top">
               <i class="mdi mdi-library-plus"></i>
               <i class="mdi mdi-plus"></i>
             </lx-button>

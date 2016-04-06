@@ -15,7 +15,7 @@ urlpatterns = [
         aviews.get_professors_matching),
     url(r'^fields_matching/(?P<partial>.+)$',
         aviews.get_fields_matching),
-    url(r'^field_categiries_matching/(?P<partial>.+)$',
+    url(r'^field_categories_matching/(?P<partial>.+)$',
         aviews.get_fields_categories_matching),
 
     url(r'^course_per_professor$', aviews.get_course_per_professor),
@@ -24,6 +24,8 @@ urlpatterns = [
 
     url(r'^view_for_model_at_id/(?P<model>[^\/]+)/(?P<id>[0-9]+)$',
         aviews.get_view_for_model),
+    url(r'^model_values/(?P<model_name>[A-Za-z]+)/(?P<id>[0-9]+)/?$',
+        aviews.model_values),
 
     url(r'login/?$', aviews.login, name="login"),
 ]

@@ -10,6 +10,10 @@
       type="text/css" />
 {% endblock %}
 
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div id="demo" class="review-card-large card-color">
   <div class="professor-title">
@@ -31,25 +35,25 @@
   <md-content ng-cloak="" style="margin-top: 20px;">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Reviews">
-        <md-content style="margin-top: 20px;">
+        <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if review_votes|length > 0 %}
             {% for review, vote in review_votes %}
               {% review_card review vote %}
             {% endfor %}
           {% else %}
-            <h2 class="no-items">There are no reviews for this professor.</h2>
+            <h2 class="no-items">There are no reviews for professors at this school.</h2>
           {% endif %}
         </md-content>
       </md-tab>
 
       <md-tab label="Courses">
-        <md-content style="margin-top: 20px;">
+        <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if courses|length > 0 %}
             {% for course in courses %}
-            {{ course.name }}
+             {% course_card course %}
             {% endfor %}
           {% else %}
-            <h2 class="no-items">There are no courses listed for this professor.</h2>
+            <h2 class="no-items">There are no courses listed for this school.</h2>
           {% endif %}
         </md-content>
       </md-tab>
@@ -80,14 +84,14 @@
         </md-content>
       </md-tab>
 
-      <md-tab label="Schools">
-        <md-content style="margin-top: 20px;">
-          {% if schools|length > 0 %}
-            {% for school in schools %}
-              {% school_card school %}
+      <md-tab label="Professors">
+        <md-content style="margin-top: 20px; background-color: #eeeeee;">
+          {% if professors|length > 0 %}
+            {% for professor in professors %}
+              {% professor_card professor %}
             {% endfor %}
           {% else %}
-            <h2 class="no-items">There are no schools that this professor is associated with.</h2>
+            <h2 class="no-items">There are no professors listed for this school.</h2>
           {% endif %}
         </md-content>
       </md-tab>

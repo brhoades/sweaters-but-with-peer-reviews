@@ -1,0 +1,14 @@
+{% load formlets %}
+
+<lx-dialog class="dialog dialog--l" id="commentCall" auto-close="true"
+           onclose="closingDialog()" onscrollend="scrollEndDialog()">
+  <div class="dialog__header">
+    <div id="popup" class="toolbar pl++">
+      <span class="toolbar__label tc-white fs-title">
+        New Comment
+      </span>
+    </div>
+  </div>
+
+  {% new_comment review %}
+</lx-dialog>
