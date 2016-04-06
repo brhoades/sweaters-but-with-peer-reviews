@@ -159,13 +159,11 @@
             </ul>
           </md-content>
         </md-sidenav>
-
-
-      <div id="o-wrapper" class="o-wrapper" style="margin: 30px;">
+    <canvas id="world" style="position: absolute; top: 0px; left: 0px; z-index: 0;">
+    </canvas>
+      <div id="o-wrapper" class="o-wrapper" style="margin: 30px; position: relative; z-index: 1;">
         <div class="c-buttons">
           <div id="content">
-            <canvas id="world" style="position: absolute; top: 0px; left: 0px;">
-            </canvas>
               {% block content %}{% endblock %}
           </div>
         </div>

@@ -42,10 +42,12 @@ $site-accent-color: #f49832;
 }
 
 .small_logo {
+    position: relative;
     width: 50px;
     height: 70px;
     margin-top: -3px;
     margin-right: 40px;
+    z-index: 2;
 }
 
 .cyc {
@@ -175,6 +177,7 @@ body {
 
 .o-wrapper {
   padding-top: 10px;
+  position: relative;
 }
 
 .top-bar {
@@ -187,6 +190,7 @@ body {
   float: top;
   box-shadow: 0 1px 5px 0 rgba(0,0,0,.68);
   background-color: $site-banner-color;
+  z-index: 1;
 }
 
 .sidebar {
