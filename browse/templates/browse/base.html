@@ -53,7 +53,6 @@
 
   <body class="background-color">
     <div class="top-bar bgc-light-blue-800"></div>
-
     <div ng-app="lumxWrap" ng-controller="leftCtrl">
       <div class="toolbar">
         <div class="toolbar__left mr+++ mobile">
@@ -160,7 +159,9 @@
       <div id="o-wrapper" class="o-wrapper" style="margin: 30px;">
         <div class="c-buttons">
           <div id="content">
-            {% block content %}{% endblock %}
+            <canvas id="world" style="position: absolute; top: 0px; left: 0px;">
+            </canvas>
+              {% block content %}{% endblock %}
           </div>
         </div>
       </div>

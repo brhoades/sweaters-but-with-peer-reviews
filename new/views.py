@@ -2,12 +2,13 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
 
-import json
-
 from browse.models import Review, ReviewVote, Professor, School, Department, \
     Field, FieldCategory, Course, ReviewComment
 from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm, CommentForm
+
+import json
+import datetime
 
 
 MODEL_MAP = {"review": Review,
@@ -112,9 +113,6 @@ def new(request, type="new", page=None, id=None):
     if page == "reviewcomment":
         data["target"] = Review.objects.get(id=int(data["target"]))
 
-    print(data)
-    print(model)
-
     for key in data.keys():
         # Check that this is a key that exists
         if key not in model._meta.get_all_field_names():
@@ -154,6 +152,8 @@ def new(request, type="new", page=None, id=None):
             new = model.objects.get(id=id)
             for k, v in data.items():
                 setattr(new, k, data[k])
+            if hasattr(new, "updated_ts"):
+                new.updated_ts = datetime.datetime.now()
     except Exception as e:
         print("ERROR: " + str(e))
         return HttpResponse(json_error({"error": str(e)}))

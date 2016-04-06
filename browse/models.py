@@ -7,6 +7,7 @@ from geoposition.fields import GeopositionField
 
 import urllib.request as urllib
 import json
+import datetime
 
 
 def to_json(self):
@@ -29,7 +30,17 @@ def to_json(self):
             pass
     return json.dumps(ret)
 
+
+def updated(self):
+    """
+    Returns true if this model has been updated by a user.
+    """
+    if abs(self.created_ts - self.updated_ts) < datetime.timedelta(seconds=1):
+        return False
+    return True
+
 Model.to_json = to_json
+Model.updated = updated
 
 
 class School(Model):
