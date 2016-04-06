@@ -1,0 +1,13 @@
+#wowers {
+  font-size: 30px;
+  font-weight: bolder;
+  position: absolute;
+  right: 5%;
+  font-family: Roboto;
+  color: red;
+
+  -ms-transform: translateY(7px) rotate(45deg); /* IE 9 */
+  -webkit-transform: translateY(7px) rotate(45deg); /* Chrome, Safari, Opera */
+  transform: translateY(7px) rotate(45deg);
+  z-index: 10;
+}

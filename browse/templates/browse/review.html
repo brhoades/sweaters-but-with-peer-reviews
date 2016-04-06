@@ -18,6 +18,11 @@
 {% endblock %}
 
 {% block content %}
+  {% if review.target.last_name == "Mason" %}
+    <div id="wowers">WOW!</div>
+  {% elif review.target.last_name == "Buechler" %}
+    <div id="wowers">GREAT!</div>
+  {% endif %}
 <div id="demo" class="review-card-large card-color">
   {% if user.is_authenticated and review.owner == user %}
     <!-- this never happens as review lacks created_by -->
@@ -43,6 +48,9 @@
   <div style="float: right;">
     <!-- this shit can be removed after our 2nd demo. It's some fancy stuff -->
       {% if review.target.last_name == "Mason" or review.target.last_name == "Buechler" %}
+        <script>
+          wow_them();
+        </script>
         {% if not review.updated %}
           <div class="review-rating">
             <div class="rating-title">

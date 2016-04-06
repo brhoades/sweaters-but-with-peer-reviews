@@ -114,3 +114,9 @@ var start_magic = function() {
 
   step();
 };
+
+var wow_them = function() {
+  var text = $("#wowers");
+  $("#wowers").toggle("scale", {percent: 150});
+  $("#wowers").toggle("scale", {percent: 150});
+};
