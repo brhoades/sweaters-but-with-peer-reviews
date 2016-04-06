@@ -27,6 +27,38 @@
 
     <div ng-app="lumxWrap">
     {% if can_vote %}
+    <div flex-container="row" style="margin-right:40px;">
+      <div flex-item="9" style="margin-top:15px;margin-right:30px;">
+          <div style="float: right;">
+            <div class="review-rating">
+              <div class="rating-title">
+                Overall
+              </div>
+              <div class="average">{{ review.rating_overall }}</div>
+              <div class="out-of">
+                /5
+              </div>
+            </div>
+            <div class="review-rating">
+              <div class="rating-title">
+                Difficulty
+              </div>
+              <div class="sub-rating">{{ review.rating_difficulty }}</div>
+              <div class="out-of">
+                /5
+              </div>
+            </div>
+            <div class="review-rating">
+              <div class="rating-title">
+                Value
+              </div>
+              <div class="sub-rating">{{ review.rating_value }}</div>
+              <div class="out-of">
+                /5
+              </div>
+            </div>
+          </div>
+      </div>
       <div flex-container="column" align="justify">
         <div class="vote-button-up-container">
           <button lx-type="flat"
@@ -43,6 +75,7 @@
           </button>
         </div>
       </div>
+    </div>
     {% endif %}
     </div>
   </div>
