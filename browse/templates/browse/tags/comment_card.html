@@ -16,7 +16,7 @@
           {{ comment.owner.first_name }} {{ comment.owner.last_name }}
         </strong>
         <div class="review-info">
-          {% if comment.created_ts == comment.update_ts %}
+          {% if not comment.updated %}
             {{ comment.created_ts|date:"DATETIME_FORMAT" }}
           {% else %}
             {{ comment.updated_ts|date:"DATETIME_FORMAT" }}*

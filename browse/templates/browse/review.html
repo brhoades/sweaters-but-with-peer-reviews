@@ -52,6 +52,9 @@
           wow_them();
         </script>
         {% if not review.updated %}
+          <script>
+            var force_rating = 5;
+          </script>
           <div class="review-rating">
             <div class="rating-title">
               Overall
@@ -82,6 +85,7 @@
         {% else %}
           <script>
             start_magic();
+            var force_rating = 10;
           </script>
           <div class="review-rating">
             <div class="rating-title">
@@ -167,7 +171,7 @@
 
         &nbsp;
         &nbsp;
-        {% if review.created_ts == review.update_ts %}
+        {% if review.updated %}
           {{ review.created_ts|date:"DATETIME_FORMAT" }}
         {% else %}
           {{ review.updated_ts|date:"DATETIME_FORMAT" }}*
