@@ -11,19 +11,19 @@
 {% endblock %}
 
 {% block content %}
-<div id="demo" class="review-card-large card-color">
-  <div class="professor-title">
-      <img src="{% gravatar_url professor.owner.email 100 %}"
-           class="professor-avatar">
-      <div class="professor-name">
-        {{ school.name }}
-      </div>
-    </a>
+  <div id="demo" class="review-card-large card-color">
+    <div class="professor-title">
+        <img src="{% gravatar_url professor.owner.email 100 %}"
+             class="professor-avatar">
+        <div class="professor-name">
+          {{ school.name }}
+        </div>
+      </a>
+    </div>
+    <div class="professor-info">
+      <a href="{{ school.url }}"> {{ school.url }}</a>
+    </div>
   </div>
-  <div class="professor-info">
-    <a href="{{ school.url }}"> {{ school.url }}</a>
-  </div>
-</div>
 
   <md-content ng-cloak="" style="margin-top: 20px;">
     <md-tabs md-dynamic-height md-border-bottom>
