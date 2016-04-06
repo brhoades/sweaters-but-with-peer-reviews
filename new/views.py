@@ -76,8 +76,10 @@ def edit(request, page=None, id=None):
     return new(request, page=page, id=id, type="edit")
 
 
-@login_required
 def new(request, type="new", page=None, id=None):
+    if not request.user.is_authenticated():
+        return json_error({"error": "Please login to add a {}.".format(page)})
+
     model = None
     response = {"error": {"error": ""}}
     model_map = MODEL_MAP

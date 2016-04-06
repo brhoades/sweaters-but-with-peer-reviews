@@ -12,7 +12,7 @@ app.config(function($mdThemingProvider) {
     .primaryPalette('blue', {
       'default': '500'
     })
-    .accentPalette('pink', {
+    .accentPalette('orange', {
       'default': 'A200'
     });
 });

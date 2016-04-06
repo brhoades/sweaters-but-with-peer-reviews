@@ -10,22 +10,26 @@
       type="text/css" />
 {% endblock %}
 
-{% block content %}
-<div id="demo" class="review-card-large card-color">
-  <div class="professor-title">
-      <img src="{% gravatar_url professor.owner.email 100 %}"
-           class="professor-avatar">
-      <div class="professor-name">
-        {{ school.name }}
-      </div>
-    </a>
-  </div>
-  <div class="professor-info">
-    <a href="{{ school.url }}"> {{ school.url }}</a>
-  </div>
-</div>
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
 
-  <md-content ng-cloak="" style="margin-top: 20px;">
+{% block content %}
+  <div id="demo" class="review-card-large card-color">
+    <div class="professor-title">
+        <img src="{% gravatar_url professor.owner.email 100 %}"
+             class="professor-avatar">
+        <div class="professor-name">
+          {{ school.name }}
+        </div>
+      </a>
+    </div>
+    <div class="professor-info">
+      <a href="{{ school.url }}"> {{ school.url }}</a>
+    </div>
+  </div>
+
+  <md-content ng-cloak="" style="margin-top: 20px; background-color: #eeeeee;">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Reviews">
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
