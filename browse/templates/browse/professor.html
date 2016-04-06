@@ -2,12 +2,12 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load cards %}
-{% load formlets %}
-{% block title %}Professor{% endblock %}
+{% load gravatar %}
 
+{% block title %}Professor{% endblock %}
 {% block header %}
-  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
-        type="text/css" />
+<link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+      type="text/css" />
 {% endblock %}
 
 {% block js %}
@@ -15,35 +15,22 @@
 {% endblock %}
 
 {% block content %}
-  <br />
-
-  <div class="card" style="margin-bottom: 10px;">
-    {% if user.is_authenticated and professor.created_by == user %}
-      <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}"
-           class="edit-icon-outer">
-        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
-                   ng-click="opendDialog('professorCall')">
-          <i class="edit-icon fa fa-pencil"></i>
-        </lx-button>
-        {% new_professor_popup True %}
+<div id="demo" class="review-card-large card-color">
+  <div class="professor-title">
+      <img src="{% gravatar_url professor.owner.email 100 %}"
+           class="professor-avatar">
+      <div class="professor-name">
+        {{ professor.first_name }}
+        {{ professor.last_name }}
       </div>
-    {% endif %}
-    <strong>Name</strong>: {{ professor.first_name }} {{ professor.last_name }}<br />
-    <strong>School</strong>: {{ professor.school.name }}<br />
-    <strong>Owner</strong>:
-
-    {% if professor.owner.first_name or professor.owner.last_name %}
-      {{ professor.owner.first_name }} {{professor.owner.last_name }} ({{ professor.owner.username }})<br />
-    {% else %}
-      {{ professor.owner.username }}<br />
-    {% endif %}
-    <br />
-
-    Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
-    {% if professor.update_ts %}
-      Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
-    {% endif %}
+    </a>
   </div>
+  <div class="professor-info">
+    <a href="{% url "school" professor.school.id %}">
+      {{ professor.school.name }}
+    </a>
+  </div>
+</div>
 
   <md-content ng-cloak="" style="margin-top: 20px;">
     <md-tabs md-dynamic-height md-border-bottom>
@@ -67,6 +54,32 @@
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no courses listed for this school.</h2>
+          {% endif %}
+        </md-content>
+      </md-tab>
+      
+  <md-content ng-cloak="" style="margin-top: 20px;">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Reviews">
+        <md-content style="margin-top: 20px;">
+          {% if review_votes|length > 0 %}
+            {% for review, vote in review_votes %}
+              {% review_card review vote %}
+            {% endfor %}
+          {% else %}
+            <h2 class="no-items">There are no reviews for this professor.</h2>
+          {% endif %}
+        </md-content>
+      </md-tab>
+
+      <md-tab label="Courses">
+        <md-content style="margin-top: 20px;">
+          {% if courses|length > 0 %}
+            {% for course in courses %}
+            {{ course.name }}
+            {% endfor %}
+          {% else %}
+            <h2 class="no-items">There are no courses listed for this professor.</h2>
           {% endif %}
         </md-content>
       </md-tab>

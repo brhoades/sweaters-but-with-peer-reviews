@@ -2,45 +2,28 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load cards %}
-{% load formlets %}
+{% load gravatar %}
+
 {% block title %}School{% endblock %}
-
-{% block js %}
-  <script src="{% static 'new/js/new.js' %}"></script>
-{% endblock %}
-
 {% block header %}
-  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
-        type="text/css" />
+<link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+      type="text/css" />
 {% endblock %}
 
-<br />
 {% block content %}
-  <div class="card card-color">
-    {% if user.is_authenticated and school.created_by == user %}
-      <!-- this never happens as school lacks created_by -->
-      <div ng-controller="form-handler" model="school" edit="{{ school.id }}"
-           class="edit-icon-outer">
-        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
-                   ng-click="opendDialog('schoolCall')">
-          <i class="edit-icon fa fa-pencil"></i>
-        </lx-button>
-        {% new_school_popup True %}
+<div id="demo" class="review-card-large card-color">
+  <div class="professor-title">
+      <img src="{% gravatar_url professor.owner.email 100 %}"
+           class="professor-avatar">
+      <div class="professor-name">
+        {{ school.name }}
       </div>
-    {% endif %}
-    <br />
-    <strong>School</strong>: {{ school.name }}<br />
-    <strong>Location</strong>: {{ school_location }}<br />
-    <strong>Email Pattern</strong>:{{ school.email_pattern }}<br />
-    {% if school.url %}
-      <strong>Website</strong>:<a href="{{school.url}}">{{ school.url }}<a /><br />
-    {% endif %}
-    <br />
-    Created: {{ professor.created_ts|date:"DATETIME_FORMAT" }}<br />
-    {% if professor.update_ts %}
-      Last Update: {{ professor.updated_ts|date:"DATETIME_FORMAT" }}<br />
-    {% endif %}
+    </a>
   </div>
+  <div class="professor-info">
+    <a href="{{ school.url }}"> {{ school.url }}</a>
+  </div>
+</div>
 
   <md-content ng-cloak="" style="margin-top: 20px;">
     <md-tabs md-dynamic-height md-border-bottom>
