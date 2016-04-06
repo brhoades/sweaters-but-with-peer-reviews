@@ -103,6 +103,7 @@
 }
 
 #demo{
+  z-index: 3;
   padding: 30px;
   margin: 5%;
 }
