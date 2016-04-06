@@ -9,12 +9,20 @@
 {% block header %}
 <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
       type="text/css" />
+<link href="{% sass_src "browse/scss/special.scss" %}" rel="stylesheet"
+      type="text/css" />
 {% endblock %}
 {% block js %}
   <script src="{% static 'new/js/new.js' %}"></script>
+  <script src="{% static 'browse/js/special.js' %}"></script>
 {% endblock %}
 
 {% block content %}
+  {% if review.target.last_name == "Mason" %}
+    <div id="wowers">WOW!</div>
+  {% elif review.target.last_name == "Buechler" %}
+    <div style="right: 2%;" id="wowers">GREAT!</div>
+  {% endif %}
 <div id="demo" class="review-card-large card-color">
   {% if user.is_authenticated and review.owner == user %}
     <!-- this never happens as review lacks created_by -->
@@ -29,7 +37,7 @@
   {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}">
-      <img src="{% gravatar_url review.owner.email 100 %}"
+      <img src="{% static 'browse/img/professor.png' %}"
            class="professor-avatar">
       <div class="professor-name">
         {{ review.target.first_name }}
@@ -38,84 +46,159 @@
     </a>
   </div>
   <div style="float: right;">
-    <div class="review-rating">
-      <div class="rating-title">
-        Overall
-      </div>
-      <div class="average">{{ review.rating_overall }}</div>
-      <div class="out-of">
-        /5
-      </div>
-    </div>
-    <div class="review-rating">
-      <div class="rating-title">
-        Difficulty
-      </div>
-      <div class="sub-rating">{{ review.rating_difficulty }}</div>
-      <div class="out-of">
-        /5
-      </div>
-    </div>
-    <div class="review-rating">
-      <div class="rating-title">
-        Value
-      </div>
-      <div class="sub-rating">{{ review.rating_value }}</div>
-      <div class="out-of">
-        /5
-      </div>
-    </div>
-  </div>
-  <div class="professor-info">
-    <a href="{% url "school" review.course.department.school.id %}">
-      {{ review.course.department.school.name }}
-    </a> -
-    {% comment %}
-    <a href="{% url "department" review.course.department.id %}">
-    {% endcomment %}
-
-      {{ review.course.department.name }}
-
-    {% comment %}
-    </a>
-    {% endcomment %}
-    <br />
-    &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
-  </div>
-
-  <strong class="review-title">{{ review.title }}</strong>
-  <div class="review-info">
-    <a href="{% url "profile" review.owner.id %}">
-      {% if review.owner.first_name or review.owner.last_name %}
-        {{ review.owner.first_name }} {{ review.owner.last_name }}
-        ({{ review.owner.username }})
+    <!-- this shit can be removed after our 2nd demo. It's some fancy stuff -->
+      {% if review.target.last_name == "Mason" or review.target.last_name == "Buechler" %}
+        <script>
+          wow_them();
+        </script>
+        {% if not review.updated %}
+          <script>
+            var force_rating = 5;
+          </script>
+          <div class="review-rating">
+            <div class="rating-title">
+              Overall
+            </div>
+            <div class="average">5.0</div>
+            <div class="out-of">
+              /5
+            </div>
+          </div>
+          <div class="review-rating">
+            <div class="rating-title">
+              Difficulty
+            </div>
+            <div class="sub-rating">5.0</div>
+            <div class="out-of">
+              /5
+            </div>
+          </div>
+          <div class="review-rating">
+            <div class="rating-title">
+              Value
+            </div>
+            <div class="sub-rating">5.0</div>
+            <div class="out-of">
+              /5
+            </div>
+          </div>
+        {% else %}
+          <script>
+            start_magic();
+            var force_rating = 10;
+          </script>
+          <div class="review-rating">
+            <div class="rating-title">
+              Overall
+            </div>
+            <div class="average">10</div>
+            <div class="out-of">
+              /5
+            </div>
+          </div>
+          <div class="review-rating">
+            <div class="rating-title">
+              Difficulty
+            </div>
+            <div class="sub-rating">10</div>
+            <div class="out-of">
+              /5
+            </div>
+          </div>
+          <div class="review-rating">
+            <div class="rating-title">
+              Value
+            </div>
+            <div class="sub-rating">10</div>
+            <div class="out-of">
+              /5
+            </div>
+          </div>
+        {% endif %}
       {% else %}
-        {{ review.owner.username }}
+        <div class="review-rating">
+          <div class="average">{{ review.rating_overall }}</div>
+          <div class="out-of">
+            /5
+          </div>
+        </div>
+        <div class="review-rating">
+          <div class="rating-title">
+            Difficulty
+          </div>
+          <div class="sub-rating">{{ review.rating_difficulty }}</div>
+          <div class="out-of">
+            /5
+          </div>
+        </div>
+        <div class="review-rating">
+          <div class="rating-title">
+            Value
+          </div>
+          <div class="sub-rating">{{ review.rating_value }}</div>
+          <div class="out-of">
+            /5
+          </div>
+        </div>
       {% endif %}
+    </div>
+    <div class="professor-info">
+      <a href="{% url "school" review.course.department.school.id %}">
+        {{ review.course.department.school.name }}
+      </a> -
+      {% comment %}
+      <a href="{% url "department" review.course.department.id %}">
+      {% endcomment %}
 
-      {% if not review.update_ts %}
-        {{ review.created_ts|date:"DATETIME_FORMAT" }}
-      {% else %}
-        Last Update: {{ review.updated_ts|date:"DATETIME_FORMAT" }}
-      {% endif %}
-    </a>
+        {{ review.course.department.name }}
+
+      {% comment %}
+      </a>
+      {% endcomment %}
+      <br />
+      &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
+    </div>
+
+    <strong class="review-title">{{ review.title }}</strong>
+    <div class="review-info">
+      <a href="{% url "profile" review.owner.id %}">
+        {% if review.owner.first_name or review.owner.last_name %}
+          {{ review.owner.first_name }} {{ review.owner.last_name }}
+          ({{ review.owner.username }})
+        {% else %}
+          {{ review.owner.username }}
+        {% endif %}
+
+        &nbsp;
+        &nbsp;
+        {% if review.updated %}
+          {{ review.created_ts|date:"DATETIME_FORMAT" }}
+        {% else %}
+          {{ review.updated_ts|date:"DATETIME_FORMAT" }}*
+        {% endif %}
+      </a>
+    </div>
+
+    <div class="review-text">
+      {{ review.text }}
+    </div>
+
+    {% if comments|length > 0 %}
+      <md-divider style="margin-top: 60px; margin-bottom: 40px;"></md-divider>
+    {% endif %}
+
+    {% for comment in comments %}
+      {% comment_card comment %}
+    {% endfor %}
+
+    <div ng-controller="form-handler" model="reviewcomment">
+      <lx-button id="siteButton" lx-size="l" lx-type="fab" lx-tooltip="Add Comment" 
+                  lx-tooltip-position="top" ng-click="opendDialog('commentCall')">
+        <i class="mdi mdi-message-text"></i>
+      </lx-button>
+      {% new_comment_popup review %}
+    </div>
   </div>
-
-  <div class="review-text">
-    {{ review.text }}
-  </div>
-  {% for comment in comments %}
-    {% comment_card comment %}
-  {% endfor %}
-
-  <div ng-controller="form-handler" model="reviewcomment">
-    <lx-button id="siteButton" lx-size="l" lx-type="fab" lx-tooltip="Add Comment" 
-                lx-tooltip-position="top" ng-click="opendDialog('commentCall')">
-      <i class="mdi mdi-message-text"></i>
-    </lx-button>
-    {% new_comment_popup review %}
-  </div>
-
 </div>
 
 {% endblock %}

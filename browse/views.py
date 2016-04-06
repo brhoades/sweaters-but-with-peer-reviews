@@ -162,7 +162,7 @@ def review(request, review_id=0):
 
     context["review"] = get_object_or_404(Review, id=review_id)
     context["comments"] = ReviewComment.objects.filter(target_id=review_id)\
-                                               .order_by("-created_ts")
+                                               .order_by("created_ts")
 
     return HttpResponse(template.render(context))
 
