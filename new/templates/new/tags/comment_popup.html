@@ -1,14 +1,14 @@
 {% load formlets %}
 
-<lx-dialog class="dialog dialog--l" id="reviewCall" auto-close="true"
+<lx-dialog class="dialog dialog--l" id="commentCall" auto-close="true"
            onclose="closingDialog()" onscrollend="scrollEndDialog()">
   <div class="dialog__header">
-    <div class="toolbar bgc-light-blue-500 pl++">
+    <div id="popup" class="toolbar pl++">
       <span class="toolbar__label tc-white fs-title">
-        New Review
+        New Comment
       </span>
     </div>
   </div>
 
-  {% new_review %}
+  {% new_comment review %}
 </lx-dialog>

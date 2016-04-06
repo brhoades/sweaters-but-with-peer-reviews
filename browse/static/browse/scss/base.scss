@@ -1,18 +1,34 @@
 @import "lumx/dist/scss/lumx";
 @import "settings";
 
+/* Base materials for site layout */
+$site-background-color: #eeeeee;
+$site-banner-color: #0277bd;
+$highlight: #f49832;
+$site-accent-color: #f49832;
+
+
+
+/* End base materials */
+
+// Finds the IDs of the buttons and set it as the site color
+#siteButton {
+  color: white;
+  background-color: $site-accent-color;
+}
+
+#popup {
+  background-color: $site-banner-color;
+  width: 100%;
+}
 
 /* Begin voting classes */
 .card-color {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
 
 .background-color {
-    background-color: #EEEEEE;
-}
-
-.header-button {
-    font-family: Roboto, Helvetica, Neue, sans-serif;
+    background-color: $site-background-color;
 }
 
 .index_layout {
@@ -28,15 +44,26 @@
 .small_logo {
     width: 50px;
     height: 70px;
-    margin-top: -10px;
+    margin-top: -3px;
     margin-right: 40px;
 }
 
-.logo {
-    width:300px;
-    height: 300px;
-    display: block;
-    margin: 0 auto;
+.cyc {
+    width:100%;
+    height: 450px;
+    margin-bottom:30px;
+}
+
+.content {
+    margin-right:-60px;
+}
+
+.nav-buttons {
+  padding-top: 3px;
+}
+
+.profile-button {
+  padding-top: 7px;
 }
 
 .vote-button {
@@ -84,6 +111,10 @@
   @extend .display-block;
   @extend .tc-black-1;
   text-align: center;
+  margin-top: -30px;
+  margin-left: -30px;
+  margin-right: -30px;
+  padding: 0px;
 }
 
 .mobile-title-block {
@@ -96,7 +127,8 @@
   @extend .fs-display-1;
   @extend .display-block;
   @extend .tc-black-1;
-  text-align: right;
+  text-align: left;
+  padding-bottom:12px;
 }
 
 .sweaters-error {
@@ -112,9 +144,8 @@
     @extend .p+;
     text-align: left;
   }
-
   display: block;
-  padding-bottom: 25px;
+  padding-bottom: 5px;
 }
 
 /* Body and html should span whole page
@@ -122,10 +153,12 @@
  */
 html {
   height: 100%;
+  background-color: $site-background-color;
 }
 
 body {
-  min-height: 100%;
+  height: 100%;
+  font-family: Roboto, Helvetica, Neue, Sans-Serif !important;
 }
 
 .header-button {
@@ -135,6 +168,7 @@ body {
 
 .toolbar {
   position: relative;
+  padding-top: 20px;
   margin-top: -10px;
   margin-right: 20px;
 }
@@ -148,21 +182,26 @@ body {
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 80px;
+  height: 70px;
   z-index: 0;
   float: top;
-  box-shadow: 0 2px 10px 0 rgba(0,0,0,1);
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.68);
+  background-color: $site-banner-color;
+}
+
+.sidebar {
+  background-color: $primary;
 }
 /* End Main Page Classes */
 
 /* Supporting classes */
 
 
-/* School / Professor Page Classes */ 
+/* School / Professor Page Classes */
 .padded-card {
   @extend .card;
   @extend .tc-black-1;
-  
+
   padding: 5px;
   position: relative;
   margin-top: 15px;
@@ -249,7 +288,48 @@ body {
 
 .rating-title {
   color: $grey-500;
-
 }
 
-/* End School / Professor Page Classes */ 
+.pagination-buttons {
+  margin-bottom: 20px;
+}
+
+
+/* End School / Professor Page Classes */
+
+/* All pages. A hyperlink class for nested cards in tabs. */
+.hyperlink {
+  color: #28aadc;
+}
+
+.hyperlink:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* For professor / school view, the error about no x found for this y. */
+.no-items {
+  padding-bottom: 50px;
+  padding-top: 20px;
+}
+
+/* The outer edit icon container and the icon proper */
+.edit-icon-outer {
+  z-index: 20;
+  float: right;
+}
+
+.edit-icon {
+  color: grey;
+}
+
+/* Text highlighting for the site */
+/*** Works on common browsers ***/
+::selection { background-color: $highlight; }
+/*** Mozilla based browsers ***/
+::-moz-selection { background-color: $highlight; }
+/***For Other Browsers ***/
+::-o-selection { background-color: $highlight; }
+::-ms-selection { background-color: $highlight; }
+/*** For Webkit ***/
+::-webkit-selection { background-color: $highlight; }

@@ -1,6 +1,7 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load formlets %}
+{% load cards %}
 {% block title %}Schools{% endblock %}
 {% block js %}
   <script src="{% static 'new/js/new.js' %}"></script>
@@ -8,44 +9,26 @@
 
 
 {% block content %}
-  {% if schools|length > 0 %}
-    <div class="latest-block">
-      <h2>
-        Latest {{schools|length}} School(s)
-      </h2>
-    </div>
-    {% for s in schools %}
-    <div class="padded-card" school-id="{{ s.school.id }}">
-      <div class="rating">
-        <!-- We should decide color and set it here -->
-        <div class="average">{{ s.rating }}</div>
-        <div class="out-of">
-          /5
-        </div>
-      </div>
-      <div class="information">
-        <div class="name">
-          <a href="{% url "school" s.school.id %}">
-            {{ s.school.name }}
-          </a>
-        </div>
-        <div class="card-stats">
-          <div class="location">{{ s.school_location }} </div>
-          <div class="item">
-            {{ s.num_professors }}<br />
-            Professor{% if s.num_professors != 1 %}s{% endif %}
-          </div>
+  <div class="pagination-buttons">
+    {% for i in pages %}
+      <a href="{% url 'schools' i %}">
+        {% if i == page %}
+          <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
+        {% else %}
+          <button class="md-raised md-button md-ink-ripple">
+        {% endif %}
+          {{ i }}
+        </button>
+      </a>
+    {% endfor %}
+  </div>
 
-          <div class="item">
-            {{ s.num_reviews }}<br />
-            Review{% if s.num_reviews != 1 %}s{% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
+  {% if schools|length > 0 %}
+    {% for s in schools %}
+      {% school_card s %}
     {% endfor %}
   {% else %}
-    <h2>There are no schools</h2>
+    <h2 class="no-items">There are no more schools.</h2>
   {% endif %}
 
   <div id="addButton">
@@ -53,7 +36,7 @@
       <!-- Left direction add menu -->
       <lx-fab lx-direction="left">
         <lx-fab-trigger>
-            <lx-button lx-size="xl" lx-color="orange" lx-type="fab" lx-tooltip="Add Things" lx-tooltip-position="top">
+            <lx-button id="siteButton" lx-size="xl" lx-type="fab" lx-tooltip="Add Things" lx-tooltip-position="top">
               <i class="mdi mdi-library-plus"></i>
               <i class="mdi mdi-plus"></i>
             </lx-button>

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * These are at the top for a reason.
  * Do not move them.
@@ -42,7 +42,7 @@ $.ajaxSetup({
  */
 
 // Configure lumx to use csrf
-var app = angular.module('lumxWrap', ['lumx']).config(function($httpProvider) {
+app.config(function($httpProvider) {
   $httpProvider.defaults.xsrfCookieName = 'csrftoken';
   $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });
@@ -85,7 +85,7 @@ app.controller('myCount', function($scope) {
 });
 
 
-//This changes the css class based on the size of the window. 
+//This changes the css class based on the size of the window.
 $(window).on('resize', function() {
     if($(window).width() < 1001 ) {
         $('#title').removeClass('title-block')
@@ -104,3 +104,17 @@ window.onload = function() {
         $('#title').addClass('title-block')
     }
 }
+
+function cycleImages(){
+    var $active = $('#cycler .active');
+    var $next = ($active.next().length > 0) ? $active.next() : $('#cycler img:first');
+    $next.css('z-index', 2);
+    $active.fadeOut(1500,function(){
+        $active.css('z-index',1).show().removeClass('active');
+        $next.css('z-index',3).addClass('active');
+    });
+}
+
+$(document).ready(function(){
+    setInterval('cycleImages()', 7000);
+})

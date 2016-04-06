@@ -1,6 +1,6 @@
 from django.contrib import admin
 from browse.models import School, Professor, Review, ReviewVote, Field, \
-    FieldCategory, Department, Course
+    FieldCategory, Department, Course, ReviewComment
 
 
 # Register your models here.
@@ -12,3 +12,4 @@ admin.site.register(Course)
 admin.site.register(Department)
 admin.site.register(Field)
 admin.site.register(FieldCategory)
+admin.site.register(ReviewComment)

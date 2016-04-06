@@ -2,15 +2,31 @@
 {% load staticfiles %}
 {% load sass_tags %}
 {% load gravatar %}
+{% load cards %}
+{% load formlets %}
 
 {% block title %}View Review{% endblock %}
 {% block header %}
 <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
       type="text/css" />
 {% endblock %}
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 <div id="demo" class="review-card-large card-color">
+  {% if user.is_authenticated and review.owner == user %}
+    <!-- this never happens as review lacks created_by -->
+    <div ng-controller="form-handler" model="review" edit="{{ review.id }}"
+         class="edit-icon-outer">
+      <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                 ng-click="opendDialog('reviewCall')">
+        <i class="edit-icon fa fa-pencil"></i>
+      </lx-button>
+      {% new_review_popup True %}
+    </div>
+  {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}">
       <img src="{% gravatar_url review.owner.email 100 %}"
@@ -67,7 +83,7 @@
     &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
   </div>
 
-  <strong class="review-title">Title of Review</strong>
+  <strong class="review-title">{{ review.title }}</strong>
   <div class="review-info">
     <a href="{% url "profile" review.owner.id %}">
       {% if review.owner.first_name or review.owner.last_name %}
@@ -88,6 +104,18 @@
   <div class="review-text">
     {{ review.text }}
   </div>
+  {% for comment in comments %}
+    {% comment_card comment %}
+  {% endfor %}
+
+  <div ng-controller="form-handler" model="reviewcomment">
+    <lx-button id="siteButton" lx-size="l" lx-type="fab" lx-tooltip="Add Comment" 
+                lx-tooltip-position="top" ng-click="opendDialog('commentCall')">
+      <i class="mdi mdi-message-text"></i>
+    </lx-button>
+    {% new_comment_popup review %}
+  </div>
+
 </div>
 
 {% endblock %}

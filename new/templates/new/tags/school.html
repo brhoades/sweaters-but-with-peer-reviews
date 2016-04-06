@@ -2,7 +2,7 @@
   {% csrf_token %}
 
   {% verbatim %}
-  <div flex-container="row" ng-model="valid.error" 
+  <div flex-container="row" ng-model="valid.error"
        class="p+ error bgc-red-500 tc-white-1"
        ng-show="valid.error != ''">
     <center>
@@ -42,13 +42,13 @@
             <span class="text-field-error" ng-show="valid.location != ''">{{ valid.location }}</span>
         </div>
       </div>
-      <button class="btn btn--l btn--blue btn--raised"type="submit" 
-            ng-submit="submit(data)" lx-ripple />Add School</button>
+      <button id="siteButton" class="btn btn--l btn--raised"type="submit" 
+            ng-submit="submit(data)" lx-ripple />Submit</button>
     </div>
   </div>
     {% endverbatim %}
     {{ form.media }}
     {{ form.location }}
 
-  
+
 </form>

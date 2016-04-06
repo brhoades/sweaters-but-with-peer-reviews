@@ -1,11 +1,38 @@
+from django.db.models import Model
 from django.db import models
 from django.core.validators import RegexValidator, URLValidator, \
     MinLengthValidator
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 
+import urllib.request as urllib
+import json
 
-class School(models.Model):
+
+def to_json(self):
+    """
+    Tries to recursively serialize this object and its references.
+    """
+    ret = {}
+    for field in self._meta.get_fields():
+        # If we don't have the attribute (this happens), skip it
+        try:
+            ret[field.name] = getattr(self, field.name)
+        except:
+            continue
+
+        # FIXME: Add a catch for user. Don't return the password.
+        try:
+            ret[field.name] = json.loads(ret[field.name].to_json())
+        except:
+            ret[field.name] = str(ret[field.name])
+            pass
+    return json.dumps(ret)
+
+Model.to_json = to_json
+
+
+class School(Model):
     name = models.CharField(max_length=100)
     email_pattern = models.CharField(max_length=50,
                                      validators=[RegexValidator])
@@ -15,11 +42,48 @@ class School(models.Model):
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
 
+    @property
+    def num_professors(self):
+        return Professor.objects.filter(school_id=self.id).count
+
+    @property
+    def num_reviews(self):
+        return Review.objects.filter(target__school_id=self.id).count
+
+    @property
+    def human_location(self):
+        if not self.location:
+            return None
+
+        url = ("http://maps.googleapis.com/maps/api/geocode/json"
+               "?latlng={},{}&sensor=false").format(self.location.latitude,
+                                                    self.location.longitude)
+        data = urllib.urlopen(url).read()
+        data = json.loads(data.decode("UTF-8"))
+
+        if len(data["results"]) > 0:
+            return data["results"][0]["formatted_address"]
+        else:
+            return "Unknown"
+
+    @property
+    def rating(self):
+        rating = (Review.objects.filter(target__school_id=self.id)
+                  .aggregate(models.Avg("rating_overall"))
+                  ["rating_overall__avg"])
+
+        if rating is None:
+            rating = "-"
+        else:
+            rating = round(rating, 1)
+
+        return rating
+
     def __str__(self):
         return "%s" % (self.name)
 
 
-class FieldCategory(models.Model):
+class FieldCategory(Model):
     class Meta:
         verbose_name_plural = "Field Categories"
 
@@ -31,7 +95,7 @@ class FieldCategory(models.Model):
         return "%s" % (self.name)
 
 
-class Field(models.Model):
+class Field(Model):
     name = models.CharField(max_length=100)
     categories = models.ManyToManyField(FieldCategory)
 
@@ -55,22 +119,8 @@ class Department(models.Model):
     def __str__(self):
         return "%s" % (self.name)
 
-    def to_json(self):
-        # Forcing school to be expanded
-        return {
-            "id": self.pk,
-            "name": self.name,
-            "school": self.school.id,
-            "school_name": self.school.name,
-            # "fields": serializers.serialize("json", self.fields),
-            "url": self.url,
-            "created_ts": str(self.created_ts),
-            "updated_ts": str(self.updated_ts),
-            "created_by": str(self.created_by),
-            }
 
-
-class Professor(models.Model):
+class Professor(Model):
     owner = models.ForeignKey(User, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -80,11 +130,32 @@ class Professor(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, related_name='created_by')
 
+    @property
+    def num_reviews(self):
+        return Review.objects.filter(target_id=self.id).count()
+
+    @property
+    def num_courses(self):
+        return (Review.objects.filter(target_id=self.id).values("course")
+                .distinct().count())
+
+    @property
+    def rating(self):
+        rating = (Review.objects.filter(target_id=self.id)
+                  .aggregate(models.Avg("rating_overall"))
+                  ["rating_overall__avg"])
+
+        if rating is None:
+            rating = "-"
+        else:
+            rating = round(rating, 1)
+        return rating
+
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
 
-class Course(models.Model):
+class Course(Model):
     name = models.CharField(max_length=100)
     number = models.IntegerField()
     department = models.ForeignKey(Department)
@@ -97,10 +168,13 @@ class Course(models.Model):
         return "%s (%i)" % (self.name, self.number)
 
 
-class Review(models.Model):
+class Review(Model):
     owner = models.ForeignKey(User)
     course = models.ForeignKey(Course)
     target = models.ForeignKey(Professor, on_delete=models.CASCADE)
+
+    title = models.TextField(max_length=100,
+                             validators=[MinLengthValidator(3)])
 
     # [0,5]
     rating_value = models.FloatField()
@@ -109,7 +183,7 @@ class Review(models.Model):
 
     # 100k otta be enough for nebody.
     text = models.TextField(max_length=100000,
-                            validators=[MinLengthValidator(40)])
+                            validators=[MinLengthValidator(50)])
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
@@ -121,7 +195,7 @@ class Review(models.Model):
                                         self.target.last_name)
 
 
-class ReviewVote(models.Model):
+class ReviewVote(Model):
     class Meta:
         verbose_name_plural = "Review Votes"
 
@@ -131,3 +205,23 @@ class ReviewVote(models.Model):
 
     def __str__(self):
         return "%s %s" % (self.owner.first_name, self.owner.last_name)
+
+
+class ReviewComment(models.Model):
+    class Meta:
+        verbose_name_plural = "Review Comments"
+
+    target = models.ForeignKey(Review)
+    owner = models.ForeignKey(User)
+
+    # 100k otta be enough for Billy
+    text = models.TextField(max_length=100000,
+                            validators=[MinLengthValidator(25)])
+
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "{} {} on {}".format(self.owner.first_name,
+                                    self.owner.last_name,
+                                    self.target.id)

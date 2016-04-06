@@ -9,9 +9,9 @@ import json
 
 from new.views import json_error
 from browse.models import Review, Professor, School, Department, Course, \
-    Field, FieldCategory
+    Field, FieldCategory, ReviewComment
 from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
-    FieldForm, FieldCategoryForm, CourseForm
+    FieldForm, FieldCategoryForm, CourseForm, CommentForm
 
 
 def get_professors(request):
@@ -61,7 +61,7 @@ def get_form_from_model(model):
     if unknown model is passed.
     """
     modelforms = [ReviewForm, ProfessorForm, CourseForm, SchoolForm,
-                  DepartmentForm, FieldForm, FieldCategoryForm]
+                  DepartmentForm, FieldForm, FieldCategoryForm, CommentForm]
 
     for form in modelforms:
         if form.Meta.model is model:
@@ -73,7 +73,7 @@ def get_form_from_model(model):
 def get_model_from_string(model):
     modelmap = {}
     models = [Review, Professor, Course, School, Department, Field,
-              FieldCategory]
+              FieldCategory, ReviewComment]
 
     for m in models:
         modelmap[m.__name__] = m
@@ -155,3 +155,23 @@ def login(request):
                 response["message"] = "Invalid login details."
 
     return JsonResponse(response)
+
+
+def model_values(request, model_name, id):
+    """
+    Gets values for a model instance.
+    """
+    try:
+        # Create modelmap
+        model = get_model_from_string(model_name)
+    except ValueError:
+        return HttpResponse(json.dumps({"error":
+                                        {"error":
+                                         "Unknown model requested."}}))
+
+    instance = model.objects.filter(id=id)[0]
+
+    if not instance:
+        return json_error("Unknown id provided.")
+
+    return HttpResponse(instance.to_json())
