@@ -29,7 +29,7 @@
   {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}">
-      <img src="{% gravatar_url review.owner.email 100 %}"
+      <img src="{% static 'browse/img/professor.png' %}"
            class="professor-avatar">
       <div class="professor-name">
         {{ review.target.first_name }}
