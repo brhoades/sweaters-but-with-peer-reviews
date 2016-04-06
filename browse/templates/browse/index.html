@@ -31,15 +31,15 @@
         <img src="{% static 'browse/img/mstpanorama.jpg' %}" alt="My Image">
         <img src="{% static 'browse/img/PandaZu.jpg' %}" alt="My Image">
     </div>
-  {% if review_votes|length > 0 %}
-    <div class=latest-block>
-      <h2>
-        Latest {{review_votes|length}} Review(s)
-      </h2>
-    </div>
-  {% endif %}
     <div flex-container="row" flex-gutter="24">
       <div flex-item="6">
+      {% if review_votes|length > 0 %}
+        <div class=latest-block>
+          <h2>
+            Latest {{review_votes|length}} Review(s)
+          </h2>
+        </div>
+      {% endif %}
         {% if review_votes|length > 0 %}
           {% for review, vote in review_votes %}
             {% review_card review vote %}
