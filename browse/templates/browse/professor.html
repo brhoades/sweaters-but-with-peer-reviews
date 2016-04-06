@@ -17,7 +17,7 @@
 {% block content %}
 <div id="demo" class="review-card-large card-color">
   <div class="professor-title">
-      <img src="{% gravatar_url professor.owner.email 100 %}"
+      <img src="{% static 'browse/img/professor.png' %}"
            class="professor-avatar">
       <div class="professor-name">
         {{ professor.first_name }}
