@@ -5,6 +5,7 @@
 $site-background-color: #eeeeee;
 $site-banner-color: #0277bd;
 $highlight: #f49832;
+$site-accent-color: #f49832;
 
 
 
@@ -12,11 +13,13 @@ $highlight: #f49832;
 
 // Finds the IDs of the buttons and set it as the site color
 #siteButton {
-  background-color: $site-banner-color;
+  color: white;
+  background-color: $site-accent-color;
 }
 
 #popup {
   background-color: $site-banner-color;
+  width: 100%;
 }
 
 /* Begin voting classes */
@@ -147,6 +150,7 @@ $highlight: #f49832;
  */
 html {
   height: 100%;
+  background-color: $site-background-color;
 }
 
 body {
