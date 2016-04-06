@@ -38,3 +38,11 @@ def school_card(school):
     Displays a school card for the provided school.
     """
     return {"school": school}
+
+
+@register.inclusion_tag("browse/tags/course_card.html")
+def course_card(course):
+    """
+    Displays a course card for the provided course.
+    """
+    return {"course": course}
