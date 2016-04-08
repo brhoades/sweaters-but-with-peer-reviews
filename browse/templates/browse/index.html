@@ -57,9 +57,11 @@
               Not a member yet?
               </div>
               <div flex-item="6">
-                <lx-button lx-color="orange">
-                  <span class="fs-headline">Register now!</span>
-                </lx-button>
+                  <a href="{% url 'user_registration' %}">
+                    <lx-button lx-color="orange">
+                      <span class="fs-headline">Register now!</span>
+                    </lx-button>
+                  </a>
               </div>
           </div>
           {% endif %}
