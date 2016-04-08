@@ -51,6 +51,18 @@
       </div>
       <div flex-item="4">
         <div flex-container="column" flex-align="space-between">
+          {% if not user.is_authenticated %}
+          <div flex-container="row" class="subtitle-block">
+              <div flex-item="6">
+              Not a member yet?
+              </div>
+              <div flex-item="6">
+                <lx-button lx-color="orange">
+                  <span class="fs-headline">Register now!</span>
+                </lx-button>
+              </div>
+          </div>
+          {% endif %}
           <div flex-item="4" class="subtitle-block">
              About Us!
           </div> 
@@ -62,11 +74,6 @@
                   and their classes.
               </p>
           </div>
-          {% if not user.is_authenticated %}
-          <div flex-container="4" class="subtitle-block">
-              Not a member yet? Register now!
-          </div>
-          {% endif %}
         </div>
       </div>
     </div>
