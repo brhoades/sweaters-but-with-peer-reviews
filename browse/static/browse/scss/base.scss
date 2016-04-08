@@ -337,3 +337,12 @@ body {
 ::-ms-selection { background-color: $highlight; }
 /*** For Webkit ***/
 ::-webkit-selection { background-color: $highlight; }
+
+
+/* Styling for search bar*/
+.search {
+    @extend .tc-white;
+    @extend .p+;
+
+    z-index:3;
+}

@@ -62,6 +62,11 @@
                   and their classes.
               </p>
           </div>
+          {% if not user.is_authenticated %}
+          <div flex-container="4" class="subtitle-block">
+              Not a member yet? Register now!
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
