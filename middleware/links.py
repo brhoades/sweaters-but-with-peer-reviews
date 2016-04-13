@@ -14,7 +14,7 @@ def link_processor(request):
     SIDEBAR_URLS["Home"] = "home"
     SIDEBAR_URLS["Schools"] = "schools"
     SIDEBAR_URLS["Professors"] = "professors"
-    SIDEBAR_URLS["Reviews"] = "reviews_overview"
+    SIDEBAR_URLS["Reviews"] = "reviews"
     return {"page_links": SIDEBAR_URLS.items(),
             "current_page_name": resolve(request.path_info).url_name,
             }

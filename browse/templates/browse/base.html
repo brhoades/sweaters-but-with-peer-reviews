@@ -73,7 +73,7 @@
         <div class="desktop nav-buttons">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              {% if name|lower in current_page_name %}
+              {% if current_page_name in name|lower %}
                   <lx-button lx-color="white" lx-type="raised" style="width:200px;">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
