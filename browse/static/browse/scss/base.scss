@@ -206,7 +206,7 @@ body {
   @extend .card;
   @extend .tc-black-1;
 
-  padding: 5px;
+  //padding: 5px;
   position: relative;
   margin-top: 15px;
 
@@ -337,3 +337,12 @@ body {
 ::-ms-selection { background-color: $highlight; }
 /*** For Webkit ***/
 ::-webkit-selection { background-color: $highlight; }
+
+
+/* Styling for search bar*/
+.search {
+    @extend .tc-white;
+    @extend .p+;
+
+    z-index:5;
+}

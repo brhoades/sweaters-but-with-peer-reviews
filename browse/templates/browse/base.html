@@ -73,7 +73,7 @@
         <div class="desktop nav-buttons">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              {% if name|lower in current_page_name %}
+              {% if current_page_name in name|lower %}
                   <lx-button lx-color="white" lx-type="raised" style="width:200px;">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
@@ -111,26 +111,20 @@
                 </ul>
               </lx-dropdown-menu>
               {% else %}
-              <button class="btn" lx-ripple lx-dropdown-toggle >
-                <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
-              </button>
-              <div ng-controller="loginData">
-                <lx-dropdown-menu>
-                  <ul>
-                    <li>
-                        <a  class="fs-body-1 display-block dropdown-link dropdown-link--is-large"
-                            ng-click="opendDialog('loginCall')">
-                           Login
-                        </a>
-                    </li>
-                    <li>
-                      <a href="{% url 'user_registration' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Register</a>
-                    </li>
-                  </ul>
-                </lx-dropdown-menu>
-              {% login_popup %}
-              </div>
+                  <a href="{% url 'user_registration' %}">
+                    <lx-button lx-color="orange">
+                      <span class="fs-headline display-block">Register now!</span>
+                    </lx-button>
+                  </a>
+                  <a ng-click="opendDialog('loginCall')">
+                    <lx-button lx-color="white">
+                      <span class="fs-headline display-block">Login!</span>
+                    </lx-button>
+                    Login
+                  </a>
+
               {% endif %}
+          </lx-dropdown>
         </div>
       </div>
 

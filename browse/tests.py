@@ -97,7 +97,7 @@ class TestBrowseViews(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_reviews_overview(self):
-        resp = self.client.get(reverse("reviews_overview"))
+        resp = self.client.get(reverse("reviews"))
         self.assertEqual(resp.status_code, 200)
 
     def test_reviews_page(self):
@@ -172,7 +172,7 @@ class ReviewContent(TestCase):
         """
         Should list every single review.
         """
-        resp = self.client.get(reverse("reviews_overview"))
+        resp = self.client.get(reverse("reviews"))
 
         self.assertIn("review_votes", resp.context)
         self.assertGreaterEqual(len(resp.context["review_votes"]), 5)

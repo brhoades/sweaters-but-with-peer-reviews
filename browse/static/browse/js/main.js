@@ -118,3 +118,5 @@ function cycleImages(){
 $(document).ready(function(){
     setInterval('cycleImages()', 7000);
 })
+
+
