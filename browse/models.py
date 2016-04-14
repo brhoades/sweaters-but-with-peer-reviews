@@ -235,4 +235,29 @@ class ReviewComment(models.Model):
     def __str__(self):
         return "{} {} on {}".format(self.owner.first_name,
                                     self.owner.last_name,
-                                    self.target.id)
+                                    self.target.title)
+
+class PeerReview(Model):
+    class Meta:
+        verbose_name_plural = "Peer Reviews"
+
+    target = models.ForeignKey(Review)
+    owner = models.ForeignKey(User)
+
+    text = models.TextField(max_length=100000)
+    rating = models.FloatField()
+
+    PR_FLAGS = (("LD", "Lewd."),
+                ("UH", "Unhelpful."),
+                ("OT","Off Topic."),
+                ("OK", "Okay."),)
+
+    flag = models.CharField(max_length=2, choices=PR_FLAGS, default="OK")
+
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "{} {} on {}".format(self.owner.first_name,
+                                    self.owner.last_name,
+                                    self.target.title)
