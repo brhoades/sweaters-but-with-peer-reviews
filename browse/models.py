@@ -237,6 +237,7 @@ class ReviewComment(models.Model):
                                     self.owner.last_name,
                                     self.target.title)
 
+
 class PeerReview(Model):
     class Meta:
         verbose_name_plural = "Peer Reviews"
@@ -249,7 +250,7 @@ class PeerReview(Model):
 
     PR_FLAGS = (("LD", "Lewd."),
                 ("UH", "Unhelpful."),
-                ("OT","Off Topic."),
+                ("OT", "Off Topic."),
                 ("OK", "Okay."),)
 
     flag = models.CharField(max_length=2, choices=PR_FLAGS, default="OK")
