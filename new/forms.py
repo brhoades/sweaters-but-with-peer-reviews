@@ -33,7 +33,7 @@ class ProfessorForm(ModelForm):
 
 class SchoolForm(ModelForm):
     needs_owner = False
-    needs_created_by = False
+    needs_created_by = True
 
     class Meta:
         model = School
