@@ -51,20 +51,6 @@
       </div>
       <div flex-item="4">
         <div flex-container="column" flex-align="space-between">
-          {% if not user.is_authenticated %}
-          <div flex-container="row" class="subtitle-block">
-              <div flex-item="6">
-              Not a member yet?
-              </div>
-              <div flex-item="6">
-                  <a href="{% url 'user_registration' %}">
-                    <lx-button lx-color="orange">
-                      <span class="fs-headline">Register now!</span>
-                    </lx-button>
-                  </a>
-              </div>
-          </div>
-          {% endif %}
           <div flex-item="4" class="subtitle-block">
              About Us!
           </div> 
