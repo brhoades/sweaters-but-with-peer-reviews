@@ -8,97 +8,112 @@
 {% block content %}
 <body>
 
-  <h1>New Registration</h1>
-  <h2>Create your account</h2>
+  <div flex-container="row" >
+    <div flex-item="2"></div>
+    <div flex-item="8" style="text-align: left;">
+      <span class="fs-title display-block mb" style="margin-left:20px;">New Registration</span>
+      <span class="display-block fs-body-1 tc-black-2" style="margin-left:20px;">Create your account</span>
+      <div class="divider divider--dark"></div>
+    </div>
+  </div>
+
 
   <form class="form-signup" method="post" class="post-form">{% csrf_token %}
-      <div class="fieldWrapper">
-          {{ form.first_name.errors }}
-          <label>First name</label>
-          <br>
-          {{ form.first_name }}
+    <div flex-container="row" flex-column="12">
+
+      <div flex-item="3"></div>
+      <div flex-item="6">
+        <div flex-container="row">
+          <div flex-item="6" style="padding:0 5px 0 0">
+            {{ form.first_name.errors }}
+            <lx-text-field label="First Name">
+                <input type="text" ng-model="textFields.first.name" name="firstname">
+            </lx-text-field>
+          </div>
+          <div flex-item="6">
+            {{ form.last_name.errors }}
+            <lx-text-field label="Last Name">
+              <input type="text" ng-model="textFields.last.name" name="lastname">
+            </lx-text-field>
+          </div>
+        </div>
+
+        {{ form.email.errors }}
+        <lx-text-field label="E-mail">
+          <input type="text" ng-model="textFields.email.name" name="email">
+        </lx-text-field>
+
+        {{ form.username.errors }}
+        <lx-text-field label="UserName">
+          <input type="text" ng-model="textFields.user.name" name="username">
+        </lx-text-field>
+
+        {{ form.password2.errors }}
+        <lx-text-field label="Password">
+          <input type="password" ng-model="textFields.password.name"name="password">
+        </lx-text-field>
+
+        {{ form.password2.errors }}
+        <lx-text-field label="Repeat Password">
+          <input type="password" ng-model="textFields.password.name"name="password">
+        </lx-text-field>
+
+        <button id="siteButton" class="btn btn--l btn--raised" type="submit" style="margin-top:20px;" lx-ripple />Create account</button>
+
       </div>
-      <br>
-      <div class="fieldWrapper">
-          {{ form.last_name.errors }}
-          <label>Last name</label>
-          <br>
-          {{ form.last_name }}
-      </div>
-      <br>
-      <div class="fieldWrapper">
-          {{ form.email.errors }}
-          <label>E-mail</label>
-          <br>
-          {{ form.email }}
-      </div>
-      <br>
-      <div class="fieldWrapper">
-          {{ form.username.errors }}
-          <label>Username</label>
-          <br>
-          {{ form.username }}
-      </div>
-      <br>
-      <div class="fieldWrapper">
-          {{ form.password2.errors }}
-          <label>Password</label>
-          <br>
-          {{ form.password1 }}
-      </div>
-      <br>
-      <div class="fieldWrapper">
-          {{ form.password2.errors }}
-          <label>Password again</label>
-          <br>
-          {{ form.password2 }}
-      </div>
-      <br></br>
-      <input type="submit" name="submit" class="btn btn-primary" value="Create account">
+    </div>
   </form>
-
-
-
-
-<div class="p+" flex-container="row" flex-gutter="24">
-    <div flex-item>
-        <lx-text-field lx-label="Name" lx-fixed-label="true">
-            <input type="text" ng-model="vm.textFields.fixed.name">
-        </lx-text-field>
-
-        <lx-text-field lx-label="Phone number" lx-fixed-label="true">
-            <input type="text" ng-model="vm.textFields.fixed.phone">
-        </lx-text-field>
-
-        <lx-text-field lx-label="Email address" lx-fixed-label="true">
-            <input type="email" ng-model="vm.textFields.fixed.email">
-        </lx-text-field>
-
-        <lx-text-field lx-label="Location" lx-fixed-label="true">
-            <input type="text" ng-model="vm.textFields.fixed.location">
-        </lx-text-field>
-    </div>
-
-    <div flex-item>
-        <lx-text-field lx-label="Name" lx-fixed-label="true" lx-icon="account">
-            <input type="text" ng-model="vm.textFields.fixed.emptyName">
-        </lx-text-field>
-
-        <lx-text-field lx-label="Phone number" lx-fixed-label="true" lx-icon="phone">
-            <input type="text" ng-model="vm.textFields.fixed.emptyPhone">
-        </lx-text-field>
-
-        <lx-text-field lx-label="Email address" lx-fixed-label="true" lx-icon="email">
-            <input type="email" ng-model="vm.textFields.fixed.emptyEmail">
-        </lx-text-field>
-
-        <lx-text-field lx-label="Location" lx-fixed-label="true" lx-icon="city">
-            <input type="text" ng-model="vm.textFields.fixed.emptyLocation">
-        </lx-text-field>
-    </div>
-</div>
-
 
 
 </body>
 {% endblock %}
+
+<!--
+
+<form class="form-signup" method="post" class="post-form">{% csrf_token %}
+    <div class="fieldWrapper">
+        {{ form.first_name.errors }}
+        <label>First name</label>
+        <br>
+        {{ form.first_name }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        {{ form.last_name.errors }}
+        <label>Last name</label>
+        <br>
+        {{ form.last_name }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        {{ form.email.errors }}
+        <label>E-mail</label>
+        <br>
+        {{ form.email }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        {{ form.username.errors }}
+        <label>Username</label>
+        <br>
+        {{ form.username }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        {{ form.password2.errors }}
+        <label>Password</label>
+        <br>
+        {{ form.password1 }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        {{ form.password2.errors }}
+        <label>Password again</label>
+        <br>
+        {{ form.password2 }}
+    </div>
+    <br></br>
+    <input type="submit" name="submit" class="btn btn-primary" value="Create account">
+</form>
+
+-->

@@ -64,6 +64,10 @@
 	      <input type="text" ng-model="textFields.email.name"name="email">
 	  	</lx-text-field>
 
+			<lx-text-field label="UserName">
+	      <input type="text" ng-model="textFields.user.name" name="username">
+	    </lx-text-field>
+
 		  <lx-text-field label="Password">
 	      <input type="password" ng-model="textFields.password.name"name="password">
 	  	</lx-text-field>
@@ -71,7 +75,7 @@
 		  <lx-text-field label="Repeat Password">
 	      <input type="password" ng-model="textFields.password.name"name="password">
 	  	</lx-text-field>
-			<button id="siteButton" class="btn btn--l btn--raised" type="submit"
+			<button id="siteButton" class="btn btn--l btn--raised" type="submit" style="margin-top:20px;"
 							ng-submit="submit(data)" lx-ripple />Update</button>
 		</div>
 
