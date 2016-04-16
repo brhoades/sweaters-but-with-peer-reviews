@@ -1,48 +1,104 @@
-<h1>New Registration</h1>
-<h2>Create your account</h2>
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Register{% endblock %}
+{% block js %}
+  <script src="{% static 'new/js/register.js' %}"></script>
+{% endblock %}
 
-<form class="form-signup" method="post" class="post-form">{% csrf_token %}
-    <div class="fieldWrapper">
-        {{ form.first_name.errors }}
-        <label>First name</label>
-        <br>
-        {{ form.first_name }}
+{% block content %}
+<body>
+
+  <h1>New Registration</h1>
+  <h2>Create your account</h2>
+
+  <form class="form-signup" method="post" class="post-form">{% csrf_token %}
+      <div class="fieldWrapper">
+          {{ form.first_name.errors }}
+          <label>First name</label>
+          <br>
+          {{ form.first_name }}
+      </div>
+      <br>
+      <div class="fieldWrapper">
+          {{ form.last_name.errors }}
+          <label>Last name</label>
+          <br>
+          {{ form.last_name }}
+      </div>
+      <br>
+      <div class="fieldWrapper">
+          {{ form.email.errors }}
+          <label>E-mail</label>
+          <br>
+          {{ form.email }}
+      </div>
+      <br>
+      <div class="fieldWrapper">
+          {{ form.username.errors }}
+          <label>Username</label>
+          <br>
+          {{ form.username }}
+      </div>
+      <br>
+      <div class="fieldWrapper">
+          {{ form.password2.errors }}
+          <label>Password</label>
+          <br>
+          {{ form.password1 }}
+      </div>
+      <br>
+      <div class="fieldWrapper">
+          {{ form.password2.errors }}
+          <label>Password again</label>
+          <br>
+          {{ form.password2 }}
+      </div>
+      <br></br>
+      <input type="submit" name="submit" class="btn btn-primary" value="Create account">
+  </form>
+
+
+
+
+<div class="p+" flex-container="row" flex-gutter="24">
+    <div flex-item>
+        <lx-text-field lx-label="Name" lx-fixed-label="true">
+            <input type="text" ng-model="vm.textFields.fixed.name">
+        </lx-text-field>
+
+        <lx-text-field lx-label="Phone number" lx-fixed-label="true">
+            <input type="text" ng-model="vm.textFields.fixed.phone">
+        </lx-text-field>
+
+        <lx-text-field lx-label="Email address" lx-fixed-label="true">
+            <input type="email" ng-model="vm.textFields.fixed.email">
+        </lx-text-field>
+
+        <lx-text-field lx-label="Location" lx-fixed-label="true">
+            <input type="text" ng-model="vm.textFields.fixed.location">
+        </lx-text-field>
     </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.last_name.errors }}
-        <label>Last name</label>
-        <br>
-        {{ form.last_name }}
+
+    <div flex-item>
+        <lx-text-field lx-label="Name" lx-fixed-label="true" lx-icon="account">
+            <input type="text" ng-model="vm.textFields.fixed.emptyName">
+        </lx-text-field>
+
+        <lx-text-field lx-label="Phone number" lx-fixed-label="true" lx-icon="phone">
+            <input type="text" ng-model="vm.textFields.fixed.emptyPhone">
+        </lx-text-field>
+
+        <lx-text-field lx-label="Email address" lx-fixed-label="true" lx-icon="email">
+            <input type="email" ng-model="vm.textFields.fixed.emptyEmail">
+        </lx-text-field>
+
+        <lx-text-field lx-label="Location" lx-fixed-label="true" lx-icon="city">
+            <input type="text" ng-model="vm.textFields.fixed.emptyLocation">
+        </lx-text-field>
     </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.email.errors }}
-        <label>E-mail</label>
-        <br>
-        {{ form.email }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.username.errors }}
-        <label>Username</label>
-        <br>
-        {{ form.username }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.password2.errors }}
-        <label>Password</label>
-        <br>
-        {{ form.password1 }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.password2.errors }}
-        <label>Password again</label>
-        <br>
-        {{ form.password2 }}
-    </div>
-    <br></br>
-    <input type="submit" name="submit" class="btn btn-primary" value="Create account">
-</form>
+</div>
+
+
+
+</body>
+{% endblock %}

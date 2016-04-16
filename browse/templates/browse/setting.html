@@ -5,85 +5,78 @@
 {% block content %}
 <body>
 
-<link rel="stylesheet" type="text/css" href="{% static 'browse/css/profile_style.css' %}"> 
-	
-<div class="tc-white-1 p+" flex-container="row" flex-column="12">
-    <div flex-item="1"><div class="p+ bgc-red-500">1</div></div>
-    <div flex-item="1"><div class="p+ bgc-blue-500">2</div></div>
-    <div flex-item="1"><div class="p+ bgc-green-500">3</div></div>
-    <div flex-item="1"><div class="p+ bgc-pink-500">4</div></div>
-    <div flex-item="1"><div class="p+ bgc-orange-500">5</div></div>
-    <div flex-item="1"><div class="p+ bgc-purple-500">6</div></div>
-    <div flex-item="1"><div class="p+ bgc-cyan-500">7</div></div>
-    <div flex-item="1"><div class="p+ bgc-teal-500">8</div></div>
-    <div flex-item="1"><div class="p+ bgc-deep-purple-500">9</div></div>
-    <div flex-item="1"><div class="p+ bgc-lime-500">10</div></div>
-    <div flex-item="1"><div class="p+ bgc-yellow-500">11</div></div>
-    <div flex-item="1"><div class="p+ bgc-brown-500">12</div></div>
-</div>
+<link rel="stylesheet" type="text/css" href="{% static 'browse/css/profile_style.css' %}">
 
 
-	<div>
-		<p>
-			add email<br>
-			password<br>
-			repeat password<br>
-		</p>
-	</div>
+<div ng-app="lumxWrap">
+  <div flex-container="row" flex-column="12">
+		<div flex-item="3" style="text-align: left; padding: 0 20px 0 20px;">
 
-	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
-		<div flex-item="5">
-		  <h1>First Name: {{ profile.first_name }}</h1>
-		</div>
-		<div flex-item="5">
-		  <lx-text-field label="First Name">
-		      <input type="text" ng-model="textFields.first.name"name="firstname">
-		  </lx-text-field>
-		</div>
-	</div>
+			<div flex-item="6" class="mt++">
+        <span class="fs-title display-block mb">User Setting</span>
 
-	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
-		<div flex-item="5">
-		  <h1>Last Name: {{ profile.last_name }}</h1>
-		</div>
-		<div flex-item="5">
-		  <lx-text-field label="Last Name">
-	      <input type="text" ng-model="textFields.last.name"name="lastname">
-	  	</lx-text-field>
-		</div>
-	</div>
+        <div class="divider divider--dark"></div>
 
-	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
-		<div flex-item="5">
-		  <h1>Username: {{ profile.username }}</h1>
-		</div>
-		<div flex-item="5">
-		  <lx-text-field label="Username">
-	      <input type="text" ng-model="textFields.username"name="username">
-	  	</lx-text-field>
-		</div>
-	</div>
+        <ul class="list mt++">
+            <li class="list-row list-row--has-separator">
 
-	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
-		<div flex-item="5">
-		  <h1>Birthday:</h1>
-		</div>
-		<div flex-item="5">
-		  <h2>Birthday button for calander</h2>
-		</div>
-	</div>
+                <div class="list-row__content">
+                    <span class="display-block">Name</span>
+                    <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
+                </div>
+            </li>
+            <li class="list-row list-row--has-separator">
 
-	<div class="tc-white-1 p+" flex-container="row" flex-column="12">
-		<div flex-item="5">
-		  <h1>E-mail:</h1>
+                <div class="list-row__content">
+                    <span class="display-block">Username</span>
+                    <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
+                </div>
+            </li>
+            <li class="list-row list-row--has-separator">
+
+                <div class="list-row__content">
+                    <span class="display-block">E-mail</span>
+                    <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
+                </div>
+            </li>
+        </ul>
+    	</div>
+
 		</div>
-		<div flex-item="5">
+
+		<div flex-item="1"></div>
+
+		<div flex-item="6">
+			<div flex-container="row">
+				<div flex-item="6" style="padding:0 5px 0 0">
+				  <lx-text-field label="First Name">
+				      <input type="text" ng-model="textFields.first.name"name="firstname">
+				  </lx-text-field>
+				</div>
+				<div flex-item="6">
+				  <lx-text-field label="Last Name">
+			      <input type="text" ng-model="textFields.last.name"name="lastname">
+			  	</lx-text-field>
+				</div>
+			</div>
+
 		  <lx-text-field label="E-mail">
 	      <input type="text" ng-model="textFields.email.name"name="email">
 	  	</lx-text-field>
-		</div>
-	</div>  
 
+		  <lx-text-field label="Password">
+	      <input type="password" ng-model="textFields.password.name"name="password">
+	  	</lx-text-field>
+
+		  <lx-text-field label="Repeat Password">
+	      <input type="password" ng-model="textFields.password.name"name="password">
+	  	</lx-text-field>
+			<button id="siteButton" class="btn btn--l btn--raised" type="submit"
+							ng-submit="submit(data)" lx-ripple />Update</button>
+		</div>
+
+  </div>
+</div>
 
 </body>
 {% endblock %}
