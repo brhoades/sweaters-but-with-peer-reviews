@@ -89,7 +89,6 @@ def setting(request, id=None, page=0):
 
     context["user_rating"] = voteCount
 
-
     return render(request, template, context)
 
 
