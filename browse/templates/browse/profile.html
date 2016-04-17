@@ -1,7 +1,14 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load gravatar %}
+{% load sass_tags %}
+{% load cards %}
+{% load formlets %}
 {% block title %}Profile{% endblock %}
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
+
 
 {% block content %}
 <body>
@@ -44,7 +51,19 @@
   <div>
 
 	<!-- Section #2 / Background Only -->
-	<section id="profile_body" class="story" data-speed="4" data-type="background">
+	<section id="profile_body">
+
+
+		{% if review_votes|length > 0 %}
+			{% for review, vote in review_votes %}
+				{% review_card review vote %}
+			{% endfor %}
+		{% else %}
+			<h2>There are no more reviews</h2>
+		{% endif %}
+
+
+
 		<article>
 			<h1>Background Only</h1>
 	    	<p>Testing this section</p>

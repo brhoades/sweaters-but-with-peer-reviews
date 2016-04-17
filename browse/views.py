@@ -59,13 +59,36 @@ def profile(request, id=None, page=0):
     return render(request, template, context)
 
 
-def setting(request, id=None):
+def setting(request, id=None, page=0):
     """
     Settings stuff goes here, like messing with first names last names, etc.
     It should display the data of the user unless they are not logged in.
     """
     template = "browse/setting.html"
     context = RequestContext(request)
+
+    # Specific profile was requested
+    if id is not None:
+        # Could use 404 shortcut, or a simple redirect for invalid user id's
+        context["profile"] = get_object_or_404(User, id=id)
+    # User logged in and should see own profile
+    elif request.user.is_authenticated():
+        context["profile"] = request.user
+    # No Profile specified and user is not logged in
+    else:
+        # One option is redirect as such.
+        messages.info(request, "Please login to view your profile.")
+        return redirect("home")
+
+    userReviews = context["profile"].review_set.all()
+
+    voteCount = 0
+    for review in userReviews:
+        votes = review.reviewvote_set.all()
+        voteCount += sum([1 if vote.quality else -1 for vote in votes])
+
+    context["user_rating"] = voteCount
+
 
     return render(request, template, context)
 
