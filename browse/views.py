@@ -47,10 +47,12 @@ def profile(request, id=None, page=0):
         messages.info(request, "Please login to view your profile.")
         return redirect("home")
 
-    userReviews = context["profile"].review_set.all()
+    context["review_votes"] = _get_all_review_votes(
+        request,
+        {"owner": context["profile"].id})
 
     voteCount = 0
-    for review in userReviews:
+    for review, v in context["review_votes"]:
         votes = review.reviewvote_set.all()
         voteCount += sum([1 if vote.quality else -1 for vote in votes])
 
