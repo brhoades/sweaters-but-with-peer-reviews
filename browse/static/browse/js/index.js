@@ -45,7 +45,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-      url: "new/add_vote",
+      url: "/new/add_vote",
       type: "POST",
       data: {
         "review-id": review_id,
