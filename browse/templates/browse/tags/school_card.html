@@ -1,28 +1,39 @@
-<div class="padded-card" school-id="{{ school.id }}" 
-    style="margin-top:0px;margin-left:20px;margin-right:20px; margin-bottom:20px;overflow:visible;">
-  <div class="rating">
-    <div class="average">{{ school.rating }}</div>
-    <div class="out-of">
-      /5
-    </div>
-  </div>
-  <div class="information" >
-    <div class="name">
-      <div onclick="window.location='{% url "school" school.id %}';"
-           class="hyperlink">
-        {{ school.name }}
-      </div>
-    </div>
-    <div class="card-stats">
-      <div class="location">{{ school.human_location }} </div>
-      <div class="item">
-        {{ school.num_professors }}<br />
-        Professor{% if school.num_professors != 1 %}s{% endif %}
-      </div>
+{% load staticfiles %}
 
-      <div class="item">
-        {{ school.num_reviews }}<br />
-        Review{% if school.num_reviews != 1 %}s{% endif %}
+<div class="padded-card" school-id="{{ school.id }}" 
+    style="margin-top:0px;margin-left:10px;margin-right:10px; margin-bottom:20px;overflow:visible;">
+  <div flex-container="row">
+      <div flex-item="2">
+      <div class="hyperlink card__img card__img- - left" style="height: 100px;" >
+        <img src="{% static 'browse/img/mst.jpg' %}" style="margin-right:20px;height:100px;">
+      </div>
+    </div>
+    <div flex-item="10">
+      <div class="rating">
+        <div class="average">{{ school.rating }}</div>
+        <div class="out-of">
+          /5
+        </div>
+      </div>
+      <div class="information" >
+        <div class="name">
+          <div onclick="window.location='{% url "school" school.id %}';"
+               class="hyperlink">
+            {{ school.name }}
+          </div>
+        </div>
+        <div class="card-stats">
+          <div class="location">{{ school.human_location }} </div>
+          <div class="item">
+            {{ school.num_professors }}<br />
+            Professor{% if school.num_professors != 1 %}s{% endif %}
+          </div>
+
+          <div class="item">
+            {{ school.num_reviews }}<br />
+            Review{% if school.num_reviews != 1 %}s{% endif %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
