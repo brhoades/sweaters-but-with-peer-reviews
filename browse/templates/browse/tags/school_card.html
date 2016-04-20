@@ -1,11 +1,12 @@
-<div class="padded-card" school-id="{{ school.id }}" style="margin-top:0px;margin-left:20px;margin-right:20px; margin-bottom:20px;">
+<div class="padded-card" school-id="{{ school.id }}" 
+    style="margin-top:0px;margin-left:20px;margin-right:20px; margin-bottom:20px;overflow:visible;">
   <div class="rating">
     <div class="average">{{ school.rating }}</div>
     <div class="out-of">
       /5
     </div>
   </div>
-  <div class="information">
+  <div class="information" >
     <div class="name">
       <div onclick="window.location='{% url "school" school.id %}';"
            class="hyperlink">
