@@ -94,9 +94,9 @@
           <lx-dropdown position="right" from-top>
             {% if user.is_authenticated %}
 
-            <button class="btn" lx-ripple lx-dropdown-toggle >
-              <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
-            </button>
+              <button class="btn" lx-ripple lx-dropdown-toggle >
+                <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
+              </button>
               <lx-dropdown-menu>
                 <ul>
                   <li>
@@ -110,20 +110,24 @@
                   </li>
                 </ul>
               </lx-dropdown-menu>
-              {% else %}
-                  <a href="{% url 'user_registration' %}">
-                    <lx-button lx-color="orange">
-                      <span class="fs-headline display-block">Register now!</span>
-                    </lx-button>
-                  </a>
-                  <a ng-click="opendDialog('loginCall')">
-                    <lx-button lx-color="white">
-                      <span class="fs-headline display-block">Login!</span>
-                    </lx-button>
-                    Login
-                  </a>
+            {% else %}
+              <div ng-controller="loginData">
+                <a href="{% url 'user_registration' %}">
+                  <lx-button lx-color="orange">
+                    <span class="fs-headline display-block">Register</span>
+                  </lx-button>
+                </a>
 
-              {% endif %}
+                <a ng-click="opendDialog('loginCall')">
+                  <lx-button lx-color="white">
+                    <span class="fs-headline display-block">Login</span>
+                  </lx-button>
+                  Login
+                </a>
+                {% login_popup %}
+              </div>
+
+            {% endif %}
           </lx-dropdown>
         </div>
       </div>

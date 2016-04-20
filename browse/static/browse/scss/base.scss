@@ -50,11 +50,29 @@ $site-accent-color: #f49832;
     z-index: 2;
 }
 
+/* CSS for the image cycling */
 .cyc {
-    width:100%;
+    width:70%;
     height: 450px;
-    margin-bottom:30px;
+    margin: 0 auto 30px auto;
+    vertical-align: middle;
+    position:relative;
+    overflow: hidden;
+
 }
+
+#cycler img {
+    position:absolute;
+    z-index:1;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+#cycler img.active {
+  z-index:3;
+}
+
 
 .content {
     margin-right:-60px;
@@ -249,7 +267,6 @@ body {
     display: inline-block;
     text-align: center;
     position: relative;
-    top: 50%;
     transform: translateY(-35%);
     z-index: 2;
 
