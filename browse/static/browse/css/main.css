@@ -42,6 +42,7 @@
 .md-track-ticks {
   display: none;
 }
+<<<<<<< HEAD
 
 /* CSS for the image cycling */
 
@@ -61,3 +62,5 @@
     -moz-column-count: 2; /* For Firefox */
     column-count: 2;
 }
+=======
+>>>>>>> 1b8f065fd9805d577aa0da17fcaafcdde26b99e2

@@ -1,5 +1,71 @@
-<h1>New Registration</h1>
-<h2>Create your account</h2>
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<body>
+
+  <div flex-container="row" >
+    <div flex-item="2"></div>
+    <div flex-item="8" style="text-align: left;">
+      <span class="fs-title display-block mb" style="margin-left:20px;">New Registration</span>
+      <span class="display-block fs-body-1 tc-black-2" style="margin-left:20px;">Create your account</span>
+      <div class="divider divider--dark"></div>
+    </div>
+  </div>
+
+
+  <form class="form-signup" method="post" class="post-form">{% csrf_token %}
+    <div flex-container="row" flex-column="12">
+
+      <div flex-item="3"></div>
+      <div flex-item="6">
+        <div flex-container="row">
+          <div flex-item="6" style="padding:0 5px 0 0">
+            {{ form.first_name.errors }}
+            <lx-text-field label="First Name">
+                <input type="text" ng-model="textFields.first.name" name="firstname">
+            </lx-text-field>
+          </div>
+          <div flex-item="6">
+            {{ form.last_name.errors }}
+            <lx-text-field label="Last Name">
+              <input type="text" ng-model="textFields.last.name" name="lastname">
+            </lx-text-field>
+          </div>
+        </div>
+
+        {{ form.email.errors }}
+        <lx-text-field label="E-mail">
+          <input type="text" ng-model="textFields.email.name" name="email">
+        </lx-text-field>
+
+        {{ form.username.errors }}
+        <lx-text-field label="UserName">
+          <input type="text" ng-model="textFields.user.name" name="username">
+        </lx-text-field>
+
+        {{ form.password2.errors }}
+        <lx-text-field label="Password">
+          <input type="password" ng-model="textFields.password.name"name="password">
+        </lx-text-field>
+
+        {{ form.password2.errors }}
+        <lx-text-field label="Repeat Password">
+          <input type="password" ng-model="textFields.password.name"name="password">
+        </lx-text-field>
+
+        <button id="siteButton" class="btn btn--l btn--raised" type="submit" style="margin-top:20px;" lx-ripple />Create account</button>
+
+      </div>
+    </div>
+  </form>
+
+
+</body>
+{% endblock %}
+
+<!--
 
 <form class="form-signup" method="post" class="post-form">{% csrf_token %}
     <div class="fieldWrapper">
@@ -46,3 +112,5 @@
     <br></br>
     <input type="submit" name="submit" class="btn btn-primary" value="Create account">
 </form>
+
+-->
