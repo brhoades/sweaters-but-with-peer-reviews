@@ -23,6 +23,7 @@
     {% endfor %}
   </div>
 
+  <div class="multi_column">
   {% if schools|length > 0 %}
     {% for s in schools %}
       {% school_card s %}
@@ -30,7 +31,7 @@
   {% else %}
     <h2 class="no-items">There are no more schools.</h2>
   {% endif %}
-
+  </div>
   <div id="addButton">
     <div ng-app"lumxWrap">
       <!-- Left direction add menu -->

@@ -55,3 +55,9 @@
     height: 450px;
 }
 #cycler img.active {z-index:3}
+
+.multi_column {
+    -webkit-column-count: 2; /* For Chrome */
+    -moz-column-count: 2; /* For Firefox */
+    column-count: 2;
+}
