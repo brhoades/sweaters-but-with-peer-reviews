@@ -22,6 +22,8 @@ app.controller('form-handler',
     function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
   $scope.edit = $attrs.edit;
+  $scope.report_model = $attrs.reportmodel;
+  $scope.report_id = $attrs.reportid;
 
   $scope.data = {
     error: ""
@@ -113,6 +115,11 @@ app.controller('form-handler',
     var url = "/new/" + $scope.type;
     if($scope.edit) {
       url = "/edit/" + $scope.type + "/" + $scope.id;
+    }
+    if($scope.type == "report") {
+      url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
+      console.log(url);
+      console.log("HI");
     }
 
     $http.post(url, JSON.stringify($scope.data)).

@@ -10,8 +10,8 @@
 <!-- Load the card here -->
 
 <div id="demo" class="card">
-  <div ng-app"lumxWrap">
-    <div ng-controller="form-handler" model="report" report="True">
+  <div ng-app="lumxWrap">
+    <div ng-controller="form-handler" model="report" reportmodel="{{ model }}" reportid="{{ id }}">
       {% new_report instance %}
     </div>
   </div>

@@ -205,6 +205,6 @@ def report(request, model_name, id):
 
         inst = MODEL_MAP[model_name].objects.get(id=id)
         template = loader.get_template("new/report.html")
-        context = {"instance": inst, "model": model_name}
+        context = {"instance": inst, "model": model_name, "id": id}
 
         return HttpResponse(template.render(context))
