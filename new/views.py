@@ -170,7 +170,8 @@ def new(request, type="new", page=None, id=None):
     return HttpResponse(json.dumps(response))
 
 
-def addVote(request):
+def addVote(request, wat=None):
+    # I don't know where 'wat' is coming from, but it's not needed...
     if request.method == "POST":
         if not request.user.is_authenticated():
             jsonResponse = {"success": False,

@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardigans but with Peer Reviews - {% block title %}Default{% endblock %}</title>
+    <title>Blazers but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}">
     <link href="{% sass_src "browse/scss/base.scss" %}" rel="stylesheet" type="text/css" />
@@ -73,7 +73,7 @@
         <div class="desktop nav-buttons">
           {% for name, link in page_links %}
             <a href="{% url link %}">
-              {% if name|lower in current_page_name %}
+              {% if current_page_name in name|lower %}
                   <lx-button lx-color="white" lx-type="raised" style="width:200px;">
                     <div class="c-menu__link fs-headline display-block">
                       {{ name }}
@@ -94,9 +94,9 @@
           <lx-dropdown position="right" from-top>
             {% if user.is_authenticated %}
 
-            <button class="btn" lx-ripple lx-dropdown-toggle >
-              <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
-            </button>
+              <button class="btn" lx-ripple lx-dropdown-toggle >
+                <img src="{% gravatar_url user.email 200 %}" width="40" height="40" class="img-round ">
+              </button>
               <lx-dropdown-menu>
                 <ul>
                   <li>
@@ -110,27 +110,25 @@
                   </li>
                 </ul>
               </lx-dropdown-menu>
-              {% else %}
-              <button class="btn" lx-ripple lx-dropdown-toggle >
-                <i class="icon icon--l bgc-grey-400 icon--circled mdi mdi-account"></i>
-              </button>
+            {% else %}
               <div ng-controller="loginData">
-                <lx-dropdown-menu>
-                  <ul>
-                    <li>
-                        <a  class="fs-body-1 display-block dropdown-link dropdown-link--is-large"
-                            ng-click="opendDialog('loginCall')">
-                           Login
-                        </a>
-                    </li>
-                    <li>
-                      <a href="{% url 'user_registration' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Register</a>
-                    </li>
-                  </ul>
-                </lx-dropdown-menu>
-              {% login_popup %}
+                <a href="{% url 'user_registration' %}">
+                  <lx-button lx-color="orange">
+                    <span class="fs-headline display-block">Register</span>
+                  </lx-button>
+                </a>
+
+                <a ng-click="opendDialog('loginCall')">
+                  <lx-button lx-color="white">
+                    <span class="fs-headline display-block">Login</span>
+                  </lx-button>
+                  Login
+                </a>
+                {% login_popup %}
               </div>
-              {% endif %}
+
+            {% endif %}
+          </lx-dropdown>
         </div>
       </div>
 
