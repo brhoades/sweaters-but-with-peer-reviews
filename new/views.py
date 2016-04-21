@@ -78,9 +78,6 @@ def new(request, type="new", page=None, id=None):
 
     model = model_map[page]
 
-    # Otherwise we will complain about it existing
-    del data["error"]
-
     # If model has an owner or created by field, add us
     if MODEL_FORM_MAP[page].needs_owner:
         data["owner"] = request.user

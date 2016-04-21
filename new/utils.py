@@ -41,6 +41,9 @@ def check_fields_in_data(data, model):
     """
     response = {"error": {"error": ""}}
 
+    if "error" in data:
+        del data["error"]
+
     for key in data.keys():
         # Check that this is a key that exists
         if key not in model._meta.get_all_field_names():
