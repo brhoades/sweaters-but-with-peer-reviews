@@ -1,7 +1,8 @@
 from django.http import HttpResponse
+from django.template import loader, RequestContext
 
 from browse.models import Review, Professor, School, Department, \
-    Field, FieldCategory, Course, ReviewComment
+    Field, FieldCategory, Course, ReviewComment, Report
 from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm, CommentForm, ReportForm
 
@@ -15,6 +16,7 @@ MODEL_MAP = {"review": Review,
              "field": Field,
              "fieldcategory": FieldCategory,
              "reviewcomment": ReviewComment,
+             "report": Report,
              }
 
 MODEL_FORM_MAP = {"review": ReviewForm,
@@ -69,3 +71,40 @@ def check_fields_in_data(data, model):
         if field not in data or data[field] == "" and field != "location":
             response["error"][field] = "No {} specified".format(
                 field)
+
+
+def get_template_for_model(request, model_form_map, page):
+    template = None
+    context = RequestContext(request)
+
+    if page == "review":
+        template = loader.get_template("new/review.html")
+    elif page == "professor":
+        template = loader.get_template("new/professor.html")
+    elif page == "school":
+        template = loader.get_template("new/school.html")
+    elif page == "department":
+        template = loader.get_template("new/department.html")
+    elif page == "course":
+        template = loader.get_template("new/course.html")
+    elif page == "field":
+        template = loader.get_template("new/field.html")
+    elif page == "fieldcategory":
+        template = loader.get_template("new/fieldcategory.html")
+    elif page == "report":
+        template = loader.get_template("new/report.html")
+    else:
+        return HttpResponse("Put a 404 here or something.")
+
+    context["form"] = MODEL_FORM_MAP[page]
+    return HttpResponse(template.render(context))
+
+
+def get_form_from_model(model):
+    if model not in MODEL_FORM_MAP:
+        raise ValueError("Unknown model {}".format(model))
+    return MODEL_FORM_MAP[model]
+
+
+def get_model_from_string(model):
+    return MODEL_MAP[model]

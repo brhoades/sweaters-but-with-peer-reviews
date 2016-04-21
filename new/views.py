@@ -1,38 +1,13 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
-from django.template import loader, RequestContext
+from django.template import loader
 
 from new.utils import json_error, check_fields_in_data, MODEL_MAP, \
-    MODEL_FORM_MAP
+    MODEL_FORM_MAP, get_template_for_model
 from browse.models import ReviewVote, Report, Review
 
 import json
 import datetime
-
-
-def get_template_for_model(request, model_form_map, page):
-    template = None
-    context = RequestContext(request)
-
-    if page == "review":
-        template = loader.get_template("new/review.html")
-    elif page == "professor":
-        template = loader.get_template("new/professor.html")
-    elif page == "school":
-        template = loader.get_template("new/school.html")
-    elif page == "department":
-        template = loader.get_template("new/department.html")
-    elif page == "course":
-        template = loader.get_template("new/course.html")
-    elif page == "field":
-        template = loader.get_template("new/field.html")
-    elif page == "fieldcategory":
-        template = loader.get_template("new/fieldcategory.html")
-    else:
-        return HttpResponse("Put a 404 here or something.")
-
-    context["form"] = MODEL_FORM_MAP[page]
-    return HttpResponse(template.render(context))
 
 
 @login_required

@@ -110,7 +110,6 @@ app.controller('form-handler',
   };
 
   $scope.submit = function() {
-    console.log(JSON.stringify($scope.data));
     $scope.ajax.loading = true;
     var url = "/new/" + $scope.type;
     if($scope.edit) {
@@ -118,13 +117,10 @@ app.controller('form-handler',
     }
     if($scope.type == "report") {
       url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
-      console.log(url);
-      console.log("HI");
     }
 
     $http.post(url, JSON.stringify($scope.data)).
       success(function(data) {
-        console.log(data);
         // Always expects, if any elements, a fields item in it
         $scope.ajax.list = [];
         $scope.ajax.loading = false;
