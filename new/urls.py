@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^(?P<page>(school|department|professor|review|course|field'
         '|fieldcategory))/(?P<id>[0-9]+)$',
         nviews.edit, name="edit"),
+    url(r'^report/(?P<model_name>[A-Za-z]+)/(?P<id>[0-9]+)/?', nviews.report)
 ]

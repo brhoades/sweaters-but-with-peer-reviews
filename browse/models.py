@@ -308,6 +308,8 @@ class Report(models.Model):
     target_log = models.ForeignKey(Log, related_name="target_log")
     handled_by = models.ForeignKey(Log, null=True, related_name="handled_by")
 
+    summary = models.TextField(max_length=50)
+
     @staticmethod
     def create(cls, model, id, reporter, comment):
         """

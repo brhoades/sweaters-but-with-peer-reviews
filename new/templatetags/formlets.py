@@ -101,7 +101,7 @@ def new_field_category():
 @register.inclusion_tag("new/tags/comment_popup.html")
 def new_comment_popup(review):
     """
-    Must be whithin a ng-controller="form-hanler" with a parameter for this
+    Must be whithin a ng-controller="form-handler" with a parameter for this
     form model.
     """
     return {"review": review}
@@ -110,7 +110,15 @@ def new_comment_popup(review):
 @register.inclusion_tag("new/tags/comment.html")
 def new_comment(review):
     """
-    Must be whithin a ng-controller="form-hanler" with a parameter for this
+    Must be whithin a ng-controller="form-handler" with a parameter for this
     form model.
     """
     return {"review": review}
+
+
+@register.inclusion_tag("new/tags/report.html")
+def new_report(instance):
+    """
+    Given an instance of a model, gives a form for reporting it.
+    """
+    return {"model": type(instance), "instance": instance}

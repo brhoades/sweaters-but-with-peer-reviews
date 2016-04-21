@@ -25,7 +25,6 @@
   {% endif %}
 <div id="demo" class="review-card-large card-color">
   {% if user.is_authenticated and review.owner == user %}
-    <!-- this never happens as review lacks created_by -->
     <div ng-controller="form-handler" model="review" edit="{{ review.id }}"
          class="edit-icon-outer">
       <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
@@ -33,6 +32,15 @@
         <i class="edit-icon fa fa-pencil"></i>
       </lx-button>
       {% new_review_popup True %}
+    </div>
+  {% elif user.is_authenticated %}
+    <div ng-controller="form-handler" model="review" report="{{ review.id }}"
+         class="edit-icon-outer">
+      <lx-button lx-tooltip="Report" lx-type="icon" lx-tooltip-position="left"
+                 ng-click="opendDialog('report')">
+        <i class="edit-icon fa fa-warning-sign"></i>
+      </lx-button>
+      {% new_report_popup review %}
     </div>
   {% endif %}
   <div class="professor-title">
@@ -47,6 +55,7 @@
   </div>
   <div style="float: right;">
     <!-- this shit can be removed after our 2nd demo. It's some fancy stuff -->
+    {% comment %}
       {% if review.target.last_name == "Mason" or review.target.last_name == "Buechler" %}
         <script>
           wow_them();
@@ -116,6 +125,7 @@
           </div>
         {% endif %}
       {% else %}
+      {% endcomment %}
         <div class="review-rating">
           <div class="average">{{ review.rating_overall }}</div>
           <div class="out-of">
@@ -140,7 +150,9 @@
             /5
           </div>
         </div>
+      {% comment %}
       {% endif %}
+      {% endcomment %}
     </div>
     <div class="professor-info">
       <a href="{% url "school" review.course.department.school.id %}">

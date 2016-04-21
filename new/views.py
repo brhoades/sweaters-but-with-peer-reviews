@@ -219,3 +219,15 @@ def addVote(request, wat=None):
                             content_type="application/json")
     else:
         return HttpResponseNotAllowed(["POST"])
+
+
+@login_required
+def report(request, model_name, id):
+    if model_name not in MODEL_MAP.keys():
+        return json_error({"error": "Unknown page requested."})
+
+    inst = MODEL_MAP[model_name].objects.get(id=id)
+    template = loader.get_template("new/report.html")
+    context = {"instance": inst}
+
+    return HttpResponse(template.render(context))
