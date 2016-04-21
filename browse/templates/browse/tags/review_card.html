@@ -9,10 +9,8 @@
 
     <div flex-item flex-container="column">
       <div align="left">
-        <strong class="review-title hyperlink"
-                onclick="window.location='{% url 'review' review.id %}'">
-          {{ review.title }}
-        </strong>
+        
+        <a href='{% url 'review' review.id %}' target="iframe_a">{{ review.title }}</a>
         <span class="display-block fs-body-1 tc-black-2">
           <b>{{ review.course.name }}</b> <br />
           with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
