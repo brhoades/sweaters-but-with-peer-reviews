@@ -1,8 +1,7 @@
 <!-- we get a review and a vote object. We also get a can_vote bool -->
 {% load gravatar %}
 
-<div class="review-card-small"
-     style="margin: 20px;" review-id="{{review.id}}">
+<div class="review-card-small" review-id="{{review.id}}">
   <div flex-container="row">
     <div class="hyperlink card__img card__img- - left" style="height: 100px;" >
       <img src="{% gravatar_url review.owner.email 100 %}" style="margin-right:20px;">
