@@ -238,7 +238,8 @@ class ReviewComment(models.Model):
                                     self.owner.last_name,
                                     self.target.id)
 
+
 class Settings(models.Model):
-    timezone = models.CharField(max_length=100,)
+    timezone = models.CharField(max_length=100)
     color_scheme = models.IntegerField()
     is_demo = models.BooleanField()
