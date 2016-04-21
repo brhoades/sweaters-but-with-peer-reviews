@@ -237,3 +237,8 @@ class ReviewComment(models.Model):
         return "{} {} on {}".format(self.owner.first_name,
                                     self.owner.last_name,
                                     self.target.id)
+
+class Settings(models.Model):
+    timezone = models.CharField(max_length=100,)
+    color_scheme = models.IntegerField()
+    is_demo = models.BooleanField()
