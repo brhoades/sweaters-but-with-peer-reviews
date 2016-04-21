@@ -1,0 +1,68 @@
+from django.http import HttpResponse
+
+from browse.models import Review, Professor, School, Department, \
+    Field, FieldCategory, Course, ReviewComment
+from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
+    FieldForm, FieldCategoryForm, CourseForm, CommentForm, ReportForm
+
+import json
+
+MODEL_MAP = {"review": Review,
+             "professor": Professor,
+             "school": School,
+             "department": Department,
+             "course": Course,
+             "field": Field,
+             "fieldcategory": FieldCategory,
+             "reviewcomment": ReviewComment,
+             }
+
+MODEL_FORM_MAP = {"review": ReviewForm,
+                  "professor": ProfessorForm,
+                  "school": SchoolForm,
+                  "course": CourseForm,
+                  "department": DepartmentForm,
+                  "field": FieldForm,
+                  "fieldcategory": FieldCategoryForm,
+                  "reviewcomment": CommentForm,
+                  "report": ReportForm
+                  }
+
+
+def json_error(data):
+    return HttpResponse(json.dumps({"error": data}))
+
+
+def check_fields_in_data(data, model):
+    """
+    Go through every key in data. Check that, for a given model, there are
+    all required keys. Check that each key, if it's a foreign key, points
+    to a valid object. It returns a json error if invalid, None otherwise.
+    """
+    response = {"error": {"error": ""}}
+
+    for key in data.keys():
+        # Check that this is a key that exists
+        if key not in model._meta.get_all_field_names():
+            return json_error({"error": ''.join(["No field for ",
+                                                 str(model), ": \"",
+                                                 key, "\""])})
+        # Check that an id field exists for required foreign key fields
+        field = model._meta.get_field(key)
+        if field.is_relation and isinstance(data[key], dict):
+            if "id" not in data[key]:
+                response["error"][key] = "No {} specified".format(
+                    field.target_field.model.__name__)
+            elif not field.target_field.model.objects.filter(
+                    id=data[key]["id"]).count():
+                response["error"][key] = "{} does not exist".format(
+                    field.target_field.model.__name__)
+            else:
+                data[key] = field.target_field.model.objects.get(
+                    id=data[key]["id"])
+
+    # Check for required keys
+    for field in model.Meta.fields[:].extend(model.Meta.fields_extra):
+        if field not in data or data[field] == "" and field != "location":
+            response["error"][field] = "No {} specified".format(
+                field)

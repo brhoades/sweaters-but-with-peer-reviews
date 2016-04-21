@@ -2,24 +2,12 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
 
-from browse.models import Review, ReviewVote, Professor, School, Department, \
-    Field, FieldCategory, Course, ReviewComment
-from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
-    FieldForm, FieldCategoryForm, CourseForm, CommentForm
+from new.utils import json_error, check_fields_in_data, MODEL_MAP, \
+    MODEL_FORM_MAP
+from browse.models import ReviewVote, Report, Review
 
 import json
 import datetime
-
-
-MODEL_MAP = {"review": Review,
-             "professor": Professor,
-             "school": School,
-             "department": Department,
-             "course": Course,
-             "field": Field,
-             "fieldcategory": FieldCategory,
-             "reviewcomment": ReviewComment,
-             }
 
 
 def get_template_for_model(request, model_form_map, page):
@@ -43,12 +31,8 @@ def get_template_for_model(request, model_form_map, page):
     else:
         return HttpResponse("Put a 404 here or something.")
 
-    context["form"] = model_form_map[page]
+    context["form"] = MODEL_FORM_MAP[page]
     return HttpResponse(template.render(context))
-
-
-def json_error(data):
-    return HttpResponse(json.dumps({"error": data}))
 
 
 @login_required
@@ -83,18 +67,9 @@ def new(request, type="new", page=None, id=None):
     model = None
     response = {"error": {"error": ""}}
     model_map = MODEL_MAP
-    model_form_map = {"review": ReviewForm,
-                      "professor": ProfessorForm,
-                      "school": SchoolForm,
-                      "course": CourseForm,
-                      "department": DepartmentForm,
-                      "field": FieldForm,
-                      "fieldcategory": FieldCategoryForm,
-                      "reviewcomment": CommentForm
-                      }
 
     if request.method != "POST":
-        return get_template_for_model(request, model_form_map, page)
+        return get_template_for_model(request, MODEL_FORM_MAP, page)
 
     data = json.loads(request.body.decode())
 
@@ -107,39 +82,18 @@ def new(request, type="new", page=None, id=None):
     del data["error"]
 
     # If model has an owner or created by field, add us
-    if model_form_map[page].needs_owner:
+    if MODEL_FORM_MAP[page].needs_owner:
         data["owner"] = request.user
-    elif model_form_map[page].needs_created_by:
+    elif MODEL_FORM_MAP[page].needs_created_by:
         data["created_by"] = request.user
 
+    # FIXME: Is this necessary? It seems like it should autoresolve this
     if page == "reviewcomment":
         data["target"] = Review.objects.get(id=int(data["target"]))
 
-    for key in data.keys():
-        # Check that this is a key that exists
-        if key not in model._meta.get_all_field_names():
-            return json_error({"error": ''.join(["No field for ",
-                                                 str(model), ": \"",
-                                                 key, "\""])})
-        # Check that an id field exists for required foreign key fields
-        field = model._meta.get_field(key)
-        if field.is_relation and isinstance(data[key], dict):
-            if "id" not in data[key]:
-                response["error"][key] = "No {} specified".format(
-                    field.target_field.model.__name__)
-            elif not field.target_field.model.objects.filter(
-                    id=data[key]["id"]).count():
-                response["error"][key] = "{} does not exist".format(
-                    field.target_field.model.__name__)
-            else:
-                data[key] = field.target_field.model.objects.get(
-                    id=data[key]["id"])
-
-    # Check for required keys
-    for field in model_form_map[page].Meta.fields:
-        if field not in data or data[field] == "" and field != "location":
-            response["error"][field] = "No {} specified".format(
-                field)
+    res = check_fields_in_data(data, model)
+    if res:
+        return res
 
     # Look for any errors
     for k, v in response["error"].items():
@@ -160,7 +114,7 @@ def new(request, type="new", page=None, id=None):
         print("ERROR: " + str(e))
         return HttpResponse(json_error({"error": str(e)}))
 
-    for field in model_form_map[page].Meta.fields:
+    for field in MODEL_FORM_MAP[page].Meta.fields:
         response["error"][field] = ""  # clear errors
 
     new.save()
@@ -223,11 +177,34 @@ def addVote(request, wat=None):
 
 @login_required
 def report(request, model_name, id):
-    if model_name not in MODEL_MAP.keys():
-        return json_error({"error": "Unknown page requested."})
+    if request.method == "POST":
+        res = {}
+        if model_name not in MODEL_MAP.keys():
+            return HttpResponse(json.dumps({"error": "Unknown model."}),
+                                content_type="application/json")
 
-    inst = MODEL_MAP[model_name].objects.get(id=id)
-    template = loader.get_template("new/report.html")
-    context = {"instance": inst}
+        model = MODEL_MAP[model_name]
+        template = loader.get_template("new/report.html")
+        data = json.loads(request.body.decode())
 
-    return HttpResponse(template.render(context))
+        # FIXME: flip shit if this isn't here.
+        inst = MODEL_MAP[model_name].objects.get(id=id)
+
+        res = check_fields_in_data(data, Report)
+        if res:
+            return res
+
+        # FIXME handle shit that doesn't exist (ie report for bad instance)
+        Report.create(model, id, request.user, data["comment"])
+        context = {"instance": inst, "model": model_name}
+
+        return HttpResponse(template.render(context))
+    else:
+        if model_name not in MODEL_MAP.keys():
+            return HttpResponse("Put a 404 here or something.")
+
+        inst = MODEL_MAP[model_name].objects.get(id=id)
+        template = loader.get_template("new/report.html")
+        context = {"instance": inst, "model": model_name}
+
+        return HttpResponse(template.render(context))
