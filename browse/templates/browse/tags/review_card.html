@@ -9,7 +9,7 @@
     <div flex-container="row">
 
 
-    <div flex-item="6">
+    <div flex-item="7">
 
       <div class="hyperlink card__img card__img- - left" style="height: 100px; float: left;" >
         <img src="{% gravatar_url review.owner.email 100 %}" style="margin-right:20px;">
@@ -33,47 +33,57 @@
 
 
     {% if can_vote %}
-    <div flex-item="4" style="padding: 10px;">
-      <div style="float: left;">
+    <div flex-item="5" style="padding: 10px;">
 
-        <div class="review-rating">
-          <div class="rating-title">Overall</div>
-          <div class="sub-rating">{{ review.rating_overall }}</div>
-          <div class="out-of">/5</div>
+      <div flex-container="column">
+        <div style="float: left;">
+
+          <div class="review-rating">
+            <div class="rating-title">Overall</div>
+            <div class="sub-rating">{{ review.rating_overall }}</div>
+            <div class="out-of">/5</div>
+          </div>
+
+          <div class="review-rating">
+            <div class="rating-title">Difficulty</div>
+            <div class="sub-rating">{{ review.rating_difficulty }}</div>
+            <div class="out-of">/5</div>
+          </div>
+
+          <div class="review-rating">
+            <div class="rating-title">Value</div>
+            <div class="sub-rating">{{ review.rating_value }}</div>
+            <div class="out-of">/5</div>
+          </div>
+
         </div>
 
-        <div class="review-rating">
-          <div class="rating-title">Difficulty</div>
-          <div class="sub-rating">{{ review.rating_difficulty }}</div>
-          <div class="out-of">/5</div>
+        <div flex-container="row">
+
+          <div flex-item="6">
+          <div class="vote-button-up-container">
+            <button lx-type="flat"
+                    class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
+                    action="up" lx-ripple>
+              <i class="mdi mdi-thumb-up"></i>
+            </button>
+          </div>
+          </div>
+
+          <div flex-item="6">
+          <div class="vote-button-down-container">
+            <button lx-type="flat"
+                    class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
+                    action="down" lx-ripple>
+              <i class="mdi mdi-thumb-down"></i>
+            </button>
+          </div>
+          </div>
+
+
         </div>
 
-        <div class="review-rating">
-          <div class="rating-title">Value</div>
-          <div class="sub-rating">{{ review.rating_value }}</div>
-          <div class="out-of">/5</div>
-        </div>
 
-
-      </div>
-    </div>
-
-    <div flex-item="2">
-      <div flex-container="column" align="justify">
-        <div class="vote-button-up-container">
-          <button lx-type="flat"
-                  class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
-                  action="up" lx-ripple>
-            <i class="vote-button-up-icon"></i>
-          </button>
-        </div>
-        <div class="vote-button-down-container">
-          <button lx-type="flat"
-                  class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
-                  action="down" lx-ripple>
-            <i class="vote-button-down-icon"></i>
-          </button>
-        </div>
       </div>
     </div>
 
