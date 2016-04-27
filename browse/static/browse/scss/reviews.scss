@@ -91,18 +91,3 @@
   text-align: left;
   font-size: 13px;
 }
-
-@media only screen and (min-width: 150px) and (max-width: 600px)
-{
-  .vote-button-down-container {
-    margin-right:15px;
-    float: right;
-  }
-
-  .vote-button-up-container {
-    margin-top:13%;
-    margin-right:15px;
-    float: left;
-  }
-
-}
