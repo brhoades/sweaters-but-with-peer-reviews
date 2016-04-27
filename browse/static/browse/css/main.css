@@ -42,16 +42,3 @@
 .md-track-ticks {
   display: none;
 }
-
-/* CSS for the image cycling */
-
-#cycler {
-    position:relative;
-}
-#cycler img {
-    position:absolute;
-    z-index:1;
-    width: 100%;
-    height: 450px;
-}
-#cycler img.active {z-index:3}

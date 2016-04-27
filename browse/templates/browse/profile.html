@@ -1,13 +1,19 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load gravatar %}
+{% load sass_tags %}
+{% load cards %}
+{% load formlets %}
 {% block title %}Profile{% endblock %}
+
 
 {% block content %}
 <body>
-
-<link rel="stylesheet" type="text/css" href="{% static 'browse/css/profile_style.css' %}">
-
+  <!--link rel="stylesheet" type="text/scss" href="{% static 'browse/scss/profile_style.scss' %}"-->
+  <link href="{% sass_src "browse/scss/profileStyle.scss" %}" rel="stylesheet"
+        type="text/css" />
+  <link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+        type="text/css" />
 
 <div class="profile_banner">
 	<div class="profile_picture">
@@ -44,14 +50,21 @@
   <div>
 
 	<!-- Section #2 / Background Only -->
-	<section id="profile_body" class="story" data-speed="4" data-type="background">
-		<article>
-			<h1>Background Only</h1>
-	    	<p>Testing this section</p>
-	    	<p>EVERYONE PUT THE CONTENT IN THIS AREA</p>
-	    	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+	<section id="profile_body">
 
-		</article>
+  <div ng-app="lumxWrap">
+    <span class="fs-title display-block mb">User Reviews</span>
+    <div class="divider divider--dark"></div>
+
+		{% if review_votes|length > 0 %}
+			{% for review, vote in review_votes %}
+				{% review_card review vote %}
+			{% endfor %}
+		{% else %}
+			<h2>There are no more reviews</h2>
+		{% endif %}
+  </div>
+
 
 	</section>
 

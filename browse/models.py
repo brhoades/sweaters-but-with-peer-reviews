@@ -44,6 +44,7 @@ Model.updated = updated
 
 
 class School(Model):
+    created_by = models.ForeignKey(User, default=1)
     name = models.CharField(max_length=100)
     email_pattern = models.CharField(max_length=50,
                                      validators=[RegexValidator])
