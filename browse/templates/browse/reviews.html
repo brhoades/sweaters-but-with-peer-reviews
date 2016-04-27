@@ -19,22 +19,6 @@
 
   <div ng-app="lumxWrap">
 
-    <div class="tc-white-1 p+" flex-container="row" flex-column="12">
-      <div flex-item="1"><div class="p+ bgc-red-500">1</div></div>
-      <div flex-item="1"><div class="p+ bgc-blue-500">2</div></div>
-      <div flex-item="1"><div class="p+ bgc-green-500">3</div></div>
-      <div flex-item="1"><div class="p+ bgc-pink-500">4</div></div>
-      <div flex-item="1"><div class="p+ bgc-orange-500">5</div></div>
-      <div flex-item="1"><div class="p+ bgc-purple-500">6</div></div>
-      <div flex-item="1"><div class="p+ bgc-cyan-500">7</div></div>
-      <div flex-item="1"><div class="p+ bgc-teal-500">8</div></div>
-      <div flex-item="1"><div class="p+ bgc-deep-purple-500">9</div></div>
-      <div flex-item="1"><div class="p+ bgc-lime-500">10</div></div>
-      <div flex-item="1"><div class="p+ bgc-yellow-500">11</div></div>
-      <div flex-item="1"><div class="p+ bgc-brown-500">12</div></div>
-    </div>
-
-
     <div flex-container="row" flex-column="12">
       <!-- The left side contains review cards -->
       <div flex-item="6">
@@ -65,7 +49,7 @@
       <!-- The right side contains the review -->
       <div flex-item="6" style="height:100%">
 
-        <iframe width="100%" height="500px" name="iframe_a"> Click a review</iframe>
+        <iframe name="iframe_a" onload="resizeIframe(this)" target="_parent"> Click a review</iframe>
 
       </div> <!-- end left side -->
     </div>
@@ -113,5 +97,11 @@
     </lx-fab>
   </div>
 </div>
+
+<script language="javascript" type="text/javascript">
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
 
 {% endblock %}

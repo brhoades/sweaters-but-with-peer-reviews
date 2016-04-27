@@ -29,6 +29,8 @@ $site-accent-color: #f49832;
 
 .background-color {
     background-color: $site-background-color;
+    margin: 0 auto;
+    clear: both;
 }
 
 .index_layout {
@@ -362,4 +364,10 @@ body {
     @extend .p+;
 
     z-index:5;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
