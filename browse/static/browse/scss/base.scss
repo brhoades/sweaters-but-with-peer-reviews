@@ -388,7 +388,7 @@ iframe {
 
 
 /* This media seciton is for mobile size site changes */
-@media only screen and (min-width: 150px) and (max-width: 600px)
+@media only screen and (min-width: 150px) and (max-width: 800px)
 {
   #bannerImg {
     height: 150px;
@@ -396,6 +396,15 @@ iframe {
     -moz-background-size: 300px;
     -o-background-size: 300px;
     background-size: 300px;
+  }
+
+  .nav-buttons {
+    display: none;
+    padding-top: 50%;
+  }
+
+  .fs-headline {
+    font-size: 9px;
   }
 
 }
