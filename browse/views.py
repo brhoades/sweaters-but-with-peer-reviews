@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from browse.models import Review, User, Professor, School, Course,\
-    ReviewComment, PeerReview
+    ReviewComment
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
 
@@ -254,6 +254,7 @@ def sandbox(request):
     template = "browse/sandbox.html"
     return render(request, template)
 
+
 @login_required
 def wardrobe(request):
     """
@@ -263,6 +264,7 @@ def wardrobe(request):
     template = "browse/wardrobe.html"
     context = {}
 
-    context["peerReviews"] = request.user.peerreview_set.all()
+    context["peerReviews"] = request.user.peerreview_set.all()\
+                                    .order_by('-created_ts')
 
     return render(request, template, context)
