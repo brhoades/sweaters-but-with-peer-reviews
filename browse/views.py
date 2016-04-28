@@ -2,9 +2,10 @@ from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from browse.models import Review, User, Professor, School, Course,\
-    ReviewComment
+    ReviewComment, PeerReview
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
 
@@ -252,3 +253,16 @@ def sandbox(request):
     """
     template = "browse/sandbox.html"
     return render(request, template)
+
+@login_required
+def wardrobe(request):
+    """
+    The view for each user to view their peer reivews.
+    """
+
+    template = "browse/wardrobe.html"
+    context = {}
+
+    context["peerReviews"] = request.user.peerreview_set.all()
+
+    return render(request, template, context)

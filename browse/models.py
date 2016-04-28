@@ -246,8 +246,8 @@ class PeerReview(Model):
     target = models.ForeignKey(Review)
     owner = models.ForeignKey(User)
 
-    text = models.TextField(max_length=100000)
-    rating = models.FloatField()
+    text = models.TextField(max_length=100000, blank=True)
+    rating = models.FloatField(blank=True, null=True)
 
     PR_FLAGS = (("LD", "Lewd."),
                 ("UH", "Unhelpful."),

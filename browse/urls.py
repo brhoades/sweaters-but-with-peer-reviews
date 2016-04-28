@@ -4,6 +4,8 @@ import browse.views as bviews
 urlpatterns = [
     url(r'^user/(?P<id>[0-9]+)?$', bviews.profile, name="profile"),
     url(r'^user/?$', bviews.setting, name="setting"),
+    url(r'^user/wardrobe/?$', bviews.wardrobe, name="wardrobe"),
+
     url(r'^school/(?P<school_id>[0-9]+)?$', bviews.school, name="school"),
     url(r'^schools/(?P<page>[0-9]+)?$', bviews.schools, name="schools"),
 
