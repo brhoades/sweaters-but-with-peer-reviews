@@ -1,5 +1,5 @@
 from browse.models import Review, Course, Professor, School, Department,\
-    Field, FieldCategory, ReviewComment
+    Field, FieldCategory, ReviewComment, PeerReview
 from django.forms import ModelForm
 
 
@@ -74,3 +74,9 @@ class CommentForm(ModelForm):
     class Meta:
         model = ReviewComment
         fields = ['text', 'target', 'owner']
+
+
+class PeerReviewForm(ModelForm):
+    class Meta:
+        model = PeerReview
+        fields = ['text', 'rating', 'flag']
