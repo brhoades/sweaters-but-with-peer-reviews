@@ -97,7 +97,7 @@ class CommentForm(ModelForm):
 
 
 class ReportForm(ModelForm):
-    needs_owner = False
+    needs_owner = True
     needs_created_by = False
 
     class Meta:

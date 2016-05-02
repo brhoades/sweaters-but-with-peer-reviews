@@ -94,7 +94,7 @@ class School(Model):
         return rating
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s at %s" % (self.name, self.human_location)
 
 
 class FieldCategory(Model):
@@ -131,7 +131,7 @@ class Department(models.Model):
     created_by = models.ForeignKey(User)
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s (%s)" % (self.name, self.school.name)
 
 
 class Professor(Model):
@@ -166,7 +166,8 @@ class Professor(Model):
         return rating
 
     def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return "%s %s (at %s)" % (self.first_name, self.last_name,
+                                  self.school.name)
 
 
 class Course(Model):
@@ -179,7 +180,8 @@ class Course(Model):
     created_by = models.ForeignKey(User)
 
     def __str__(self):
-        return "%s (%i)" % (self.name, self.number)
+        return "%s (%i) at %s" % (self.name, self.number,
+                                  self.department.school.name)
 
 
 class Review(Model):
@@ -218,7 +220,14 @@ class ReviewVote(Model):
     owner = models.ForeignKey(User)
 
     def __str__(self):
-        return "%s %s" % (self.owner.first_name, self.owner.last_name)
+        if self.quality:
+            type = "positive"
+        else:
+            type = "negative"
+        return ("{} for {} {} by {} {}"
+                .format(type, self.target.first_name,
+                        self.target_last_name,  self.owner.first_name,
+                        self.owner.last_name))
 
 
 class ReviewComment(models.Model):
@@ -236,9 +245,10 @@ class ReviewComment(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} {} on {}".format(self.owner.first_name,
-                                    self.owner.last_name,
-                                    self.target.id)
+        return ("{} {} on review for {} {} ({})"
+                .format(self.owner.first_name, self.owner.last_name,
+                        self.target.target.first_name,
+                        self.target.target.last_name, self.target.id))
 
 
 class Log(models.Model):
@@ -279,6 +289,10 @@ class Log(models.Model):
 
     @property
     def target(self):
+        """
+        Get the target of this entry. Note that if it was delete, this will
+        raise.
+        """
         data = json.loads(self.target_serialized)
         model = apps.get_model(model_name=data["model_type"],
                                app_label="browse")
@@ -298,6 +312,16 @@ class Log(models.Model):
             "model_pk": id
             }), category=type, action=action, comment=comment,
             created_by=created_by)
+
+    def __str__(self):
+        if self.owner:
+            owner = "{} {}".format(self.owner.first_name,
+                                   self.owner.last_name)
+        else:
+            owner = "System"
+        return ("\"{}\" (\"{}\") by {}"
+                .format(self.action, self.comment, owner))
+        # TODO: Add target information in here if there's a target ^^
 
 
 class Report(models.Model):
@@ -320,7 +344,7 @@ class Report(models.Model):
         Returns the report without saving.
         """
         log = Log.create(model, id, Log.REPORT, comment=text,
-                         created_by=reporter)
+                         owner=reporter)
         log.save()
         return Report(target_log=log, summary=summary)
 
@@ -332,8 +356,8 @@ class Report(models.Model):
         """
         self.handled_by = Log.create(self.target.__name__, self.target.id,
                                      Log.REPORT, comment=comment,
-                                     created_by=by)
-        # self.handled_by.save() ?
+                                     owner=by)
+        self.handled_by.save()
         return self
 
     @property
@@ -381,3 +405,14 @@ class Report(models.Model):
             return self.handled_by.created_ts
 
         return self.created_by.created_ts
+
+    def __str__(self):
+        resolved = "not addressed"
+        if self.handled:
+            resolved = "addressed by {} {}".format(self.handler.first_name,
+                                                   self.handler.last_name)
+        return ("\"{}\" for \"{}\" by {} ({})"
+                .format(self.summary, str(self.target),
+                        self.created_by.first_name,
+                        self.created_by.last_name,
+                        resolved))
