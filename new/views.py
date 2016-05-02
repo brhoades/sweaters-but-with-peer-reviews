@@ -41,29 +41,33 @@ def new(request, type="new", page=None, id=None):
 
     model = None
     response = {"error": {"error": ""}}
-    model_map = MODEL_MAP
 
     if request.method != "POST":
         return get_template_for_model(request, MODEL_FORM_MAP, page)
 
     data = json.loads(request.body.decode())
 
-    if page not in model_map.keys():
-        return json_error({"error": "Unknown page requested."})
+    if page not in MODEL_MAP:
+        return json_error({"error": "Requested page type \"{}\" does not have"
+                                    " a known model.".format(page)})
+    if page not in MODEL_FORM_MAP.keys():
+        return json_error({"error": "Requested page type \"{}\" does not have"
+                                    " a known form.".format(page)})
 
-    model = model_map[page]
+    model = MODEL_MAP[page]
+    form = MODEL_FORM_MAP[page]
 
     # If model has an owner or created by field, add us
-    if MODEL_FORM_MAP[page].needs_owner:
+    if form.needs_owner:
         data["owner"] = request.user
-    elif MODEL_FORM_MAP[page].needs_created_by:
+    elif form.needs_created_by:
         data["created_by"] = request.user
 
     # FIXME: Is this necessary? It seems like it should autoresolve this
     if page == "reviewcomment":
         data["target"] = Review.objects.get(id=int(data["target"]))
 
-    res = check_fields_in_data(data, model)
+    res = check_fields_in_data(data, model, form)
     if res:
         return res
 
@@ -150,29 +154,37 @@ def addVote(request, wat=None):
 @login_required
 def report(request, model_name, id):
     if request.method == "POST":
+        if model_name not in MODEL_MAP:
+            return json_error({"error": "Requested page type \"{}\" does not "
+                                        "have a known model."
+                                        .format(model_name)
+                               })
+        if model_name not in MODEL_FORM_MAP:
+            return json_error({"error": "Requested page type \"{}\" does not "
+                                        "have a known form.".format(model_name)
+                               })
         res = {}
-        if model_name not in MODEL_MAP.keys():
-            return HttpResponse(json.dumps({"error": "Unknown model."}),
-                                content_type="application/json")
-
-        model = MODEL_MAP[model_name]
-        template = loader.get_template("new/report.html")
         data = json.loads(request.body.decode())
 
-        # FIXME: flip shit if this isn't here.
-        inst = MODEL_MAP[model_name].objects.get(id=id)
+        template = loader.get_template("new/report.html")
+        target_model = MODEL_MAP[model_name]
+        form = MODEL_FORM_MAP["report"]
 
-        res = check_fields_in_data(data, Report)
+        inst = target_model.objects.get(id=id)
+        if not inst:
+            json_error({"error": "Unknown model instance id for provided model"
+                                 " ({} for '{}').".format(id, model_name)})
+
+        res = check_fields_in_data(data, Report, form)
         if res:
             return res
 
-        # FIXME handle shit that doesn't exist (ie report for bad instance)
-        Report.create(model, id, request.user, data["comment"])
+        Report.create(target_model, id, request.user, data["comment"])
         context = {"instance": inst, "model": model_name}
 
         return HttpResponse(template.render(context))
     else:
-        if model_name not in MODEL_MAP.keys():
+        if model_name not in MODEL_MAP:
             return HttpResponse("Put a 404 here or something.")
 
         inst = MODEL_MAP[model_name].objects.get(id=id)

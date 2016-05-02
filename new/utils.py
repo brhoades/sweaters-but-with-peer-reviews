@@ -35,7 +35,7 @@ def json_error(data):
     return HttpResponse(json.dumps({"error": data}))
 
 
-def check_fields_in_data(data, model):
+def check_fields_in_data(data, model, form):
     """
     Go through every key in data. Check that, for a given model, there are
     all required keys. Check that each key, if it's a foreign key, points
@@ -48,7 +48,8 @@ def check_fields_in_data(data, model):
 
     for key in data.keys():
         # Check that this is a key that exists
-        if key not in model._meta.get_all_field_names():
+        if (key not in model._meta.get_all_field_names() and
+                key not in form.Meta.fields_extra):
             return json_error({"error": ''.join(["No field for ",
                                                  str(model), ": \"",
                                                  key, "\""])})

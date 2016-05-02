@@ -97,4 +97,4 @@ class ReportForm(ModelForm):
         model = Report
         fields = ['summary']
         # Only used for internal checks.
-        fields_extra = ['comment']
+        fields_extra = ['text']
