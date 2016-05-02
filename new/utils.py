@@ -47,12 +47,13 @@ def check_fields_in_data(data, model, form):
         del data["error"]
 
     for key in data.keys():
-        # Check that this is a key that exists
-        if (key not in model._meta.get_all_field_names() and
-                key not in form.Meta.fields_extra):
-            return json_error({"error": ''.join(["No field for ",
-                                                 str(model), ": \"",
-                                                 key, "\""])})
+        if key in form.Meta.fields_extra:
+            # just give up, everything for this will break as it's a metafield.
+            continue
+
+        if key not in model._meta.get_all_field_names():
+            return json_error({"error": "{} lacks a field '{}'"
+                                        .format(model, key)})
         # Check that an id field exists for required foreign key fields
         field = model._meta.get_field(key)
         if field.is_relation and isinstance(data[key], dict):
@@ -68,7 +69,9 @@ def check_fields_in_data(data, model, form):
                     id=data[key]["id"])
 
     # Check for required keys
-    for field in model.Meta.fields[:].extend(model.Meta.fields_extra):
+    fields = form.Meta.fields[:]
+    fields.extend(form.Meta.fields_extra)
+    for field in fields:
         if field not in data or data[field] == "" and field != "location":
             response["error"][field] = "No {} specified".format(
                 field)

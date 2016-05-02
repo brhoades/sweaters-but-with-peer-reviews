@@ -9,6 +9,13 @@ from django.forms import ModelForm
 
 
 class ReviewForm(ModelForm):
+    """
+    Fields in all of these models lists fields which must be filled by a
+    form. fields_extra are for metafields, which are in forms, but aren't on
+    the models themselves and are ignored when doing required data checks.
+
+    When in doubt, just add whatever you have to fields. Fields_extra is rare.
+    """
     needs_owner = True
     needs_created_by = False
 

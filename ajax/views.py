@@ -134,5 +134,3 @@ def get_fields_for_model(request, model=""):
     fields = form.Meta.fields[:]
     fields.extend(form.Meta.fields_extra)
     return HttpResponse(json.dumps(fields))
-
-

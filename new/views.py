@@ -153,16 +153,28 @@ def addVote(request, wat=None):
 
 @login_required
 def report(request, model_name, id):
+    """
+    This view serves both the proper form page and the POST requests for
+    the report form page.
+
+    It's essentially a clone of new but with a few fixes since the model is
+    mucked up with metamadness.
+    """
+    if model_name not in MODEL_MAP:
+        if request.method != "POST":
+            return HttpResponse("Unknown model name specified.")
+        return json_error({"error": "Requested page type \"{}\" does not "
+                                    "have a known model."
+                                    .format(model_name)
+                           })
+    if model_name not in MODEL_FORM_MAP:
+        if request.method != "POST":
+            return HttpResponse("Unknown model name specified.")
+        return json_error({"error": "Requested page type \"{}\" does not "
+                                    "have a known form.".format(model_name)
+                           })
+
     if request.method == "POST":
-        if model_name not in MODEL_MAP:
-            return json_error({"error": "Requested page type \"{}\" does not "
-                                        "have a known model."
-                                        .format(model_name)
-                               })
-        if model_name not in MODEL_FORM_MAP:
-            return json_error({"error": "Requested page type \"{}\" does not "
-                                        "have a known form.".format(model_name)
-                               })
         res = {}
         data = json.loads(request.body.decode())
 
@@ -175,18 +187,21 @@ def report(request, model_name, id):
             json_error({"error": "Unknown model instance id for provided model"
                                  " ({} for '{}').".format(id, model_name)})
 
-        res = check_fields_in_data(data, Report, form)
-        if res:
-            return res
+        err = check_fields_in_data(data, Report, form)
+        if err:
+            return err
 
-        Report.create(target_model, id, request.user, data["comment"])
-        context = {"instance": inst, "model": model_name}
+        print(data)
 
-        return HttpResponse(template.render(context))
+        new = Report.create(target_model, id, request.user, data["summary"],
+                            data["text"])
+        new.save()
+        res["id"] = new.id
+        print(res)
+
+        return HttpResponse(json.dumps(res),
+                            content_type="application/json")
     else:
-        if model_name not in MODEL_MAP:
-            return HttpResponse("Put a 404 here or something.")
-
         inst = MODEL_MAP[model_name].objects.get(id=id)
         template = loader.get_template("new/report.html")
         context = {"instance": inst, "model": model_name, "id": id}
