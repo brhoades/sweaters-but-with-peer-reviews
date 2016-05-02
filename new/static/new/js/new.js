@@ -118,6 +118,9 @@ app.controller('form-handler',
     if($scope.type == "report") {
       url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
     }
+    if($scope.type == "resolve_report") {
+      url = "/new/resolve_report/" + $scope.report_id;
+    }
 
     $http.post(url, JSON.stringify($scope.data)).
       success(function(data) {

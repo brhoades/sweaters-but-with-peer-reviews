@@ -122,3 +122,11 @@ def new_report(instance):
     Given an instance of a model, gives a form for reporting it.
     """
     return {"model": type(instance), "instance": instance}
+
+
+@register.inclusion_tag("new/tags/resolve_report.html")
+def resolve_report(id, instance):
+    """
+    Given a report id, gives a form to resolve it..
+    """
+    return {"model": type(instance), "instance": instance, "id": id}

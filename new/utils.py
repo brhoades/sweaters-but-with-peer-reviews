@@ -4,7 +4,8 @@ from django.template import loader, RequestContext
 from browse.models import Review, Professor, School, Department, \
     Field, FieldCategory, Course, ReviewComment, Report
 from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
-    FieldForm, FieldCategoryForm, CourseForm, CommentForm, ReportForm
+    FieldForm, FieldCategoryForm, CourseForm, CommentForm, ReportForm, \
+    ResolveReportForm
 
 import json
 
@@ -27,7 +28,8 @@ MODEL_FORM_MAP = {"review": ReviewForm,
                   "field": FieldForm,
                   "fieldcategory": FieldCategoryForm,
                   "reviewcomment": CommentForm,
-                  "report": ReportForm
+                  "report": ReportForm,
+                  "resolve_report": ResolveReportForm
                   }
 
 

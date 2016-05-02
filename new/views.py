@@ -178,7 +178,6 @@ def report(request, model_name, id):
         res = {}
         data = json.loads(request.body.decode())
 
-        template = loader.get_template("new/report.html")
         target_model = MODEL_MAP[model_name]
         form = MODEL_FORM_MAP["report"]
 
@@ -197,7 +196,6 @@ def report(request, model_name, id):
                             data["text"])
         new.save()
         res["id"] = new.id
-        print(res)
 
         return HttpResponse(json.dumps(res),
                             content_type="application/json")
@@ -205,5 +203,44 @@ def report(request, model_name, id):
         inst = MODEL_MAP[model_name].objects.get(id=id)
         template = loader.get_template("new/report.html")
         context = {"instance": inst, "model": model_name, "id": id}
+
+        return HttpResponse(template.render(context))
+
+
+@login_required
+def resolve_report(request, report_id):
+    """
+    This view serves both the proper form page and the POST requests for
+    the resolve report form page.
+
+    It's essentially a clone of report but with a few changes to make
+    resolution better.
+    """
+    # TODO: Check if staff
+    inst = Report.objects.get(id=report_id)
+    if not inst:
+        return json_error({"error": "Unknown report with id {}".format(id)})
+
+    if inst.handled:
+        return json_error({"error": "Report has already been resolved."})
+
+    if request.method == "POST":
+        res = {}
+        data = json.loads(request.body.decode())
+
+        if "text" not in data:
+            return json_error({"text": "Missing text field."})
+
+        if "summary" not in data or data["summary"] == "":
+            return json_error({"summary": "Missing action field."})
+
+        inst.resolve(by=request.user, comment=data["text"])
+        res["id"] = inst.id
+
+        return HttpResponse(json.dumps(res),
+                            content_type="application/json")
+    else:
+        template = loader.get_template("new/resolve_report.html")
+        context = {"instance": inst, "id": report_id}
 
         return HttpResponse(template.render(context))

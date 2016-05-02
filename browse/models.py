@@ -300,7 +300,7 @@ class Log(models.Model):
 
     @staticmethod
     def create(model, id, type, action=None, comment=None,
-               created_by=""):
+               owner=""):
         """
         Create a log entry given a model, its id, and a type.
         Message optional.
@@ -308,10 +308,10 @@ class Log(models.Model):
         Does not save, only returns a new Log.
         """
         return Log(target_serialized=json.dumps({
-            "model_type": model.__name__,
+            "model_type": model.__class__.__name__,
             "model_pk": id
             }), category=type, action=action, comment=comment,
-            owner=created_by)
+            owner=owner)
 
     def __str__(self):
         if self.owner:
@@ -354,7 +354,8 @@ class Report(models.Model):
 
         Returns this object without saving.
         """
-        self.handled_by = Log.create(self.target.__name__, self.target.id,
+        self.handled_by = Log.create(self.target,
+                                     self.target.id,
                                      Log.REPORT, comment=comment,
                                      owner=by)
         self.handled_by.save()
@@ -419,6 +420,16 @@ class Report(models.Model):
         Gives a report title for our overview page.
         """
         return "[{}] {}".format(self.target.__class__.__name__, self.target)
+
+    @property
+    def target_type(self):
+        """
+        Returns a string that can be used as a link to get the target's info
+        page.
+
+        Usually.
+        """
+        return self.target.__class__.__name__.lower()
 
     def __str__(self):
         resolved = "pending"

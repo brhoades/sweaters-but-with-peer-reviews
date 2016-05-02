@@ -105,3 +105,14 @@ class ReportForm(ModelForm):
         fields = ['summary']
         # Only used for internal checks.
         fields_extra = ['text']
+
+
+class ResolveReportForm(ModelForm):
+    needs_owner = True
+    needs_created_by = False
+
+    class Meta:
+        model = Report
+        fields = ['summary']
+        # Only used for internal checks.
+        fields_extra = ['text']
