@@ -252,11 +252,10 @@ class Log(models.Model):
     target_serialized = models.TextField(max_length=1000, null=True)
     action = models.TextField(max_length=10000, null=True)
     comment = models.TextField(max_length=10000, null=True)
+    owner = models.ForeignKey(User, null=True)  # null implies system
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
-
-    created_by = models.ForeignKey(User, null=True)
 
     # Types of logs
     ADD = "add"
