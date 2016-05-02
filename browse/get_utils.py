@@ -35,7 +35,7 @@ def _get_all_review_votes(request, review_filter={}):
     return [(x, y,) for x, y in zip(reviewList, voteList)]
 
 
-def paginate(page, model):
+def paginate(page, model, key="-created_ts"):
     """
     Helps paging models.
 
@@ -44,6 +44,8 @@ def paginate(page, model):
          startobject, endobject)
 
     Where the start object is an index of the object list.
+
+    Can optionally pass it a key to sort by.
     """
     if page is None:
         page = 1
@@ -57,7 +59,7 @@ def paginate(page, model):
     end = start + num_per_page
     pages_to_show = 4  # the number of pages to show on the listing
 
-    all_instances = model.objects.order_by("-created_ts")
+    all_instances = model.objects.order_by(key)
     pages_available = math.ceil(len(all_instances) / num_per_page)
 
     if page > pages_available or page <= 0:

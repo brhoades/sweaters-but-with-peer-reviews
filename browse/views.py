@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from browse.models import Review, User, Professor, School, Course,\
-    ReviewComment
+    ReviewComment, Report
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
 
@@ -235,6 +235,30 @@ def reviews(request, type="all", first_id=None, second_id=None, page=1):
             .format(page)
 
     return render(request, template, context)
+
+
+def reports(request, page):
+    template = loader.get_template("browse/reports.html")
+    context = RequestContext(request)
+
+    reports = []
+    context["reports"] = reports
+    context["pages"], context["page"], all, start, end \
+        = paginate(page, Report, "-target_log__created_ts")
+
+    for p in Report.objects.order_by('-target_log__created_ts')[start:end]:
+        reports.append(p)
+
+    return HttpResponse(template.render(context))
+
+
+def report(request, report_id=None, page=0):
+    template = loader.get_template("browse/report.html")
+    context = RequestContext(request)
+
+    context["report"] = get_object_or_404(Report, id=report_id)
+
+    return HttpResponse(template.render(context))
 
 
 def logout(request):

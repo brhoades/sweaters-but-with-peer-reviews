@@ -23,6 +23,9 @@ urlpatterns = [
         '/(?P<second_id>[0-9]+)/?$', bviews.reviews,
         name="reviews_by_type_two"),
 
+    url(r'^reports/(?P<page>[0-9]+)?$', bviews.reports, name="reports"),
+    url(r'^report/(?P<report_id>[0-9]+)?$', bviews.report, name="report"),
+
     url(r'logout/?$', bviews.logout, name="logout"),
 
     url(r'^sandbox/?$', bviews.sandbox, name="sandbox")
