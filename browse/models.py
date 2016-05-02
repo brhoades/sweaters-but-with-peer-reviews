@@ -205,10 +205,10 @@ class Review(Model):
     updated_ts = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} {} for {} {}".format(self.owner.first_name,
-                                        self.owner.last_name,
-                                        self.target.first_name,
-                                        self.target.last_name)
+        return "Review by {} {} for {} {}".format(self.owner.first_name,
+                                                  self.owner.last_name,
+                                                  self.target.first_name,
+                                                  self.target.last_name)
 
 
 class ReviewVote(Model):
@@ -224,7 +224,7 @@ class ReviewVote(Model):
             type = "positive"
         else:
             type = "negative"
-        return ("{} for {} {} by {} {}"
+        return ("Review Vote for {} {} by {} {}"
                 .format(type, self.target.first_name,
                         self.target_last_name,  self.owner.first_name,
                         self.owner.last_name))
@@ -405,6 +405,20 @@ class Report(models.Model):
             return self.handled_by.created_ts
 
         return self.created_by.created_ts
+
+    @property
+    def owner(self):
+        """
+        Gives the owner of this report.
+        """
+        return self.created_by
+
+    @property
+    def title(self):
+        """
+        Gives a report title for our overview page.
+        """
+        return "[{}] {}".format(self.target.__class__.__name__, self.target)
 
     def __str__(self):
         resolved = "pending"
