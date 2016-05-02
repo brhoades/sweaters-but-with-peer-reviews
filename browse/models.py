@@ -412,7 +412,7 @@ class Report(models.Model):
             resolved = "addressed by {} {}".format(self.handler.first_name,
                                                    self.handler.last_name)
         return ("\"{}\" for a {} ({}) by {} {} ({})"
-                .format(self.summary, self.target.__class__.__name__, 
+                .format(self.summary, self.target.__class__.__name__,
                         str(self.target),
                         self.created_by.first_name,
                         self.created_by.last_name,
