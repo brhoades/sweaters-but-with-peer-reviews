@@ -311,7 +311,7 @@ class Log(models.Model):
             "model_type": model.__name__,
             "model_pk": id
             }), category=type, action=action, comment=comment,
-            created_by=created_by)
+            owner=created_by)
 
     def __str__(self):
         if self.owner:
@@ -372,21 +372,21 @@ class Report(models.Model):
         """
         Gives the person who created this report
         """
-        return self.target_log.created_by
+        return self.target_log.owner
 
     @property
     def handled(self):
         """
         Returns if this report was handled.
         """
-        return self.handled_by is None
+        return self.handled_by is not None
 
     @property
     def handler(self):
         """
         Gives the user who handled this report.
         """
-        return self.handled_by.created_by
+        return self.handled_by.owner
 
     @property
     def created_ts(self):
@@ -407,12 +407,13 @@ class Report(models.Model):
         return self.created_by.created_ts
 
     def __str__(self):
-        resolved = "not addressed"
+        resolved = "pending"
         if self.handled:
             resolved = "addressed by {} {}".format(self.handler.first_name,
                                                    self.handler.last_name)
-        return ("\"{}\" for \"{}\" by {} ({})"
-                .format(self.summary, str(self.target),
+        return ("\"{}\" for a {} ({}) by {} {} ({})"
+                .format(self.summary, self.target.__class__.__name__, 
+                        str(self.target),
                         self.created_by.first_name,
                         self.created_by.last_name,
                         resolved))
