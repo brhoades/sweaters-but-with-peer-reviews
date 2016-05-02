@@ -256,6 +256,8 @@ class Log(models.Model):
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
 
+    created_by = models.ForeignKey(User, null=True)
+
     # Types of logs
     ADD = "add"
     DELETE = "del"
@@ -284,7 +286,7 @@ class Log(models.Model):
         return model.objects.get(id=data["model_pk"])
 
     @staticmethod
-    def create(cls, model, id, type, action=None, comment=None,
+    def create(model, id, type, action=None, comment=None,
                created_by=""):
         """
         Create a log entry given a model, its id, and a type.
@@ -293,7 +295,7 @@ class Log(models.Model):
         Does not save, only returns a new Log.
         """
         return Log(target_serialized=json.dumps({
-            "model_type": model,
+            "model_type": model.__name__,
             "model_pk": id
             }), category=type, action=action, comment=comment,
             created_by=created_by)
@@ -311,17 +313,17 @@ class Report(models.Model):
     summary = models.TextField(max_length=50)
 
     @staticmethod
-    def create(cls, model, id, reporter, comment):
+    def create(model, id, reporter, summary, text):
         """
         Creates a new report given a reporter, a message, a target id,
         and a target model.
 
         Returns the report without saving.
         """
-        log = Log.create(model, id, Log.REPORT, comment=comment,
+        log = Log.create(model, id, Log.REPORT, comment=text,
                          created_by=reporter)
-        # log.save() ?
-        return Report(target_log=log)
+        log.save()
+        return Report(target_log=log, summary=summary)
 
     def resolve(self, by, comment):
         """
