@@ -233,10 +233,10 @@ body {
   @extend .tc-black-1;
 
   //padding: 5px;
-  position: relative;
-  margin-top: 15px;
+  margin: 10px 0 10px;
 
   .information {
+    margin: 20px;
     display: inline-block;
     width: 80%;
     z-index: 3;
@@ -247,14 +247,14 @@ body {
 
       display: inline-block;
       position: relative;
-      left: -5%;
+      text-align: center;
     }
 
     /* Fields which, at the bottom of a card, give statistics. */
     .card-stats {
       display: block;
-      text-align: right;
-      margin-top: 10px;
+      text-align: center;
+      padding: 0 10px 0 10px;
 
       .item {
         display: inline-block;
@@ -265,18 +265,16 @@ body {
 
       .location {
         display: inline-block;
-        text-align: left;
+        text-align: center;
         position: relative;
       }
     }
   }
 
   .rating {
+    margin: 20px;
     display: inline-block;
     text-align: center;
-    position: relative;
-    transform: translateY(-35%);
-    z-index: 2;
 
   }
 }
@@ -395,7 +393,7 @@ iframe {
 
 
 /* This media seciton is for mobile size site changes */
-@media only screen and (min-width: 150px) and (max-width: 600px)
+@media only screen and (min-width: 150px) and (max-width: 800px)
 {
   #bannerImg {
     height: 150px;
@@ -407,9 +405,23 @@ iframe {
 
   #addButton {
     position: fixed;
-    bottom: 10%;
-    right: 10%;
+    bottom: 7px;
+    right: 7px;
     margin: 0;
   }
+
+  .nav-buttons {
+    display: none;
+    padding-top: 50%;
+  }
+
+  .fs-headline {
+    font-size: 15px;
+  }
+
+  .hyperlink {
+      font-size: 30px;
+    }
+
 
 }
