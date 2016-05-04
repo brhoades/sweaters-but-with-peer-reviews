@@ -40,6 +40,7 @@
     {% endif %}
   </div>
 
+    {% if user.is_authenticated %}
     <div id="addButton">
     <div ng-app"lumxWrap">
       <!-- Left direction add menu -->
@@ -81,5 +82,5 @@
     </lx-fab>
   </div>
 </div>
-
+{% endif %}
 {% endblock %}

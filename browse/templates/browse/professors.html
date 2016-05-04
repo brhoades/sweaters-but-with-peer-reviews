@@ -31,6 +31,7 @@
     <h2 class="no-items">There are no more professors.</h2>
   {% endif %}
 
+  {% if user.is_authenticated %}
   <div id="addButton">
     <div ng-app"lumxWrap">
       <!-- Left direction add menu -->
@@ -72,5 +73,5 @@
       </lx-fab>
     </div>
   </div>
-
+  {% endif %}
 {% endblock %}
