@@ -104,6 +104,7 @@ def schools(request, page):
     # range of that all we're going to send back.
     context["pages"], context["page"], all, start, end = paginate(page, School)
     context["schools"] = all[start:end]
+    
 
     return HttpResponse(template.render(context))
 
@@ -132,6 +133,8 @@ def school(request, school_id=None, page=0):
 
     context["professors"] = Professor.objects.filter(school_id=school_id)
 
+
+
     return HttpResponse(template.render(context))
 
 
@@ -147,6 +150,9 @@ def professors(request, page):
 
     for p in Professor.objects.order_by('-created_ts')[start:end]:
         professors.append(p)
+
+
+
 
     return HttpResponse(template.render(context))
 
@@ -177,6 +183,9 @@ def professor(request, professor_id=None, page=0):
     context["schools"] = [course.department.school for course
                           in context["courses"]]
 
+
+
+
     return HttpResponse(template.render(context))
 
 
@@ -190,6 +199,8 @@ def review(request, review_id=0):
     context["review"] = get_object_or_404(Review, id=review_id)
     context["comments"] = ReviewComment.objects.filter(target_id=review_id)\
                                                .order_by("created_ts")
+
+
 
     return HttpResponse(template.render(context))
 
@@ -237,6 +248,8 @@ def reviews(request, type="all", first_id=None, second_id=None, page=1):
         context["message"] =\
             "This is the page that lists all reviews (pg {0})."\
             .format(page)
+
+
 
     return render(request, template, context)
 

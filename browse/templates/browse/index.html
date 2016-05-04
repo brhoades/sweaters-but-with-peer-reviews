@@ -43,7 +43,7 @@
       {% endif %}
         {% if review_votes|length > 0 %}
           {% for review, vote in review_votes %}
-            {% review_card review vote %}
+            {% review_card review vote user %}
           {% endfor %}
         {% else %}
           <h2>There are no reviews</h2>

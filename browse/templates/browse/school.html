@@ -3,6 +3,7 @@
 {% load sass_tags %}
 {% load cards %}
 {% load gravatar %}
+{% load formlets %}
 
 {% block title %}School{% endblock %}
 {% block header %}
@@ -16,6 +17,26 @@
 
 {% block content %}
   <div id="demo" class="review-card-large card-color">
+    {% if user.is_authenticated and school.created_by == user %}
+      <!-- <div ng-controller="form-handler" model="review" edit="{{ school.id }}"
+           class="edit-icon-outer">
+        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                   ng-click="opendDialog('schoolCall')">
+          <i class="edit-icon fa fa-pencil"></i>
+        </lx-button>
+        {% new_school_popup True %}
+      </div> -->
+
+      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+                  class="delete-button"
+                  action="delete"
+                  model="school"
+                  model-id="{{ school.id }}"
+                  redir="{% url "schools" %}"
+                  >
+        <i class="delete-button-icon"></i>
+      </lx-button>
+    {% endif %}
     <div class="professor-title">
         <img src="{% gravatar_url professor.owner.email 100 %}"
              class="professor-avatar">
@@ -35,7 +56,7 @@
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if review_votes|length > 0 %}
             {% for review, vote in review_votes %}
-              {% review_card review vote %}
+              {% review_card review user vote %}
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no reviews for professors at this school.</h2>
@@ -47,7 +68,7 @@
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if courses|length > 0 %}
             {% for course in courses %}
-             {% course_card course %}
+             {% course_card course user %}
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no courses listed for this school.</h2>
@@ -59,7 +80,7 @@
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if professors|length > 0 %}
             {% for professor in professors %}
-              {% professor_card professor %}
+              {% professor_card professor user %}
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no professors listed for this school.</h2>

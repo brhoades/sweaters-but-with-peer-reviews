@@ -23,6 +23,25 @@
         {{ school.num_reviews }}<br />
         Review{% if school.num_reviews != 1 %}s{% endif %}
       </div>
+      <div class="item">
+      {% if school.created_by == user %}
+            <div flex-container="row" align="justify">
+              <div class="delete-button-container">
+                <button lx-type="flat"
+                        class="delete-button"
+                        action="delete"
+                        model="school"
+                        model-id="{{ school.id }}"
+                        lx-ripple>
+                  <i class="delete-button-icon"></i>
+                </button>
+              </div>
+            </div>
+      {% else %}
+        <!-- {{school.created_by}}<br />
+        Creator -->
+      {% endif %}
+    </div>
     </div>
   </div>
 </div>

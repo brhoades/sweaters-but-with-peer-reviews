@@ -33,7 +33,7 @@
     </div>
     {% if review_votes|length > 0 %}
       {% for review, vote in review_votes %}
-        {% review_card review vote %}
+        {% review_card review user vote %}
       {% endfor %}
     {% else %}
       <h2>There are no more reviews</h2>

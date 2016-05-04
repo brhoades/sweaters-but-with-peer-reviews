@@ -58,22 +58,40 @@
             </div>
           </div>
       </div>
-      <div flex-container="column" align="justify">
-        <div class="vote-button-up-container">
-          <button lx-type="flat"
-                  class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
-                  action="up" lx-ripple>
-            <i class="vote-button-up-icon"></i>
-          </button>
+      {% if not user.is_authenticated %}
+
+      {% elif review.owner == user %}
+        <div flex-container="row" align="justify">
+          <div class="delete-button-container">
+            <button lx-type="flat"
+                    class="delete-button"
+                    action="delete"
+                    model="review"
+                    model-id="{{ review.id }}"
+                    lx-ripple>
+              <i class="delete-button-icon"></i>
+            </button>
+          </div>
         </div>
-        <div class="vote-button-down-container">
-          <button lx-type="flat"
-                  class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
-                  action="down" lx-ripple>
-            <i class="vote-button-down-icon"></i>
-          </button>
-        </div>
-      </div>
+      {% else %}
+          <div flex-container="column" align="justify">
+            <div class="vote-button-up-container">
+              <button lx-type="flat"
+                      class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
+                      action="up" lx-ripple>
+                <i class="vote-button-up-icon"></i>
+              </button>
+            </div>
+            <div class="vote-button-down-container">
+              <button lx-type="flat"
+                      class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
+                      action="down" lx-ripple>
+                <i class="vote-button-down-icon"></i>
+              </button>
+            </div>
+          </div>
+      {% endif %}
+
     </div>
     {% endif %}
     </div>

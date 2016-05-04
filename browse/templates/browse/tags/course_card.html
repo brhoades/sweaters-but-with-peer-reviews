@@ -5,6 +5,25 @@
           <b>{{ course.name }}</b> ({{ course.number }}) <br />
           by <b> {{ course.department.name}} </b>
         </span>
+        {% if course.created_by == user %}
+          <div flex-container="row" align="justify">
+            <div class="delete-button-container">
+              <button lx-type="flat"
+                      class="delete-button"
+                      action="delete"
+                      model="course"
+                      model-id="{{ course.id }}"
+                      lx-ripple>
+                <i class="delete-button-icon"></i>
+              </button>
+            </div>
+          </div>
+        {% else %}
+        <!-- <div class="item">
+          {{school.created_by}}<br />
+          Creator
+        </div> -->
+        {% endif %}
     </div>
   </div>
 </div>

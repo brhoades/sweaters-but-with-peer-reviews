@@ -124,6 +124,28 @@ $site-accent-color: #f49832;
 }
 /* End Voting Classes */
 
+.delete-button {
+  @extend .btn;
+  @extend .btn--red;
+  @extend .btn--l;
+  @extend .btn--flat;
+  float:right !important;
+}
+
+.delete-button-icon {
+  @extend .icon;
+  @extend .icon--l;
+  @extend .icon--red;
+  @extend .icon--flat;
+  @extend .mdi;
+  @extend .mdi-delete;
+}
+
+.delete-button-active {
+  @extend .bgc-grey-300;
+}
+
+
 
 /* Main Page Classes */
 .title-block {

@@ -37,6 +37,26 @@
             {{ professor.num_reviews }}<br />
             Review{% if professor.num_reviews != 1 %}s{% endif %}
           </div>
+
+          {% if professor.created_by == user %}
+            <div flex-container="row" align="justify">
+              <div class="delete-button-container">
+                <button lx-type="flat"
+                        class="delete-button"
+                        action="delete"
+                        model="professor"
+                        model-id="{{ professor.id }}"
+                        lx-ripple>
+                  <i class="delete-button-icon"></i>
+                </button>
+              </div>
+            </div>
+          {% else %}
+          <!-- <div class="item">
+            {{school.created_by}}<br />
+            Creator
+          </div> -->
+          {% endif %}
         </div>
       </div>
     </div>

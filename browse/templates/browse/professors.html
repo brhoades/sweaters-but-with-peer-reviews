@@ -25,7 +25,7 @@
   </div>
   {% if professors|length > 0 %}
     {% for p in professors %}
-      {% professor_card p %}
+      {% professor_card p user %}
     {% endfor %}
   {% else %}
     <h2 class="no-items">There are no more professors.</h2>
