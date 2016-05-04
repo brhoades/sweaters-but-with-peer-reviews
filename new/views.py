@@ -142,22 +142,9 @@ def new(request, type="new", page=None, id=None):
             response["error"][field] = "No {} specified".format(
                 field)
         if field == 'location':
-            print (data)
-            lat=float(data[field]['lat'])
-            lng=float(data[field]['lng'])
-            data[field]=[lat,lng]
-            print("""
-
-
-
-
-
-
-        LOUYIE IS DUMB! DAKOTA CANT TYPE!
-            """)
-
-            print (data)
-
+            lat = float(data[field]['lat'])
+            lng = float(data[field]['lng'])
+            data[field] = [lat, lng]
 
     # Look for any errors
     for k, v in response["error"].items():
