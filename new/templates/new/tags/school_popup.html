@@ -1,4 +1,8 @@
+{% load staticfiles %}
 {% load formlets %}
+
+<link href="{% static 'geoposition/geoposition.css' %}" type="text/css" media="all" rel="stylesheet">
+<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
 
 <lx-dialog class="dialog dialog--l" id="schoolCall" auto-close="true"
            onclose="closingDialog()" onscrollend="scrollEndDialog()">
@@ -14,5 +18,5 @@
     </div>
   </div>
 
-  {% new_school form is_edit %}
+  {% new_school form True is_edit %}
 </lx-dialog>

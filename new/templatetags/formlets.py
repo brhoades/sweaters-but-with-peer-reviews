@@ -36,12 +36,12 @@ def new_course():
 
 
 @register.inclusion_tag("new/tags/school.html")
-def new_school(form, is_edit=False):
+def new_school(form, is_popup=False, is_edit=False):
     """
     Must be within a ng-controller="form-handler" with a parameter for this
     form model.
     """
-    return {"form":form, "is_edit": is_edit}
+    return {"form":form, "is_popup": is_popup, "is_edit": is_edit}
 
 
 @register.inclusion_tag("new/tags/school_popup.html")

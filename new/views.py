@@ -124,6 +124,7 @@ def new(request, type="new", page=None, id=None):
         # Check that an id field exists for required foreign key fields
         field = model._meta.get_field(key)
         if field.is_relation and isinstance(data[key], dict):
+            print(key)
             if "id" not in data[key]:
                 response["error"][key] = "No {} specified".format(
                     field.target_field.model.__name__)
@@ -137,9 +138,26 @@ def new(request, type="new", page=None, id=None):
 
     # Check for required keys
     for field in model_form_map[page].Meta.fields:
-        if field not in data or data[field] == "" and field != "location":
+        if field not in data or data[field] == "" and field != 'location':
             response["error"][field] = "No {} specified".format(
                 field)
+        if field == 'location':
+            print (data)
+            lat=float(data[field]['lat'])
+            lng=float(data[field]['lng'])
+            data[field]=[lat,lng]
+            print("""
+
+
+
+
+
+
+        LOUYIE IS DUMB! DAKOTA CANT TYPE!
+            """)
+
+            print (data)
+
 
     # Look for any errors
     for k, v in response["error"].items():
