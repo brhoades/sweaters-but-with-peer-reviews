@@ -124,7 +124,6 @@ def new(request, type="new", page=None, id=None):
         # Check that an id field exists for required foreign key fields
         field = model._meta.get_field(key)
         if field.is_relation and isinstance(data[key], dict):
-            print(key)
             if "id" not in data[key]:
                 response["error"][key] = "No {} specified".format(
                     field.target_field.model.__name__)
