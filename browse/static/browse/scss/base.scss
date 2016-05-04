@@ -12,14 +12,21 @@ $site-accent-color: #f49832;
 /* End base materials */
 
 // Finds the IDs of the buttons and set it as the site color
-#siteButton {
-  color: white;
-  background-color: $site-accent-color;
-}
-
 #popup {
   background-color: $site-banner-color;
   width: 100%;
+}
+
+// This is the button to add reviews, professor, and schools
+#addButton {
+  right: 0;
+  margin: 15px;
+  position: absolute;
+}
+
+#siteButton {
+  color: white;
+  background-color: $site-accent-color;
 }
 
 /* Begin voting classes */
@@ -396,6 +403,13 @@ iframe {
     -moz-background-size: 300px;
     -o-background-size: 300px;
     background-size: 300px;
+  }
+
+  #addButton {
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    margin: 0;
   }
 
 }

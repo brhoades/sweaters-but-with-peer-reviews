@@ -5,12 +5,6 @@
 
 /* Override some lumx stuff to center buttons */
 
-#addButton {
-  right: 0;
-  margin-right: 30px;
-  position: absolute;
-}
-
 #c-button--push-left {
   position: relative;
   top: -7.5px;
