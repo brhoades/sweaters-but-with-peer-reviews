@@ -27,15 +27,17 @@
         {% new_school_popup True %}
       </div> -->
 
-      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+      <div class="delete-button-outer">
+        <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
                   class="delete-button"
                   action="delete"
                   model="school"
                   model-id="{{ school.id }}"
                   redir="{% url "schools" %}"
                   >
-        <i class="delete-button-icon"></i>
-      </lx-button>
+          <i class="delete-button-icon"></i>
+        </lx-button>
+      </div>
     {% endif %}
     <div class="professor-title">
         <img src="{% gravatar_url professor.owner.email 100 %}"

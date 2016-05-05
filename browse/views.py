@@ -9,6 +9,9 @@ from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
 from new.forms import SchoolForm
 
+import json
+from new.views import MODEL_MAP
+
 
 def index(request, message=""):
     template = "browse/index.html"
@@ -254,3 +257,39 @@ def sandbox(request):
     """
     template = "browse/sandbox.html"
     return render(request, template)
+
+def delete(request):
+    if request.method == "POST":
+        if not request.user.is_authenticated():
+            jsonResponse = {"success": False,
+                            "error": "User is not logged in"}
+            return HttpResponse(json.dumps(jsonResponse),
+                                content_type="application/json")
+
+        model_id = request.POST.get("model-id")
+        model = request.POST.get("model").lower()
+        user = request.user
+
+        obj = MODEL_MAP[model].objects.get(id=model_id)
+
+        if hasattr(MODEL_MAP[model], 'created_by'):
+            created_by_key = 'created_by'
+        elif hasattr(MODEL_MAP[model], 'owner'):
+            created_by_key = 'owner'
+        else:
+            jsonResponse = {"success": False,
+                            "error": model.capitalize()+" does not have an owner"}
+            return HttpResponse(json.dumps(jsonResponse),
+                                content_type="application/json")
+        if user != getattr(obj, created_by_key):
+            jsonResponse = {"success": False,
+                                "error": "You don't own this "+model}
+            return HttpResponse(json.dumps(jsonResponse),
+                                content_type="application/json")
+
+        obj.delete()
+
+        return HttpResponse(json.dumps({"success": True}),
+                            content_type="application/json")
+    else:
+        return HttpResponseNotAllowed(["POST"])

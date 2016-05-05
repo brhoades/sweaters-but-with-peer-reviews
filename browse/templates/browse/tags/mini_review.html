@@ -38,17 +38,15 @@
     <br />
     &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
     {% if review.owner == user %}
-      <div flex-container="row" align="justify">
-        <div class="delete-button-container">
-          <button lx-type="flat"
+      <div class="delete-button-outer">
+        <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
                   class="delete-button"
                   action="delete"
                   model="review"
                   model-id="{{ review.id }}"
-                  lx-ripple>
-            <i class="delete-button-icon"></i>
-          </button>
-        </div>
+                  >
+          <i class="delete-button-icon"></i>
+        </lx-button>
       </div>
     {% else %}
     <!-- <div class="item">

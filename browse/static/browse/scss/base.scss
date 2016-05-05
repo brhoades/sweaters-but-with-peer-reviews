@@ -124,12 +124,16 @@ $site-accent-color: #f49832;
 }
 /* End Voting Classes */
 
+.delete-button-outer {
+    z-index: 20;
+    float: right;
+}
+
 .delete-button {
   @extend .btn;
   @extend .btn--red;
   @extend .btn--l;
   @extend .btn--flat;
-  float:right !important;
 }
 
 .delete-button-icon {

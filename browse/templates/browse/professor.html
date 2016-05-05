@@ -29,15 +29,17 @@
       {% new_professor_popup True %}
     </div> -->
 
-    <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+    <div class="delete-button-outer">
+      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
                 class="delete-button"
                 action="delete"
                 model="professor"
                 model-id="{{ professor.id }}"
                 redir="{% url "professors" %}"
                 >
-      <i class="delete-button-icon"></i>
-    </lx-button>
+        <i class="delete-button-icon"></i>
+      </lx-button>
+    </div>
   {% endif %}
 
   <div class="professor-title">

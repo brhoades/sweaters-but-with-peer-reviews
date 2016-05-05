@@ -1,6 +1,6 @@
 {% load gravatar %}
 
-<div class="comment-card padded-card" comment-id="{{ comment.id }}" >
+<div class="comment-card padded-card" reviewcomment-id="{{ comment.id }}" >
   <div flex-container="row">
     <div class="card__img card__img--left" style="margin-right: 20px;">
       <a href="{% url 'profile' comment.owner.id %}">
@@ -28,17 +28,15 @@
       </div>
     </div>
     {% if comment.owner == user %}
-      <div flex-container="row" align="right">
-        <div class="delete-button-container">
-          <button lx-type="flat"
+      <div class="delete-button-outer">
+        <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
                   class="delete-button"
                   action="delete"
-                  model="comment"
+                  model="reviewcomment"
                   model-id="{{ comment.id }}"
-                  lx-ripple>
-            <i class="delete-button-icon"></i>
-          </button>
-        </div>
+                  >
+          <i class="delete-button-icon"></i>
+        </lx-button>
       </div>
     {% else %}
 

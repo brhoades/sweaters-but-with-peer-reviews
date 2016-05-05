@@ -25,18 +25,16 @@
       </div>
       <div class="item">
       {% if school.created_by == user %}
-            <div flex-container="row" align="justify">
-              <div class="delete-button-container">
-                <button lx-type="flat"
-                        class="delete-button"
-                        action="delete"
-                        model="school"
-                        model-id="{{ school.id }}"
-                        lx-ripple>
-                  <i class="delete-button-icon"></i>
-                </button>
-              </div>
-            </div>
+        <div class="delete-button-outer">
+          <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+                    class="delete-button"
+                    action="delete"
+                    model="school"
+                    model-id="{{ school.id }}"
+                    >
+            <i class="delete-button-icon"></i>
+          </lx-button>
+        </div>
       {% else %}
         <!-- {{school.created_by}}<br />
         Creator -->

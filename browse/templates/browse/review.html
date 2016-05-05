@@ -34,16 +34,18 @@
       </lx-button>
       {% new_review_popup True %}
     </div>
-
-    <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+    <div class="delete-button-outer">
+      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
                 class="delete-button"
                 action="delete"
                 model="review"
                 model-id="{{ review.id }}"
                 redir="{% url "reviews" %}"
                 >
-      <i class="delete-button-icon"></i>
-    </lx-button>
+        <i class="delete-button-icon"></i>
+      </lx-button>
+    </div>
+
   {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}">

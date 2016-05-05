@@ -46,12 +46,17 @@ $(document).ready(function() {
           "model-id": model_id,
           "model": model,
         },
-        success:function(){
-          if(redir==undefined){
-            $("["+model+"-id="+model_id+"]").remove();
+        success:function(data){
+          if(data.success) {
+            if(redir==undefined){
+              $("["+model+"-id="+model_id+"]").remove();
+            }
+            else {
+              window.location = redir
+            }
           }
           else {
-            window.location = redir
+            alert(data.error)
           }
         }
       });
