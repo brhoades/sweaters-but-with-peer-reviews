@@ -284,9 +284,12 @@ def peer_review(request, peerreview_id):
         form = PeerReviewForm(instance=peerReview)
     elif request.method == "POST":
         form = PeerReviewForm(request.POST, instance=peerReview)
-        form.save()
+        reviewEdit = form.save(commit=False)
+
+        reviewEdit.is_finished = True
+        reviewEdit.save()
     else:
-        HttpResponseNotAllowed(["POST", "GET"])
+        return HttpResponseNotAllowed(["POST", "GET"])
 
     context["form"] = form
 

@@ -259,6 +259,8 @@ class PeerReview(Model):
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)
 
+    is_finished = models.BooleanField(default=False)
+
     def __str__(self):
         return "{} {} on {}".format(self.owner.first_name,
                                     self.owner.last_name,

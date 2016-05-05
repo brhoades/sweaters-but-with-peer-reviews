@@ -26,7 +26,7 @@ urlpatterns = [
         name="reviews_by_type_two"),
 
     url(r'^peerreview/(?P<peerreview_id>[0-9]+)/?$', bviews.peer_review,
-        name="peer_review"),
+        name="peerreview"),
 
     url(r'logout/?$', bviews.logout, name="logout"),
 
