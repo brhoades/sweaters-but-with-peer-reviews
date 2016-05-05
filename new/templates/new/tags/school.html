@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <form method="post" ng-submit="submit()">
   {% csrf_token %}
 
@@ -34,21 +35,35 @@
             </lx-text-field>
             <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
         </div>
-        <div flex-item>
-            <lx-text-field label="Location">
-                <input type="text" ng-model="data.location" error="valid.location != ''"
-                         ng-model-updates="{ debounce: 1000 }">
-            </lx-text-field>
-            <span class="text-field-error" ng-show="valid.location != ''">{{ valid.location }}</span>
+      </div>
+
+      <div id="geoposition-widget" class="geoposition-widget" data-map-widget-height="480" data-map-options="{}" data-marker-options="{}">
+        <div flex-container="row" flex-gutter="24">
+          <div flex-item>
+              <lx-text-field label="Latitude">
+                  <input id="lat-input" class="geoposition"  type="text" ng-model="data.location['lat']" error="valid.url != ''">
+              </lx-text-field>
+              <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
+          </div>
+          <div flex-item>
+              <lx-text-field label="Longitude">
+                  <input id="lng-input" class="geoposition"  type="text" ng-model="data.location['lng']" error="valid.url != ''">
+              </lx-text-field>
+              <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
+          </div>
         </div>
       </div>
-      <button id="siteButton" class="btn btn--l btn--raised"type="submit" 
+      <button id="siteButton" class="btn btn--l btn--raised"type="submit"
             ng-submit="submit(data)" lx-ripple />Submit</button>
     </div>
   </div>
     {% endverbatim %}
-    {{ form.media }}
-    {{ form.location }}
-
+    {% if is_popup %}
+      <script type="text/javascript" src="{% static 'new/js/geoposition-popup.js' %}"></script>
+    {% else %}
+      <link href="{% static 'geoposition/geoposition.css' %}" type="text/css" media="all" rel="stylesheet">
+      <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
+      <script type="text/javascript" src="{% static 'new/js/geoposition.js' %}"></script>
+    {% endif %}
 
 </form>

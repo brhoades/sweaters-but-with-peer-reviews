@@ -137,9 +137,13 @@ def new(request, type="new", page=None, id=None):
 
     # Check for required keys
     for field in model_form_map[page].Meta.fields:
-        if field not in data or data[field] == "" and field != "location":
+        if field not in data or data[field] == "" and field != 'location':
             response["error"][field] = "No {} specified".format(
                 field)
+        if field == 'location':
+            lat = float(data[field]['lat'])
+            lng = float(data[field]['lng'])
+            data[field] = [lat, lng]
 
     # Look for any errors
     for k, v in response["error"].items():
