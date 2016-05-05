@@ -8,7 +8,7 @@ from browse.models import Review, User, Professor, School, Course,\
     ReviewComment, PeerReview
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
-from new.forms import PeerReviewForm
+from new.forms import PeerReviewForm, SchoolForm
 
 
 def index(request, message=""):
@@ -99,6 +99,7 @@ def setting(request, id=None, page=0):
 def schools(request, page):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
+    context["schoolForm"] = SchoolForm()
 
     # Get our page numbers to display, our page, all objects, and the
     # range of that all we're going to send back.
@@ -138,6 +139,7 @@ def school(request, school_id=None, page=0):
 def professors(request, page):
     template = loader.get_template("browse/professors.html")
     context = RequestContext(request)
+    context["schoolForm"] = SchoolForm()
 
     professors = []
     context["professors"] = professors
@@ -216,6 +218,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=1):
     context = RequestContext(request)
     context["pages"], context["page"], all, start, end = paginate(page, Review)
     context["review_votes"] = _get_all_review_votes(request)[start:end]
+    context["schoolForm"] = SchoolForm()
 
     if type == "by_school":
         context["message"] =\
