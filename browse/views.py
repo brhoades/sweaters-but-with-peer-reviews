@@ -1,5 +1,5 @@
 from django.template import loader, RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
@@ -258,6 +258,7 @@ def sandbox(request):
     template = "browse/sandbox.html"
     return render(request, template)
 
+
 def delete(request):
     if request.method == "POST":
         if not request.user.is_authenticated():
@@ -278,12 +279,13 @@ def delete(request):
             created_by_key = 'owner'
         else:
             jsonResponse = {"success": False,
-                            "error": model.capitalize()+" does not have an owner"}
+                            "error": model.capitalize() +
+                            " does not have an owner"}
             return HttpResponse(json.dumps(jsonResponse),
                                 content_type="application/json")
         if user != getattr(obj, created_by_key):
             jsonResponse = {"success": False,
-                                "error": "You don't own this "+model}
+                            "error": "You don't own this "+model}
             return HttpResponse(json.dumps(jsonResponse),
                                 content_type="application/json")
 
