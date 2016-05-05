@@ -10,6 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Blazers but with Peer Reviews - {% block title %}Default{% endblock %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'browse/css/main.css' %}">
@@ -111,16 +112,16 @@
                 </ul>
               </lx-dropdown-menu>
             {% else %}
-              <div ng-controller="loginData">
+              <div class="login-buttons" ng-controller="loginData">
                 <a href="{% url 'user_registration' %}">
                   <lx-button lx-color="orange">
-                    <span class="fs-headline display-block">Register</span>
+                    <span class="c-menu__link fs-headline display-block">Register</span>
                   </lx-button>
                 </a>
 
                 <a ng-click="opendDialog('loginCall')">
                   <lx-button lx-color="white">
-                    <span class="fs-headline display-block">Login</span>
+                    <span class="c-menu__link fs-headline display-block">Login</span>
                   </lx-button>
                   Login
                 </a>
