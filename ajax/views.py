@@ -70,7 +70,13 @@ def get_view_for_model(request, model="", id=-1):
     if model not in model_map:
         json_error("Unknown/unsupported model specified")
 
-    return HttpResponse(json.dumps({"url": reverse(model, args=[id])}))
+    # This one is sort of hacked in, it redirects to your dashboard
+    if model == "resolve_report":
+        url = "/browse/user/"
+    else:
+        url = reverse(model, args=[id])
+
+    return HttpResponse(json.dumps({"url": url}))
 
 
 def login(request):
