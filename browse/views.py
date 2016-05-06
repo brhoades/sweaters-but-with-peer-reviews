@@ -332,5 +332,3 @@ def reports(request, page):
         reports.append(p)
 
     return HttpResponse(template.render(context))
-
-
