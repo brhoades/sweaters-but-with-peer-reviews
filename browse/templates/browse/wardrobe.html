@@ -11,16 +11,17 @@
 
 {% block content %}
 
-<div class="review-card-small">
+<div class="review-card-small padded-card">
   <div flex-container="row">
     {% if peerReviews|length > 0 %}
       {% for peerReview in peerReviews %}
           <strong class="review-title">
-        {{ peerReview.target.title }}
+            {{ peerReview.target.title }}
           </strong>
           <span class="display-block">
             <b> {{ peerReview.target.course.name }} </b> <br />
-            with <b>
+            with
+            <b>
               {{ peerReview.target.target.first_name }} {{ peerReview.target.target.last_name }}
             </b>
             <a href="{% url 'peerreview' peerReview.id %}">Edit Review</a>
@@ -31,6 +32,19 @@
     {% endif %}
   </div>
 </div>
+
+{% if request.user.is_staff %}
+  <a href="{% url 'reports' %}">
+    <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
+      Reports
+    </button>
+  </a>
+  <a href="{% url 'logs' %}">
+    <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
+      Logs
+    </button>
+  </a>
+{% endif %}
 
 {% endblock %}
 

@@ -242,21 +242,6 @@ def reviews(request, type="all", first_id=None, second_id=None, page=1):
     return render(request, template, context)
 
 
-def reports(request, page):
-    template = loader.get_template("browse/reports.html")
-    context = RequestContext(request)
-
-    reports = []
-    context["reports"] = reports
-    context["pages"], context["page"], all, start, end \
-        = paginate(page, Report, "-target_log__created_ts")
-
-    for p in Report.objects.order_by('-target_log__created_ts')[start:end]:
-        reports.append(p)
-
-    return HttpResponse(template.render(context))
-
-
 def report(request, report_id=None, page=0):
     template = loader.get_template("browse/report.html")
     context = RequestContext(request)
@@ -321,3 +306,31 @@ def peer_review(request, peerreview_id):
     context["form"] = form
 
     return render(request, template, context)
+
+
+@login_required
+def logs(request, page=0):
+    """
+    The view for listing all log entries.
+    """
+    template = "browse/logs.html"
+    context = {}
+
+    return render(request, template, context)
+
+
+def reports(request, page):
+    template = loader.get_template("browse/reports.html")
+    context = RequestContext(request)
+
+    reports = []
+    context["reports"] = reports
+    context["pages"], context["page"], all, start, end \
+        = paginate(page, Report, "-target_log__created_ts")
+
+    for p in Report.objects.order_by('-target_log__created_ts')[start:end]:
+        reports.append(p)
+
+    return HttpResponse(template.render(context))
+
+
