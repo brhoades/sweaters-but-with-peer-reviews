@@ -1,54 +1,13 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
-from django.template import loader, RequestContext
+from django.template import loader
 
-from browse.models import Review, ReviewVote, Professor, School, Department, \
-    Field, FieldCategory, Course, ReviewComment
-from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
-    FieldForm, FieldCategoryForm, CourseForm, CommentForm
+from new.utils import json_error, check_fields_in_data, MODEL_MAP, \
+    MODEL_FORM_MAP, get_template_for_model
+from browse.models import ReviewVote, Report, Review
 
 import json
 import datetime
-
-
-MODEL_MAP = {"review": Review,
-             "professor": Professor,
-             "school": School,
-             "department": Department,
-             "course": Course,
-             "field": Field,
-             "fieldcategory": FieldCategory,
-             "reviewcomment": ReviewComment,
-             }
-
-
-def get_template_for_model(request, model_form_map, page):
-    template = None
-    context = RequestContext(request)
-
-    if page == "review":
-        template = loader.get_template("new/review.html")
-    elif page == "professor":
-        template = loader.get_template("new/professor.html")
-    elif page == "school":
-        template = loader.get_template("new/school.html")
-    elif page == "department":
-        template = loader.get_template("new/department.html")
-    elif page == "course":
-        template = loader.get_template("new/course.html")
-    elif page == "field":
-        template = loader.get_template("new/field.html")
-    elif page == "fieldcategory":
-        template = loader.get_template("new/fieldcategory.html")
-    else:
-        return HttpResponse("Put a 404 here or something.")
-
-    context["form"] = model_form_map[page]
-    return HttpResponse(template.render(context))
-
-
-def json_error(data):
-    return HttpResponse(json.dumps({"error": data}))
 
 
 @login_required
@@ -82,68 +41,35 @@ def new(request, type="new", page=None, id=None):
 
     model = None
     response = {"error": {"error": ""}}
-    model_map = MODEL_MAP
-    model_form_map = {"review": ReviewForm,
-                      "professor": ProfessorForm,
-                      "school": SchoolForm,
-                      "course": CourseForm,
-                      "department": DepartmentForm,
-                      "field": FieldForm,
-                      "fieldcategory": FieldCategoryForm,
-                      "reviewcomment": CommentForm
-                      }
 
     if request.method != "POST":
-        return get_template_for_model(request, model_form_map, page)
+        return get_template_for_model(request, MODEL_FORM_MAP, page)
 
     data = json.loads(request.body.decode())
 
-    if page not in model_map.keys():
-        return json_error({"error": "Unknown page requested."})
+    if page not in MODEL_MAP:
+        return json_error({"error": "Requested page type \"{}\" does not have"
+                                    " a known model.".format(page)})
+    if page not in MODEL_FORM_MAP.keys():
+        return json_error({"error": "Requested page type \"{}\" does not have"
+                                    " a known form.".format(page)})
 
-    model = model_map[page]
-
-    # Otherwise we will complain about it existing
-    del data["error"]
+    model = MODEL_MAP[page]
+    form = MODEL_FORM_MAP[page]
 
     # If model has an owner or created by field, add us
-    if model_form_map[page].needs_owner:
+    if form.needs_owner:
         data["owner"] = request.user
-    elif model_form_map[page].needs_created_by:
+    elif form.needs_created_by:
         data["created_by"] = request.user
 
+    # FIXME: Is this necessary? It seems like it should autoresolve this
     if page == "reviewcomment":
         data["target"] = Review.objects.get(id=int(data["target"]))
 
-    for key in data.keys():
-        # Check that this is a key that exists
-        if key not in model._meta.get_all_field_names():
-            return json_error({"error": ''.join(["No field for ",
-                                                 str(model), ": \"",
-                                                 key, "\""])})
-        # Check that an id field exists for required foreign key fields
-        field = model._meta.get_field(key)
-        if field.is_relation and isinstance(data[key], dict):
-            if "id" not in data[key]:
-                response["error"][key] = "No {} specified".format(
-                    field.target_field.model.__name__)
-            elif not field.target_field.model.objects.filter(
-                    id=data[key]["id"]).count():
-                response["error"][key] = "{} does not exist".format(
-                    field.target_field.model.__name__)
-            else:
-                data[key] = field.target_field.model.objects.get(
-                    id=data[key]["id"])
-
-    # Check for required keys
-    for field in model_form_map[page].Meta.fields:
-        if field not in data or data[field] == "" and field != 'location':
-            response["error"][field] = "No {} specified".format(
-                field)
-        if field == 'location':
-            lat = float(data[field]['lat'])
-            lng = float(data[field]['lng'])
-            data[field] = [lat, lng]
+    res = check_fields_in_data(data, model, form)
+    if res:
+        return res
 
     # Look for any errors
     for k, v in response["error"].items():
@@ -164,7 +90,7 @@ def new(request, type="new", page=None, id=None):
         print("ERROR: " + str(e))
         return HttpResponse(json_error({"error": str(e)}))
 
-    for field in model_form_map[page].Meta.fields:
+    for field in MODEL_FORM_MAP[page].Meta.fields:
         response["error"][field] = ""  # clear errors
 
     new.save()
@@ -223,3 +149,98 @@ def addVote(request, wat=None):
                             content_type="application/json")
     else:
         return HttpResponseNotAllowed(["POST"])
+
+
+@login_required
+def report(request, model_name, id):
+    """
+    This view serves both the proper form page and the POST requests for
+    the report form page.
+
+    It's essentially a clone of new but with a few fixes since the model is
+    mucked up with metamadness.
+    """
+    if model_name not in MODEL_MAP:
+        if request.method != "POST":
+            return HttpResponse("Unknown model name specified.")
+        return json_error({"error": "Requested page type \"{}\" does not "
+                                    "have a known model."
+                                    .format(model_name)
+                           })
+    if model_name not in MODEL_FORM_MAP:
+        if request.method != "POST":
+            return HttpResponse("Unknown model name specified.")
+        return json_error({"error": "Requested page type \"{}\" does not "
+                                    "have a known form.".format(model_name)
+                           })
+
+    if request.method == "POST":
+        res = {}
+        data = json.loads(request.body.decode())
+
+        target_model = MODEL_MAP[model_name]
+        form = MODEL_FORM_MAP["report"]
+
+        inst = target_model.objects.get(id=id)
+        if not inst:
+            json_error({"error": "Unknown model instance id for provided model"
+                                 " ({} for '{}').".format(id, model_name)})
+
+        err = check_fields_in_data(data, Report, form)
+        if err:
+            return err
+
+        print(data)
+
+        new = Report.create(target_model, id, request.user, data["summary"],
+                            data["text"])
+        new.save()
+        res["id"] = new.id
+
+        return HttpResponse(json.dumps(res),
+                            content_type="application/json")
+    else:
+        inst = MODEL_MAP[model_name].objects.get(id=id)
+        template = loader.get_template("new/report.html")
+        context = {"instance": inst, "model": model_name, "id": id}
+
+        return HttpResponse(template.render(context))
+
+
+@login_required
+def resolve_report(request, report_id):
+    """
+    This view serves both the proper form page and the POST requests for
+    the resolve report form page.
+
+    It's essentially a clone of report but with a few changes to make
+    resolution better.
+    """
+    # TODO: Check if staff
+    inst = Report.objects.get(id=report_id)
+    if not inst:
+        return json_error({"error": "Unknown report with id {}".format(id)})
+
+    if inst.handled:
+        return json_error({"error": "Report has already been resolved."})
+
+    if request.method == "POST":
+        res = {}
+        data = json.loads(request.body.decode())
+
+        if "text" not in data:
+            return json_error({"text": "Missing text field."})
+
+        if "summary" not in data or data["summary"] == "":
+            return json_error({"summary": "Missing action field."})
+
+        inst.resolve(by=request.user, comment=data["text"])
+        res["id"] = inst.id
+
+        return HttpResponse(json.dumps(res),
+                            content_type="application/json")
+    else:
+        template = loader.get_template("new/resolve_report.html")
+        context = {"instance": inst, "id": report_id}
+
+        return HttpResponse(template.render(context))

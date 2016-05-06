@@ -1,5 +1,4 @@
 from django import template
-from django.shortcuts import render, redirect, get_object_or_404
 
 register = template.Library()
 
@@ -17,12 +16,14 @@ def review_card(review_data, vote_data, can_vote=True):
     return {"review": review_data, "vote": vote_data,
             "can_vote": can_vote}
 
+
 @register.inclusion_tag("browse/tags/comment_card.html")
 def comment_card(comment):
     """
     Displays a Comment card for the given comment text
     """
     return {"comment": comment}
+
 
 @register.inclusion_tag("browse/tags/professor_card.html")
 def professor_card(professor):
@@ -46,3 +47,11 @@ def course_card(course):
     Displays a course card for the provided course.
     """
     return {"course": course}
+
+
+@register.inclusion_tag("browse/tags/report_card.html")
+def report_card(report):
+    """
+    Displays a report card for the provided report.
+    """
+    return {"report": report}

@@ -1,0 +1,34 @@
+<form method="post" ng-submit="submit()">
+  {% csrf_token %}
+
+  {% verbatim %}
+  <div flex-container="row" ng-model="valid.error"
+       class="p+ error bgc-red-500 tc-white-1" ng-show="valid.error != ''">
+    <center>
+      {{ valid.error }}
+    </center>
+  </div>
+  <div flex-container="column" flex-gutter="24">
+    <div flex-item>
+      <div flex-item>
+        <lx-text-field label="Report Summary">
+          <input type="text" ng-minlength="5" ng-maxlength="50" ng-model="data.summary"
+                 error="valid.summary != ''">
+        </lx-text-field>
+        <span class="text-field-error" ng-show="valid.summary != ''">{{ valid.summary }}</span>
+      </div>
+
+      <div flex-item>
+        <lx-text-field label="Write your report here (minimum 20 characters)" error="valid.text != ''">
+          <textarea ng-model="data.text" type="text" ng-minlength="20"></textarea>
+        </lx-text-field>
+        <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
+      </div>
+
+    <button id="siteButton" class="btn btn--l btn--raised"type="submit" ng-submit="submit()" lx-ripple />Submit</button>
+
+    </div>
+  </div>
+  {% endverbatim %}
+
+</form>

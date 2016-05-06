@@ -24,9 +24,13 @@ urlpatterns = [
     url(r'^reviews/(?P<page>[0-9]+)/(?P<type>[A-Za-z_]+)/(?P<first_id>[0-9]+)'
         '/(?P<second_id>[0-9]+)/?$', bviews.reviews,
         name="reviews_by_type_two"),
-
+    url(r'^reports/(?P<page>[0-9]+)?$', bviews.reports, name="reports"),
+    url(r'^report/(?P<report_id>[0-9]+)?$', bviews.report, name="report"),
     url(r'^peerreview/(?P<peerreview_id>[0-9]+)/?$', bviews.peer_review,
         name="peerreview"),
+
+    url(r'^logs/(?P<page>[0-9]+)?/?$', bviews.logs, name="logs"),
+    url(r'^reports/(?P<page>[0-9]+)?/?$', bviews.reports, name="reports"),
 
     url(r'logout/?$', bviews.logout, name="logout"),
 

@@ -22,6 +22,8 @@ app.controller('form-handler',
     function($scope, $http, $window, $attrs, LxDialogService) {
   $scope.type = $attrs.model;
   $scope.edit = $attrs.edit;
+  $scope.report_model = $attrs.reportmodel;
+  $scope.report_id = $attrs.reportid;
 
   $scope.data = {
     error: ""
@@ -108,16 +110,20 @@ app.controller('form-handler',
   };
 
   $scope.submit = function() {
-    console.log(JSON.stringify($scope.data));
     $scope.ajax.loading = true;
     var url = "/new/" + $scope.type;
     if($scope.edit) {
       url = "/edit/" + $scope.type + "/" + $scope.id;
     }
+    if($scope.type == "report") {
+      url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
+    }
+    if($scope.type == "resolve_report") {
+      url = "/new/resolve_report/" + $scope.report_id;
+    }
 
     $http.post(url, JSON.stringify($scope.data)).
       success(function(data) {
-        console.log(data);
         // Always expects, if any elements, a fields item in it
         $scope.ajax.list = [];
         $scope.ajax.loading = false;

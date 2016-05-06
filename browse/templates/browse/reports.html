@@ -1,0 +1,37 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% load sass_tags %}
+{% load formlets %}
+{% load cards %}
+{% block title %}Reports{% endblock %}
+{% block header %}
+<link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+      type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+  <div class="pagination-buttons">
+    {% for i in pages %}
+      <a href="{% url 'reports' i %}">
+        {% if i == page %}
+          <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
+        {% else %}
+          <button class="md-raised md-button md-ink-ripple">
+        {% endif %}
+          {{ i }}
+        </button>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if reports|length > 0 %}
+    {% for report in reports %}
+      {% report_card report %}
+    {% endfor %}
+  {% else %}
+    <h2 class="no-items">There are no more reports (yay!).</h2>
+  {% endif %}
+</div>
+
+{% endblock %}

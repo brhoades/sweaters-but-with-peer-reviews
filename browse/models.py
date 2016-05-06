@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator, URLValidator, \
     MinLengthValidator
 from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
+from django.apps import apps
 
 import urllib.request as urllib
 import json
@@ -39,6 +40,7 @@ def updated(self):
         return False
     return True
 
+# monkey patch some new functions onto models
 Model.to_json = to_json
 Model.updated = updated
 
@@ -92,7 +94,7 @@ class School(Model):
         return rating
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s at %s" % (self.name, self.human_location)
 
 
 class FieldCategory(Model):
@@ -129,7 +131,7 @@ class Department(models.Model):
     created_by = models.ForeignKey(User)
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s (%s)" % (self.name, self.school.name)
 
 
 class Professor(Model):
@@ -164,7 +166,8 @@ class Professor(Model):
         return rating
 
     def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return "%s %s (at %s)" % (self.first_name, self.last_name,
+                                  self.school.name)
 
 
 class Course(Model):
@@ -177,7 +180,8 @@ class Course(Model):
     created_by = models.ForeignKey(User)
 
     def __str__(self):
-        return "%s (%i)" % (self.name, self.number)
+        return "%s (%i) at %s" % (self.name, self.number,
+                                  self.department.school.name)
 
 
 class Review(Model):
@@ -201,10 +205,10 @@ class Review(Model):
     updated_ts = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} {} for {} {}".format(self.owner.first_name,
-                                        self.owner.last_name,
-                                        self.target.first_name,
-                                        self.target.last_name)
+        return "Review by {} {} for {} {}".format(self.owner.first_name,
+                                                  self.owner.last_name,
+                                                  self.target.first_name,
+                                                  self.target.last_name)
 
 
 class ReviewVote(Model):
@@ -216,7 +220,14 @@ class ReviewVote(Model):
     owner = models.ForeignKey(User)
 
     def __str__(self):
-        return "%s %s" % (self.owner.first_name, self.owner.last_name)
+        if self.quality:
+            type = "positive"
+        else:
+            type = "negative"
+        return ("Review Vote for {} {} by {} {}"
+                .format(type, self.target.first_name,
+                        self.target_last_name,  self.owner.first_name,
+                        self.owner.last_name))
 
 
 class ReviewComment(models.Model):
@@ -234,9 +245,203 @@ class ReviewComment(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} {} on {}".format(self.owner.first_name,
-                                    self.owner.last_name,
-                                    self.target.title)
+        return ("{} {} on review for {} {} ({})"
+                .format(self.owner.first_name, self.owner.last_name,
+                        self.target.target.first_name,
+                        self.target.target.last_name, self.target.id))
+
+
+class Log(models.Model):
+    """
+    Contains an event. Can be a edits, deletions, etc. Reports can point
+    to a log of that report.
+    """
+    # Contains JSON detailing target model name and pk.
+    # 'model_type': 'String',
+    # 'model_pk': Number
+    target_serialized = models.TextField(max_length=1000, null=True)
+    action = models.TextField(max_length=10000, null=True)
+    comment = models.TextField(max_length=10000, null=True)
+    owner = models.ForeignKey(User, null=True)  # null implies system
+
+    created_ts = models.DateTimeField(auto_now_add=True)
+    updated_ts = models.DateTimeField(auto_now=True)
+
+    # Types of logs
+    ADD = "add"
+    DELETE = "del"
+    MODIFY = "mod"
+    REPORT = "rep"
+    REPORT_RESOLVE = "han"
+    OTHER = "oth"
+
+    CATEGORIES = (
+        (ADD, "Add"),
+        (DELETE, "Delete"),
+        (MODIFY, "Modify"),
+        (REPORT, "Report"),
+        (REPORT_RESOLVE, "Report Resolution"),
+        (OTHER, "Other"),
+    )
+
+    category = models.CharField(max_length=3, choices=CATEGORIES,
+                                default=OTHER)
+
+    @property
+    def target(self):
+        """
+        Get the target of this entry. Note that if it was delete, this will
+        raise.
+        """
+        data = json.loads(self.target_serialized)
+        model = apps.get_model(model_name=data["model_type"],
+                               app_label="browse")
+        return model.objects.get(id=data["model_pk"])
+
+    @staticmethod
+    def create(model, id, type, action=None, comment=None,
+               owner=""):
+        """
+        Create a log entry given a model, its id, and a type.
+        Message optional.
+
+        Does not save, only returns a new Log.
+        """
+        return Log(target_serialized=json.dumps({
+            "model_type": model.__class__.__name__,
+            "model_pk": id
+            }), category=type, action=action, comment=comment,
+            owner=owner)
+
+    def __str__(self):
+        if self.owner:
+            owner = "{} {}".format(self.owner.first_name,
+                                   self.owner.last_name)
+        else:
+            owner = "System"
+        return ("\"{}\" (\"{}\") by {}"
+                .format(self.action, self.comment, owner))
+        # TODO: Add target information in here if there's a target ^^
+
+
+class Report(models.Model):
+    """
+    Reports are simply a pointer to a log entry (that's in turn a report).
+
+    Unsatisfied unless handled_by is a log entry.
+    """
+    target_log = models.ForeignKey(Log, related_name="target_log")
+    handled_by = models.ForeignKey(Log, null=True, related_name="handled_by")
+
+    summary = models.TextField(max_length=50)
+
+    @staticmethod
+    def create(model, id, reporter, summary, text):
+        """
+        Creates a new report given a reporter, a message, a target id,
+        and a target model.
+
+        Returns the report without saving.
+        """
+        log = Log.create(model, id, Log.REPORT, comment=text,
+                         owner=reporter)
+        log.save()
+        return Report(target_log=log, summary=summary)
+
+    def resolve(self, by, comment):
+        """
+        Resolves a report by creating another log entry.
+
+        Returns this object without saving.
+        """
+        self.handled_by = Log.create(self.target,
+                                     self.target.id,
+                                     Log.REPORT, comment=comment,
+                                     owner=by)
+        self.handled_by.save()
+        return self
+
+    @property
+    def target(self):
+        """
+        Gives the target of this report.
+        """
+        return self.target_log.target
+
+    @property
+    def created_by(self):
+        """
+        Gives the person who created this report
+        """
+        return self.target_log.owner
+
+    @property
+    def handled(self):
+        """
+        Returns if this report was handled.
+        """
+        return self.handled_by is not None
+
+    @property
+    def handler(self):
+        """
+        Gives the user who handled this report.
+        """
+        return self.handled_by.owner
+
+    @property
+    def created_ts(self):
+        """
+        Gives the time this report was created.
+        """
+        return self.target_log.created_ts
+
+    @property
+    def updated_ts(self):
+        """
+        Returns the created_ts unless this report has been handled, in which
+        case it returns the handler entry's created_ts.
+        """
+        if self.handled:
+            return self.handled_by.created_ts
+
+        return self.created_by.created_ts
+
+    @property
+    def owner(self):
+        """
+        Gives the owner of this report.
+        """
+        return self.created_by
+
+    @property
+    def title(self):
+        """
+        Gives a report title for our overview page.
+        """
+        return "[{}] {}".format(self.target.__class__.__name__, self.target)
+
+    @property
+    def target_type(self):
+        """
+        Returns a string that can be used as a link to get the target's info
+        page.
+
+        Usually.
+        """
+        return self.target.__class__.__name__.lower()
+
+    def __str__(self):
+        resolved = "pending"
+        if self.handled:
+            resolved = "addressed by {} {}".format(self.handler.first_name,
+                                                   self.handler.last_name)
+        return ("\"{}\" for a {} ({}) by {} {} ({})"
+                .format(self.summary, self.target.__class__.__name__,
+                        str(self.target),
+                        self.created_by.first_name,
+                        self.created_by.last_name,
+                        resolved))
 
 
 class PeerReview(Model):
