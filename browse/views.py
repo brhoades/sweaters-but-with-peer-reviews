@@ -1,13 +1,14 @@
 from django.template import loader, RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from browse.models import Review, User, Professor, School, Course,\
-    ReviewComment, Report
+    ReviewComment, Report, PeerReview
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
-from new.forms import SchoolForm
+from new.forms import PeerReviewForm, SchoolForm
 
 
 def index(request, message=""):
@@ -280,3 +281,43 @@ def sandbox(request):
     """
     template = "browse/sandbox.html"
     return render(request, template)
+
+
+@login_required
+def wardrobe(request):
+    """
+    The view for each user to view their peer reivews.
+    """
+
+    template = "browse/wardrobe.html"
+    context = {}
+
+    context["peerReviews"] = request.user.peerreview_set.all()\
+                                    .order_by('-created_ts')
+
+    return render(request, template, context)
+
+
+def peer_review(request, peerreview_id):
+    """
+    The view for look at and fill-out peerReview forms.
+    """
+    template = "browse/peerreview.html"
+    context = {}
+
+    peerReview = get_object_or_404(PeerReview, id=peerreview_id)
+
+    if request.method == "GET":
+        form = PeerReviewForm(instance=peerReview)
+    elif request.method == "POST":
+        form = PeerReviewForm(request.POST, instance=peerReview)
+        reviewEdit = form.save(commit=False)
+
+        reviewEdit.is_finished = True
+        reviewEdit.save()
+    else:
+        return HttpResponseNotAllowed(["POST", "GET"])
+
+    context["form"] = form
+
+    return render(request, template, context)

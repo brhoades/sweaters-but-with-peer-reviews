@@ -4,7 +4,7 @@ the appropriate fields required.
 """
 
 from browse.models import Review, Course, Professor, School, Department,\
-    Field, FieldCategory, ReviewComment, Report
+    Field, FieldCategory, ReviewComment, Report, PeerReview
 from django.forms import ModelForm
 
 
@@ -116,3 +116,10 @@ class ResolveReportForm(ModelForm):
         fields = ['summary']
         # Only used for internal checks.
         fields_extra = ['text']
+
+
+class PeerReviewForm(ModelForm):
+    class Meta:
+        model = PeerReview
+        fields = ['text', 'rating', 'flag']
+        fields_extra = []

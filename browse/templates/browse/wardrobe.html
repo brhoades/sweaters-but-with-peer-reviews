@@ -1,0 +1,28 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% load sass_tags %}
+{% load cards %}
+
+{% block title %}Wardrobe{% endblock %}
+
+{% block content %}
+
+{% for peerReview in peerReviews %}
+<div class="review-card-small">
+  <div flex-container="row">
+    <strong class="review-title">
+  {{ peerReview.target.title }}
+    </strong>
+    <span class="display-block">
+      <b> {{ peerReview.target.course.name }} </b> <br />
+      with <b>
+        {{ peerReview.target.target.first_name }} {{ peerReview.target.target.last_name }}
+      </b>
+      <a href="{% url 'peerreview' peerReview.id %}">Edit Review</a>
+    </span>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
