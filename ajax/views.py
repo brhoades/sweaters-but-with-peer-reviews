@@ -70,9 +70,9 @@ def get_view_for_model(request, model="", id=-1):
     if model not in model_map:
         json_error("Unknown/unsupported model specified")
 
-    # This one is sort of hacked in, it redirects to your dashboard
+    # This one is sort of hacked in, it redirects to your reports list
     if model == "resolve_report":
-        url = "/browse/user/"
+        url = "/browse/reports"
     else:
         url = reverse(model, args=[id])
 
