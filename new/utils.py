@@ -77,6 +77,10 @@ def check_fields_in_data(data, model, form):
         if field not in data or data[field] == "" and field != "location":
             response["error"][field] = "No {} specified".format(
                 field)
+        if field == 'location':
+            lat = float(data[field]['lat'])
+            lng = float(data[field]['lng'])
+            data[field] = [lat, lng]
 
 
 def get_template_for_model(request, model_form_map, page):

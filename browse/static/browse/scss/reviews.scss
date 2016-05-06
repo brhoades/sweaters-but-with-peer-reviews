@@ -1,17 +1,16 @@
 @import "base";
 
 .vote-button-down-container {
-  margin-right:15px;
+  margin: 0;
 }
 
 .vote-button-up-container {
-  margin-top:13%;
-  margin-right:15px;
+  margin: 0;
 }
 
 .review-card-small {
   @extend .card;
-  margin: 20px 10% 20px 10%;
+  margin: 10px 0 10px;
 
   .review-title {
     @extend .fs-headline;
@@ -69,7 +68,7 @@
 .review-text {
   margin-right: 10px;
   overflow: visible;
-  text-align: left;
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -90,4 +89,37 @@
   overflow: visible;
   text-align: left;
   font-size: 13px;
+}
+
+@media only screen and (max-width: 800px)
+{
+  .review-rating {
+    font-size: 8px;
+  }
+
+  .display-block {
+    font-size: 10px;
+  }
+
+  .review-title-subtext {
+    font-size: 10px;
+  }
+
+  .review-title {
+    font-size: 15px;
+  }
+
+}
+
+@media only screen and (min-width: 150px) and (max-width: 320px)
+{
+
+  .vote-button-down-container {
+    float: right;
+  }
+
+  .vote-button-up-container {
+    float: left;
+  }
+
 }
