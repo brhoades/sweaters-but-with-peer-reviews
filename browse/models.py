@@ -17,13 +17,16 @@ def to_json(self):
     """
     ret = {}
     for field in self._meta.get_fields():
+        # Don't send passwords or emails.
+        if field.name == "password" or field.name == "email":
+            continue
+
         # If we don't have the attribute (this happens), skip it
         try:
             ret[field.name] = getattr(self, field.name)
         except:
             continue
 
-        # FIXME: Add a catch for user. Don't return the password.
         try:
             ret[field.name] = json.loads(ret[field.name].to_json())
         except:
