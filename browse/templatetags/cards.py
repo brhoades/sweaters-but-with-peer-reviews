@@ -18,11 +18,11 @@ def review_card(review_data, vote_data, can_vote=True):
 
 
 @register.inclusion_tag("browse/tags/comment_card.html")
-def comment_card(comment):
+def comment_card(comment, user, review):
     """
     Displays a Comment card for the given comment text
     """
-    return {"comment": comment}
+    return {"comment": comment, "user": user, "review": review}
 
 
 @register.inclusion_tag("browse/tags/professor_card.html")

@@ -116,7 +116,7 @@
     {% endif %}
 
     {% for comment in comments %}
-      {% comment_card comment %}
+      {% comment_card comment request.user review %}
     {% endfor %}
 
     <div ng-controller="form-handler" model="reviewcomment">
