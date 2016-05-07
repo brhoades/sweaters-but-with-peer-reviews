@@ -6,7 +6,7 @@ from new.utils import MODEL_MAP
 
 
 @receiver(post_save)
-def log_save(sender, instance, *args, **kwargs):
+def log_save(sender, instance, created, *args, **kwargs):
     """
     Creates a log entry for every creation / modification.
     """
@@ -23,7 +23,7 @@ def log_save(sender, instance, *args, **kwargs):
         owner = instance.owner
 
     type = Log.ADD
-    if hasattr(instance, "updated") and instance.updated():
+    if not created:
         type = Log.MODIFY
 
     log = Log.create(instance, instance.id, type, owner=owner)
