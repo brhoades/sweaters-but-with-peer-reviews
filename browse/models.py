@@ -245,7 +245,7 @@ class ReviewComment(models.Model):
     updated_ts = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return ("{} {} on review for {} {} ({})"
+        return ("{} {} comment on review for {} {} ({})"
                 .format(self.owner.first_name, self.owner.last_name,
                         self.target.target.first_name,
                         self.target.target.last_name, self.target.id))
@@ -369,7 +369,7 @@ class Report(models.Model):
         """
         self.handled_by = Log.create(self.target,
                                      self.target.id,
-                                     Log.REPORT, comment=comment,
+                                     Log.REPORT_RESOLVE, comment=comment,
                                      owner=by)
         self.handled_by.save()
         self.save()
