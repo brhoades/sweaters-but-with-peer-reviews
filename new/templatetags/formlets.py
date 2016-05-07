@@ -99,21 +99,21 @@ def new_field_category():
 
 
 @register.inclusion_tag("new/tags/comment_popup.html")
-def new_comment_popup(review):
+def new_comment_popup(review, is_edit=False, comment=None):
     """
     Must be whithin a ng-controller="form-handler" with a parameter for this
     form model.
     """
-    return {"review": review}
+    return {"review": review, "is_edit": is_edit, "comment": comment}
 
 
 @register.inclusion_tag("new/tags/comment.html")
-def new_comment(review):
+def new_comment(review, is_edit=False, comment=None):
     """
     Must be whithin a ng-controller="form-handler" with a parameter for this
     form model.
     """
-    return {"review": review}
+    return {"review": review, "is_edit": is_edit, "comment": comment}
 
 
 @register.inclusion_tag("new/tags/report.html")
