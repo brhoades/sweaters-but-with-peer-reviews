@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from browse.models import Review, User, Professor, School, Course,\
-    ReviewComment, Report, PeerReview
+    ReviewComment, Report, PeerReview, Log
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
 from new.forms import PeerReviewForm, SchoolForm
@@ -315,6 +315,14 @@ def logs(request, page=0):
     """
     template = "browse/logs.html"
     context = {}
+
+    logs = []
+    context["logs"] = logs
+    context["pages"], context["page"], all, start, end \
+        = paginate(page, Log, "-created_ts")
+
+    for p in Log.objects.order_by('-created_ts')[start:end]:
+        logs.append(p)
 
     return render(request, template, context)
 

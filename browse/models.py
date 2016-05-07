@@ -307,11 +307,25 @@ class Log(models.Model):
 
         Does not save, only returns a new Log.
         """
-        return Log(target_serialized=json.dumps({
+        log = Log(target_serialized=json.dumps({
             "model_type": model.__class__.__name__,
             "model_pk": id
             }), category=type, action=action, comment=comment,
             owner=owner)
+
+        log.save()
+
+        return log
+
+    @property
+    def category_name(self):
+        """
+        Get a pretty category name for this log entry. Do a lazy linear
+        search.
+        """
+        for short, name in Log.CATEGORIES:
+            if short == self.category:
+                return name
 
     def __str__(self):
         if self.owner:
@@ -340,25 +354,25 @@ class Report(models.Model):
         """
         Creates a new report given a reporter, a message, a target id,
         and a target model.
-
-        Returns the report without saving.
         """
         log = Log.create(model, id, Log.REPORT, comment=text,
                          owner=reporter)
-        log.save()
-        return Report(target_log=log, summary=summary)
+
+        new = Report(target_log=log, summary=summary)
+        new.save()
+
+        return new
 
     def resolve(self, by, comment):
         """
         Resolves a report by creating another log entry.
-
-        Returns this object without saving.
         """
         self.handled_by = Log.create(self.target,
                                      self.target.id,
                                      Log.REPORT, comment=comment,
                                      owner=by)
         self.handled_by.save()
+        self.save()
         return self
 
     @property
