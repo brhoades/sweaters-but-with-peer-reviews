@@ -319,7 +319,7 @@ def logs(request, page=0):
     logs = []
     context["logs"] = logs
     context["pages"], context["page"], all, start, end \
-        = paginate(page, Log, "-created_ts")
+        = paginate(page, Log, "-created_ts", 15)
 
     for p in Log.objects.order_by('-created_ts')[start:end]:
         logs.append(p)

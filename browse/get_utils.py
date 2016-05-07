@@ -35,7 +35,7 @@ def _get_all_review_votes(request, review_filter={}):
     return [(x, y,) for x, y in zip(reviewList, voteList)]
 
 
-def paginate(page, model, key="-created_ts"):
+def paginate(page, model, key="-created_ts", num_per_page=6):
     """
     Helps paging models.
 
@@ -52,8 +52,6 @@ def paginate(page, model, key="-created_ts"):
     else:
         page = int(page)
 
-    # Someone make this less dumb
-    num_per_page = 6
     # Our start and end indices of our model list.
     start = (page-1)*num_per_page
     end = start + num_per_page
