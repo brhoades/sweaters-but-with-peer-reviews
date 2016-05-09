@@ -4,6 +4,8 @@ import browse.views as bviews
 urlpatterns = [
     url(r'^user/(?P<id>[0-9]+)?$', bviews.profile, name="profile"),
     url(r'^user/?$', bviews.setting, name="setting"),
+    url(r'^user/wardrobe/?$', bviews.wardrobe, name="wardrobe"),
+
     url(r'^school/(?P<school_id>[0-9]+)?$', bviews.school, name="school"),
     url(r'^schools/(?P<page>[0-9]+)?$', bviews.schools, name="schools"),
 
@@ -22,6 +24,13 @@ urlpatterns = [
     url(r'^reviews/(?P<page>[0-9]+)/(?P<type>[A-Za-z_]+)/(?P<first_id>[0-9]+)'
         '/(?P<second_id>[0-9]+)/?$', bviews.reviews,
         name="reviews_by_type_two"),
+    url(r'^reports/(?P<page>[0-9]+)?$', bviews.reports, name="reports"),
+    url(r'^report/(?P<report_id>[0-9]+)?$', bviews.report, name="report"),
+    url(r'^peerreview/(?P<peerreview_id>[0-9]+)/?$', bviews.peer_review,
+        name="peerreview"),
+
+    url(r'^logs/(?P<page>[0-9]+)?/?$', bviews.logs, name="logs"),
+    url(r'^reports/(?P<page>[0-9]+)?/?$', bviews.reports, name="reports"),
 
     url(r'logout/?$', bviews.logout, name="logout"),
 

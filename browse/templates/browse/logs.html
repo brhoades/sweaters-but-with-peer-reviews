@@ -1,0 +1,83 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% load sass_tags %}
+{% load formlets %}
+{% load cards %}
+{% block title %}Logs{% endblock %}
+{% block header %}
+<link href="{% sass_src "browse/scss/reviews.scss" %}" rel="stylesheet"
+      type="text/css" />
+{% endblock %}
+{% block javascript %}
+  angular.module('lumxWrap').controller('logstable', ['$scope', function ($scope) {
+    'use strict';
+
+    $scope.selected = [];
+
+  }]);
+{% endblock %}
+
+
+{% block content %}
+  <div class="pagination-buttons">
+    {% for i in pages %}
+      <a href="{% url 'logs' i %}">
+        {% if i == page %}
+          <button id="siteButton" class="md-raised md-button md-primary md-ink-ripple">
+        {% else %}
+          <button class="md-raised md-button md-ink-ripple">
+        {% endif %}
+          {{ i }}
+        </button>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if logs|length > 0 %}
+    <md-table-container>
+      <table md-table ng-model="logstable">
+        <thead md-head>
+          <tr md-row>
+            <th md-column md-numeric>Category</th>
+            <th md-column md-numeric>Created By</th>
+            <th md-column md-numeric>Created On</th>
+            <th md-column md-numeric>Action</th>
+            <th md-column md-numeric>Comment</th>
+            <th md-column md-numeric>Target</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+
+            {% for log in logs %}
+              <tr md-row md-auto-select>
+                <td md-cell>{{ log.category_name }}</td>
+                {% if not log.owner.first_name %}
+                  <td md-cell>
+                    {{ log.owner }}
+                  </td>
+                {% else %}
+                  <td md-cell>{{ log.owner.first_name }} {{ log.owner.last_name }} 
+                    (<a href="{% url 'profile' id=log.owner.id %}">{{ log.owner.username }}</a>)
+                  </td>
+                {% endif %}
+                <td md-cell>{{ log.created_ts|date:"DATETIME_FORMAT" }}</td>
+                {% if log.action %}
+                  <td md-cell>{{ log.action }}</td>
+                {% else %}
+                  <td md-cell>
+                    &mdash;
+                  </td>
+                {% endif %}
+                <td md-cell>{{ log.comment }}</td>
+                <td md-cell>{{ log.target }}</td>
+              </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </md-table-container>
+  {% else %}
+    <h2 class="no-items">There are no more logs.</h2>
+  {% endif %}
+</div>
+
+{% endblock %}

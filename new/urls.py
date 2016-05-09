@@ -7,6 +7,10 @@ urlpatterns = [
         '|fieldcategory|reviewcomment))$',
         nviews.new, name="new"),
     url(r'^(?P<page>(school|department|professor|review|course|field'
-        '|fieldcategory))/(?P<id>[0-9]+)$',
+        '|fieldcategory|reviewcomment))/(?P<id>[0-9]+)$',
         nviews.edit, name="edit"),
+    url(r'^report/(?P<model_name>[A-Za-z]+)/(?P<id>[0-9]+)$', nviews.report,
+        name="new_report"),
+    url(r'^resolve_report/(?P<report_id>[0-9]+)$', nviews.resolve_report,
+        name="resolve_report"),
 ]
