@@ -53,24 +53,7 @@
                 <div class="out-of">/5</div>
               </div>
 
-              {% if not user.is_authenticated %}
-
-              {% elif review.owner == user %}
-                <div flex-container="row" style="display:inline-block; float:right;">
-                  <div class="delete-button-outer">
-                    <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
-                              class="delete-button"
-                              action="delete"
-                              model="review"
-                              model-id="{{ review.id }}"
-                              >
-                      <i class="delete-button-icon"></i>
-                    </lx-button>
-                  </div>
-                </div>
-
-
-              {% else %}
+              {% if user.is_authenticated %}
                 <div flex-container="row" style="display:inline-block; float:right;">
                   <div class="vote-button-up-container">
                     <button lx-type="flat"
@@ -87,6 +70,20 @@
                     </button>
                   </div>
                 </div>
+                {% if review.owner == user or user.is_superuser %}
+                  <div flex-container="row" style="display:inline-block; float:right;">
+                    <div class="delete-button-outer">
+                      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+                                class="delete-button"
+                                action="delete"
+                                model="review"
+                                model-id="{{ review.id }}"
+                                >
+                        <i class="delete-button-icon"></i>
+                      </lx-button>
+                    </div>
+                  </div>
+                {% endif %}
               {% endif %}
             </div>
 

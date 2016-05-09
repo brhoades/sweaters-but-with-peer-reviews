@@ -273,21 +273,30 @@ def delete(request):
 
         obj = MODEL_MAP[model].objects.get(id=model_id)
 
-        if hasattr(MODEL_MAP[model], 'created_by'):
-            created_by_key = 'created_by'
-        elif hasattr(MODEL_MAP[model], 'owner'):
-            created_by_key = 'owner'
-        else:
-            jsonResponse = {"success": False,
-                            "error": model.capitalize() +
-                            " does not have an owner"}
-            return HttpResponse(json.dumps(jsonResponse),
-                                content_type="application/json")
-        if user != getattr(obj, created_by_key):
-            jsonResponse = {"success": False,
-                            "error": "You don't own this "+model}
-            return HttpResponse(json.dumps(jsonResponse),
-                                content_type="application/json")
+        if not user.is_superuser:
+            if model in ["school", "professor"]:
+                jsonResponse = {"success": False,
+                                "error": model.capitalize() +
+                                " cannot be deleted by non-admins," +
+                                " delete would cause more delete to cascade."}
+                return HttpResponse(json.dumps(jsonResponse),
+                                    content_type="application/json")
+
+            if hasattr(MODEL_MAP[model], 'created_by'):
+                created_by_key = 'created_by'
+            elif hasattr(MODEL_MAP[model], 'owner'):
+                created_by_key = 'owner'
+            else:
+                jsonResponse = {"success": False,
+                                "error": model.capitalize() +
+                                " does not have an owner"}
+                return HttpResponse(json.dumps(jsonResponse),
+                                    content_type="application/json")
+            if user != getattr(obj, created_by_key):
+                jsonResponse = {"success": False,
+                                "error": "You don't own this "+model}
+                return HttpResponse(json.dumps(jsonResponse),
+                                    content_type="application/json")
 
         obj.delete()
 

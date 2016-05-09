@@ -24,28 +24,31 @@
     <div style="right: 2%;" id="wowers">GREAT!</div>
   {% endif %}
 <div id="demo" class="review-card-large card-color">
-  {% if user.is_authenticated and review.owner == user %}
-    <!-- this never happens as review lacks created_by -->
-    <div ng-controller="form-handler" model="review" edit="{{ review.id }}"
-         class="edit-icon-outer">
-      <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
-                 ng-click="opendDialog('reviewCall')">
-        <i class="edit-icon fa fa-pencil"></i>
-      </lx-button>
-      {% new_review_popup True %}
-    </div>
-    <div class="delete-button-outer">
-      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
-                class="delete-button"
-                action="delete"
-                model="review"
-                model-id="{{ review.id }}"
-                redir="{% url "reviews" %}"
-                >
-        <i class="delete-button-icon"></i>
-      </lx-button>
-    </div>
+  {% if user.is_authenticated %}
+    {% if review.owner == user %}
+      <div ng-controller="form-handler" model="review" edit="{{ review.id }}"
+           class="edit-icon-outer">
+        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                   ng-click="opendDialog('reviewCall')">
+          <i class="edit-icon fa fa-pencil"></i>
+        </lx-button>
+        {% new_review_popup True %}
+      </div>
+    {% endif %}
 
+    {% if review.owner == user or user.is_superuser %}
+      <div class="delete-button-outer">
+        <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+                  class="delete-button"
+                  action="delete"
+                  model="review"
+                  model-id="{{ review.id }}"
+                  redir="{% url "reviews" %}"
+                  >
+          <i class="delete-button-icon"></i>
+        </lx-button>
+      </div>
+    {% endif %}
   {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}" target="_parent">

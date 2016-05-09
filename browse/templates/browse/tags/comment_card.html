@@ -27,19 +27,19 @@
         </div>
       </div>
     </div>
-    {% if comment.owner == user %}
-      <div class="delete-button-outer">
-        <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
-                  class="delete-button"
-                  action="delete"
-                  model="reviewcomment"
-                  model-id="{{ comment.id }}"
-                  >
-          <i class="delete-button-icon"></i>
-        </lx-button>
-      </div>
+    {% if user.is_authenticated and comment.owner == user or user.is_superuser %}
+        <div flex-item align="right">
+          <div class="delete-button-outer">
+            <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+                      class="delete-button"
+                      action="delete"
+                      model="reviewcomment"
+                      model-id="{{ comment.id }}"
+                      >
+              <i class="delete-button-icon"></i>
+            </lx-button>
+          </div>
     {% else %}
-
     <!-- <div class="item">
       {{school.created_by}}<br />
       Creator

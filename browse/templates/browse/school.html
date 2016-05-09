@@ -17,16 +17,8 @@
 
 {% block content %}
   <div id="demo" class="review-card-large card-color">
-    {% if user.is_authenticated and school.created_by == user %}
-      <!-- <div ng-controller="form-handler" model="review" edit="{{ school.id }}"
-           class="edit-icon-outer">
-        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
-                   ng-click="opendDialog('schoolCall')">
-          <i class="edit-icon fa fa-pencil"></i>
-        </lx-button>
-        {% new_school_popup True %}
-      </div> -->
 
+      {% if user.is_authenticated and user.is_superuser %}
       <div class="delete-button-outer">
         <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
                   class="delete-button"
@@ -34,6 +26,7 @@
                   model="school"
                   model-id="{{ school.id }}"
                   redir="{% url "schools" %}"
+                  confirm="true"
                   >
           <i class="delete-button-icon"></i>
         </lx-button>

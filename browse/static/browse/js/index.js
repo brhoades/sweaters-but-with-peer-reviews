@@ -38,29 +38,33 @@ $(document).ready(function() {
       var model = $(this).attr('model');
       var model_id = $(this).attr('model-id');
       var redir = $(this).attr('redir');
-      console.log(redir);
-      $.ajax({
-        url: "/delete",
-        type: "POST",
-        data: {
-          "model-id": model_id,
-          "model": model,
-        },
-        success:function(data){
-          if(data.success) {
-            if(redir==undefined){
-              $("["+model+"-id="+model_id+"]").remove();
+
+      if(
+        $(this).attr('confirm') != "true" ||
+        confirm("Are you sure you wish to delete this "+model+" and everything linked to it?")
+      ) {
+        $.ajax({
+          url: "/delete",
+          type: "POST",
+          data: {
+            "model-id": model_id,
+            "model": model,
+          },
+          success:function(data){
+            if(data.success) {
+              if(redir==undefined){
+                $("["+model+"-id="+model_id+"]").remove();
+              }
+              else {
+                window.location = redir
+              }
             }
             else {
-              window.location = redir
+              alert(data.error)
             }
           }
-          else {
-            alert(data.error)
-          }
-        }
-      });
-
+        });
+      }
 
       return;
     }

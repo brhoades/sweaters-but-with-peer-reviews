@@ -18,17 +18,7 @@
 
 {% block content %}
 <div id="demo" class="review-card-large card-color">
-  {% if user.is_authenticated and professor.created_by == user %}
-    <!-- this never happens as review lacks created_by -->
-    <!-- <div ng-controller="form-handler" model="review" edit="{{ professor.id }}"
-         class="edit-icon-outer">
-      <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
-                 ng-click="opendDialog('professorCall')">
-        <i class="edit-icon fa fa-pencil"></i>
-      </lx-button>
-      {% new_professor_popup True %}
-    </div> -->
-
+  {% if user.is_authenticated and user.is_superuser %}
     <div class="delete-button-outer">
       <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
                 class="delete-button"
@@ -36,6 +26,7 @@
                 model="professor"
                 model-id="{{ professor.id }}"
                 redir="{% url "professors" %}"
+                confirm="true"
                 >
         <i class="delete-button-icon"></i>
       </lx-button>
