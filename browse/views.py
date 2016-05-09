@@ -1,7 +1,6 @@
 from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
 
 from browse.models import Review, User, Professor, School, Course,\
     ReviewComment
@@ -13,11 +12,7 @@ from new.forms import SchoolForm
 def index(request, message=""):
     template = "browse/index.html"
 
-    if message:
-        messages.info(request, message)
-
     context = RequestContext(request)
-    context["messages"] = messages.get_messages(request)
 
     context["review_votes"] = _get_all_review_votes(request)[0:5]
 

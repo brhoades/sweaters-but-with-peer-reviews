@@ -12,22 +12,6 @@
 
 {% block content %}
 {% csrf_token %}
-
-  {% if messages %}
-
-    <!-- FIXME: Open login dialog and run that -->
-    {% for message in messages %}
-      <div flex-container="row">
-        <div flex-item class="sweaters-error">
-          <center>
-            {{ message }}
-          </center>
-        </div>
-      </div>
-    {% endfor %}
-  {% endif %}
-
-
     <!--div id="cycler" class="cyc" align="center">
         <img class="active" src="{% static 'browse/img/Logo_Wide.jpg' %}">
         <img src="{% static 'browse/img/Library_Panorama.jpg' %}">

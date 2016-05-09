@@ -42,7 +42,11 @@
     <script src="{% static 'browse/bower_components/angular-material/angular-material.min.js' %}"></script>
 
     <script>
-      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages']);
+      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages']).run( function(LxNotificationService) {
+          {% for message in messages %}
+            LxNotificationService.info('{{ message }}');
+          {% endfor %}
+        });
     </script>
 
     <script src="{% static 'browse/js/libs/jquery-ui.min.js' %}"></script>
@@ -53,6 +57,7 @@
     <script src="{% static 'browse/bower_components/lumx/modules/dialog/js/dialog_directive.js' %}"></script>
     <script src="{% static 'browse/js/main.js' %}"></script>
 
+    <!-- messages -->
     {% block js %}{% endblock %}
     {% block header %}{% endblock %}
   </head>
