@@ -1,6 +1,7 @@
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load formlets %}
+{% load sass_tags %}
 {% load cards %}
 {% block title %}Professors{% endblock %}
 {% block js %}
@@ -37,7 +38,7 @@
       <!-- Left direction add menu -->
       <lx-fab lx-direction="left">
         <lx-fab-trigger>
-            <lx-button id="siteButton" lx-size="xl" lx-type="fab" lx-tooltip="Add Things" lx-tooltip-position="top">
+            <lx-button id="siteButton" lx-size="xl" lx-type="fab" lx-tooltip="Add Menu" lx-tooltip-position="top">
               <i class="mdi mdi-library-plus"></i>
               <i class="mdi mdi-plus"></i>
             </lx-button>

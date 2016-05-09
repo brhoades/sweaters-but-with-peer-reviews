@@ -1,4 +1,3 @@
-{% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load sass_tags %}
 {% load gravatar %}
@@ -34,18 +33,6 @@
       </lx-button>
       {% new_review_popup True %}
     </div>
-    <div class="delete-button-outer">
-      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
-                class="delete-button"
-                action="delete"
-                model="review"
-                model-id="{{ review.id }}"
-                redir="{% url "reviews" %}"
-                >
-        <i class="delete-button-icon"></i>
-      </lx-button>
-    </div>
-
   {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}" target="_parent">
@@ -200,7 +187,7 @@
     {% endif %}
 
     {% for comment in comments %}
-      {% comment_card comment user %}
+      {% comment_card comment %}
     {% endfor %}
 
     <div ng-controller="form-handler" model="reviewcomment">
