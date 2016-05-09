@@ -227,9 +227,10 @@ class ReviewVote(Model):
             type = "positive"
         else:
             type = "negative"
-        return ("Review Vote for {} {} by {} {}"
-                .format(type, self.target.first_name,
-                        self.target_last_name,  self.owner.first_name,
+        return ("Review Vote for {} by {} {}"
+                .format(type,
+                        self.target.title,
+                        self.owner.first_name,
                         self.owner.last_name))
 
 
