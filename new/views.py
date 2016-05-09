@@ -1,6 +1,9 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed, \
+    HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 from browse.models import Review, ReviewVote, Professor, School, Department, \
     Field, FieldCategory, Course, ReviewComment
@@ -78,7 +81,16 @@ def edit(request, page=None, id=None):
 
 def new(request, type="new", page=None, id=None):
     if not request.user.is_authenticated():
-        return json_error({"error": "Please login to add a {}.".format(page)})
+        if request.method == "POST":
+            return json_error({"error": "Please login to add a {}."
+                                        .format(page)})
+        else:
+            redir = request.META.get("HTTP_REFERER")
+            if not redir:
+                redir = reverse("home")
+            messages.error(request,
+                           "You must be logged in to add a {}.".format(page))
+            return HttpResponseRedirect(redir)
 
     model = None
     response = {"error": {"error": ""}}
