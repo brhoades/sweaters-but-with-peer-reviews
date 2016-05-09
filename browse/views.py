@@ -1,13 +1,14 @@
 from django.template import loader, RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from browse.models import Review, User, Professor, School, Course,\
-    ReviewComment
+    ReviewComment, Report, PeerReview, Log
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
-from new.forms import SchoolForm
+from new.forms import PeerReviewForm, SchoolForm
 
 
 def index(request, message=""):
@@ -241,6 +242,15 @@ def reviews(request, type="all", first_id=None, second_id=None, page=1):
     return render(request, template, context)
 
 
+def report(request, report_id=None, page=0):
+    template = loader.get_template("browse/report.html")
+    context = RequestContext(request)
+
+    context["report"] = get_object_or_404(Report, id=report_id)
+
+    return HttpResponse(template.render(context))
+
+
 def logout(request):
     """
     Our view for logging out.
@@ -256,3 +266,77 @@ def sandbox(request):
     """
     template = "browse/sandbox.html"
     return render(request, template)
+
+
+@login_required
+def wardrobe(request):
+    """
+    The view for each user to view their peer reivews.
+    """
+
+    template = "browse/wardrobe.html"
+    context = {}
+
+    context["peerReviews"] = request.user.peerreview_set.all()\
+                                    .order_by('-created_ts')
+
+    return render(request, template, context)
+
+
+def peer_review(request, peerreview_id):
+    """
+    The view for look at and fill-out peerReview forms.
+    """
+    template = "browse/peerreview.html"
+    context = {}
+
+    peerReview = get_object_or_404(PeerReview, id=peerreview_id)
+
+    if request.method == "GET":
+        form = PeerReviewForm(instance=peerReview)
+    elif request.method == "POST":
+        form = PeerReviewForm(request.POST, instance=peerReview)
+        reviewEdit = form.save(commit=False)
+
+        reviewEdit.is_finished = True
+        reviewEdit.save()
+    else:
+        return HttpResponseNotAllowed(["POST", "GET"])
+
+    context["form"] = form
+
+    return render(request, template, context)
+
+
+@login_required
+def logs(request, page=0):
+    """
+    The view for listing all log entries.
+    """
+    template = "browse/logs.html"
+    context = {}
+
+    logs = []
+    context["logs"] = logs
+    context["pages"], context["page"], all, start, end \
+        = paginate(page, Log, "-created_ts", 15)
+
+    for p in Log.objects.order_by('-created_ts')[start:end]:
+        logs.append(p)
+
+    return render(request, template, context)
+
+
+def reports(request, page):
+    template = loader.get_template("browse/reports.html")
+    context = RequestContext(request)
+
+    reports = []
+    context["reports"] = reports
+    context["pages"], context["page"], all, start, end \
+        = paginate(page, Report, "-target_log__created_ts")
+
+    for p in Report.objects.order_by('-target_log__created_ts')[start:end]:
+        reports.append(p)
+
+    return HttpResponse(template.render(context))

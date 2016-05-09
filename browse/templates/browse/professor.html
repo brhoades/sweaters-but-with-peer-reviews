@@ -3,6 +3,7 @@
 {% load sass_tags %}
 {% load cards %}
 {% load gravatar %}
+{% load formlets %}
 
 {% block title %}Professor{% endblock %}
 {% block header %}
@@ -16,6 +17,25 @@
 
 {% block content %}
 <div id="demo" class="review-card-large card-color">
+  {% if user.is_authenticated and professor.created_by == user %}
+    <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}"
+         class="edit-icon-outer">
+      <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+                 ng-click="opendDialog('professorCall')">
+        <i class="edit-icon fa fa-pencil"></i>
+      </lx-button>
+      {% new_professor_popup True %}
+    </div>
+  {% elif user.is_authenticated %}
+    <div ng-controller="form-handler" model="professor" report="{{ professor.id }}"
+         class="edit-icon-outer">
+      <lx-button lx-tooltip="Report" lx-type="icon" lx-tooltip-position="left"
+                 ng-href="{% url "new_report" "new" "professor" professor.id %}">
+        <i class="edit-icon fa fa-warning"></i>
+      </lx-button>
+    </div>
+  {% endif %}
+
   <div class="professor-title">
       <img src="{% static 'browse/img/professor.png' %}"
            class="professor-avatar">
