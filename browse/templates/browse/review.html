@@ -130,11 +130,7 @@
     {% endif %}
 
     {% for comment in comments %}
-<<<<<<< HEAD
-      {% comment_card comment user %}
-=======
       {% comment_card comment request.user review %}
->>>>>>> origin
     {% endfor %}
 
     <div ng-controller="form-handler" model="reviewcomment">
