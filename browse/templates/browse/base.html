@@ -41,8 +41,17 @@
     <!-- Angular Material Library -->
     <script src="{% static 'browse/bower_components/angular-material/angular-material.min.js' %}"></script>
 
+    <!-- Angular Material Tables Plugin --->
+    <!-- style sheet -->
+    <link href="{% static 'browse/bower_components/angular-material-data-table/dist/md-data-table.min.css' %}" 
+          rel="stylesheet" type="text/css"/>
+    <!-- module -->
+    <script type="text/javascript" 
+            src="{% static 'browse/bower_components/angular-material-data-table/dist/md-data-table.min.js' %}">
+    </script>
+
     <script>
-      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages']).run( function(LxNotificationService) {
+      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages', 'md.data.table']).run( function(LxNotificationService) {
           {% for message in messages %}
             LxNotificationService.info('{{ message }}');
           {% endfor %}
@@ -107,6 +116,9 @@
                 <ul>
                   <li>
                     <a href="{% url 'profile' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Profile</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'wardrobe' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">My Wardrobe</a>
                   </li>
                   <li>
                     <a href="{% url 'setting' %}" class="fs-headline display-block dropdown-link dropdown-link--is-large">Settings</a>

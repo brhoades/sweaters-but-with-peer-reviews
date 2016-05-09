@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Pull sensitive/local information from a local file
-from peerreviewed.sensitive import SECRET_KEY, DEBUG, ALLOWED_HOSTS, DATABASES
+from peerreviewed.sensitive import SECRET_KEY, DEBUG, ALLOWED_HOSTS, DATABASES  # noqa
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -117,7 +117,7 @@ LOGIN_URL = '/logged_in'
 
 BASE_URL = 'https://blazersbutwithpeerreviews.xyz/'
 
-#Email Config
+# Email Config
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'blazersbutwithpeerreviews@gmail.com'
 EMAIL_HOST_EMAIL = 'blazersbutwithpeerreviews@gmail.com'

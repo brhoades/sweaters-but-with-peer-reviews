@@ -9,9 +9,8 @@ import json
 
 from new.views import json_error
 from browse.models import Review, Professor, School, Department, Course, \
-    Field, FieldCategory, ReviewComment
-from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
-    FieldForm, FieldCategoryForm, CourseForm, CommentForm
+    Field, FieldCategory
+from new.utils import get_model_from_string, get_form_from_model
 
 
 def get_professors(request):
@@ -55,59 +54,6 @@ def get_fields_categories_matching(request, partial):
                         FieldCategory.objects.filter(name__icontains=partial)))
 
 
-def get_form_from_model(model):
-    """
-    Returns an array of fields which must be filled. Raises ValueError
-    if unknown model is passed.
-    """
-    modelforms = [ReviewForm, ProfessorForm, CourseForm, SchoolForm,
-                  DepartmentForm, FieldForm, FieldCategoryForm, CommentForm]
-
-    for form in modelforms:
-        if form.Meta.model is model:
-            return form
-    else:
-        raise ValueError("Unknown model passed.")
-
-
-def get_model_from_string(model):
-    modelmap = {}
-    models = [Review, Professor, Course, School, Department, Field,
-              FieldCategory, ReviewComment]
-
-    for m in models:
-        modelmap[m.__name__] = m
-        modelmap[m.__name__.lower()] = m
-
-    if model not in modelmap:
-        raise ValueError("Unknown model string provided.")
-
-    return modelmap[model]
-
-
-def get_fields_for_model(request, model=""):
-    try:
-        # Create modelmap
-        model = get_model_from_string(model)
-    except ValueError:
-        return HttpResponse(json.dumps({"error":
-                                        {"error":
-                                         "Unknown model requested."}}))
-
-    # Create list of fields
-    """
-    fields = []
-    for field in model._meta.fields:
-        # Ignore automatically created fields
-        if not field.auto_created and "auto_now" not in field.__dict__:
-            if field.column.endswith("_id"):
-                fields.append(field.column[:-3])
-            else:
-                fields.append(field.column)
-    """
-    return HttpResponse(json.dumps(get_form_from_model(model).Meta.fields))
-
-
 def get_course_per_professor(request):
     # for prof in Professor.objects:
     # FIXME: courses and professors aren't related
@@ -124,7 +70,13 @@ def get_view_for_model(request, model="", id=-1):
     if model not in model_map:
         json_error("Unknown/unsupported model specified")
 
-    return HttpResponse(json.dumps({"url": reverse(model, args=[id])}))
+    # This one is sort of hacked in, it redirects to your reports list
+    if model == "resolve_report":
+        url = "/browse/reports"
+    else:
+        url = reverse(model, args=[id])
+
+    return HttpResponse(json.dumps({"url": url}))
 
 
 def login(request):
@@ -175,3 +127,17 @@ def model_values(request, model_name, id):
         return json_error("Unknown id provided.")
 
     return HttpResponse(instance.to_json())
+
+
+def get_fields_for_model(request, model=""):
+    try:
+        form = get_form_from_model(model)
+    except ValueError:
+        return HttpResponse(json.dumps({"error":
+                                        {"error":
+                                         "Unknown model requested."}}))
+
+    fields = form.Meta.fields[:]
+    fields.extend(form.Meta.fields_extra)
+
+    return HttpResponse(json.dumps(fields))

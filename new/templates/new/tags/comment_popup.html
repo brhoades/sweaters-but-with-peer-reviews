@@ -1,14 +1,23 @@
 {% load formlets %}
 
-<lx-dialog class="dialog dialog--l" id="commentCall" auto-close="true"
+<lx-dialog class="dialog dialog--l"
+  {% if is_edit %}
+           id="commentCall_{{ comment.id }}" auto-close="true"
+  {% else %}
+           id="commentCall" auto-close="true"
+  {% endif %}
            onclose="closingDialog()" onscrollend="scrollEndDialog()">
   <div class="dialog__header">
     <div id="popup" class="toolbar pl++">
       <span class="toolbar__label tc-white fs-title">
-        New Comment
+        {% if is_edit %}
+          Edit Comment
+        {% else %}
+          New Comment
+        {% endif %}
       </span>
     </div>
   </div>
 
-  {% new_comment review %}
+  {% new_comment review is_edit %}
 </lx-dialog>

@@ -1,0 +1,20 @@
+{% extends 'browse/base.html' %}
+{% load staticfiles %}
+{% load formlets %}
+{% block title %}Report Resolution{% endblock %}
+{% block js %}
+  <script src="{% static 'new/js/new.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Load the card here -->
+
+<div id="demo" class="card">
+  <div ng-app="lumxWrap">
+                              <!--- Not really a resolve_report model -->
+    <div ng-controller="form-handler" model="resolve_report" reportmodel="{{ model }}" reportid="{{ id }}">
+      {% resolve_report id instance %}
+    </div>
+  </div>
+</div>
+{% endblock %}
