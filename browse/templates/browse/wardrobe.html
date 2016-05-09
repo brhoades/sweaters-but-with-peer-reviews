@@ -11,24 +11,28 @@
 
 {% block content %}
 
-<div class="review-card-small padded-card">
-  <div flex-container="row">
+<div flex-container="row" flex-gutter="20">
+  <div flex-item="7">
     {% if peerReviews|length > 0 %}
-      {% for peerReview in peerReviews %}
-          <strong class="review-title">
-            {{ peerReview.target.title }}
-          </strong>
-          <span class="display-block">
-            <b> {{ peerReview.target.course.name }} </b> <br />
-            with
-            <b>
-              {{ peerReview.target.target.first_name }} {{ peerReview.target.target.last_name }}
-            </b>
-            <a href="{% url 'peerreview' peerReview.id %}">Edit Review</a>
-          </span>
-      {% endfor %}
+    {% for peerReview in peerReviews %}
+    <div class="review-card-small padded-card">
+      <div flex-container="row">
+        <strong class="review-title">
+          {{ peerReview.target.title }}
+        </strong>
+        <span class="display-block">
+          <b> {{ peerReview.target.course.name }} </b> <br />
+          with
+          <b>
+            {{ peerReview.target.target.first_name }} {{ peerReview.target.target.last_name }}
+          </b>
+          <a href="{% url 'peerreview' peerReview.id %}">Edit Review</a>
+        </span>
+      </div>
+    </div>
+    {% endfor %}
     {% else %}
-      No more peer reviews to do<br />.
+    No more peer reviews to do<br />.
     {% endif %}
   </div>
 </div>

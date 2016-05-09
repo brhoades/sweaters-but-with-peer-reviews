@@ -8,9 +8,9 @@
 {% block content %}
 <form method="POST" action="">
   {% csrf_token %}
-{{ form.text }}
-{{ form.rating }}
-{{ form.flag }}
+  {{ form.text }}
+  {{ form.rating }}
+  {{ form.flag }}
   <button type="submit">Save</button>
 </form>
 {% endblock %}

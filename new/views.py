@@ -86,9 +86,18 @@ def new(request, type="new", page=None, id=None):
                 setattr(new, k, data[k])
             if hasattr(new, "updated_ts"):
                 new.updated_ts = datetime.datetime.now()
+
+        new.full_clean()
+    except ValueError as e:
+        return HttpResponse(json_error({"error": str(e)}))
     except Exception as e:
         print("ERROR: " + str(e))
-        return HttpResponse(json_error({"error": str(e)}))
+        errorDict = {}
+        for key, value in e.message_dict.items():
+            if isinstance(value, list):
+                errorDict[key] = " ".join(value).strip("[]/'")
+
+        return HttpResponse(json_error(errorDict))
 
     for field in MODEL_FORM_MAP[page].Meta.fields:
         response["error"][field] = ""  # clear errors
