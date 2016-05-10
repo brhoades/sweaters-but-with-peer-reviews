@@ -1,3 +1,4 @@
+
 {% extends 'browse/base.html' %}
 {% load staticfiles %}
 {% load sass_tags %}
@@ -69,7 +70,7 @@
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if review_votes|length > 0 %}
             {% for review, vote in review_votes %}
-              {% review_card review user vote %}
+              {% review_card review vote user %}
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no reviews for professors at this school.</h2>

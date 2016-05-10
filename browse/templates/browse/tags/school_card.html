@@ -54,23 +54,5 @@
 
       </div>
     </div>
-    <div class="item">
-      {% if user.is_authenticated and user.is_superuser %}
-        <div class="delete-button-outer">
-          <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
-                    class="delete-button"
-                    action="delete"
-                    model="school"
-                    model-id="{{ school.id }}"
-                    confirm="true"
-                    >
-            <i class="delete-button-icon"></i>
-          </lx-button>
-        </div>
-      {% else %}
-        <!-- {{school.created_by}}<br />
-        Creator -->
-      {% endif %}
-    </div>
   </div>
 </div>

@@ -37,25 +37,6 @@
             {{ professor.num_reviews }}<br />
             Review{% if professor.num_reviews != 1 %}s{% endif %}
           </div>
-
-          {% if user.is_authenticated and user.is_superuser %}
-            <div class="delete-button-outer">
-              <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
-                        class="delete-button"
-                        action="delete"
-                        model="professor"
-                        model-id="{{ professor.id }}"
-                        confirm="true"
-                        >
-                <i class="delete-button-icon"></i>
-              </lx-button>
-            </div>
-          {% else %}
-          <!-- <div class="item">
-            {{school.created_by}}<br />
-            Creator
-          </div> -->
-          {% endif %}
         </div>
       </div>
     </div>

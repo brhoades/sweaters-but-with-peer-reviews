@@ -129,13 +129,7 @@
       <md-divider style="margin-top: 60px; margin-bottom: 40px;"></md-divider>
     {% endif %}
 
-    {% for comment in comments %}
-<<<<<<< HEAD
-      {% comment_card comment user %}
-=======
-      {% comment_card comment request.user review %}
->>>>>>> origin
-    {% endfor %}
+    {% comment_card comment request.user review %}
 
     <div ng-controller="form-handler" model="reviewcomment">
       <lx-button id="siteButton" lx-size="l" lx-type="fab" lx-tooltip="Add Comment"

@@ -27,7 +27,8 @@
                 redir="{% url "professors" %}"
                 confirm="true"
                 >
-        <i class="delete-button-icon"></i>
+      <i class="delete-button-icon"></i>
+    </div>
   {% endif %}
   {% if user.is_authenticated and professor.created_by == user %}
     <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}"
