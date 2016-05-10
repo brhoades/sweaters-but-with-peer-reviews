@@ -11,12 +11,15 @@
 
 {% block content %}
 
-<div flex-container="row" flex-gutter="20">
-  <div flex-item="7">
+<div flex-container="row" flex-gutter="12">
+  <div flex-item="1"></div>
+  <div flex-item="10">
+
     {% if peerReviews|length > 0 %}
     {% for peerReview in peerReviews %}
+
     <div class="review-card-small padded-card">
-      <div flex-container="row">
+      <div flex-container="column">
         <strong class="review-title">
           {{ peerReview.target.title }}
         </strong>
@@ -30,11 +33,13 @@
         </span>
       </div>
     </div>
+
     {% endfor %}
     {% else %}
     No more peer reviews to do<br />.
     {% endif %}
   </div>
+
 </div>
 
 {% if request.user.is_staff %}
@@ -51,4 +56,3 @@
 {% endif %}
 
 {% endblock %}
-
