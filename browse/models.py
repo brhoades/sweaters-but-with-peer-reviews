@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 from django.apps import apps
 
+from django.utils import timezone
+
 import urllib.request as urllib
 import json
 import datetime
@@ -212,6 +214,10 @@ class Review(Model):
                                                   self.owner.last_name,
                                                   self.target.first_name,
                                                   self.target.last_name)
+
+    def is_new(self):
+        timediff = timezone.now() - self.created_ts
+        return timediff.seconds < 10
 
 
 class ReviewVote(Model):

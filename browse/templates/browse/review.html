@@ -37,6 +37,9 @@
       </lx-button>
     </div>
   {% endif %}
+  {% if review.is_new %}
+    <script>kiipInstance.postMoment('Registering');</script>
+  {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}" target="_parent">
       <img src="{% static 'browse/img/professor.png' %}"
