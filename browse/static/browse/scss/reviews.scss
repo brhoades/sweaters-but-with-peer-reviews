@@ -25,7 +25,7 @@
 
 .professor-name {
   @extend .tc-black-1;
-  @extend .fs-display-2;
+  @extend .fs-display-1;
 
   display: inline-block;
 }
@@ -121,6 +121,7 @@
   .vote-button-up-container {
     float: left;
   }
+
 
 }
 

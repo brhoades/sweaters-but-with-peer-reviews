@@ -37,8 +37,7 @@
   {% endif %}
 
   <div class="professor-title">
-      <img src="{% static 'browse/img/professor.png' %}"
-           class="professor-avatar">
+      <img src="{% static 'browse/img/professor.png' %}" class="professor-avatar">
       <div class="professor-name">
         {{ professor.first_name }}
         {{ professor.last_name }}
@@ -46,6 +45,7 @@
     </a>
   </div>
   <div class="professor-info">
+    School Name:
     <a href="{% url "school" professor.school.id %}">
       {{ professor.school.name }}
     </a>
