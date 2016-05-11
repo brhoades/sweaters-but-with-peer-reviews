@@ -24,36 +24,35 @@
           </div></strong>
         </div>
       </div>
-      </div>
+    </div>
 
-      <div flex-item="4">
-        <div class="information">
+    <div flex-item="4">
+      <div class="information">
 
-          <div class="card-stats">
+        <div class="card-stats">
 
-            <div flex-item flex-container="column">
-              <div flex-item>
-                <div class="location">{{ school.human_location }} </div>
+          <div flex-item flex-container="column">
+            <div flex-item>
+              <div class="location">{{ school.human_location }} </div>
+            </div>
+
+            <div flex-item>
+              <div class="item">
+                {{ school.num_professors }}<br />
+                Professor{% if school.num_professors != 1 %}s{% endif %}
               </div>
 
-              <div flex-item>
-                <div class="item">
-                  {{ school.num_professors }}<br />
-                  Professor{% if school.num_professors != 1 %}s{% endif %}
-                </div>
-
-                <div class="item">
-                  {{ school.num_reviews }}<br />
-                  Review{% if school.num_reviews != 1 %}s{% endif %}
-                </div>
+              <div class="item">
+                {{ school.num_reviews }}<br />
+                Review{% if school.num_reviews != 1 %}s{% endif %}
               </div>
-
             </div>
 
           </div>
 
         </div>
-      </div>
 
+      </div>
+    </div>
   </div>
 </div>

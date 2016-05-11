@@ -18,7 +18,6 @@
   <br />
 
   <div ng-app="lumxWrap">
-
     <div flex-container="row" flex-column="12">
       <!-- The left side contains review cards -->
       <div flex-item="2"></div>
@@ -40,52 +39,52 @@
         </div>
         {% if review_votes|length > 0 %}
           {% for review, vote in review_votes %}
-            {% review_card review vote %}
+            {% review_card review vote user %}
           {% endfor %}
         {% else %}
           <h2>There are no more reviews</h2>
         {% endif %}
+        {% if user.is_authenticated %}
+          <div id="addButton">
+            <!-- Left direction add menu -->
+            <lx-fab lx-direction="left">
+              <lx-fab-trigger>
+                  <lx-button id="siteButton" lx-size="xl" lx-type="fab" lx-tooltip="Add Menu" lx-tooltip-position="top">
+                    <i class="mdi mdi-library-plus"></i>
+                    <i class="mdi mdi-plus"></i>
+                  </lx-button>
+              </lx-fab-trigger>
 
-        <div id="addButton">
-          <!-- Left direction add menu -->
-          <lx-fab lx-direction="left">
-            <lx-fab-trigger>
-                <lx-button id="siteButton" lx-size="xl" lx-type="fab" lx-tooltip="Add Menu" lx-tooltip-position="top">
-                  <i class="mdi mdi-library-plus"></i>
-                  <i class="mdi mdi-plus"></i>
-                </lx-button>
-            </lx-fab-trigger>
+              <lx-fab-actions>
 
-            <lx-fab-actions>
+                <div ng-controller="form-handler" model="professor">
+                  <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Professor"
+                      lx-tooltip-position="top" ng-click="opendDialog('professorCall')">
+                    <i class="mdi mdi-account-plus"></i>
+                  </lx-button>
+                  {% new_professor_popup %}
+                </div>
 
-              <div ng-controller="form-handler" model="professor">
-                <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Professor"
-                    lx-tooltip-position="top" ng-click="opendDialog('professorCall')">
-                  <i class="mdi mdi-account-plus"></i>
-                </lx-button>
-                {% new_professor_popup %}
-              </div>
+                <div ng-controller="form-handler" model="school">
+                  <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add School"
+                      lx-tooltip-position="top" ng-click="opendDialog('schoolCall')">
+                    <i class="mdi mdi-chair-school"></i>
+                  </lx-button>
+                  {% new_school_popup schoolForm %}
+                </div>
 
-              <div ng-controller="form-handler" model="school">
-                <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add School"
-                    lx-tooltip-position="top" ng-click="opendDialog('schoolCall')">
-                  <i class="mdi mdi-chair-school"></i>
-                </lx-button>
-                {% new_school_popup schoolForm %}
-              </div>
+                <div ng-controller="form-handler" model="review">
+                  <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Review"
+                      lx-tooltip-position="top" ng-click="opendDialog('reviewCall')">
+                    <i class="mdi mdi-newspaper"></i>
+                  </lx-button>
+                  {% new_review_popup %}
+                </div>
 
-              <div ng-controller="form-handler" model="review">
-                <lx-button lx-size="l" lx-color="black" lx-type="fab" lx-tooltip="Add Review"
-                    lx-tooltip-position="top" ng-click="opendDialog('reviewCall')">
-                  <i class="mdi mdi-newspaper"></i>
-                </lx-button>
-                {% new_review_popup %}
-              </div>
-
-            </lx-fab-actions>
-          </lx-fab>
-        </div> <!-- Add button -->
-
+              </lx-fab-actions>
+            </lx-fab>
+          </div> <!-- Add button -->
+        {% endif %}
       </div> <!-- end left side -->
 
       <!-- The right side contains the review -->

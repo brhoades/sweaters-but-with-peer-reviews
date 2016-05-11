@@ -17,6 +17,19 @@
 
 {% block content %}
 <div id="demo" class="review-card-large card-color">
+  {% if user.is_authenticated and user.is_superuser %}
+    <div class="delete-button-outer">
+      <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
+                class="delete-button"
+                action="delete"
+                model="professor"
+                model-id="{{ professor.id }}"
+                redir="{% url "professors" %}"
+                confirm="true"
+                >
+      <i class="delete-button-icon"></i>
+    </div>
+  {% endif %}
   {% if user.is_authenticated and professor.created_by == user %}
     <div ng-controller="form-handler" model="professor" edit="{{ professor.id }}"
          class="edit-icon-outer">
@@ -58,7 +71,7 @@
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if review_votes|length > 0 %}
             {% for review, vote in review_votes %}
-              {% review_card review vote %}
+              {% review_card review vote user %}
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no reviews for this professor.</h2>
@@ -70,7 +83,7 @@
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if courses|length > 0 %}
             {% for course in courses %}
-             {% course_card course %}
+             {% course_card course  user %}
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no courses associated with this professor.</h2>
@@ -82,7 +95,7 @@
         <md-content style="margin-top: 20px; background-color: #eeeeee;">
           {% if schools|length > 0 %}
             {% for school in schools %}
-              {% school_card school %}
+              {% school_card school user %}
             {% endfor %}
           {% else %}
             <h2 class="no-items">There are no schools for this professor.</h2>

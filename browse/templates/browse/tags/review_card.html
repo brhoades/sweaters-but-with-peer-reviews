@@ -5,79 +5,77 @@
   <div ng-app="lumxWrap">
     <div flex-container="row">
 
-    <div flex-item="6">
+      <div flex-item="6">
 
-      <div class="hyperlink card__img card__img- - left" style="height: 100px; float: left;" >
-        <img src="{% gravatar_url review.owner.email 100 %}" style="margin-right:20px;">
-      </div>
+        <div class="hyperlink card__img card__img- - left" style="height: 100px; float: left;" >
+          <img src="{% gravatar_url review.owner.email 100 %}" style="margin-right:20px;">
+        </div>
 
-      <div flex-item flex-container="column" style="padding: 0 10px 0 10px;">
-        <div align="left" style="overflow: hidden;" >
-          <strong class="review-title hyperlink"><a href='{% url 'review' review.id %}'>{{ review.title }}</a></strong>
-          <!--strong class="review-title hyperlink"><a href='{% url 'review' review.id %}' target="iframe_a">{{ review.title }}</a></strong-->
-          <div class="review-title-subtext">
-            <span class="display-block fs-body-1 tc-black-2">
-              <b>{{ review.course.name }}</b> <br />
-              with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
-            </span>
-            <span class="display-block">
-              {{ review.owner.first_name }} {{ review.owner.last_name }}
-            </span>
+        <div flex-item flex-container="column" style="padding: 0 10px 0 10px;">
+          <div align="left" style="overflow: hidden;" >
+            <strong class="review-title hyperlink"><a href='{% url 'review' review.id %}'>{{ review.title }}</a></strong>
+            <!--strong class="review-title hyperlink"><a href='{% url 'review' review.id %}' target="iframe_a">{{ review.title }}</a></strong-->
+            <div class="review-title-subtext">
+              <span class="display-block fs-body-1 tc-black-2">
+                <b>{{ review.course.name }}</b> <br />
+                with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
+              </span>
+              <span class="display-block">
+                {{ review.owner.first_name }} {{ review.owner.last_name }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
 
-    {% if can_vote %}
-    <div flex-item="6" style="padding: 10px;">
+      {% if can_vote %}
+        <div flex-item="6" style="padding: 10px;">
 
-      <div flex-container="column">
-        <div class="review-text" style="float: center;">
+          <div flex-container="column">
+            <div class="review-text" style="float: center;">
 
-          <div class="review-rating">
-            <div class="rating-title">Overall</div>
-            <div class="sub-rating">{{ review.rating_overall }}</div>
-            <div class="out-of">/5</div>
-          </div>
+              <div class="review-rating">
+                <div class="rating-title">Overall</div>
+                <div class="sub-rating">{{ review.rating_overall }}</div>
+                <div class="out-of">/5</div>
+              </div>
 
-          <div class="review-rating">
-            <div class="rating-title">Difficulty</div>
-            <div class="sub-rating">{{ review.rating_difficulty }}</div>
-            <div class="out-of">/5</div>
-          </div>
+              <div class="review-rating">
+                <div class="rating-title">Difficulty</div>
+                <div class="sub-rating">{{ review.rating_difficulty }}</div>
+                <div class="out-of">/5</div>
+              </div>
 
-          <div class="review-rating">
-            <div class="rating-title">Value</div>
-            <div class="sub-rating">{{ review.rating_value }}</div>
-            <div class="out-of">/5</div>
-          </div>
+              <div class="review-rating">
+                <div class="rating-title">Value</div>
+                <div class="sub-rating">{{ review.rating_value }}</div>
+                <div class="out-of">/5</div>
+              </div>
 
-          <div flex-container="row" style="display:inline-block; float:right;">
-            <div class="vote-button-up-container">
-              <button lx-type="flat"
-                      class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
-                      action="up" lx-ripple>
-                <i class="mdi mdi-thumb-up"></i>
-              </button>
+              {% if user.is_authenticated %}
+                <div flex-container="row" style="display:inline-block; float:right;">
+                  <div class="vote-button-up-container">
+                    <button lx-type="flat"
+                            class="vote-button-up {{ vote|yesno:"vote-button-active,," }}"
+                            action="up" lx-ripple>
+                      <i class="mdi mdi-thumb-up"></i>
+                    </button>
+                  </div>
+                  <div class="vote-button-down-container">
+                    <button lx-type="flat"
+                            class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
+                            action="down" lx-ripple>
+                      <i class="mdi mdi-thumb-down"></i>
+                    </button>
+                  </div>
+                </div>
+              {% endif %}
             </div>
-            <div class="vote-button-down-container">
-              <button lx-type="flat"
-                      class="vote-button-down {{ vote|yesno:",vote-button-active," }}"
-                      action="down" lx-ripple>
-                <i class="mdi mdi-thumb-down"></i>
-              </button>
-            </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-
-    </div> <!-- flex item -->
-
-
       {% endif %}
-
     </div>
   </div>
 </div>
