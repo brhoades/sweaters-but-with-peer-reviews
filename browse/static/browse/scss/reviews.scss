@@ -13,8 +13,9 @@
   margin: 10px 0 10px;
 
   .review-title {
-    @extend .fs-headline;
+    @extend .fs-title;
     @extend .display-block;
+    font-size: 100%;
   }
 }
 
@@ -72,6 +73,11 @@
   margin-bottom: auto;
 }
 
+.review-title-subtext {
+  @extend .tc-black-2;
+  font-size: 12px;
+}
+
 .review-rating {
   margin-right: 10px;
 }
@@ -91,6 +97,7 @@
   font-size: 13px;
 }
 
+
 @media only screen and (max-width: 800px)
 {
   .review-rating {
@@ -102,7 +109,14 @@
   }
 
   .review-title-subtext {
-    font-size: 10px;
+    font-size: 90%;
+  }
+
+  .review-card-small {
+
+    .review-title {
+      font-size: 15px;
+    }
   }
 
   .review-title {
