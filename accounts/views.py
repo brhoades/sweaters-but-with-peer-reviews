@@ -55,7 +55,7 @@ def register_confirm(request, activation_key):
     return redirect("home")
 
 
-def register(request):
+def register(request, type):
     """
         "username": username
         "password": password

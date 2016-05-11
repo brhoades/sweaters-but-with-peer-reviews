@@ -15,7 +15,8 @@
   </div>
 
 
-  <form class="form-signup" method="post" class="post-form" ng-submit="submit()">
+  <form class="form-signup" method="post" class="post-form" ng-controller="register"
+        ng-submit="submit()">
     {% csrf_token %}
     {% verbatim %}
     <div id="register">

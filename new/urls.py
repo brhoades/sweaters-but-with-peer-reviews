@@ -1,5 +1,6 @@
 from django.conf.urls import url
 import new.views as nviews
+import accounts.views as accviews
 
 urlpatterns = [
     url(r'^add_vote$', nviews.addVote, name="addVote"),
@@ -13,4 +14,6 @@ urlpatterns = [
         name="new_report"),
     url(r'^resolve_report/(?P<report_id>[0-9]+)$', nviews.resolve_report,
         name="resolve_report"),
+
+    url(r'account/?$', accviews.register, name="register_ajax"),
 ]

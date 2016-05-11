@@ -82,8 +82,7 @@ app.controller('loginData', function($scope, $http, LxDialogService,
 
 app.controller('register', function($scope, $http, LxDialogService,
                                      LxNotificationService, $window) {
-  $scope.message = "";
-  $scope.user = {username: "", password: ""};
+  $scope.data = {}
 
   // Someone hit submit
   $scope.submit = function(form) {

@@ -1,6 +1,5 @@
 from django.conf.urls import url
 import ajax.views as aviews
-import accounts.views as accviews
 
 urlpatterns = [
     url(r'^professors?$', aviews.get_professors),
@@ -29,5 +28,4 @@ urlpatterns = [
         aviews.model_values),
 
     url(r'login/?$', aviews.login, name="login"),
-    url(r'account/?$', accviews.register, name="register_ajax"),
 ]
