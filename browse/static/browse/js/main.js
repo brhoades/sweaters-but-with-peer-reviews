@@ -87,7 +87,7 @@ app.controller('register', function($scope, $http, LxDialogService,
 
   // Someone hit submit
   $scope.submit = function(form) {
-    $http.post("/get/login", JSON.stringify(form)).
+    $http.post("/new/account", JSON.stringify(form)).
       success(function(data) {
           if(data["message"] != undefined) {
             LxNotificationService.error(data["message"]);
@@ -96,8 +96,8 @@ app.controller('register', function($scope, $http, LxDialogService,
           // refresh
           if(data["refresh"]) {
             $scope.closingDialog();
-            LxNotificationService.success("Successfully identified.");
-            $window.location.href = $window.location.href;
+            LxNotificationService.success("Successfully created account.");
+            $window.location.href = "/";
           }
         }).
       error(function() {

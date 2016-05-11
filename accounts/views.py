@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 import json
 from new.utils import json_error
 
@@ -31,7 +32,7 @@ def register_confirm(request, activation_key):
     try:
         user_profile = UserProfile.objects.get(activation_key=activation_key)
     except ObjectDoesNotExist:
-        messages.info(request, "Invalid activation link.")
+        messages.error(request, "Invalid activation link.")
         return redirect("home")
 
     # check if the activation key has expired, if it hase then render
@@ -40,7 +41,7 @@ def register_confirm(request, activation_key):
     user = user_profile.user
     if user_profile.key_expires < timezone.now() and not user.is_active:
         user.delete()
-        messages.info(request, "This registration email has expired.")
+        messages.error(request, "This registration email has expired.")
         return redirect("home")
 
     # if the key hasn't expired save user, remove the activation key, set
@@ -50,7 +51,7 @@ def register_confirm(request, activation_key):
     user_profile.activation_key = None
     user_profile.save()
 
-    messages.info(request, "Successfully confirmed account.")
+    messages.success(request, "Successfully confirmed account.")
     return redirect("home")
 
 
@@ -64,34 +65,30 @@ def register(request):
         "email": email
     """
 
-    if check(request) is not None:
-        return check(request)
+    resp = {"message": ""}
+
     data = json.loads(request.body.decode('utf-8'))
+    if request.method != "POST":
+        messages.error(request, "This is an AJAX interface.")
+        return redirect("home")
+
+    req = ["first_name", "last_name", "password", "password2", "email"]
+    for k in req:
+        if k not in data or (k in data and len(data[k]) < 2):
+            resp["message"] = "{} is a required field.".format(k)
+            return JsonResponse(json.dumps(resp))
 
     # Username
-    if 'username' not in data:
-        return json_error("'username' is a required field.")
     if len(data['username']) < 4 or len(data['username']) > 25:
         return json_error("Usernames must be between 4 and 25 characters.")
     if User.objects.filter(username=data['username']).exists():
         return json_error("Username already exists")
 
-    if 'last_name' not in data:
-        return json_error("'last_name' is a required field.")
-    if 'first_name' not in data:
-        return json_error("'first_name' is a required field.")
-
-    if 'password1' not in data:
-        return json_error("'password' is a required field.")
     if len(data['password1']) < 5:
         return json_error("A password must be at least 5 characters long.")
-    if 'password2' not in data:
-        return json_error("'password2' is a required field.")
     if data['password2'] != data['password']:
         return json_error("Passwords do not match")
 
-    if 'email' not in data:
-        return json_error("'email' is a required field.")
     if len(data['email']) < 5:
         return json_error("Email is too short")
 
@@ -101,14 +98,9 @@ def register(request):
     user.is_active = False  # not active until he opens activation link
     user.save()
 
-    domain = settings.BASE_URL
-
-    username = user.username
-    email = user.email
-
     random_string = str(random.random()).encode('utf8')
     salt = hashlib.sha1(random_string).hexdigest()[:5]
-    salted = (salt + email).encode('utf8')
+    salted = (salt + data['email']).encode('utf8')
     activation_key = hashlib.sha1(salted).hexdigest()
     key_expires = datetime.datetime.today() + datetime.timedelta(2)
 
@@ -121,7 +113,11 @@ def register(request):
     email_subject = 'Account confirmation'
     email_body = "Hey %s, thanks for signing up. To activate your account, " \
                  "click this link within 48 hours: %saccounts/confirm/%s/"  \
-                 % (user.first_name,domain, activation_key)
-    send_mail(email_subject, email_body, settings.EMAIL_HOST_EMAIL, [user.email], fail_silently=False)
+                 % (user.first_name, settings.BASE_URL, activation_key)
+    send_mail(email_subject, email_body, settings.EMAIL_HOST_EMAIL,
+              [user.email], fail_silently=False)
 
-    return JsonResponse({"success": True, "data": {"id": user.id}})
+    messages.success(request, "You have successfully registered. Please "
+                              "check your provided email address.")
+
+    return JsonResponse(json.dumps({"refresh": "", "message": ""}))
