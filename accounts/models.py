@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     key_expires = models.DateTimeField()
     timezone = models.CharField(max_length = 100, default = timezone.now())
     color_scheme = models.IntegerField(default = 1)
-    is_demo = models.BooleanField()
+    is_demo = models.BooleanField(default = False)
 
     def __str__(self):
         return self.user.username
