@@ -19,12 +19,22 @@
 
 {% block content %}
 <div id="demo" class="review-card-large card-color">
+  {% if review.owner == user or user.is_superuser %}
+    <div class="delete-button-outer">
+      <lx-button lx-tooltip="Delete" lx-color="red" lx-type="icon" lx-tooltip-position="top"
+                class="delete-button" action="delete" model="review"
+                model-id="{{ review.id }}" redir="{% url "reviews" %}"
+                confirm="true">
+        <i class="mdi mdi-delete"></i>
+      </lx-button>
+    </div>
+  {% endif %}
   {% if user.is_authenticated and review.owner == user %}
     <div ng-controller="form-handler" model="review" edit="{{ review.id }}"
          class="edit-icon-outer">
-      <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+      <lx-button lx-tooltip="Edit" lx-color="grey" lx-type="icon" lx-tooltip-position="top"
                  ng-click="opendDialog('reviewCall')">
-        <i class="edit-icon fa fa-pencil"></i>
+        <i class="mdi mdi-pencil"></i>
       </lx-button>
       {% new_review_popup True %}
     </div>

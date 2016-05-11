@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 
 from new.utils import json_error, check_fields_in_data, MODEL_MAP, \
     MODEL_FORM_MAP, get_template_for_model
@@ -88,6 +89,14 @@ def new(request, type="new", page=None, id=None):
         if len(v) > 0:
             return HttpResponse(json.dumps(response))
     try:
+        emptyKeys = []
+        for key, value in data.items():
+            if value == '':
+                emptyKeys.append(key)
+        for key in emptyKeys:
+            data.pop(key)
+
+        print(data)
         if type == "new":
             # Try to create it
             new = model(**data)
@@ -98,9 +107,16 @@ def new(request, type="new", page=None, id=None):
                 setattr(new, k, data[k])
             if hasattr(new, "updated_ts"):
                 new.updated_ts = datetime.datetime.now()
-    except Exception as e:
+
+        new.full_clean()
+    except ValidationError as e:
         print("ERROR: " + str(e))
-        return HttpResponse(json_error({"error": str(e)}))
+        errorDict = {}
+        for key, value in e.message_dict.items():
+            if isinstance(value, list):
+                errorDict[key] = " ".join(value).strip("[]/'")
+
+        return HttpResponse(json_error(errorDict))
 
     for field in MODEL_FORM_MAP[page].Meta.fields:
         response["error"][field] = ""  # clear errors

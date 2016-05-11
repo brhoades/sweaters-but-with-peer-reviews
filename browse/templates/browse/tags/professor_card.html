@@ -1,44 +1,66 @@
 {% load staticfiles %}
 
-<div class="padded-card" professor-id="{{ professor.id }}" style="margin: 20px;">
-  <div flex-container="row">
-    <div flex-item="1">
-      <div class="hyperlink card__img card__img- - -left" style="height:100px;">
+
+<div class="padded-card" professor-id="{{ professor.id }}">
+  <div flex-container="row" flex-column="12">
+
+    <div flex-item="4">
+
+      <div class="hyperlink card__img card__img- - -left" style="height: 100px; float: left;">
         <img src="{% static 'browse/img/professor.png' %}"
-            style="width:100px;height:100px">
+            style="height: 100px; width: 100px; margin-right:20px;">
       </div>
-    </div>
-    <div flex-item="11">
+
       <div class="rating">
-        <!-- We should decide color and set it here -->
         <div class="average">{{ professor.rating }}</div>
         <div class="out-of">
           /5
         </div>
       </div>
+
+    </div>
+
+    <div flex-item="4">
       <div class="information">
         <div class="name">
-          <div class="hyperlink" onclick="window.location='{% url "professor" professor.id %}';">
+          <strong><div class="hyperlink" onclick="window.location='{% url "professor" professor.id %}';">
           {{ professor.first_name }} {{ professor.last_name }}
-          </div>
-        </div>
-        <div class="card-stats">
-          <div class="location">
-            <div onclick="window.location='{% url "school" school.id %}';" class="hyperlink" >
-              {{ professor.school.name }}
-            </div>
-          </div>
-          <div class="item">
-            {{ professor.num_courses }}<br />
-            Course{% if professor.num_courses != 1 %}s{% endif %}
-          </div>
-
-          <div class="item">
-            {{ professor.num_reviews }}<br />
-            Review{% if professor.num_reviews != 1 %}s{% endif %}
-          </div>
+          </div></strong>
         </div>
       </div>
+    </div>
+
+    <div flex-item="4">
+
+      <div class="information">
+        <div class="card-stats">
+
+          <div flex-item flex-container="column">
+            <div flex-item>
+              <div class="location">
+                <div onclick="window.location='{% url "school" school.id %}';"
+                    class="hyperlink" >
+                  {{ professor.school.name }}
+                </div>
+              </div>
+            </div>
+
+            <div flex-item>
+              <div class="item">
+                {{ professor.num_courses }}<br />
+                Course{% if professor.num_courses != 1 %}s{% endif %}
+              </div>
+
+              <div class="item">
+                {{ professor.num_reviews }}<br />
+                Review{% if professor.num_reviews != 1 %}s{% endif %}
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- End class card-stats -->
+      </div> <!-- End class information -->
+
     </div>
   </div>
 </div>

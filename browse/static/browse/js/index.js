@@ -1,9 +1,10 @@
 var primary_color = "blue";
+var delete_color = "red";
 
 // This just toggles the follow/following of the button
 $('a.follow').click(function () {
   $(this).toggleClass('followed');
-  
+
   if($(this).hasClass('followed')) {
     $(this).text('Followed');
     $('ul li:last-child').html('325<span>Followers</span>');
@@ -33,6 +34,40 @@ $(document).ready(function() {
       var toggler = down;
       var remover = up;
     }
+    else if (action == "delete") {
+      var model = $(this).attr('model');
+      var model_id = $(this).attr('model-id');
+      var redir = $(this).attr('redir');
+
+      if(
+        $(this).attr('confirm') != "true" ||
+        confirm("Are you sure you wish to delete this "+model+" and everything linked to it?")
+      ) {
+        $.ajax({
+          url: "/delete",
+          type: "POST",
+          data: {
+            "model-id": model_id,
+            "model": model,
+          },
+          success:function(data){
+            if(data.success) {
+              if(redir==undefined){
+                $("["+model+"-id="+model_id+"]").remove();
+              }
+              else {
+                window.location = redir
+              }
+            }
+            else {
+              alert(data.error)
+            }
+          }
+        });
+      }
+
+      return;
+    }
     else {
       return;
     }
@@ -60,6 +95,9 @@ $(document).ready(function() {
 $(document).ready(function() {
   $('.vote-button-up,.vote-button-down').each(function() {
     $(this).addClass("btn--" + primary_color);
+  });
+  $('.delete-button').each(function() {
+    $(this).addClass("btn--" + delete_color);
   });
 });
 

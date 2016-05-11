@@ -15,6 +15,7 @@ urlpatterns = [
     # Other modules
     url(r'^browse/', include('browse.urls')),
     url(r'^(new|edit)/', include('new.urls')),
+    url(r'^delete', bviews.delete, name="delete"),
     url(r'^get/', include('ajax.urls')),
     url(r'^accounts/', include('accounts.urls')),
 ]

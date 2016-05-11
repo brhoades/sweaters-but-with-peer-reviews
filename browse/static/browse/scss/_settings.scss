@@ -8,6 +8,7 @@ $accent-hue-1:          $orange-300  !default;
 $accent-hue-2:          $orange-700  !default;
 
 $button-color-name: "blue";
+$delete-button-color-name: "red";
 $button-color: $primary;
 
 $vote-button-color-name: $button-color-name;
@@ -18,3 +19,8 @@ $vote-button-color-down: $button-color;
 $vote-button-activate-color: $primary-hue-1;
 $vote-button-activate-color-up: $vote-button-activate-color;
 $vote-button-activate-color-down: $vote-button-activate-color;
+
+$delete-button-color-name: $delete-button-color-name;
+$delete-button-color: $red-500 !default;;
+
+$delete-button-activate-color: $red-100 !default;
