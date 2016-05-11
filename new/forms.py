@@ -5,7 +5,7 @@ the appropriate fields required.
 
 from browse.models import Review, Course, Professor, School, Department,\
     Field, FieldCategory, ReviewComment, Report, PeerReview
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm
 
 
 class ReviewForm(ModelForm):
