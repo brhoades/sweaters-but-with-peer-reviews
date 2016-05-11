@@ -4,7 +4,7 @@
   {% verbatim %}
   <div flex-container="row" ng-model="valid.error" 
                             class="p+ error bgc-red-500 tc-white-1"
-                            ng-show="valid.error != ''">
+                            ng-show="valid.error">
     <center>
       {{ valid.error }}
     </center>
@@ -13,7 +13,7 @@
     <lx-select ng-model="data.department" placeholder="Department (School)"
                                           choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'departments_matching')" 
                                                                loading="{{ ajax.loading }}" min-length="2" allow-clear="true"
-                                                                                                           error="valid.department != ''"
+                                                                                                           error="valid.department"
                                                                                                            class="tc-white-1">
       <lx-select-selected>
         {{ $selected.name + ' (' + $selected.school_name + ')' }}
@@ -27,16 +27,16 @@
 
   <div flex-item>
     <lx-text-field label="Course name">
-      <input type="text" ng-model="data.name" error="valid.name != ''">
+      <input type="text" ng-model="data.name" error="valid.name">
     </lx-text-field>
-    <span class="text-field-error" ng-show="valid.name != ''">{{ valid.name }}</span>
+    <span class="text-field-error" ng-show="valid.name">{{ valid.name }}</span>
   </div>
 
   <div flex-item>
     <lx-text-field label="Course number">
-      <input type="text" ng-model="data.number" error="valid.number != ''">
+      <input type="text" ng-model="data.number" error="valid.number">
     </lx-text-field>
-    <span class="text-field-error" ng-show="valid.number != ''">{{ valid.number }}</span>
+    <span class="text-field-error" ng-show="valid.number">{{ valid.number }}</span>
   </div>
   <div flex-container="row">
     <div flex-item>
