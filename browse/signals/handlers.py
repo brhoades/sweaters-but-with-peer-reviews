@@ -27,11 +27,11 @@ def log_save(sender, instance, created, *args, **kwargs):
     elif hasattr(instance, "owner"):
         owner = instance.owner
 
-    type = Log.ADD
+    method = Log.ADD
     if not created:
-        type = Log.MODIFY
+        method = Log.MODIFY
 
-    log = Log.create(model, instance.id, type, owner=owner)
+    log = Log.create(model, instance.id, method, owner=owner)
     log.save()
 
 

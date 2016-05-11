@@ -384,7 +384,7 @@ class Report(models.Model):
         """
         Resolves a report by creating another log entry.
         """
-        self.handled_by = Log.create(self.target,
+        self.handled_by = Log.create(type(self.target),
                                      self.target.id,
                                      Log.REPORT_RESOLVE, comment=comment,
                                      owner=by)
