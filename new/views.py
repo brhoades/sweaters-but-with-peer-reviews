@@ -225,6 +225,7 @@ def report(request, model_name, id):
         new.save()
         res["id"] = new.id
 
+        messages.success(request, "Added report!")
         return HttpResponse(json.dumps(res),
                             content_type="application/json")
     else:

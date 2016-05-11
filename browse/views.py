@@ -9,7 +9,7 @@ from browse.models import Review, User, Professor, School, Course,\
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
 from new.forms import PeerReviewForm, SchoolForm
-
+from chartit import DataPool, Chart
 import json
 from new.views import MODEL_MAP
 
@@ -176,6 +176,28 @@ def professor(request, professor_id=None, page=0):
 
     context["schools"] = [course.department.school for course
                           in context["courses"]]
+
+    reviewdata = (Review.objects.filter(target_id=professor_id))
+    profdata = DataPool(series=[{'options': {'source': reviewdata}, 'terms':
+                                 ['id', 'rating_value', 'rating_difficulty',
+                                 'rating_overall']}])
+
+    chart = Chart(datasource=profdata, series_options=[{'options':
+                                                        {'type': 'line',
+                                                         'stacking': False},
+                                                        'terms':
+                                                        {'id':
+                                                         ['rating_value',
+                                                          'rating_difficulty',
+                                                          'rating_overall']}}],
+                  chart_options={'title': {'text': 'Ratings of Professor'},
+                                 'xAxis': {'title': {'text': 'Recent Reviews'},
+                                           'ceiling': 25},
+                                 'yAxis': {'title': {'text': 'Ratings'},
+                                           'min': 0, 'max': 5}})
+
+    context["chart"] = chart
+
     return HttpResponse(template.render(context))
 
 
