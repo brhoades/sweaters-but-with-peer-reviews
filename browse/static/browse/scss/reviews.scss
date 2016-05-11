@@ -15,7 +15,6 @@
   .review-title {
     @extend .fs-title;
     @extend .display-block;
-    font-size: 100%;
   }
 }
 
@@ -75,7 +74,7 @@
 
 .review-title-subtext {
   @extend .tc-black-2;
-  font-size: 12px;
+  @extend .fs-body-1;
 }
 
 .review-rating {
@@ -108,14 +107,11 @@
     font-size: 10px;
   }
 
-  .review-title-subtext {
-    font-size: 90%;
-  }
 
   .review-card-small {
 
     .review-title {
-      font-size: 15px;
+      font-size: 20px;
     }
   }
 
