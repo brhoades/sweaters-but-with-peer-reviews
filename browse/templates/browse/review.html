@@ -48,7 +48,7 @@
     </div>
   {% endif %}
   {% if review.is_new %}
-    <script>kiipInstance.postMoment('Registering');</script>
+    <script>kiipInstance.postMoment('new_review');</script>
   {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}" target="_parent">

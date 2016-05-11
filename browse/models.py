@@ -45,9 +45,16 @@ def updated(self):
         return False
     return True
 
+
+def is_new(self):
+    timediff = timezone.now() - self.date_joined
+    return timediff.seconds < 10
+
+
 # monkey patch some new functions onto models
 Model.to_json = to_json
 Model.updated = updated
+User.is_new = is_new
 
 
 class School(Model):
