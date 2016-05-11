@@ -105,14 +105,14 @@
       </div>
       <div flex-item>
         <lx-text-field label="Review title" error="valid.title">
-          <textarea type="text" ng-model="data.title" ng-minlength="3"></textarea>
+          <textarea type="text" ng-model="data.title"></textarea>
         </lx-text-field>
         <span class="text-field-error" ng-show="valid.title">{{ valid.title }}</span>
       </div>
 
       <div flex-item>
         <lx-text-field label="Write your review here (minimum 50 characters)" error="valid.text">
-          <textarea ng-model="data.text" type="text" ng-minlength="50"></textarea>
+          <textarea ng-model="data.text" type="text"></textarea>
         </lx-text-field>
         <span class="text-field-error" ng-show="valid.text">{{ valid.text }}</span>
       </div>
