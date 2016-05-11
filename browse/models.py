@@ -325,7 +325,7 @@ class Log(models.Model):
         Does not save, only returns a new Log.
         """
         log = Log(target_serialized=json.dumps({
-            "model_type": model.__class__.__name__,
+            "model_type": model.__name__,
             "model_pk": id
             }), category=type, action=action, comment=comment,
             owner=owner)
