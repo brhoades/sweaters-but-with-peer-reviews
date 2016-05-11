@@ -4,7 +4,7 @@ from django.core.urlresolvers import resolve
 
 def link_processor(request):
     """
-    This class provides, to all pages, a dict of links called "page_links".
+    This function provides, to all pages, a dict of links called "page_links".
     These links contain {"name": "tag"} for a name of a page to a view tag.
 
     These are used to automatically populate the sidebars.
