@@ -17,11 +17,7 @@ from new.views import MODEL_MAP
 def index(request, message=""):
     template = "browse/index.html"
 
-    if message:
-        messages.info(request, message)
-
     context = RequestContext(request)
-    context["messages"] = messages.get_messages(request)
 
     context["review_votes"] = _get_all_review_votes(request)[0:5]
 
