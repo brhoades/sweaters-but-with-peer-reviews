@@ -76,7 +76,7 @@ def register(request, type):
     for k in req:
         if k not in data or (k in data and len(data[k]) < 2):
             resp["message"] = "{} is a required field.".format(k)
-            return JsonResponse(json.dumps(resp))
+            return JsonResponse(resp)
 
     # Username
     if len(data['username']) < 4 or len(data['username']) > 25:

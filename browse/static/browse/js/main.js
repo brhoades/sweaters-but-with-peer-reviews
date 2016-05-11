@@ -82,11 +82,12 @@ app.controller('loginData', function($scope, $http, LxDialogService,
 
 app.controller('register', function($scope, $http, LxDialogService,
                                      LxNotificationService, $window) {
-  $scope.data = {}
+  $scope.data = {};
+  $scope.form = {};
 
   // Someone hit submit
-  $scope.submit = function(form) {
-    $http.post("/new/account", JSON.stringify(form)).
+  $scope.submit = function(data) {
+    $http.post("/new/account", JSON.stringify($scope.data)).
       success(function(data) {
           if(data["message"] != undefined) {
             LxNotificationService.error(data["message"]);
