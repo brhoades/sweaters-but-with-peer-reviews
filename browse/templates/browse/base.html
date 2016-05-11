@@ -58,6 +58,12 @@
         });
     </script>
 
+    <script type="text/javascript" src="//d3aq14vri881or.cloudfront.net/kiip.js"></script>
+    <script>
+        var kiipInstance = new Kiip('4e57071906e77e742435ba4a278b753c');
+    </script>
+
+
     <script src="{% static 'browse/js/libs/jquery-ui.min.js' %}"></script>
 
     <!-- Custom js files -->
@@ -72,6 +78,10 @@
   </head>
 
   <body class="background-color">
+    {% if user.is_new %}
+      <script>kiipInstance.postMoment('Registering');</script>
+    {% endif %}
+
     <div class="top-bar bgc-light-blue-800"></div>
     <div ng-app="lumxWrap" ng-controller="leftCtrl">
       <div class="toolbar">
