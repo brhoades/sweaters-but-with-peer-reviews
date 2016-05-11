@@ -17,7 +17,7 @@
         <span class="display-block fs-body-1 tc-black-2">
           Reported by <b>{{ report.owner.first_name }} {{ report.owner.last_name }}</b> 
           on {{ report.created_ts|date:"DATETIME_FORMAT" }} &nbsp; &nbsp;
-          <a href="{% url report.target_type report.id %}">View Target</a> &nbsp;
+          <a href="{% url report.target_type report.target.id %}">View Target</a> &nbsp;
           {% if not report.handled %}
             <a href="{% url 'resolve_report' 'new' report.id %}">Resolve</a>
           {% else %}
