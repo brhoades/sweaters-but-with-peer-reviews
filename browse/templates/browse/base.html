@@ -51,8 +51,18 @@
     </script>
 
     <script>
-      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages', 'md.data.table']);
+      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages', 'md.data.table']).run( function(LxNotificationService) {
+          {% for message in messages %}
+            LxNotificationService.info('{{ message }}');
+          {% endfor %}
+        });
     </script>
+
+    <script type="text/javascript" src="//d3aq14vri881or.cloudfront.net/kiip.js"></script>
+    <script>
+        var kiipInstance = new Kiip('4e57071906e77e742435ba4a278b753c');
+    </script>
+
 
     <script src="{% static 'browse/js/libs/jquery-ui.min.js' %}"></script>
 
@@ -62,11 +72,16 @@
     <script src="{% static 'browse/bower_components/lumx/modules/dialog/js/dialog_directive.js' %}"></script>
     <script src="{% static 'browse/js/main.js' %}"></script>
 
+    <!-- messages -->
     {% block js %}{% endblock %}
     {% block header %}{% endblock %}
   </head>
 
   <body class="background-color">
+    {% if user.is_new %}
+      <script>kiipInstance.postMoment('Registering');</script>
+    {% endif %}
+
     <div class="top-bar bgc-light-blue-800"></div>
     <div ng-app="lumxWrap" ng-controller="leftCtrl">
       <div class="toolbar">

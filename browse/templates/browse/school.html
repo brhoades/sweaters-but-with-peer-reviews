@@ -18,7 +18,8 @@
 
 {% block content %}
   <div id="demo" class="review-card-large card-color">
-      {% if user.is_authenticated and user.is_superuser %}
+    {% if user.is_authenticated %}
+      {% if user.is_staff %}
       <div class="delete-button-outer">
         <lx-button lx-tooltip="Delete" lx-color="red" lx-type="icon" lx-tooltip-position="top"
                   class="delete-button" action="delete" model="school"
@@ -28,7 +29,7 @@
         </lx-button>
       </div>
     {% endif %}
-    {% if user.is_authenticated and school.created_by == user %}
+    {% if school.created_by == user or user.is_staff %}
       <div ng-controller="form-handler" model="school" edit="{{ school.id }}"
            class="edit-icon-outer">
         <lx-button lx-tooltip="Edit" lx-color="grey" lx-type="icon" lx-tooltip-position="top"
@@ -37,7 +38,8 @@
         </lx-button>
         {% new_school_popup True %}
       </div>
-    {% elif user.is_authenticated %}
+    {% endif %}
+    {% if user != school.created_by %}
       <div ng-controller="form-handler" model="school" report="{{ school.id }}"
            class="edit-icon-outer">
         <lx-button lx-tooltip="Report" lx-type="icon" lx-tooltip-position="left"
@@ -46,6 +48,7 @@
         </lx-button>
       </div>
     {% endif %}
+  {% endif %}
 
     <div class="professor-title">
         <img src="{% gravatar_url professor.owner.email 100 %}"

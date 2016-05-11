@@ -4,7 +4,7 @@
   {% verbatim %}
   <div flex-container="row" ng-model="valid.error"
        class="p+ error bgc-red-500 tc-white-1"
-       ng-show="valid.error != ''">
+       ng-show="valid.error">
     <center>
       {{ valid.error }}
     </center>
@@ -19,7 +19,7 @@
           loading="{{ ajax.loading }}"
           min-length="2"
           allow-clear="true"
-          error="valid.school != ''"
+          error="valid.school"
           class="tc-black-1">
 
         <lx-select-selected>
@@ -31,20 +31,22 @@
         </lx-select-choices>
       </lx-select>
 
+      <span class="text-field-error" ng-show="valid.school">{{ valid.school }}</span>
+
       <div flex-container="row" flex-gutter="24">
 
         <div flex-item>
             <lx-text-field label="First name">
-                <input type="text" ng-model="data.first_name" error="valid.first_name != ''">
+                <input type="text" ng-model="data.first_name" error="valid.first_name">
             </lx-text-field>
-            <span class="text-field-error" ng-show="valid.first_name != ''">{{ valid.first_name }}</span>
+            <span class="text-field-error" ng-show="valid.first_name">{{ valid.first_name }}</span>
         </div>
 
         <div flex-item>
             <lx-text-field label="Last name">
-                <input type="text" ng-model="data.last_name" error="valid.last_name != ''">
+                <input type="text" ng-model="data.last_name" error="valid.last_name">
             </lx-text-field>
-            <span class="text-field-error" ng-show="valid.last_name != ''">{{ valid.last_name }}</span>
+            <span class="text-field-error" ng-show="valid.last_name">{{ valid.last_name }}</span>
         </div>
 
       </div>
