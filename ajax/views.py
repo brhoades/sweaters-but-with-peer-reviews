@@ -99,7 +99,7 @@ def login(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    response["message"] = ""
+                    response["message"] = "Accepted"
                     response["refresh"] = True
                 else:
                     response["message"] = "Your account is disabled."

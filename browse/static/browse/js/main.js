@@ -63,7 +63,7 @@ app.controller('loginData', function($scope, $http, LxDialogService,
   $scope.submit = function(form) {
     $http.post("/get/login", JSON.stringify(form)).
       success(function(data) {
-          if(data["message"] != undefined) {
+          if(data["message"] != undefined && data["message"] != "Accepted") {
             LxNotificationService.error(data["message"]);
           }
 
