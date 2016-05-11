@@ -4,7 +4,7 @@
   {% verbatim %}
   <div flex-container="row" ng-model="valid.error" 
                             class="p+ error bgc-red-500 tc-white-1"
-                            ng-show="valid.error != ''">
+                            ng-show="valid.error">
     <center>
       {{ valid.error }}
     </center>
@@ -12,9 +12,9 @@
   <div flex-container="row" flex-gutter="24">
     <div flex-item>
       <lx-text-field label="Field Name">
-        <input type="text" ng-model="data.name" error="valid.name != ''">
+        <input type="text" ng-model="data.name" error="valid.name">
       </lx-text-field>
-      <span class="text-field-error" ng-show="valid.name != ''">{{ valid.name }}</span>
+      <span class="text-field-error" ng-show="valid.name">{{ valid.name }}</span>
     </div>
 
     <div flex-item style="margin-left: 5%; margin-right: 5%" class="p+">
@@ -30,7 +30,7 @@
           {{ $choice.name }}
         </lx-select-choices>
       </lx-select>
-      <span class="text-field-error" ng-show="valid.categories != ''">{{ valid.categories }}</span>
+      <span class="text-field-error" ng-show="valid.categories">{{ valid.categories }}</span>
     </div>
   </div>
 

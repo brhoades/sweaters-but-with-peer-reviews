@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from geoposition.fields import GeopositionField
 from django.apps import apps
 
+from django.utils import timezone
+
 import urllib.request as urllib
 import json
 import datetime
@@ -43,9 +45,16 @@ def updated(self):
         return False
     return True
 
+
+def is_new(self):
+    timediff = timezone.now() - self.date_joined
+    return timediff.seconds < 10
+
+
 # monkey patch some new functions onto models
 Model.to_json = to_json
 Model.updated = updated
+User.is_new = is_new
 
 
 class School(Model):
@@ -212,6 +221,10 @@ class Review(Model):
                                                   self.owner.last_name,
                                                   self.target.first_name,
                                                   self.target.last_name)
+
+    def is_new(self):
+        timediff = timezone.now() - self.created_ts
+        return timediff.seconds < 10
 
 
 class ReviewVote(Model):
