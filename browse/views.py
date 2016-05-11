@@ -185,7 +185,7 @@ def professor(request, professor_id=None, page=0):
     reviewdata = (Review.objects.filter(target_id=professor_id))
     profdata = DataPool(series=[{'options': {'source': reviewdata}, 'terms':
                                  ['id', 'rating_value', 'rating_difficulty',
-                                 'rating_overall']}])
+                                  'rating_overall']}])
 
     chart = Chart(datasource=profdata, series_options=[{'options':
                                                         {'type': 'line',
