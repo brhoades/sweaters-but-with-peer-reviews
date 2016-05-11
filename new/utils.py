@@ -2,10 +2,10 @@ from django.http import HttpResponse
 from django.template import loader, RequestContext
 
 from browse.models import Review, Professor, School, Department, \
-    Field, FieldCategory, Course, ReviewComment, Report
+    Field, FieldCategory, Course, ReviewComment, Report, PeerReview
 from new.forms import ReviewForm, ProfessorForm, SchoolForm, DepartmentForm, \
     FieldForm, FieldCategoryForm, CourseForm, CommentForm, ReportForm, \
-    ResolveReportForm
+    ResolveReportForm, PeerReviewForm
 
 import json
 
@@ -18,6 +18,7 @@ MODEL_MAP = {"review": Review,
              "fieldcategory": FieldCategory,
              "reviewcomment": ReviewComment,
              "report": Report,
+             "peerreview": PeerReview,
              }
 
 MODEL_FORM_MAP = {"review": ReviewForm,
@@ -29,7 +30,8 @@ MODEL_FORM_MAP = {"review": ReviewForm,
                   "fieldcategory": FieldCategoryForm,
                   "reviewcomment": CommentForm,
                   "report": ReportForm,
-                  "resolve_report": ResolveReportForm
+                  "resolve_report": ResolveReportForm,
+                  "peerreview": PeerReviewForm,
                   }
 
 
