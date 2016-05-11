@@ -19,9 +19,6 @@ class ReviewForm(ModelForm):
     needs_owner = True
     needs_created_by = False
 
-    #target = forms.ModelChoiceField(queryset=Professor.objects.all())
-    #course = forms.ModelChoiceField(queryset=Course.objects.all())
-
     class Meta:
         model = Review
         fields = ['target', 'course', 'text', 'title', 'rating_overall',
