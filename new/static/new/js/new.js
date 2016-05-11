@@ -110,6 +110,10 @@ app.controller('form-handler',
     if($scope.edit) {
       url = "/edit/" + $scope.type + "/" + $scope.id;
     }
+    if($scope.type == "peerreview")
+    {
+      url = window.location.pathname;
+    }
     if($scope.type == "report") {
       url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
     }
@@ -143,6 +147,13 @@ app.controller('form-handler',
           else {
             redirectPage = $scope.type;
             redirectID = data.id;
+          }
+
+          if ($scope.type == "report") {
+            // go back
+            LxNotificationService.success("Your report has been received.");
+            $window.location.href = document.referrer;
+            return;
           }
 
           $http.get("/get/view_for_model_at_id/" + redirectPage + "/" + redirectID).
