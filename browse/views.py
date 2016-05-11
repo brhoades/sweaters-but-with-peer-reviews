@@ -1,14 +1,19 @@
 from django.template import loader, RequestContext
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed,\
+    HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 
 from browse.models import Review, User, Professor, School, Course,\
     ReviewComment, Report, PeerReview, Log
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
+
 from new.forms import PeerReviewForm, SchoolForm
+from new.utils import json_error
+
 from chartit import DataPool, Chart
 import json
 from new.views import MODEL_MAP
@@ -180,7 +185,7 @@ def professor(request, professor_id=None, page=0):
     reviewdata = (Review.objects.filter(target_id=professor_id))
     profdata = DataPool(series=[{'options': {'source': reviewdata}, 'terms':
                                  ['id', 'rating_value', 'rating_difficulty',
-                                 'rating_overall']}])
+                                  'rating_overall']}])
 
     chart = Chart(datasource=profdata, series_options=[{'options':
                                                         {'type': 'line',
@@ -358,18 +363,40 @@ def peer_review(request, peerreview_id):
 
     peerReview = get_object_or_404(PeerReview, id=peerreview_id)
 
+    if peerReview.owner != request.user:
+        HttpResponseForbidden()
+
     if request.method == "GET":
         form = PeerReviewForm(instance=peerReview)
     elif request.method == "POST":
-        form = PeerReviewForm(request.POST, instance=peerReview)
-        reviewEdit = form.save(commit=False)
+        data = json.loads(request.body.decode())
+        model = peerReview
+        model.text = data["text"]
+        model.rating = data["rating"]
+        model.flag = data["flag"]
+        model.is_finished = True
 
-        reviewEdit.is_finished = True
-        reviewEdit.save()
+        try:
+            model.full_clean()
+
+            model.save()
+            print("Saved: {}".format(model))
+            response = {"id": model.id}
+            return HttpResponse(json.dumps(response))
+        except ValidationError as e:
+            errorDict = {}
+            for key, value in e.message_dict.items():
+                if isinstance(value, list):
+                    errorDict[key] = " ".join(value)
+
+            print("ERROR: {}".format(errorDict))
+            return HttpResponse(json_error(errorDict))
     else:
         return HttpResponseNotAllowed(["POST", "GET"])
 
     context["form"] = form
+    context["review"] = peerReview.target
+    context["peerreview"] = peerReview
 
     return render(request, template, context)
 

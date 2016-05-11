@@ -1,5 +1,6 @@
 from django.conf.urls import url
 import new.views as nviews
+import browse.views as bviews
 import accounts.views as accviews
 
 urlpatterns = [
@@ -7,6 +8,9 @@ urlpatterns = [
     url(r'^(?P<page>(school|department|professor|review|course|field'
         '|fieldcategory|reviewcomment))$',
         nviews.new, name="new"),
+
+    url(r'^peerreview/?$', bviews.peer_review, name="peerreview"),
+
     url(r'^(?P<page>(school|department|professor|review|course|field'
         '|fieldcategory|reviewcomment))/(?P<id>[0-9]+)$',
         nviews.edit, name="edit"),

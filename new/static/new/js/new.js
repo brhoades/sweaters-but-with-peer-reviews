@@ -110,6 +110,10 @@ app.controller('form-handler',
     if($scope.edit) {
       url = "/edit/" + $scope.type + "/" + $scope.id;
     }
+    if($scope.type == "peerreview")
+    {
+      url = window.location.pathname;
+    }
     if($scope.type == "report") {
       url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
     }
