@@ -4,6 +4,7 @@
 {% load cards %}
 {% load gravatar %}
 {% load formlets %}
+{% load chartit %}
 
 {% block title %}Professor{% endblock %}
 {% block header %}
@@ -62,6 +63,10 @@
     <a href="{% url "school" professor.school.id %}">
       {{ professor.school.name }}
     </a>
+  </div>
+  <div id="container" style="width:100%; height:250px;">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    {{ chart|load_charts:"container" }}
   </div>
 </div>
 

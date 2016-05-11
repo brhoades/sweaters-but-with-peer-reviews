@@ -40,8 +40,8 @@ def get_departments_matching(request, partial):
 def get_professors_matching(request, partial):
     return HttpResponse(serializers.serialize("json",
                         Professor.objects
-                        .filter(Q(last_name__icontains=partial)
-                                | Q(first_name__icontains=partial))))
+                        .filter(Q(last_name__icontains=partial) |
+                                Q(first_name__icontains=partial))))
 
 
 def get_fields_matching(request, partial):

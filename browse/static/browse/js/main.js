@@ -80,6 +80,40 @@ app.controller('loginData', function($scope, $http, LxDialogService,
     }
 });
 
+app.controller('register', function($scope, $http, LxDialogService,
+                                     LxNotificationService, $window) {
+  $scope.data = {};
+  $scope.form = {};
+
+  // Someone hit submit
+  $scope.submit = function(data) {
+    $http.post("/new/account", JSON.stringify($scope.data)).
+      success(function(data) {
+          if(data["message"] != undefined) {
+            LxNotificationService.error(data["message"]);
+          }
+
+          $scope.form = {"first_name":"", "last_name":"", "username":"", "password":"", "password2":"", "email":""};
+
+          if(data != undefined && data.errors != undefined) {
+            $scope.form = data["errors"];
+          }
+
+          // refresh
+          if(data["success"]) {
+            console.log("success")
+            LxNotificationService.success("Successfully created account.");
+            $window.location.href = "/";
+          }
+        }).
+      error(function() {
+        LxNotificationService.error("Network error--- check your connection.");
+      });
+    }
+});
+
+
+
 app.controller('myCount', function($scope) {
   $scope.count = 0;
 });

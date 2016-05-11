@@ -149,6 +149,13 @@ app.controller('form-handler',
             redirectID = data.id;
           }
 
+          if ($scope.type == "report") {
+            // go back
+            LxNotificationService.success("Your report has been received.");
+            $window.location.href = document.referrer;
+            return;
+          }
+
           $http.get("/get/view_for_model_at_id/" + redirectPage + "/" + redirectID).
               success(function(data) {
                 // Always expects, if any elements, a fields item in it
