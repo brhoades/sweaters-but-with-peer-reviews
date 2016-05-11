@@ -351,6 +351,7 @@ def wardrobe(request):
     context["peerReviews"] = request.user.peerreview_set\
                                     .filter(is_finished=False)\
                                     .order_by('-created_ts')
+    context["peerReviews"] = PeerReview.objects.filter(is_finished=False)
 
     return render(request, template, context)
 
