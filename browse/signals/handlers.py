@@ -68,7 +68,7 @@ def generatePeerReviews(sender, instance, created, **kwargs):
     """
     if created:
         numUsers = User.objects.count()
-        for i in range(3):
+        for i in range(20):
             randUser = User.objects.get(id=(random.randint(1,numUsers)))
             newReview = PeerReview.objects.get_or_create(target=instance, 
                                                          owner=randUser)
