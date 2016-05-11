@@ -2,26 +2,30 @@
   {% csrf_token %}
 
   {% verbatim %}
-    <div flex-container="row" ng-model="message"
-                              class="p+ error bgc-red-500 tc-white-1"
-                              ng-show="message != ''">
+    <div flex-container="row" ng-model="message" ng-show="message != ''"
+         class="p+ error bgc-red-500 tc-white-1">
       <center>
         {{ message }}
       </center>
     </div>
     <div id="loginData">
-        <lx-text-field label="Username">
-          <input type="text" ng-model="user.username" name="username">
-        </lx-text-field>
+      <div flex-container="row">
+        <div flex-item="2"></div>
+        <div flex-item="8">
+          <lx-text-field label="Username">
+            <input type="text" ng-model="user.username" name="username">
+          </lx-text-field>
 
-        <lx-text-field label="Password">
-          <input type="password" ng-model="user.password" name="password">
-        </lx-text-field>
+          <lx-text-field label="Password">
+            <input type="password" ng-model="user.password" name="password">
+          </lx-text-field>
 
-         <button id="siteButton" class="btn btn--l btn--blue btn--raised" 
-                 lx-ripple type="submit" ng-click="submit(user);">
-           Login
-         </button>
+          <button id="siteButton" class="btn btn--l btn--blue btn--raised"
+                   lx-ripple type="submit" ng-click="submit(user);">
+             Login
+          </button>
+        </div>
+      </div>
     </div>
   {% endverbatim %}
 </form>
