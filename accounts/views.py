@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 import json
-from new.utils import json_error
 
 from django.core.mail import send_mail
 from django.conf import settings
@@ -65,44 +64,46 @@ def register(request, type):
         "email": email
     """
 
-    resp = {"message": ""}
+    resp = {"errors": {}}
 
     data = json.loads(request.body.decode('utf-8'))
     if request.method != "POST":
         messages.error(request, "This is an AJAX interface.")
         return redirect("home")
 
-    req = ["first_name", "last_name", "password", "password2", "email"]
+    req = {"first_name":"First Name", "last_name":"Last Name", "username":"User Name", "password":"Password", "password2":"Repeat Password", "email":"Email"}
     for k in req:
-        if k not in data or (k in data and len(data[k]) < 2):
-            resp["message"] = "{} is a required field.".format(k)
-            return JsonResponse(resp)
+        if k not in data or len(data[k]) == 0:
+            resp["errors"][k] = "{} is a required field.".format(req[k])
+    if len(resp["errors"]) != 0:
+        return JsonResponse(resp)
 
     # Username
     if len(data['username']) < 4 or len(data['username']) > 25:
-        return json_error("Usernames must be between 4 and 25 characters.")
-    if User.objects.filter(username=data['username']).exists():
-        return json_error("Username already exists")
+        resp["errors"]['username'] = "Usernames must be between 4 and 25 characters."
+    # elif User.objects.filter(username=data['username']).exists():
+    #     resp["errors"]['username'] = "Usernames must be between 4 and 25 characters."
+    #     return JsonResponse({"message": "Username already exists"})
 
-    if len(data['password']) < 5:
-        return JsonResponse({"message": "A password must be at least 5 "
-                                        " characters long."})
     if data['password2'] != data['password']:
-        return JsonResponse({"message": "Passwords don't match. "})
-
-    if len(data['email']) < 5:
-        return JsonResponse({"message": "Email is too short."})
+        resp["errors"]['password2'] = "Passwords don't match."
 
     try:
         user = User(username=data['username'], email=data['email'],
-                    first_name=data['first_name'], last_name=data['last_name'],
-                    is_demo=False)
+                    first_name=data['first_name'], last_name=data['last_name'])
         user.set_password(data['password'])
         user.is_active = False  # not active until he opens activation link
         user.full_clean()  # check validators
+
+        if len(resp["errors"]) != 0:
+            return JsonResponse(resp)
+
         user.save()
     except Exception as e:
-        return JsonResponse({"message": str(e)})
+        for k,v in e:
+            resp["errors"][str(k)] = v[0]
+        # return JsonResponse({"errors": json.dumps(e)})
+        return JsonResponse(resp)
 
     random_string = str(random.random()).encode('utf8')
     salt = hashlib.sha1(random_string).hexdigest()[:5]
@@ -126,4 +127,4 @@ def register(request, type):
     messages.success(request, "You have successfully registered. Please "
                               "check your provided email address.")
 
-    return JsonResponse(json.dumps({"refresh": "", "message": ""}))
+    return JsonResponse({"success": True})

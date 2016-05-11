@@ -25,40 +25,40 @@
       <div flex-item="6">
         <div flex-container="row">
           <div flex-item="6" style="padding:0 5px 0 0">
-            {{ form.first_name.errors }}
             <lx-text-field label="First Name">
                 <input type="text" ng-model="data.first_name" name="first_name">
             </lx-text-field>
+            <span class="text-field-error" ng-show="form.first_name">{{ form.first_name }}</span>
           </div>
           <div flex-item="6">
-            {{ form.last_name.errors }}
             <lx-text-field label="Last Name">
               <input type="text" ng-model="data.last_name" name="last_name">
             </lx-text-field>
+            <span class="text-field-error" ng-show="form.last_name" >{{ form.last_name }}</span>
           </div>
         </div>
 
-        {{ form.email.errors }}
-        <lx-text-field label="E-mail">
-          <input type="text" ng-model="data.email" name="email">
-        </lx-text-field>
 
-        {{ form.username.errors }}
+        <lx-text-field label="E-mail">
+          <input type="email" ng-model="data.email" name="email">
+        </lx-text-field>
+        <span class="text-field-error" ng-show="form.email" >{{ form.email }}</span>
+
         <lx-text-field label="UserName">
           <input type="text" ng-model="data.username" name="username">
         </lx-text-field>
+        <span class="text-field-error" ng-show="form.username" >{{ form.username }}</span>
 
-        {{ form.password1.errors }}
         <lx-text-field label="Password">
           <input type="password" ng-model="data.password" name="password">
         </lx-text-field>
+        <span class="text-field-error" ng-show="form.password" >{{ form.password }}</span>
 
-        {{ form.password2.errors }}
         <lx-text-field label="Repeat Password">
           <input type="password" ng-model="data.password2" name="password2">
         </lx-text-field>
+        <span class="text-field-error" ng-show="form.password2" >{{ form.password2 }}</span>
 
-        <!-- <button id="siteButton" class="btn btn--l btn--raised" type="submit" style="margin-top:20px;" lx-ripple />Create account</button> -->
         <button id="siteButton" class="btn btn--l btn--blue btn--raised"
                  lx-ripple type="submit" ng-click="submit(data);">
                  Create Account
@@ -72,53 +72,3 @@
 
 </body>
 {% endblock %}
-
-<!--
-
-<form class="form-signup" method="post" class="post-form">{% csrf_token %}
-    <div class="fieldWrapper">
-        {{ form.first_name.errors }}
-        <label>First name</label>
-        <br>
-        {{ form.first_name }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.last_name.errors }}
-        <label>Last name</label>
-        <br>
-        {{ form.last_name }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.email.errors }}
-        <label>E-mail</label>
-        <br>
-        {{ form.email }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.username.errors }}
-        <label>Username</label>
-        <br>
-        {{ form.username }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.password2.errors }}
-        <label>Password</label>
-        <br>
-        {{ form.password1 }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.password2.errors }}
-        <label>Password again</label>
-        <br>
-        {{ form.password2 }}
-    </div>
-    <br></br>
-    <input type="submit" name="submit" class="btn btn-primary" value="Create account">
-</form>
-
--->

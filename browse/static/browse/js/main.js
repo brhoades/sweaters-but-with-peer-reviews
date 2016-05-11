@@ -93,9 +93,15 @@ app.controller('register', function($scope, $http, LxDialogService,
             LxNotificationService.error(data["message"]);
           }
 
+          $scope.form = {"first_name":"", "last_name":"", "username":"", "password":"", "password2":"", "email":""};
+
+          if(data != undefined && data.errors != undefined) {
+            $scope.form = data["errors"];
+          }
+
           // refresh
-          if(data["refresh"]) {
-            $scope.closingDialog();
+          if(data["success"]) {
+            console.log("success")
             LxNotificationService.success("Successfully created account.");
             $window.location.href = "/";
           }
