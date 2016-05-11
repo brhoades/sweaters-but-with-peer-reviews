@@ -373,6 +373,7 @@ def peer_review(request, peerreview_id):
 
     context["form"] = form
     context["review"] = peerReview.target
+    context["peerreview"] = peerReview
 
     return render(request, template, context)
 

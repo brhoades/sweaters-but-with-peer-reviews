@@ -101,14 +101,16 @@
   </div>
 </div>
 
-<div ng-controller="form-handler" model="peerreview">
+<div ng-controller="form-handler" model="peerreview" edit="{{ peerreview.id }}">
   <form method="POST" ng-submit="submit()" name="peerform">
     {% csrf_token %}
     {% verbatim %}
     <div flex-item>
+      {% endverbatim %}
       <lx-text-field label="Review Text" error="valid.text">
-        <textarea type="text" ng-model="data.text"></textarea>
+        <textarea type="text" ng-model="data.text">{{ form.text.value }}</textarea>
       </lx-text-field>
+      {% verbatim %}
       <span class="rext-field-error" ng-show"valid.text">{{ valid.text }}</span>
     </div>
 

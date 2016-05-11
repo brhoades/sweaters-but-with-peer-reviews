@@ -107,12 +107,12 @@ app.controller('form-handler',
   $scope.submit = function() {
     $scope.ajax.loading = true;
     var url = "/new/" + $scope.type;
+    if($scope.edit) {
+      url = "/edit/" + $scope.type + "/" + $scope.id;
+    }
     if($scope.type == "peerreview")
     {
       url = window.location.pathname;
-    }
-    if($scope.edit) {
-      url = "/edit/" + $scope.type + "/" + $scope.id;
     }
     if($scope.type == "report") {
       url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
