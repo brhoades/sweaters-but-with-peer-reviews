@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'django_gravatar',
     'autofixture',
     'sass_processor',
+    'chartit',
 
     # Local
     'browse',
