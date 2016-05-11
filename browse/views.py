@@ -182,9 +182,22 @@ def professor(request, professor_id=None, page=0):
                           in context["courses"]]
 
     reviewdata = (Review.objects.filter(target_id=professor_id))
-    profdata = DataPool(series=[{'options': {'source': reviewdata},'terms': ['id', 'rating_value', 'rating_difficulty', 'rating_overall']}])
+    profdata = DataPool(series=[{'options': {'source': reviewdata}, 'terms':
+                                 ['id', 'rating_value', 'rating_difficulty',
+                                 'rating_overall']}])
 
-    chart = Chart(datasource = profdata, series_options =[{'options':{'type': 'line','stacking': False}, 'terms': {'id': ['rating_value', 'rating_difficulty', 'rating_overall']}}], chart_options = {'title': {'text': 'Ratings of Professor'}, 'xAxis': {'title': {'text': 'Reviews'}}, 'yAxis': {'title': {'text': 'Ratings'}, 'floor': 0, 'ceiling': 5}})
+    chart = Chart(datasource=profdata, series_options=[{'options':
+                                                        {'type': 'line',
+                                                         'stacking': False},
+                                                        'terms':
+                                                        {'id':
+                                                         ['rating_value',
+                                                          'rating_difficulty',
+                                                          'rating_overall']}}],
+                  chart_options={'title': {'text': 'Ratings of Professor'},
+                                 'xAxis': {'title': {'text': 'Reviews'}},
+                                 'yAxis': {'title': {'text': 'Ratings'},
+                                           'floor': 0, 'ceiling': 5}})
 
     context["chart"] = chart
 
