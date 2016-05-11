@@ -21,8 +21,8 @@ class ReviewForm(ModelForm):
 
     class Meta:
         model = Review
-        fields = ['target', 'course', 'text', 'rating_overall', 'rating_value',
-                  'rating_difficulty']
+        fields = ['target', 'course', 'text', 'title', 'rating_overall',
+                  'rating_value', 'rating_difficulty']
         fields_extra = []
 
 

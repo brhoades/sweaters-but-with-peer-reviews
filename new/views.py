@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
 from django.template import loader
+from django.core.exceptions import ValidationError
 
 from new.utils import json_error, check_fields_in_data, MODEL_MAP, \
     MODEL_FORM_MAP, get_template_for_model
@@ -76,6 +77,14 @@ def new(request, type="new", page=None, id=None):
         if len(v) > 0:
             return HttpResponse(json.dumps(response))
     try:
+        emptyKeys = []
+        for key, value in data.items():
+            if value == '':
+                emptyKeys.append(key)
+        for key in emptyKeys:
+            data.pop(key)
+
+        print(data)
         if type == "new":
             # Try to create it
             new = model(**data)
@@ -88,9 +97,7 @@ def new(request, type="new", page=None, id=None):
                 new.updated_ts = datetime.datetime.now()
 
         new.full_clean()
-    except ValueError as e:
-        return HttpResponse(json_error({"error": str(e)}))
-    except Exception as e:
+    except ValidationError as e:
         print("ERROR: " + str(e))
         errorDict = {}
         for key, value in e.message_dict.items():
