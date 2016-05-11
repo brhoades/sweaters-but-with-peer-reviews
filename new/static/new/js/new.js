@@ -58,6 +58,9 @@ app.controller('form-handler',
       $scope.data.rating_value = 2.5;
       $scope.data.rating_difficulty = 2.5;
     }
+    if($scope.type == "peerreview") {
+      $scope.data.rating = 2.5;
+    }
 
     // FIXME make this an option for ^
     if($scope.edit) {

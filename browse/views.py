@@ -348,7 +348,7 @@ def wardrobe(request):
     template = "browse/wardrobe.html"
     context = {}
 
-    context["peerReviews"] = request.user.peerreview_set.all()\
+    context["peerReviews"] = request.user.peerreview_set.filter(is_finished=False)\
                                     .order_by('-created_ts')
 
     return render(request, template, context)
