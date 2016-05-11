@@ -3,7 +3,7 @@
 
   {% verbatim %}
   <div flex-container="row" ng-model="valid.error"
-       class="p+ error bgc-red-500 tc-white-1" ng-show="valid.error != ''">
+       class="p+ error bgc-red-500 tc-white-1" ng-show="valid.error">
     <center>
       {{ valid.error }}
     </center>
@@ -19,7 +19,7 @@
               loading="{{ ajax.loading }}"
               min-length="2"
               allow-clear="true"
-              error="valid.target != ''"
+              error="valid.target"
               id="target"
               class="tc-black-1">
 
@@ -32,7 +32,7 @@
             </lx-select-choices>
           </lx-select>
 
-          <span class="text-field-error" ng-show="valid.target != ''">{{ valid.target }}</span>
+          <span class="text-field-error" ng-show="valid.target">{{ valid.target }}</span>
         </div>
 
         <div flex-item>
@@ -43,7 +43,7 @@
               loading="{{ ajax.loading }}"
               min-length="2"
               allow-clear="true"
-              error="valid.course != ''"
+              error="valid.course"
               id="course">
 
             <lx-select-selected>
@@ -55,7 +55,7 @@
             </lx-select-choices>
           </lx-select>
 
-          <span class="text-field-error" ng-show="valid.course != ''">{{ valid.course }}</span>
+          <span class="text-field-error" ng-show="valid.course">{{ valid.course }}</span>
         </div>
       </div>
 
@@ -84,7 +84,7 @@
                        ng-readonly="data.rating_overall == 10">
             </md-slider>
           </md-slider-container>
-          <span class="text-field-error" ng-show="valid.rating_value != ''">
+          <span class="text-field-error" ng-show="valid.rating_value">
             {{ valid.rating_value }}
           </span>
         </div>
@@ -98,23 +98,23 @@
                        ng-readonly="data.rating_overall == 10">
             </md-slider>
           </md-slider-container>
-          <span class="text-field-error" ng-show="valid.rating_difficulty != ''">
+          <span class="text-field-error" ng-show="valid.rating_difficulty">
             {{ valid.rating_difficulty }}
           </span>
         </div>
       </div>
       <div flex-item>
-        <lx-text-field label="Review title">
-          <input type="text" ng-model="data.title" error="valid.title != ''">
+        <lx-text-field label="Review title" error="valid.title">
+          <textarea type="text" ng-model="data.title" ng-minlength="3"></textarea>
         </lx-text-field>
-        <span class="text-field-error" ng-show="valid.title != ''">{{ valid.title }}</span>
+        <span class="text-field-error" ng-show="valid.title">{{ valid.title }}</span>
       </div>
 
       <div flex-item>
-        <lx-text-field label="Write your review here (minimum 50 characters)" error="valid.text != ''">
+        <lx-text-field label="Write your review here (minimum 50 characters)" error="valid.text">
           <textarea ng-model="data.text" type="text" ng-minlength="50"></textarea>
         </lx-text-field>
-        <span class="text-field-error" ng-show="valid.text != ''">{{ valid.text }}</span>
+        <span class="text-field-error" ng-show="valid.text">{{ valid.text }}</span>
       </div>
 
 
