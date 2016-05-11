@@ -84,19 +84,25 @@ def register(request, type):
     if User.objects.filter(username=data['username']).exists():
         return json_error("Username already exists")
 
-    if len(data['password1']) < 5:
-        return json_error("A password must be at least 5 characters long.")
+    if len(data['password']) < 5:
+        return JsonResponse({"message": "A password must be at least 5 "
+                                        " characters long."})
     if data['password2'] != data['password']:
-        return json_error("Passwords do not match")
+        return JsonResponse({"message": "Passwords don't match. "})
 
     if len(data['email']) < 5:
-        return json_error("Email is too short")
+        return JsonResponse({"message": "Email is too short."})
 
-    user = User(username=data['username'], email=data['email'],
-                first_name=data['first_name'], last_name=data['last_name'])
-    user.set_password(data['password'])
-    user.is_active = False  # not active until he opens activation link
-    user.save()
+    try:
+        user = User(username=data['username'], email=data['email'],
+                    first_name=data['first_name'], last_name=data['last_name'],
+                    is_demo=False)
+        user.set_password(data['password'])
+        user.is_active = False  # not active until he opens activation link
+        user.full_clean()  # check validators
+        user.save()
+    except Exception as e:
+        return JsonResponse({"message": str(e)})
 
     random_string = str(random.random()).encode('utf8')
     salt = hashlib.sha1(random_string).hexdigest()[:5]
