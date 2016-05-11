@@ -6,9 +6,9 @@
     {% if user == comment.owner %}
       <div ng-controller="form-handler" model="reviewcomment" edit="{{ comment.id }}"
            class="edit-icon-outer">
-        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+        <lx-button lx-tooltip="Edit" lx-color="grey" lx-type="icon" lx-tooltip-position="top"
                    ng-click="opendDialog('commentCall_{{ comment.id }}')">
-          <i class="edit-icon fa fa-pencil"></i>
+          <i class="mdi mdi-pencil"></i>
         </lx-button>
         {% new_comment_popup review is_edit=True comment=comment %}
       </div>

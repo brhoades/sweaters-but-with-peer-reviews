@@ -20,24 +20,20 @@
   <div id="demo" class="review-card-large card-color">
       {% if user.is_authenticated and user.is_superuser %}
       <div class="delete-button-outer">
-        <lx-button lx-tooltip="Delete" lx-type="icon" lx-tooltip-position="left"
-                  class="delete-button"
-                  action="delete"
-                  model="school"
-                  model-id="{{ school.id }}"
-                  redir="{% url "schools" %}"
-                  confirm="true"
-                  >
-          <i class="delete-button-icon"></i>
+        <lx-button lx-tooltip="Delete" lx-color="red" lx-type="icon" lx-tooltip-position="top"
+                  class="delete-button" action="delete" model="school"
+                  model-id="{{ school.id }}" redir="{% url "schools" %}"
+                  confirm="true">
+          <i class="mdi mdi-delete"></i>
         </lx-button>
       </div>
     {% endif %}
     {% if user.is_authenticated and school.created_by == user %}
       <div ng-controller="form-handler" model="school" edit="{{ school.id }}"
            class="edit-icon-outer">
-        <lx-button lx-tooltip="Edit" lx-type="icon" lx-tooltip-position="left"
+        <lx-button lx-tooltip="Edit" lx-color="grey" lx-type="icon" lx-tooltip-position="top"
                    ng-click="opendDialog('schoolCall')">
-          <i class="edit-icon fa fa-pencil"></i>
+          <i class="mdi mdi-pencil"></i>
         </lx-button>
         {% new_school_popup True %}
       </div>
@@ -60,6 +56,7 @@
       </a>
     </div>
     <div class="professor-info">
+      School's Website:
       <a href="{{ school.url }}"> {{ school.url }}</a>
     </div>
   </div>

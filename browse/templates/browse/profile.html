@@ -22,18 +22,18 @@
 		 </figure>
 
 		 <div class="profile_data">
-		 	<h3 class="profile">
-		 		<font color = "#151515" >School: </font> <p> Misssouri Sciecne and Technology </p>
-		 		<p> <font color = "#151515" >Review{{ profile.review_set.count|pluralize }}: </font>{{ profile.review_set.count }} </p>
+      	<h3 class="profile">
+      		<font color = "#151515" >School: </font> <p> Misssouri Sciecne and Technology </p>
+      		<p> <font color = "#151515" >Review{{ profile.review_set.count|pluralize }}: </font>{{ profile.review_set.count }} </p>
         		<p> <font color = "#151515" >Rating: </font>{{ user_rating }}</p>
-		 	</h3>
+      	</h3>
 		 </div>
 	</div>
 
 	<div class="profile_slider">
 		<div class="profile_name">
 			<h1 class="profile">{{ profile.first_name }} {{ profile.last_name }}</h1>
-			<h4><font color = "#E6E6E6">{{ profile.username }}</font></h4>
+			<h4 class="profile">{{ profile.username }}</h4>
 		</div>
 		<div class="picture_box">
 			<div class="box_left"></div>
@@ -42,7 +42,6 @@
 			<div class="box_right"></div>
 		</div>
 	</div>
-
 
 </div>
 
@@ -55,14 +54,23 @@
   <div ng-app="lumxWrap">
     <span class="fs-title display-block mb">User Reviews</span>
     <div class="divider divider--dark"></div>
+    <div flex-container="row" flex-column="12">
 
-		{% if review_votes|length > 0 %}
-			{% for review, vote in review_votes %}
-				{% review_card review user vote %}
-			{% endfor %}
-		{% else %}
-			<h2>There are no more reviews</h2>
-		{% endif %}
+      <div flex-item="1"></div>
+      <div flex-item="10">
+
+    		{% if review_votes|length > 0 %}
+    			{% for review, vote in review_votes %}
+    				{% review_card review user vote %}
+    			{% endfor %}
+    		{% else %}
+    			<h2>There are no more reviews</h2>
+    		{% endif %}
+
+      </div>
+
+
+    </div>
   </div>
 
 
