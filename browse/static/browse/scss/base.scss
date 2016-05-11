@@ -247,6 +247,7 @@ body {
 
 .sidebar {
   background-color: $primary;
+  display: none;
 }
 /* End Main Page Classes */
 
@@ -458,5 +459,8 @@ iframe {
       font-size: 30px;
     }
 
+  .sidebar {
+    display: inline;
+  }
 
 }
