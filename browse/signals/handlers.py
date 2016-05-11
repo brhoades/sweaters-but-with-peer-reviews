@@ -13,10 +13,12 @@ def log_save(sender, instance, created, *args, **kwargs):
     """
     Creates a log entry for every creation / modification.
     """
-    if instance.__class__.__name__.lower() not in MODEL_MAP:
+    model = type(instance)
+    name = model.__name__.lower()
+    if name not in MODEL_MAP:
         return
 
-    if instance.__class__.__name__ == "Log":
+    if name == "log":
         return
 
     owner = None
@@ -29,7 +31,7 @@ def log_save(sender, instance, created, *args, **kwargs):
     if not created:
         type = Log.MODIFY
 
-    log = Log.create(instance, instance.id, type, owner=owner)
+    log = Log.create(model, instance.id, type, owner=owner)
     log.save()
 
 
