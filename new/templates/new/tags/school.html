@@ -41,15 +41,15 @@
         <div flex-container="row" flex-gutter="24">
           <div flex-item>
               <lx-text-field label="Latitude">
-                  <input id="lat-input" class="geoposition"  type="text" ng-model="data.location['lat']" error="valid.url != ''">
+                  <input id="lat-input" class="geoposition"  type="text" ng-model="data.location['lat']" error="valid.lat != ''">
               </lx-text-field>
-              <span class="text-field-error" ng-show="valid.url">{{ valid.url }}</span>
+              <span class="text-field-error" ng-show="valid.lat">{{ valid.lat }}</span>
           </div>
           <div flex-item>
               <lx-text-field label="Longitude">
-                  <input id="lng-input" class="geoposition"  type="text" ng-model="data.location['lng']" error="valid.url">
+                  <input id="lng-input" class="geoposition"  type="text" ng-model="data.location['lng']" error="valid.lng">
               </lx-text-field>
-              <span class="text-field-error" ng-show="valid.url">{{ valid.url }}</span>
+              <span class="text-field-error" ng-show="valid.lng">{{ valid.lng }}</span>
           </div>
         </div>
       </div>
