@@ -76,13 +76,19 @@ def check_fields_in_data(data, model, form):
     fields = form.Meta.fields[:]
     fields.extend(form.Meta.fields_extra)
     for field in fields:
-        if field not in data or data[field] == "" and field != "location":
+        if field == 'location':
+            if field not in data or data[field] == "":
+                response["error"]['lat'] = "No {} specified".format(
+                    field)
+                response["error"]['lng'] = "No {} specified".format(
+                    field)
+            else:
+                lat = float(data[field]['lat'])
+                lng = float(data[field]['lng'])
+                data[field] = [lat, lng]
+        elif field not in data or data[field] == "":
             response["error"][field] = "No {} specified".format(
                 field)
-        if field == 'location':
-            lat = float(data[field]['lat'])
-            lng = float(data[field]['lng'])
-            data[field] = [lat, lng]
 
 
 def get_template_for_model(request, model_form_map, page):
