@@ -106,15 +106,15 @@
         {% else %}
           {{ review.owner.username }}
         {% endif %}
-
-        &nbsp;
-        &nbsp;
-        {% if review.updated %}
-          {{ review.created_ts|date:"DATETIME_FORMAT" }}
-        {% else %}
-          {{ review.updated_ts|date:"DATETIME_FORMAT" }}*
-        {% endif %}
       </a>
+
+      &nbsp;
+      &nbsp;
+      {% if review.updated %}
+      {{ review.created_ts|date:"DATETIME_FORMAT" }}
+      {% else %}
+      {{ review.updated_ts|date:"DATETIME_FORMAT" }}*
+      {% endif %}
     </div>
 
     <div class="review-text">

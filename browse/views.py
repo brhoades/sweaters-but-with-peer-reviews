@@ -336,6 +336,9 @@ def peer_review(request, peerreview_id):
 
     peerReview = get_object_or_404(PeerReview, id=peerreview_id)
 
+    if peerReview.owner != request.user:
+        HttpResponseForbidden()
+
     if request.method == "GET":
         form = PeerReviewForm(instance=peerReview)
     elif request.method == "POST":
@@ -348,6 +351,7 @@ def peer_review(request, peerreview_id):
         return HttpResponseNotAllowed(["POST", "GET"])
 
     context["form"] = form
+    context["review"] = peerReview.target
 
     return render(request, template, context)
 
