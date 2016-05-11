@@ -8,6 +8,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40, null=True)
     key_expires = models.DateTimeField()
+    timezone = models.CharField(max_length = 100, default = timezone.now())
+    color_scheme = models.IntegerField(default = 1)
+    is_demo = models.BooleanField()
 
     def __str__(self):
         return self.user.username

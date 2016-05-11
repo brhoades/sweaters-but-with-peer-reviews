@@ -12,16 +12,16 @@
   <div flex-container="row" flex-gutter="24">
     <div flex-item>
       <lx-text-field label="Department Name">
-        <input type="text" ng-model="data.name" error="valid.name != ''">
+        <input type="text" ng-model="data.name" error="valid.name">
       </lx-text-field>
-      <span class="text-field-error" ng-show="valid.name != ''">{{ valid.name }}</span>
+      <span class="text-field-error" ng-show="valid.name">{{ valid.name }}</span>
     </div>
 
     <div flex-item>
       <lx-text-field label="Department Website">
-        <input type="text" ng-model="data.url" error="valid.url != ''">
+        <input type="text" ng-model="data.url" error="valid.url">
       </lx-text-field>
-      <span class="text-field-error" ng-show="valid.url != ''">{{ valid.url }}</span>
+      <span class="text-field-error" ng-show="valid.url">{{ valid.url }}</span>
     </div>
   </div>
 
@@ -44,10 +44,10 @@
 
     <div flex-item style="margin-right: 5%; margin-left: 5%" class="p+">
       <lx-select ng-model="data.fields" placeholder="Fields"
-                                        choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'fields_matching')" 
-                                                             loading="{{ ajax.loading }}" allow-clear="true"
-                                                                                          error="valid.fields != ''"
-                                                                                          multiple floating-label>
+                 choices="ajax.list"  filter="ajax.update(newValue, oldValue, 'fields_matching')" 
+                 loading="{{ ajax.loading }}" allow-clear="true"
+                 error="valid.fields" multiple floating-label>
+
         <lx-select-selected>
           {{ $selected.name }}
         </lx-select-selected>
@@ -56,7 +56,7 @@
           {{ $choice.name }}
         </lx-select-choices>
       </lx-select>
-      <span class="text-field-error" ng-show="valid.fields != ''">{{ valid.fields }}</span>
+      <span class="text-field-error" ng-show="valid.fields">{{ valid.fields }}</span>
     </div>
   </div>
 

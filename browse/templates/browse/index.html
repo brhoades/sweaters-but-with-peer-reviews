@@ -12,28 +12,22 @@
 
 {% block content %}
 {% csrf_token %}
-
-  {% if messages %}
-
-    <!-- FIXME: Open login dialog and run that -->
-    {% for message in messages %}
-      <div flex-container="row">
-        <div flex-item class="sweaters-error">
-          <center>
-            {{ message }}
-          </center>
-        </div>
-      </div>
-    {% endfor %}
-  {% endif %}
-    <div id="cycler" class="cyc" align="center">
+    <!--div id="cycler" class="cyc" align="center">
         <img class="active" src="{% static 'browse/img/Logo_Wide.jpg' %}">
         <img src="{% static 'browse/img/Library_Panorama.jpg' %}">
         <img src="{% static 'browse/img/St_Pat.jpg' %}">
         <img src="{% static 'browse/img/Havener.jpg' %}">
-    </div>
+    </div -->
+
+      <section id="bannerImg" data-speed="8" data-type="background">
+      </section>
+
+
+
+
     <div flex-container="row" flex-gutter="24">
-      <div flex-item="8">
+      <div flex-item="1"></div>
+      <div flex-item="6">
       {% if review_votes|length > 0 %}
         <div class=latest-block>
           <h2>
@@ -43,7 +37,7 @@
       {% endif %}
         {% if review_votes|length > 0 %}
           {% for review, vote in review_votes %}
-            {% review_card review vote %}
+            {% review_card review vote user %}
           {% endfor %}
         {% else %}
           <h2>There are no reviews</h2>
@@ -56,7 +50,7 @@
           </div>
           <div flex-container="4">
               <p style="font-size:20px;">
-                  We are Cardigans, but with Peer Reviews! We are a Senior Design team
+                  We are Blazers, but with Peer Reviews! We are a Senior Design team
                   tasked with creating a professor rating website where students
                   can go acquire valuable, high quality, information regarding professors
                   and their classes.

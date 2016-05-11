@@ -1,22 +1,23 @@
 from django.template import loader, RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from browse.models import Review, User, Professor, School, Course,\
-    ReviewComment
+    ReviewComment, Report, PeerReview, Log
 from django.contrib.auth import logout as auth_logout
 from browse.get_utils import _get_all_review_votes, paginate
+from new.forms import PeerReviewForm, SchoolForm
+
+import json
+from new.views import MODEL_MAP
 
 
 def index(request, message=""):
     template = "browse/index.html"
 
-    if message:
-        messages.info(request, message)
-
     context = RequestContext(request)
-    context["messages"] = messages.get_messages(request)
 
     context["review_votes"] = _get_all_review_votes(request)[0:5]
 
@@ -97,6 +98,7 @@ def setting(request, id=None, page=0):
 def schools(request, page):
     template = loader.get_template("browse/schools.html")
     context = RequestContext(request)
+    context["schoolForm"] = SchoolForm()
 
     # Get our page numbers to display, our page, all objects, and the
     # range of that all we're going to send back.
@@ -136,6 +138,7 @@ def school(request, school_id=None, page=0):
 def professors(request, page):
     template = loader.get_template("browse/professors.html")
     context = RequestContext(request)
+    context["schoolForm"] = SchoolForm()
 
     professors = []
     context["professors"] = professors
@@ -173,7 +176,6 @@ def professor(request, professor_id=None, page=0):
 
     context["schools"] = [course.department.school for course
                           in context["courses"]]
-
     return HttpResponse(template.render(context))
 
 
@@ -214,6 +216,7 @@ def reviews(request, type="all", first_id=None, second_id=None, page=1):
     context = RequestContext(request)
     context["pages"], context["page"], all, start, end = paginate(page, Review)
     context["review_votes"] = _get_all_review_votes(request)[start:end]
+    context["schoolForm"] = SchoolForm()
 
     if type == "by_school":
         context["message"] =\
@@ -233,8 +236,16 @@ def reviews(request, type="all", first_id=None, second_id=None, page=1):
         context["message"] =\
             "This is the page that lists all reviews (pg {0})."\
             .format(page)
-
     return render(request, template, context)
+
+
+def report(request, report_id=None, page=0):
+    template = loader.get_template("browse/report.html")
+    context = RequestContext(request)
+
+    context["report"] = get_object_or_404(Report, id=report_id)
+
+    return HttpResponse(template.render(context))
 
 
 def logout(request):
@@ -252,3 +263,124 @@ def sandbox(request):
     """
     template = "browse/sandbox.html"
     return render(request, template)
+
+
+def delete(request):
+    if request.method == "POST":
+        if not request.user.is_authenticated():
+            jsonResponse = {"success": False,
+                            "error": "User is not logged in"}
+            return HttpResponse(json.dumps(jsonResponse),
+                                content_type="application/json")
+
+        model_id = request.POST.get("model-id")
+        model = request.POST.get("model").lower()
+        user = request.user
+
+        obj = MODEL_MAP[model].objects.get(id=model_id)
+
+        if not user.is_superuser:
+            if model in ["school", "professor"]:
+                jsonResponse = {"success": False,
+                                "error": model.capitalize() +
+                                " cannot be deleted by non-admins," +
+                                " delete would cause more delete to cascade."}
+                return HttpResponse(json.dumps(jsonResponse),
+                                    content_type="application/json")
+
+            if hasattr(MODEL_MAP[model], 'created_by'):
+                created_by_key = 'created_by'
+            elif hasattr(MODEL_MAP[model], 'owner'):
+                created_by_key = 'owner'
+            else:
+                jsonResponse = {"success": False,
+                                "error": model.capitalize() +
+                                " does not have an owner"}
+                return HttpResponse(json.dumps(jsonResponse),
+                                    content_type="application/json")
+            if user != getattr(obj, created_by_key):
+                jsonResponse = {"success": False,
+                                "error": "You don't own this "+model}
+                return HttpResponse(json.dumps(jsonResponse),
+                                    content_type="application/json")
+
+        obj.delete()
+
+        return HttpResponse(json.dumps({"success": True}),
+                            content_type="application/json")
+    else:
+        return HttpResponseNotAllowed(["POST"])
+
+
+@login_required
+def wardrobe(request):
+    """
+    The view for each user to view their peer reivews.
+    """
+
+    template = "browse/wardrobe.html"
+    context = {}
+
+    context["peerReviews"] = request.user.peerreview_set.all()\
+                                    .order_by('-created_ts')
+
+    return render(request, template, context)
+
+
+def peer_review(request, peerreview_id):
+    """
+    The view for look at and fill-out peerReview forms.
+    """
+    template = "browse/peerreview.html"
+    context = {}
+
+    peerReview = get_object_or_404(PeerReview, id=peerreview_id)
+
+    if request.method == "GET":
+        form = PeerReviewForm(instance=peerReview)
+    elif request.method == "POST":
+        form = PeerReviewForm(request.POST, instance=peerReview)
+        reviewEdit = form.save(commit=False)
+
+        reviewEdit.is_finished = True
+        reviewEdit.save()
+    else:
+        return HttpResponseNotAllowed(["POST", "GET"])
+
+    context["form"] = form
+
+    return render(request, template, context)
+
+
+@login_required
+def logs(request, page=0):
+    """
+    The view for listing all log entries.
+    """
+    template = "browse/logs.html"
+    context = {}
+
+    logs = []
+    context["logs"] = logs
+    context["pages"], context["page"], all, start, end \
+        = paginate(page, Log, "-created_ts", 15)
+
+    for p in Log.objects.order_by('-created_ts')[start:end]:
+        logs.append(p)
+
+    return render(request, template, context)
+
+
+def reports(request, page):
+    template = loader.get_template("browse/reports.html")
+    context = RequestContext(request)
+
+    reports = []
+    context["reports"] = reports
+    context["pages"], context["page"], all, start, end \
+        = paginate(page, Report, "-target_log__created_ts")
+
+    for p in Report.objects.order_by('-target_log__created_ts')[start:end]:
+        reports.append(p)
+
+    return HttpResponse(template.render(context))

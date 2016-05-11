@@ -6,7 +6,21 @@
       <div flex-item="2">
       <div class="hyperlink card__img card__img- - left" style="height: 100px;" >
         <img src="{% static 'browse/img/mst.jpg' %}" style="margin-right:20px;height:100px;">
+
+
+
+<div class="padded-card" school-id="{{ school.id }}">
+  <div flex-container="row" flex-column="12">
+
+    <div flex-item="4">
+
+      <div class="rating">
+        <div class="average">{{ school.rating }}</div>
+        <div class="out-of">
+          /5
+        </div>
       </div>
+
     </div>
     <div flex-item="10">
       <div class="rating">
@@ -33,8 +47,43 @@
             {{ school.num_reviews }}<br />
             Review{% if school.num_reviews != 1 %}s{% endif %}
           </div>
+
+    <div flex-item="4">
+      <div class="information">
+        <div class="name">
+          <strong><div onclick="window.location='{% url "school" school.id %}';"
+               class="hyperlink">
+            {{ school.name }}
+          </div></strong>
         </div>
       </div>
     </div>
+
+    <div flex-item="4">
+      <div class="information">
+        <div class="card-stats">
+
+          <div flex-item flex-container="column">
+            <div flex-item>
+              <div class="location">{{ school.human_location }} </div>
+            </div>
+
+            <div flex-item>
+              <div class="item">
+                {{ school.num_professors }}<br />
+                Professor{% if school.num_professors != 1 %}s{% endif %}
+              </div>
+
+              <div class="item">
+                {{ school.num_reviews }}<br />
+                Review{% if school.num_reviews != 1 %}s{% endif %}
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- End class card-stats -->
+      </div> <!-- End class information -->
+    </div>
+
   </div>
 </div>

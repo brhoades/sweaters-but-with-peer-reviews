@@ -64,18 +64,18 @@ app.controller('loginData', function($scope, $http, LxDialogService,
     $http.post("/get/login", JSON.stringify(form)).
       success(function(data) {
           if(data["message"] != undefined) {
-            $scope.message = data["message"];
+            LxNotificationService.error(data["message"]);
           }
 
           // refresh
           if(data["refresh"]) {
             $scope.closingDialog();
-            LxNotificationService.info("Successfully identified.");
+            LxNotificationService.success("Successfully identified.");
             $window.location.href = $window.location.href;
           }
         }).
       error(function() {
-        $scope.message = "Network error";
+        LxNotificationService.error("Network error--- check your connection.");
       });
     }
 });

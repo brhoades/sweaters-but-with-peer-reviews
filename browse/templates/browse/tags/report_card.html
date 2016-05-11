@@ -1,0 +1,34 @@
+<!-- we get a report object. -->
+{% load gravatar %}
+
+<div class="review-card-small {{ report.handled|yesno:"resolved,," }}" review-id="{{ report.id }}">
+  <div flex-container="row">
+    <div class="hyperlink card__img card__img- - left" style="height: 100px;"
+        onclick="window.location=\"{% url 'profile' report.owner.id %}\";">
+      <img src="{% gravatar_url report.owner.email 100 %}" style="margin-right:20px;">
+    </div>
+
+    <div flex-item flex-container="column">
+      <div align="left">
+        <strong class="review-title hyperlink"
+                {% comment %} onclick="window.location='{% url 'report' report.id %}'" this shit doesn't exist {% endcomment %}>
+          {{ report.title }}
+        </strong>
+        <span class="display-block fs-body-1 tc-black-2">
+          Reported by <b>{{ report.owner.first_name }} {{ report.owner.last_name }}</b> 
+          on {{ report.created_ts|date:"DATETIME_FORMAT" }} &nbsp; &nbsp;
+          <a href="{% url report.target_type report.id %}">View Target</a> &nbsp;
+          {% if not report.handled %}
+            <a href="{% url 'resolve_report' 'new' report.id %}">Resolve</a>
+          {% else %}
+            Resolved by {{ report.handler.first_name }} {{ report.handler.last_name }} ({{ report.handler.username }})
+          {% endif %}
+
+        </span>
+        <span class="display-block">
+          {{ report.summary }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

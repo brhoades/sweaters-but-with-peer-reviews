@@ -5,12 +5,6 @@
 
 /* Override some lumx stuff to center buttons */
 
-#addButton {
-  right: 0;
-  margin-right: 30px;
-  position: absolute;
-}
-
 #c-button--push-left {
   position: relative;
   top: -7.5px;
@@ -42,7 +36,6 @@
 .md-track-ticks {
   display: none;
 }
-<<<<<<< HEAD
 
 /* CSS for the image cycling */
 
@@ -62,5 +55,28 @@
     -moz-column-count: 2; /* For Firefox */
     column-count: 2;
 }
-=======
->>>>>>> 1b8f065fd9805d577aa0da17fcaafcdde26b99e2
+
+
+/* CSS for the image cycling */
+.cyc {
+    height: 450px;
+    margin: 0 auto 30px auto;
+    vertical-align: middle;
+    position:relative;
+    overflow: hidden;
+
+
+}
+
+#cycler img {
+    position:absolute;
+    z-index:1;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: 50% 0 no-repeat fixed;
+}
+
+#cycler img.active {
+  z-index:3;
+}

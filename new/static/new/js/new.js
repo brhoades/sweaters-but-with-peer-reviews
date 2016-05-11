@@ -19,9 +19,11 @@ app.config(function($mdThemingProvider) {
 
 // Expects a model param
 app.controller('form-handler',
-    function($scope, $http, $window, $attrs, LxDialogService) {
+    function($scope, $http, $window, $attrs, LxDialogService, LxNotificationService) {
   $scope.type = $attrs.model;
   $scope.edit = $attrs.edit;
+  $scope.report_model = $attrs.reportmodel;
+  $scope.report_id = $attrs.reportid;
 
   $scope.data = {
     error: ""
@@ -66,11 +68,6 @@ app.controller('form-handler',
           $scope.data[e] = form_data[e];
         });
         $scope.id = form_data["id"];
-        if(force_rating) {
-          $scope.data.rating_overall = force_rating;
-          $scope.data.rating_value = force_rating;
-          $scope.data.rating_difficulty = force_rating;
-        }
       });
     }
   });
@@ -108,23 +105,33 @@ app.controller('form-handler',
   };
 
   $scope.submit = function() {
-    console.log(JSON.stringify($scope.data));
     $scope.ajax.loading = true;
     var url = "/new/" + $scope.type;
     if($scope.edit) {
       url = "/edit/" + $scope.type + "/" + $scope.id;
     }
+    if($scope.type == "report") {
+      url = "/new/report/" + $scope.report_model + "/" + $scope.report_id;
+    }
+    if($scope.type == "resolve_report") {
+      url = "/new/resolve_report/" + $scope.report_id;
+    }
 
     $http.post(url, JSON.stringify($scope.data)).
       success(function(data) {
-        console.log(data);
         // Always expects, if any elements, a fields item in it
         $scope.ajax.list = [];
         $scope.ajax.loading = false;
         $scope.valid = angular.copy($scope.original);
 
         if(data != undefined && data.error != undefined) {
-          $scope.valid = data.error;
+          if(data.error.error) {
+            // There's an overall error.
+            LxNotificationService.error(data.error.error);
+          }
+          else {
+            $scope.valid = data.error;
+          }
         }
         if(data != undefined && data.id != undefined) {
           var redirectPage = "";
