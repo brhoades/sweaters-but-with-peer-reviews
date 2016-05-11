@@ -416,6 +416,10 @@ iframe {
   background-size: 700px;
 }
 
+.md-sidenav-left {
+  display: none;
+}
+
 @media only screen and (max-width: 1400px)
 {
   .nav-buttons {
@@ -458,5 +462,8 @@ iframe {
       font-size: 30px;
     }
 
+  .md-sidenav-left {
+    display: inline;
+  }
 
 }
