@@ -81,8 +81,8 @@ def register(request, type):
     # Username
     if len(data['username']) < 4 or len(data['username']) > 25:
         resp["errors"]['username'] = "Usernames must be between 4 and 25 characters."
-    # elif User.objects.filter(username=data['username']).exists():
-    #     resp["errors"]['username'] = "Usernames must be between 4 and 25 characters."
+    elif User.objects.filter(username=data['username']).exists():
+        resp["errors"]['username'] = "Username already exists."
     #     return JsonResponse({"message": "Username already exists"})
 
     if data['password2'] != data['password']:
