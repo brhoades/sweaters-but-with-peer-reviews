@@ -43,7 +43,7 @@ def check_fields_in_data(data, model, form):
     all required keys. Check that each key, if it's a foreign key, points
     to a valid object. It returns a json error if invalid, None otherwise.
     """
-    response = {"error": {"error": ""}}
+    response = {"error": {"error": {k: "" for k in data.keys()}}}
 
     if "error" in data:
         del data["error"]

@@ -19,7 +19,7 @@ app.config(function($mdThemingProvider) {
 
 // Expects a model param
 app.controller('form-handler',
-    function($scope, $http, $window, $attrs, LxDialogService) {
+    function($scope, $http, $window, $attrs, LxDialogService, LxNotificationService) {
   $scope.type = $attrs.model;
   $scope.edit = $attrs.edit;
   $scope.report_model = $attrs.reportmodel;
@@ -125,7 +125,13 @@ app.controller('form-handler',
         $scope.valid = angular.copy($scope.original);
 
         if(data != undefined && data.error != undefined) {
-          $scope.valid = data.error;
+          if(data.error.error) {
+            // There's an overall error.
+            LxNotificationService.error(data.error.error);
+          }
+          else {
+            $scope.valid = data.error;
+          }
         }
         if(data != undefined && data.id != undefined) {
           var redirectPage = "";

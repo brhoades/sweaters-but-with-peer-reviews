@@ -51,7 +51,11 @@
     </script>
 
     <script>
-      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages', 'md.data.table']);
+      var app = angular.module('lumxWrap', ['lumx', 'ngMaterial', 'ngMessages', 'md.data.table']).run( function(LxNotificationService) {
+          {% for message in messages %}
+            LxNotificationService.info('{{ message }}');
+          {% endfor %}
+        });
     </script>
 
     <script type="text/javascript" src="//d3aq14vri881or.cloudfront.net/kiip.js"></script>
@@ -68,6 +72,7 @@
     <script src="{% static 'browse/bower_components/lumx/modules/dialog/js/dialog_directive.js' %}"></script>
     <script src="{% static 'browse/js/main.js' %}"></script>
 
+    <!-- messages -->
     {% block js %}{% endblock %}
     {% block header %}{% endblock %}
   </head>
