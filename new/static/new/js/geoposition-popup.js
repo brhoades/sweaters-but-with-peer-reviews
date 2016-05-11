@@ -53,9 +53,9 @@ if (jQuery != undefined) {
                 markerCustomOptions,
                 marker;
 
-            $mapContainer.css('height', $container.data('map-widget-height') + 'px');
-            mapCustomOptions = $container.data('map-options') || {};
-            markerCustomOptions = $container.data('marker-options') || {};
+            // $mapContainer.css('height', $container.data('map-widget-height') + 'px');
+            // mapCustomOptions = $container.data('map-options') || {};
+            // markerCustomOptions = $container.data('marker-options') || {};
 
             function doSearch() {
                 var gc = new google.maps.Geocoder();
@@ -130,7 +130,7 @@ if (jQuery != undefined) {
                 $(this).parent().find('ul.geoposition-results').remove();
             });
             $searchInput.appendTo($searchRow);
-            $container.append($searchRow, $mapContainer, $addressRow);
+            $container.append($searchRow/*, $mapContainer, $addressRow*/);
 
             mapLatLng = new google.maps.LatLng(latitude, longitude);
 
