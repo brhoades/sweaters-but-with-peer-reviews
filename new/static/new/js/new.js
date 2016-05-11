@@ -127,7 +127,7 @@ app.controller('form-handler',
         if(data != undefined && data.error != undefined) {
           if(data.error.error) {
             // There's an overall error.
-            LxNotificationService.info(data.error.error);
+            LxNotificationService.error(data.error.error);
           }
           else {
             $scope.valid = data.error;
