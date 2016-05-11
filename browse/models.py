@@ -51,6 +51,11 @@ def is_new(self):
     return timediff.seconds < 10
 
 
+def one_week(self):
+    timediff = timezone.now() - self.date_joined
+    return timediff.minute > 10080
+
+
 # monkey patch some new functions onto models
 Model.to_json = to_json
 Model.updated = updated

@@ -50,6 +50,9 @@
   {% if review.is_new %}
     <script>kiipInstance.postMoment('new_review');</script>
   {% endif %}
+  {% if user.one_week %}
+    <script>kiipInstance.postMoment('One_Week_User');</script>
+  {% endif %}
   <div class="professor-title">
     <a href="{% url "professor" professor_id=review.target.id %}" target="_parent">
       <img src="{% static 'browse/img/professor.png' %}"
