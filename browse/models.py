@@ -151,6 +151,7 @@ class Professor(Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     school = models.ForeignKey(School)
+    avatar = models.ImageField()
 
     created_ts = models.DateTimeField(auto_now_add=True)
     updated_ts = models.DateTimeField(auto_now=True)

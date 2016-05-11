@@ -12,6 +12,7 @@ from browse.models import ReviewVote, Report, Review
 
 import json
 import datetime
+import tempfile
 
 
 @login_required
@@ -79,6 +80,20 @@ def new(request, type="new", page=None, id=None):
     # FIXME: Is this necessary? It seems like it should autoresolve this
     if page == "reviewcomment":
         data["target"] = Review.objects.get(id=int(data["target"]))
+
+    # Check for files, in this case it's avatar if ever
+    if "avatar" in data:
+        fn = None
+        res = {}
+        try:
+            # Write into tempfile
+            fn = tempfile.NamedTemporaryFile()
+            with open(fn, mode="w") as fh:
+                fh.write(data["avatar"].decode("base64"))
+        except Exception as e:
+            res["error"] = "Provided image did not decode from base64 properly"
+            return HttpResponse(json.dumps(res))
+        res["avatar"] = fn
 
     res = check_fields_in_data(data, model, form)
     if res:

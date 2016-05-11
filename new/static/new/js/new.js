@@ -163,5 +163,34 @@ app.controller('form-handler',
   // send tokens
   $httpProvider.defaults.xsrfCookieName = 'csrftoken';
   $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-}]);
+}]).directive('chooseFile', function() {
+    return {
+      link: function ($scope, elem, attrs) {
+        var button = elem.find('button');
+        var input = angular.element(elem[0].querySelector('input#fileInput'));
 
+        button.bind('click', function() {
+          input[0].click();
+        });
+
+        input.bind('change', function(e) {
+          $scope.$apply(function() {
+            var image;
+            console.log(e);
+            var files = e.target.files;
+            if (files[0]) {
+              $scope.fileName = files[0].name;
+              image = files[0];
+            } else {
+              $scope.fileName = image;
+            }
+
+            if (image) {
+              var reader = new FileReader();
+              $scope.data.avatar = reader.readAsDataURL(image);
+            }
+          });
+        });
+      }
+    };
+  });

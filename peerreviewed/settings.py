@@ -117,6 +117,8 @@ LOGIN_URL = '/logged_in'
 
 BASE_URL = 'https://blazersbutwithpeerreviews.xyz/'
 
+MEDIA_ROOT = "/uploaded_files/"
+
 # Email Config
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'blazersbutwithpeerreviews@gmail.com'

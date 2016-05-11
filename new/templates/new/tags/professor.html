@@ -48,6 +48,21 @@
             </lx-text-field>
             <span class="text-field-error" ng-show="valid.last_name">{{ valid.last_name }}</span>
         </div>
+      </div>
+
+      <div flex-container="row">
+  <choose-file layout="row">
+    <input id="fileInput" type="file" class="ng-hide">
+    <md-input-container flex class="md-block">
+      <input type="text" ng-model="fileName" disabled>
+      <div class="hint">Select your file</div>
+    </md-input-container>
+    <div>
+      <md-button id="uploadButton" class="md-fab md-mini">
+        <md-icon class="material-icons">attach_file</md-icon>
+      </md-button>
+    </div>
+  </choose-file>   
 
       </div>
        <button id="siteButton" class="btn btn--l btn--raised" type="submit"
