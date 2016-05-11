@@ -5,7 +5,7 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from autofixture import AutoFixture
 
 from browse.models import FieldCategory, Field, Department, Review, Professor,\
-    School, ReviewVote, Course
+    School, ReviewVote, Course, PeerReview, Report, ReviewComment
 from new.tests import srs
 from django.utils import formats
 
@@ -19,10 +19,13 @@ class TestBrowseViews(TestCase):
         cls.factory = RequestFactory()
         cls.NUM_EVERYTHING = 100
         models = [User, FieldCategory, Field, School, Department, Course,
-                  Professor, Review, ReviewVote]
+                  Professor, Review, ReviewVote, PeerReview, Report,
+                  ReviewComment]
 
         for m in models:
             AutoFixture(m).create(20)
+
+        AutoFixture(ReviewComment).create(100)
 
         cls.two_review_types = ["by_school", "by_professor"]
         cls.three_review_types = ["by_school_professor"]
@@ -127,7 +130,7 @@ class TestBrowseViews(TestCase):
                                args=[srs(School).id]))
         self.assertEqual(resp.status_code, 200)
 
-    def test_professor(self):
+    def test_professors(self):
         resp = self.client.get(reverse("professors"))
         self.assertEqual(resp.status_code, 200)
 

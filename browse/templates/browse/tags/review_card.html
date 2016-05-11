@@ -11,14 +11,14 @@
           <img src="{% gravatar_url review.owner.email 100 %}" style="margin-right:20px;">
         </div>
 
-        <div flex-item flex-container="column" style="padding: 0 10px 0 10px;">
-          <div align="left" style="overflow: hidden;" >
+        <div flex-item flex-container="column" style="padding: 0 10px 0 10px; min-height: 100px;">
+          <div align="left" style=" overflow: hidden; " >
             <strong class="review-title hyperlink"><a href='{% url 'review' review.id %}'>
               {{ review.title }}
             </a></strong>
             <!--strong class="review-title hyperlink"><a href='{% url 'review' review.id %}' target="iframe_a">{{ review.title }}</a></strong-->
             <div class="review-title-subtext">
-              <span class="display-block fs-body-1 tc-black-2">
+              <span class="display-block">
                 <b>{{ review.course.name }}</b> <br />
                 with <b> {{ review.target.first_name }} {{ review.target.last_name }} </b>
               </span>
@@ -33,7 +33,7 @@
 
 
       {% if can_vote %}
-      <div flex-item="6" style="padding: 10px;">
+      <div flex-item="6" style="padding: 10px 10px 0 10px;">
 
         <div flex-container="column">
           <div class="review-text" style="float: center;">

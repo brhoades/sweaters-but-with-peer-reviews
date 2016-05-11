@@ -15,7 +15,7 @@
   <input type="hidden" name="target" ng-value="data.target" ng-init="data.target={{review.id}}"/>
   {% verbatim %}
         <lx-text-field label="Write your comment here (minimum 25 characters)" error="valid.text">
-          <textarea ng-model="data.text" type="text" ng-minlength="25"></textarea>
+          <textarea ng-model="data.text" type="text"></textarea>
         </lx-text-field>
         <span class="text-field-error" ng-show="valid.text">{{ valid.text }}</span>
       </div>
