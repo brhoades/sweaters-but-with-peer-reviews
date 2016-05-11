@@ -247,7 +247,6 @@ body {
 
 .sidebar {
   background-color: $primary;
-  display: none;
 }
 /* End Main Page Classes */
 
@@ -417,6 +416,10 @@ iframe {
   background-size: 700px;
 }
 
+.md-sidenav-left {
+  display: none;
+}
+
 @media only screen and (max-width: 1400px)
 {
   .nav-buttons {
@@ -424,7 +427,7 @@ iframe {
     color: green;
   }
   .c-menu__link {
-    font-size: 110%;
+    font-size: 110px;
   }
 }
 
@@ -459,7 +462,7 @@ iframe {
       font-size: 30px;
     }
 
-  .sidebar {
+  .md-sidenav-left {
     display: inline;
   }
 
