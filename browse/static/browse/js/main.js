@@ -80,6 +80,34 @@ app.controller('loginData', function($scope, $http, LxDialogService,
     }
 });
 
+app.controller('register', function($scope, $http, LxDialogService,
+                                     LxNotificationService, $window) {
+  $scope.message = "";
+  $scope.user = {username: "", password: ""};
+
+  // Someone hit submit
+  $scope.submit = function(form) {
+    $http.post("/get/login", JSON.stringify(form)).
+      success(function(data) {
+          if(data["message"] != undefined) {
+            LxNotificationService.error(data["message"]);
+          }
+
+          // refresh
+          if(data["refresh"]) {
+            $scope.closingDialog();
+            LxNotificationService.success("Successfully identified.");
+            $window.location.href = $window.location.href;
+          }
+        }).
+      error(function() {
+        LxNotificationService.error("Network error--- check your connection.");
+      });
+    }
+});
+
+
+
 app.controller('myCount', function($scope) {
   $scope.count = 0;
 });
