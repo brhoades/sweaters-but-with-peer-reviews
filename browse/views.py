@@ -191,10 +191,10 @@ def professor(request, professor_id=None, page=0):
                                                           'rating_difficulty',
                                                           'rating_overall']}}],
                   chart_options={'title': {'text': 'Ratings of Professor'},
-                                 'xAxis': {'title': {'text': 'Reviews'},
+                                 'xAxis': {'title': {'text': 'Recent Reviews'},
                                            'ceiling': 25},
                                  'yAxis': {'title': {'text': 'Ratings'},
-                                           'floor': 0, 'ceiling': 5}})
+                                           'min': 0, 'max': 5}})
 
     context["chart"] = chart
 
