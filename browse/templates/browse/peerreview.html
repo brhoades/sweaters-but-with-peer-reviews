@@ -36,115 +36,132 @@
     </a>
   </div>
   <div style="float: right;">
-        <div class="review-rating">
-          <div class="average">{{ review.rating_overall }}</div>
-          <div class="out-of">
-            /5
-          </div>
-        </div>
-        <div class="review-rating">
-          <div class="rating-title">
-            Difficulty
-          </div>
-          <div class="sub-rating">{{ review.rating_difficulty }}</div>
-          <div class="out-of">
-            /5
-          </div>
-        </div>
-        <div class="review-rating">
-          <div class="rating-title">
-            Value
-          </div>
-          <div class="sub-rating">{{ review.rating_value }}</div>
-          <div class="out-of">
-            /5
-          </div>
-        </div>
+    <div class="review-rating">
+      <div class="average">{{ review.rating_overall }}</div>
+      <div class="out-of">
+        /5
+      </div>
     </div>
-    <div class="professor-info">
-      <a href="{% url "school" review.course.department.school.id %}" target="_parent">
-        {{ review.course.department.school.name }}
-      </a> -
-      {% comment %}
-      <a href="{% url "department" review.course.department.id %}" target="_parent">
-      {% endcomment %}
-
-        {{ review.course.department.name }}
-
-      <br />
-      &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
+    <div class="review-rating">
+      <div class="rating-title">
+        Difficulty
+      </div>
+      <div class="sub-rating">{{ review.rating_difficulty }}</div>
+      <div class="out-of">
+        /5
+      </div>
     </div>
-
-    <strong class="review-title">{{ review.title }}</strong>
-    <div class="review-info">
-      <a href="{% url "profile" review.owner.id %}" target="_parent">
-        {% if review.owner.first_name or review.owner.last_name %}
-          {{ review.owner.first_name }} {{ review.owner.last_name }}
-          ({{ review.owner.username }})
-        {% else %}
-          {{ review.owner.username }}
-        {% endif %}
-      </a>
-
-      &nbsp;
-      &nbsp;
-      {% if review.updated %}
-      {{ review.created_ts|date:"DATETIME_FORMAT" }}
-      {% else %}
-      {{ review.updated_ts|date:"DATETIME_FORMAT" }}*
-      {% endif %}
-    </div>
-
-    <div class="review-text">
-      {{ review.text }}
+    <div class="review-rating">
+      <div class="rating-title">
+        Value
+      </div>
+      <div class="sub-rating">{{ review.rating_value }}</div>
+      <div class="out-of">
+        /5
+      </div>
     </div>
   </div>
-</div>
+  <div class="professor-info">
+    <a href="{% url "school" review.course.department.school.id %}" target="_parent">
+      {{ review.course.department.school.name }}
+    </a> -
+    {% comment %}
+    <a href="{% url "department" review.course.department.id %}" target="_parent">
+    {% endcomment %}
+
+      {{ review.course.department.name }}
+
+    <br />
+    &nbsp; {{ review.course.name }} ({{ review.course.number }})<br />
+  </div>
+
+  <strong class="review-title">{{ review.title }}</strong>
+  <div class="review-info">
+    <a href="{% url "profile" review.owner.id %}" target="_parent">
+      {% if review.owner.first_name or review.owner.last_name %}
+        {{ review.owner.first_name }} {{ review.owner.last_name }}
+        ({{ review.owner.username }})
+      {% else %}
+        {{ review.owner.username }}
+      {% endif %}
+    </a>
+
+    &nbsp;
+    &nbsp;
+    {% if review.updated %}
+    {{ review.created_ts|date:"DATETIME_FORMAT" }}
+    {% else %}
+    {{ review.updated_ts|date:"DATETIME_FORMAT" }}*
+    {% endif %}
+  </div>
+
+  <div class="review-text">
+    {{ review.text }}
+  </div>
+</div> <!-- End large card div -->
+
+
 
 <div ng-controller="form-handler" model="peerreview" edit="{{ peerreview.id }}">
   <form method="POST" ng-submit="submit()" name="peerform">
     {% csrf_token %}
     {% verbatim %}
-    <div flex-item>
-      {% endverbatim %}
-      <lx-text-field label="Review Text" error="valid.text">
-        <textarea type="text" ng-model="data.text">{{ form.text.value }}</textarea>
-      </lx-text-field>
-      {% verbatim %}
-      <span class="rext-field-error" ng-show"valid.text">{{ valid.text }}</span>
-    </div>
+    <div class="review-card-small" >
+      <div ng-app="lumxWrap">
+        <div flex-container="row">
+          <div flex-item="1"></div>
+          <div flex-item="10" style="margin: 10px 0 20px 0;">
+            <h2> Edit the review </h2>
 
-    <div flex-item>
-      <md-slider-container>
-        <span class="md-body-1">Review Rating</span>
-        <md-slider flex class="md-primary" md-discrete ng-model="data.rating"
-                   step="0.1" min="0" max="5" aria-label="blue"
-                   aria-controls="blue-slider">
-        </md-slider>
-        <span class="text-field-error" ng-show="valid.rating">{{ valid.rating }}</span>
-      </md-slider-container>
-    </div>
+            <div flex-item>
+              <lx-text-field label="Review Text" error="valid.text">
+                <textarea type="text" ng-model="data.text"></textarea>
+              </lx-text-field>
+              <span class="rext-field-error" ng-show"valid.text">{{ valid.text }}</span>
+            </div>
 
-    <div flex-item>
-      <md-input-container>
-      <label>Flag Review</label>
-        <md-select ng-model="data.flag">
-          {% endverbatim %}
-          {% for value, text in form.flag.field.choices %}
-          <md-option value="{{ value }}">
-            {{ text }}
-          </md-option>
-          {% endfor %}
-          {% verbatim %}
-        </md-select>
-      </md-input-container>
-    </div>
+            <div flex-item>
+              <div flex-container="row">
+                <div flex-item="6">
+                  <md-slider-container>
+                    <span class="md-body-1">Review Rating</span>
+                    <md-slider flex class="md-primary" md-discrete ng-model="data.rating"
+                               step="0.1" min="0" max="5" aria-label="blue"
+                               aria-controls="blue-slider">
+                    </md-slider>
+                    <span class="text-field-error" ng-show="valid.rating">{{ valid.rating }}</span>
+                  </md-slider-container>
+                </div>
 
-    <button type="submit" id="siteButton" class="btn btn--l btn--raised" 
-            ng-submit="submit()" lx-ripple>
-      Save
-    </button>
+                <div flex-item="6">
+                  <md-input-container>
+                  <label>Flag Review</label>
+                    <md-select ng-model="data.flag">
+                      {% endverbatim %}
+                      {% for value, text in form.flag.field.choices %}
+                      <md-option value="{{ value }}">
+                        {{ text }}
+                      </md-option>
+                      {% endfor %}
+                      {% verbatim %}
+                    </md-select>
+                  </md-input-container>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="siteButton" class="btn btn--l btn--raised"
+                    ng-submit="submit()" lx-ripple>
+              Save
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div> <!-- End small card div -->
+
     {% endverbatim %}
-    </form>
+  </form>
 </div>
+
 {% endblock %}
