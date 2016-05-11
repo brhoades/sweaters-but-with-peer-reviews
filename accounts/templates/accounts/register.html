@@ -39,7 +39,8 @@
         </div>
 
 
-        <lx-text-field label="E-mail">
+        <lx-text-field label="E-mail (Ex: JoeMiner@mst.edu)"
+                       lx-tooltip="The E-mail should be the one provided by your institution">
           <input type="email" ng-model="data.email" name="email">
         </lx-text-field>
         <span class="text-field-error" ng-show="form.email" >{{ form.email }}</span>
